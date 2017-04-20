@@ -3,14 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/two"
     android:background="@drawable/selector"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/four"
+    android:paddingLeft="@dimen/two"
+    android:paddingRight="@dimen/two"
+    android:paddingTop="@dimen/four">
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:hint="@string/app_name"></TextView>
+        android:hint="@string/app_name"
+        android:textSize="24sp"></TextView>
 </LinearLayout>

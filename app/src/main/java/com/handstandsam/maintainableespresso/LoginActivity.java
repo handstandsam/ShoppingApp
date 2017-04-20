@@ -53,10 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Login");
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
-        getSupportActionBar().setTitle(R.string.app_name);
 
         handleIntent(getIntent());
 
