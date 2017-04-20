@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="one">8dp</dimen>
+    <dimen name="two">16dp</dimen>
+    <dimen name="three">24dp</dimen>
+    <dimen name="four">32dp</dimen>
+    <dimen name="activity_padding">16dp</dimen>
+</resources>
