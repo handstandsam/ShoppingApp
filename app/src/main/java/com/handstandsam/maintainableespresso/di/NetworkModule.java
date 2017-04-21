@@ -15,6 +15,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 public class NetworkModule {
 
+    public static final String IMAGE_BASE_URL = "https://s3.amazonaws.com/maintainable-espresso/images/";
+
     protected String baseUrl;
 
     public NetworkModule(String baseUrl) {

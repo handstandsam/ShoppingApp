@@ -7,7 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.handstandsam.maintainableespresso.login.LoginActivity;
+import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.robot.LoginRobot;
 
 import org.junit.Rule;

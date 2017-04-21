@@ -1,11 +1,13 @@
 package com.handstandsam.maintainableespresso.di;
 
-import com.handstandsam.maintainableespresso.login.LoginActivity;
-import com.handstandsam.maintainableespresso.category.CategoryActivity;
-import com.handstandsam.maintainableespresso.category.CategoryPresenter;
-import com.handstandsam.maintainableespresso.home.HomeActivity;
-import com.handstandsam.maintainableespresso.home.HomePresenter;
-import com.handstandsam.maintainableespresso.login.LoginPresenter;
+import com.handstandsam.maintainableespresso.LoggedInActivity;
+import com.handstandsam.maintainableespresso.features.category.CategoryActivity;
+import com.handstandsam.maintainableespresso.features.category.CategoryPresenter;
+import com.handstandsam.maintainableespresso.features.home.HomeActivity;
+import com.handstandsam.maintainableespresso.features.home.HomePresenter;
+import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailPresenter;
+import com.handstandsam.maintainableespresso.features.login.LoginActivity;
+import com.handstandsam.maintainableespresso.features.login.LoginPresenter;
 import com.handstandsam.maintainableespresso.mockaccount.Stubberator;
 
 import javax.inject.Singleton;
@@ -28,4 +30,8 @@ public interface AppComponent {
     void inject(CategoryPresenter clazz);
 
     void inject(LoginPresenter clazz);
+
+    void inject(LoggedInActivity clazz);
+
+    void inject(ItemDetailPresenter clazz);
 }

@@ -1,15 +1,18 @@
-package com.handstandsam.maintainableespresso.home;
+package com.handstandsam.maintainableespresso.features.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
+import com.handstandsam.maintainableespresso.LoggedInActivity;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
 import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.models.Category;
 
 import java.util.List;
@@ -18,12 +21,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends LoggedInActivity {
 
     HomePresenter presenter;
 
     @BindView(R.id.categories)
     RecyclerView recyclerView;
+
+    @BindView(R.id.welcome_message)
+    TextView welcomeMessageText;
 
     HomeView homeView;
 
@@ -50,6 +56,10 @@ public class HomeActivity extends AppCompatActivity {
         Context getContext();
 
         void showCategories(List<Category> categories);
+
+        void setWelcomeMessage(String welcomeStr);
+
+        void kickToLogin();
     }
 
     public class MyHomeView implements HomeView {
@@ -63,6 +73,17 @@ public class HomeActivity extends AppCompatActivity {
         public void showCategories(List<Category> categories) {
             recyclerViewAdapter.setData(categories);
             Timber.d("showCategories: " + new GsonBuilder().create().toJson(categories));
+        }
+
+        @Override
+        public void setWelcomeMessage(String welcomeStr) {
+            welcomeMessageText.setText(welcomeStr);
+        }
+
+        @Override
+        public void kickToLogin() {
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            HomeActivity.this.finish();
         }
     }
 

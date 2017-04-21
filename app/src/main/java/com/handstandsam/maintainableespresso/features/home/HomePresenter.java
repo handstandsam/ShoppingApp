@@ -1,4 +1,4 @@
-package com.handstandsam.maintainableespresso.home;
+package com.handstandsam.maintainableespresso.features.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.GsonBuilder;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
 import com.handstandsam.maintainableespresso.models.Category;
+import com.handstandsam.maintainableespresso.models.User;
 import com.handstandsam.maintainableespresso.repository.CategoryRepository;
 import com.handstandsam.maintainableespresso.repository.SessionManager;
 
@@ -31,11 +32,18 @@ public class HomePresenter {
         this.view = homeView;
         this.applicationContext = homeView.getContext().getApplicationContext();
         ((MyAbstractApplication) applicationContext).getAppComponent().inject(this);
-        Timber.d("HomePresenter: "+ new GsonBuilder().create().toJson(categoryRepository));
+        Timber.d("HomePresenter: " + new GsonBuilder().create().toJson(categoryRepository));
     }
 
     public void onResume(Intent intent) {
         List<Category> categories = categoryRepository.getCategories();
         view.showCategories(categories);
+
+        User currentUser = sessionManager.getCurrentUser();
+        if (currentUser == null) {
+            view.kickToLogin();
+        }
+        String welcomeStr = "Welcome back " + currentUser.getFirstname() + " " + currentUser.getLastname();
+        view.setWelcomeMessage(welcomeStr);
     }
 }

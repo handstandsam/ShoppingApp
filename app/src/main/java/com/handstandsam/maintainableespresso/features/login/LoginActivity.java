@@ -1,9 +1,9 @@
-package com.handstandsam.maintainableespresso.login;
+package com.handstandsam.maintainableespresso.features.login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
 import com.handstandsam.maintainableespresso.R;
 import com.handstandsam.maintainableespresso.di.AppComponent;
-import com.handstandsam.maintainableespresso.home.HomeActivity;
+import com.handstandsam.maintainableespresso.features.home.HomeActivity;
 import com.handstandsam.maintainableespresso.network.GitHubService;
 import com.handstandsam.maintainableespresso.network.model.GitHubUser;
 
@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     GitHubService gitHubService;
 
+    @BindView(R.id.remember_me)
+    AppCompatCheckBox rememberMeCheckbox;
 
     @BindView(R.id.username)
     AppCompatEditText usernameEditText;
@@ -60,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Shopping App");
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setTitle("Sign In to Shopping App");
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 
@@ -130,9 +132,17 @@ public class LoginActivity extends AppCompatActivity {
     public interface LoginView {
         AppComponent getAppComponent();
 
-        void startActivity(Intent intent);
+        void startHomeActivity();
 
-        Context getActivity();
+        String getUsername();
+
+        boolean isRememberMeChecked();
+
+        void setUsername(String username);
+
+        void setRememberMe(boolean rememberMe);
+
+        void kickToHomeScreen();
     }
 
 
@@ -144,13 +154,35 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        public void startActivity(Intent intent) {
+        public void startHomeActivity() {
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             LoginActivity.this.startActivity(intent);
         }
 
         @Override
-        public Context getActivity() {
-            return LoginActivity.this;
+        public String getUsername() {
+            return usernameEditText.getText().toString();
+        }
+
+        @Override
+        public boolean isRememberMeChecked() {
+            return rememberMeCheckbox.isChecked();
+        }
+
+        @Override
+        public void setUsername(String username) {
+            usernameEditText.setText(username);
+        }
+
+        @Override
+        public void setRememberMe(boolean value) {
+            rememberMeCheckbox.setChecked(value);
+        }
+
+        @Override
+        public void kickToHomeScreen() {
+            LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
         }
 
     }

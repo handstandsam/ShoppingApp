@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.handstandsam.maintainableespresso.login.LoginActivity;
+import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.R;
 
 public class IntentUtils {

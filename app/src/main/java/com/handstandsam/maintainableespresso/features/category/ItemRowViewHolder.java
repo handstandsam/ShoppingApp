@@ -1,13 +1,18 @@
-package com.handstandsam.maintainableespresso.category;
+package com.handstandsam.maintainableespresso.features.category;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.di.NetworkModule;
+import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailActivity;
+import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailPresenter;
 import com.handstandsam.maintainableespresso.models.Item;
 
 import butterknife.BindView;
@@ -15,8 +20,7 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 
-class CategoryViewHolder extends RecyclerView.ViewHolder {
-    private static final String IMAGE_BASE_URL = "https://s3.amazonaws.com/maintainable-espresso/images/";
+class ItemRowViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.text)
     TextView textView;
@@ -26,13 +30,18 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     private Item item;
 
-    public CategoryViewHolder(View itemView) {
+    public ItemRowViewHolder(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), item.getLabel(), Toast.LENGTH_SHORT).show();
+                Context context = itemView.getContext();
+                Intent intent = new Intent(view.getContext(), ItemDetailActivity.class);
+                Bundle extras = new Bundle();
+                extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, item);
+                intent.putExtras(extras);
+                context.startActivity(intent);
             }
         });
     }
@@ -50,7 +59,7 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
         itemView.setBackgroundResource(colorResource);
         this.item = item;
 
-        Glide.with(imageView.getContext()).load(IMAGE_BASE_URL + item.getImage()).into(imageView);
+        Glide.with(imageView.getContext()).load(NetworkModule.IMAGE_BASE_URL + item.getImage()).into(imageView);
         textView.setText(this.item.getLabel());
     }
 }

@@ -2,7 +2,10 @@ package com.handstandsam.maintainableespresso.di;
 
 import android.app.Application;
 
+import com.handstandsam.maintainableespresso.preferences.UserPreferences;
 import com.handstandsam.maintainableespresso.repository.SessionManager;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,8 +24,14 @@ public class AppModule {
         return mApplication;
     }
 
+    @Singleton
     @Provides
     SessionManager sessionManager() {
         return new SessionManager();
+    }
+
+    @Provides
+    UserPreferences userPreferences() {
+        return new UserPreferences(mApplication);
     }
 }

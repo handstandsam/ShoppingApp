@@ -5,4 +5,8 @@
     <dimen name="three">24dp</dimen>
     <dimen name="four">32dp</dimen>
     <dimen name="activity_padding">16dp</dimen>
+
+    <dimen name="item_title">24sp</dimen>
+    <dimen name="category_title">32sp</dimen>
+    <dimen name="welcome_message">20sp</dimen>
 </resources>

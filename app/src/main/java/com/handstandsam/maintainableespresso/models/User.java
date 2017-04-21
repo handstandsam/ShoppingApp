@@ -10,4 +10,11 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
     }
+
+    public String getFirstname() {
+        return firstname;
+    }
+    public String getLastname() {
+        return lastname;
+    }
 }

@@ -1,15 +1,18 @@
-package com.handstandsam.maintainableespresso.home;
+package com.handstandsam.maintainableespresso.features.home;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.handstandsam.maintainableespresso.R;
-import com.handstandsam.maintainableespresso.category.CategoryActivity;
-import com.handstandsam.maintainableespresso.category.CategoryPresenter;
+import com.handstandsam.maintainableespresso.features.category.CategoryActivity;
+import com.handstandsam.maintainableespresso.features.category.CategoryPresenter;
+import com.handstandsam.maintainableespresso.di.NetworkModule;
 import com.handstandsam.maintainableespresso.models.Category;
 
 import butterknife.BindView;
@@ -17,13 +20,16 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 
-class HomeViewHolder extends RecyclerView.ViewHolder {
+class CategoryViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text)
     TextView textView;
 
+    @BindView(R.id.image)
+    ImageView imageView;
+
     Category category;
 
-    public HomeViewHolder(final View itemView) {
+    public CategoryViewHolder(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +58,9 @@ class HomeViewHolder extends RecyclerView.ViewHolder {
         int colorResource = colors[colorIdx];
         itemView.setBackgroundResource(colorResource);
         this.category = category;
+
+
+        Glide.with(imageView.getContext()).load(NetworkModule.IMAGE_BASE_URL + category.getImage()).into(imageView);
         textView.setText(this.category.getLabel());
     }
 }

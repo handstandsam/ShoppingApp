@@ -1,12 +1,12 @@
-package com.handstandsam.maintainableespresso.category;
+package com.handstandsam.maintainableespresso.features.category;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.GsonBuilder;
+import com.handstandsam.maintainableespresso.LoggedInActivity;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
 import com.handstandsam.maintainableespresso.R;
 import com.handstandsam.maintainableespresso.models.Item;
@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends LoggedInActivity {
 
     @Inject
     GitHubService gitHubService;

@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".login.LoginActivity"
-            android:launchMode="singleTask">
+            android:name=".features.login.LoginActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".features.home.HomeActivity"
             android:launchMode="singleTask"></activity>
 
         <activity
-            android:name=".category.CategoryActivity"
+            android:name=".features.category.CategoryActivity"
+            android:launchMode="singleTask"></activity>
+
+        <activity
+            android:name=".features.itemdetail.ItemDetailActivity"
             android:launchMode="singleTask"></activity>
     </application>
 

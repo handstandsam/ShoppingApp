@@ -1,4 +1,4 @@
-package com.handstandsam.maintainableespresso.category;
+package com.handstandsam.maintainableespresso.features.category;
 
 import android.content.Context;
 import android.content.Intent;
