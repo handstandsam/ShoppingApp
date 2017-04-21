@@ -1,5 +1,6 @@
-package com.handstandsam.maintainableespresso;
+package com.handstandsam.maintainableespresso.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.handstandsam.maintainableespresso.MyAbstractApplication;
+import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.di.AppComponent;
 import com.handstandsam.maintainableespresso.home.HomeActivity;
 import com.handstandsam.maintainableespresso.network.GitHubService;
 import com.handstandsam.maintainableespresso.network.model.GitHubUser;
@@ -35,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatEditText usernameEditText;
 
     Disposable disposable;
+    private MyLoginView loginView;
+    private LoginPresenter presenter;
 
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -54,10 +60,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setTitle("Shopping App");
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
+
+        loginView = new MyLoginView();
+        presenter = new LoginPresenter(loginView);
 
         handleIntent(getIntent());
 
@@ -78,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     public void submit() {
         String username = usernameEditText.getText().toString();
 
-        startActivity(new Intent(this, HomeActivity.class));
+        presenter.loginClicked();
 //        search(username);
     }
 
@@ -116,5 +125,39 @@ public class LoginActivity extends AppCompatActivity {
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
+    }
+
+    public interface LoginView {
+        AppComponent getAppComponent();
+
+        void startActivity(Intent intent);
+
+        Context getActivity();
+    }
+
+
+    public class MyLoginView implements LoginView {
+
+        @Override
+        public AppComponent getAppComponent() {
+            return ((MyAbstractApplication) getApplication()).getAppComponent();
+        }
+
+        @Override
+        public void startActivity(Intent intent) {
+            LoginActivity.this.startActivity(intent);
+        }
+
+        @Override
+        public Context getActivity() {
+            return LoginActivity.this;
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume(getIntent());
     }
 }

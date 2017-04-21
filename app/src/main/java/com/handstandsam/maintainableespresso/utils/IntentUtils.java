@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.handstandsam.maintainableespresso.LoginActivity;
+import com.handstandsam.maintainableespresso.login.LoginActivity;
 import com.handstandsam.maintainableespresso.R;
 
 public class IntentUtils {
@@ -40,7 +40,7 @@ public class IntentUtils {
 
 //        public static void triggerPRNotification(Context context, String username, Intent intent) {
 //        int id = (int) System.currentTimeMillis();
-//        PendingIntent pIntent = PendingIntent.getActivity(context, id, intent, PendingIntent.FLAG_ONE_SHOT);
+//        PendingIntent pIntent = PendingIntent.getContext(context, id, intent, PendingIntent.FLAG_ONE_SHOT);
 //
 //        Notification n = new Notification.Builder(context)
 //                .setContentTitle("New PR from " + username)

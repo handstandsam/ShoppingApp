@@ -25,7 +25,7 @@ public class ProduceMockAccount extends MockAccount {
 
         user = new User("Sam", "Edwards");
         Category fruitCategory = new CategoryBuilder("Fruits").build();
-        String[] fruitNames = {"Apple", "Banana", "Orange", "Pear", "Grapes", "Mango", "Watermelon"};
+        String[] fruitNames = {"Apple", "Strawberry", "Orange", "Banana", "Grapes", "Pear", "Peach", "Cherry", "Pineapple", "Grapefruit", "Mango", "Watermelon", "Kiwi", "Lemon", "Blackberries"};
         List<Item> fruitItems = new ArrayList<>();
         for (String name : fruitNames) {
             fruitItems.add(new ItemBuilder().label(name).build());
@@ -33,7 +33,7 @@ public class ProduceMockAccount extends MockAccount {
         itemByCategoryMap.put(fruitCategory.getLabel(), fruitItems);
 
 
-        String[] vegetableNames = {"Carrots", "Romaine Lettuce", "Radish", "Squash", "Celery", "Spinach", "Peas", "Broccoli", "Tomato", "Cabbage", "Onion"};
+        String[] vegetableNames = {"Carrots", "Romaine Lettuce", "Radish", "Squash", "Celery", "Spinach", "Peas", "Broccoli", "Tomato", "Cabbage", "Onion", "Brussels Sprouts", "Zucchini", "Kale", "Asparagus"};
         List<Item> vegetableItems = new ArrayList<>();
         Category vegetableCategory = new CategoryBuilder("Vegetables").build();
         for (String name : vegetableNames) {
