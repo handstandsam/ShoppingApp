@@ -2,6 +2,8 @@ package com.handstandsam.maintainableespresso.di;
 
 import android.app.Application;
 
+import com.handstandsam.maintainableespresso.repository.SessionManager;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,5 +19,10 @@ public class AppModule {
     @Provides
     Application providesApplication() {
         return mApplication;
+    }
+
+    @Provides
+    SessionManager sessionManager() {
+        return new SessionManager();
     }
 }

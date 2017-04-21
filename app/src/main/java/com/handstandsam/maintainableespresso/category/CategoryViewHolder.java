@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.models.Item;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,7 +17,7 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text)
     TextView textView;
 
-    private String data;
+    private Item item;
 
     public CategoryViewHolder(View itemView) {
         super(itemView);
@@ -24,7 +25,7 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), item.getLabel(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -35,12 +36,12 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
             R.color.material_green, R.color.material_blue, R.color.material_light_blue,
             R.color.material_brown, R.color.material_amber};
 
-    public void bindData(String data, int position) {
+    public void bindData(Item item, int position) {
         int colorIdx = position % colors.length;
         Timber.d("idx: " + colorIdx);
         int colorResource = colors[colorIdx];
         itemView.setBackgroundResource(colorResource);
-        this.data = data;
-        textView.setText(data);
+        this.item = item;
+        textView.setText(this.item.getLabel());
     }
 }

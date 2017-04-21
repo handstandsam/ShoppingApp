@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.models.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class CategoryRVAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
-    String[] data = {"Apple", "Banana", "Orange", "Pear", "Grapes", "Mango"};
+    List<Item> items = new ArrayList<>();
 
     public CategoryRVAdapter() {
     }
@@ -19,15 +23,19 @@ class CategoryRVAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_category_row, parent, false);
         return new CategoryViewHolder(view);
     }
-
-
+    
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        holder.bindData(data[position], position);
+        holder.bindData(items.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return items.size();
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 }

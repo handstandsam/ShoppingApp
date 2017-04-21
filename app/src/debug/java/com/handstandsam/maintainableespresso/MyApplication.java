@@ -11,6 +11,7 @@ import com.handstandsam.maintainableespresso.di.AppComponent;
 import com.handstandsam.maintainableespresso.di.AppModule;
 import com.handstandsam.maintainableespresso.di.DaggerAppComponent;
 import com.handstandsam.maintainableespresso.di.DebugNetworkModule;
+import com.handstandsam.maintainableespresso.di.RepositoryModule;
 
 import java.io.IOException;
 
@@ -65,6 +66,7 @@ public class MyApplication extends MyAbstractApplication {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new DebugNetworkModule(endpoint))
+                .repositoryModule(new RepositoryModule())
                 .build();
     }
 

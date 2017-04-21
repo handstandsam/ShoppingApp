@@ -2,12 +2,15 @@ package com.handstandsam.maintainableespresso.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.handstandsam.maintainableespresso.R;
 import com.handstandsam.maintainableespresso.category.CategoryActivity;
+import com.handstandsam.maintainableespresso.category.CategoryPresenter;
+import com.handstandsam.maintainableespresso.models.Category;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +21,7 @@ class HomeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text)
     TextView textView;
 
-    private String data;
+    Category category;
 
     public HomeViewHolder(final View itemView) {
         super(itemView);
@@ -27,7 +30,11 @@ class HomeViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 Context context = itemView.getContext();
-                context.startActivity(new Intent(context, CategoryActivity.class));
+                Intent intent = new Intent(context, CategoryActivity.class);
+                Bundle extras = new Bundle();
+                extras.putSerializable(CategoryPresenter.BUNDLE_PARAM_CATEGORY, category);
+                intent.putExtras(extras);
+                context.startActivity(intent);
             }
         });
     }
@@ -39,12 +46,12 @@ class HomeViewHolder extends RecyclerView.ViewHolder {
             R.color.material_green, R.color.material_blue,
             R.color.material_brown, R.color.material_amber};
 
-    public void bindData(String data, int position) {
+    public void bindData(Category category, int position) {
         int colorIdx = position % colors.length;
         Timber.d("idx: " + colorIdx);
         int colorResource = colors[colorIdx];
         itemView.setBackgroundResource(colorResource);
-        this.data = data;
-        textView.setText(data);
+        this.category = category;
+        textView.setText(this.category.getLabel());
     }
 }

@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     GitHubService gitHubService;
 
+
     @BindView(R.id.username)
     AppCompatEditText usernameEditText;
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.submit)
     public void submit() {
         String username = usernameEditText.getText().toString();
+
         startActivity(new Intent(this, HomeActivity.class));
 //        search(username);
     }

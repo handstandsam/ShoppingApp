@@ -45,10 +45,17 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textPassword"
                     android:hint='@string/password'
                     android:imeOptions="actionDone" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/rememberme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/remember_me" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/submit"

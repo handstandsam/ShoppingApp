@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.handstandsam.maintainableespresso.R;
+import com.handstandsam.maintainableespresso.models.Category;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class HomeRVAdapter extends RecyclerView.Adapter<HomeViewHolder> {
-
-    String[] data = {"Fruits", "Vegetables", "Dairy", "Grain", "Meats", "Desserts"};
+    private List<Category> categories = new ArrayList<>();
 
     public HomeRVAdapter() {
     }
@@ -20,14 +23,18 @@ class HomeRVAdapter extends RecyclerView.Adapter<HomeViewHolder> {
         return new HomeViewHolder(view);
     }
 
+    public void setData(List<Category> categories) {
+        this.categories = categories;
+        notifyDataSetChanged();
+    }
 
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
-        holder.bindData(data[position], position);
+        holder.bindData(categories.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return categories.size();
     }
 }
