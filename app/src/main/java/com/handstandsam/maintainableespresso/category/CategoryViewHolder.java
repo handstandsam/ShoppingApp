@@ -1,10 +1,12 @@
 package com.handstandsam.maintainableespresso.category;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.handstandsam.maintainableespresso.R;
 import com.handstandsam.maintainableespresso.models.Item;
 
@@ -14,8 +16,13 @@ import timber.log.Timber;
 
 
 class CategoryViewHolder extends RecyclerView.ViewHolder {
+    private static final String IMAGE_BASE_URL = "https://s3.amazonaws.com/maintainable-espresso/images/";
+
     @BindView(R.id.text)
     TextView textView;
+
+    @BindView(R.id.image)
+    AppCompatImageView imageView;
 
     private Item item;
 
@@ -42,6 +49,8 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
         int colorResource = colors[colorIdx];
         itemView.setBackgroundResource(colorResource);
         this.item = item;
+
+        Glide.with(imageView.getContext()).load(IMAGE_BASE_URL + item.getImage()).into(imageView);
         textView.setText(this.item.getLabel());
     }
 }
