@@ -3,6 +3,7 @@ package com.handstandsam.maintainableespresso.di;
 import com.handstandsam.maintainableespresso.LoggedInActivity;
 import com.handstandsam.maintainableespresso.features.category.CategoryActivity;
 import com.handstandsam.maintainableespresso.features.category.CategoryPresenter;
+import com.handstandsam.maintainableespresso.features.checkout.CheckoutPresenter;
 import com.handstandsam.maintainableespresso.features.home.HomeActivity;
 import com.handstandsam.maintainableespresso.features.home.HomePresenter;
 import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailPresenter;
@@ -34,4 +35,6 @@ public interface AppComponent {
     void inject(LoggedInActivity clazz);
 
     void inject(ItemDetailPresenter clazz);
+
+    void inject(CheckoutPresenter clazz);
 }

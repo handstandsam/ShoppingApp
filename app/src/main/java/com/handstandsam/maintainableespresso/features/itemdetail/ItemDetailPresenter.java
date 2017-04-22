@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.handstandsam.maintainableespresso.di.NetworkModule;
 import com.handstandsam.maintainableespresso.models.Item;
+import com.handstandsam.maintainableespresso.repository.CheckoutCart;
 import com.handstandsam.maintainableespresso.repository.SessionManager;
 
 import javax.inject.Inject;
@@ -17,6 +18,9 @@ public class ItemDetailPresenter {
 
     @Inject
     SessionManager sessionManager;
+
+    @Inject
+    CheckoutCart cart;
 
     Item item;
 
@@ -34,5 +38,10 @@ public class ItemDetailPresenter {
         view.setLabel(item.getLabel());
         view.setImageUrl(NetworkModule.IMAGE_BASE_URL + item.getImage());
         view.setActionBarTitle(item.getLabel());
+    }
+
+    public void addToCardClicked() {
+        cart.addItem(item);
+        view.showToast(item.getLabel() + " added to cart.");
     }
 }

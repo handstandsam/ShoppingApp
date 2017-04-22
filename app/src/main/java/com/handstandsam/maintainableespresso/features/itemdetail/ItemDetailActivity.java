@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.handstandsam.maintainableespresso.LoggedInActivity;
@@ -53,9 +55,20 @@ public class ItemDetailActivity extends LoggedInActivity {
         void setLabel(String label);
 
         void setImageUrl(String imageUrl);
+
+        void showToast(String message);
     }
 
     public class MyItemDetailView implements ItemDetailView {
+
+        public MyItemDetailView() {
+            addToCartButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.addToCardClicked();
+                }
+            });
+        }
 
         @Override
         public Context getContext() {
@@ -80,7 +93,11 @@ public class ItemDetailActivity extends LoggedInActivity {
         @Override
         public void setImageUrl(String imageUrl) {
             Glide.with(imageView.getContext()).load(imageUrl).into(imageView);
+        }
 
+        @Override
+        public void showToast(String message) {
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         }
     }
 

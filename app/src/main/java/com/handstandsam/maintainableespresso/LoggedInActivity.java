@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.handstandsam.maintainableespresso.features.checkout.CheckoutActivity;
 import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.repository.SessionManager;
 
@@ -15,12 +16,17 @@ import javax.inject.Inject;
 public class LoggedInActivity extends AppCompatActivity {
 
     @Inject
-    SessionManager sessionManager;
+    protected SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
+        if (!sessionManager.isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
     }
 
     @Override
@@ -36,6 +42,9 @@ public class LoggedInActivity extends AppCompatActivity {
                 sessionManager.logout();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
+                return true;
+            case R.id.view_cart:
+                startActivity(new Intent(this, CheckoutActivity.class));
                 return true;
             default:
                 return super.onContextItemSelected(item);

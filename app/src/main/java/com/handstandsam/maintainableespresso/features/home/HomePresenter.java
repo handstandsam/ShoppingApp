@@ -40,9 +40,6 @@ public class HomePresenter {
         view.showCategories(categories);
 
         User currentUser = sessionManager.getCurrentUser();
-        if (currentUser == null) {
-            view.kickToLogin();
-        }
         String welcomeStr = "Welcome back " + currentUser.getFirstname() + " " + currentUser.getLastname();
         view.setWelcomeMessage(welcomeStr);
     }

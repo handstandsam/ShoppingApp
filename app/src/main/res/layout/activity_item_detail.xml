@@ -4,34 +4,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="@dimen/two"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/two">
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/two"
         android:gravity="center"
-        android:padding="@dimen/two"
         android:textSize="@dimen/item_title"
         tools:text="Title" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/image"
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_text"
+        android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:minHeight="200dp"
+        android:layout_marginBottom="@dimen/two"
         android:scaleType="fitCenter" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/add_to_cart"
-        android:layout_below="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/two"
+        android:layout_below="@+id/image"
         android:text="@string/add_to_cart" />
 </RelativeLayout>

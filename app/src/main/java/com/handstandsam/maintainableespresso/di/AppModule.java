@@ -3,6 +3,7 @@ package com.handstandsam.maintainableespresso.di;
 import android.app.Application;
 
 import com.handstandsam.maintainableespresso.preferences.UserPreferences;
+import com.handstandsam.maintainableespresso.repository.CheckoutCart;
 import com.handstandsam.maintainableespresso.repository.SessionManager;
 
 import javax.inject.Singleton;
@@ -26,8 +27,14 @@ public class AppModule {
 
     @Singleton
     @Provides
-    SessionManager sessionManager() {
-        return new SessionManager();
+    SessionManager sessionManager(CheckoutCart checkoutCart) {
+        return new SessionManager(checkoutCart);
+    }
+
+    @Singleton
+    @Provides
+    CheckoutCart checkoutCart() {
+        return new CheckoutCart();
     }
 
     @Provides

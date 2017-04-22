@@ -5,5 +5,6 @@
     <string name="sign_in">Sign In</string>
     <string name="logout">Log out</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="view_cart">View Cart</string>
     <string name="remember_me">Remember Me</string>
 </resources>

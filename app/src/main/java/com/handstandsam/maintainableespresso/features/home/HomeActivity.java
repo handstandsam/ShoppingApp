@@ -1,7 +1,6 @@
 package com.handstandsam.maintainableespresso.features.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import com.google.gson.GsonBuilder;
 import com.handstandsam.maintainableespresso.LoggedInActivity;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
 import com.handstandsam.maintainableespresso.R;
-import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.models.Category;
 
 import java.util.List;
@@ -58,8 +56,6 @@ public class HomeActivity extends LoggedInActivity {
         void showCategories(List<Category> categories);
 
         void setWelcomeMessage(String welcomeStr);
-
-        void kickToLogin();
     }
 
     public class MyHomeView implements HomeView {
@@ -78,12 +74,6 @@ public class HomeActivity extends LoggedInActivity {
         @Override
         public void setWelcomeMessage(String welcomeStr) {
             welcomeMessageText.setText(welcomeStr);
-        }
-
-        @Override
-        public void kickToLogin() {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-            HomeActivity.this.finish();
         }
     }
 

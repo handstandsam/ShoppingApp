@@ -35,6 +35,9 @@
         <activity
             android:name=".features.itemdetail.ItemDetailActivity"
             android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".features.checkout.CheckoutActivity"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>
