@@ -40,15 +40,8 @@ public class LoginPresenter {
     }
 
     public void loginClicked() {
-        userPreferences.setIsLoggedIn(true);
         boolean rememberMe = view.isRememberMeChecked();
-        if (rememberMe) {
-            userPreferences.setLastLoggedInUsername(view.getUsername());
-        } else {
-            userPreferences.setLastLoggedInUsername(null);
-        }
-        userPreferences.setRememberMe(rememberMe);
-
+        userPreferences.setRememberMe(rememberMe, view.getUsername());
         sessionManager.setCurrentUser(new ProduceMockAccount().getUser());
 
         view.startHomeActivity();

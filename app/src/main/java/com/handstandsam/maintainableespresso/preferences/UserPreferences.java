@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.handstandsam.maintainableespresso.models.User;
+
 public class UserPreferences {
 
     public static final String REMEMBER_ME = "REMEMBER_ME";
 
     public static final String LAST_LOGGED_IN_USERNAME = "LAST_LOGGED_IN_USERNAME";
 
-    public static final String IS_LOGGED_IN = "IS_LOGGED_IN";
+    public static final String CURRENT_USER = "CURRENT_USER";
 
+    private static Gson gson = new GsonBuilder().create();
 
     private final SharedPreferences sharedPreferences;
 
@@ -20,23 +25,13 @@ public class UserPreferences {
     }
 
     public boolean isLoggedIn() {
-        boolean value = sharedPreferences.getBoolean(IS_LOGGED_IN, false);
-        return value;
-    }
-
-    public void setIsLoggedIn(boolean value) {
-        sharedPreferences.edit().putBoolean(IS_LOGGED_IN, value).apply();
+        return getCurrentUser() != null;
     }
 
     public boolean getRememberMe() {
         boolean value = sharedPreferences.getBoolean(REMEMBER_ME, false);
         return value;
     }
-
-    public void setRememberMe(boolean value) {
-        sharedPreferences.edit().putBoolean(REMEMBER_ME, value).apply();
-    }
-
 
     public String getLastLoggedInUsername() {
         String value = sharedPreferences.getString(LAST_LOGGED_IN_USERNAME, null);
@@ -47,4 +42,24 @@ public class UserPreferences {
         sharedPreferences.edit().putString(LAST_LOGGED_IN_USERNAME, value).apply();
     }
 
+    public void setCurrentUser(User user) {
+        sharedPreferences.edit().putString(CURRENT_USER, gson.toJson(user)).apply();
+    }
+
+    public User getCurrentUser() {
+        String json = sharedPreferences.getString(CURRENT_USER, null);
+        if (json != null) {
+            return gson.fromJson(json, User.class);
+        }
+        return null;
+    }
+
+    public void setRememberMe(boolean rememberMe, String username) {
+        sharedPreferences.edit().putBoolean(REMEMBER_ME, rememberMe).apply();
+        if (rememberMe) {
+            setLastLoggedInUsername(username);
+        } else {
+            setLastLoggedInUsername(null);
+        }
+    }
 }

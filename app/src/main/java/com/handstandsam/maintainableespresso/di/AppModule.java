@@ -27,8 +27,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    SessionManager sessionManager(CheckoutCart checkoutCart) {
-        return new SessionManager(checkoutCart);
+    SessionManager sessionManager(CheckoutCart checkoutCart, UserPreferences userPreferences) {
+        return new SessionManager(checkoutCart, userPreferences);
     }
 
     @Singleton
@@ -37,6 +37,7 @@ public class AppModule {
         return new CheckoutCart();
     }
 
+    @Singleton
     @Provides
     UserPreferences userPreferences() {
         return new UserPreferences(mApplication);

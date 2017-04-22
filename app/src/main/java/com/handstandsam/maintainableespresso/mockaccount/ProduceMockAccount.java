@@ -50,7 +50,7 @@ public class ProduceMockAccount extends MockAccount {
         seafoodItems.add(new ItemBuilder("Scallop").image("scallops.jpg").build());
         itemByCategoryMap.put(seafoodCategory.getLabel(), seafoodItems);
 
-        Category vegetableCategory = new CategoryBuilder("Vegetables").image("broccoli.jpg").build();
+        Category vegetableCategory = new CategoryBuilder("Vegetables").image("kale.jpg").build();
         List<Item> vegetableItems = new ArrayList<>();
         vegetableItems.add(new ItemBuilder("Carrot").image("carrots.jpg").build());
         vegetableItems.add(new ItemBuilder("Cucumber").image("cucumber.jpg").build());

@@ -1,35 +1,38 @@
 package com.handstandsam.maintainableespresso.repository;
 
+
 import com.handstandsam.maintainableespresso.models.User;
+import com.handstandsam.maintainableespresso.preferences.UserPreferences;
 
 import timber.log.Timber;
 
 public class SessionManager {
 
     private final CheckoutCart cart;
+    private final UserPreferences userPreferences;
 
-    User user;
-
-    public SessionManager(CheckoutCart cart) {
+    public SessionManager(CheckoutCart cart, UserPreferences userPreferences) {
         this.cart = cart;
+        this.userPreferences = userPreferences;
     }
 
     public User getCurrentUser() {
-        return user;
+        return userPreferences.getCurrentUser();
     }
 
     public void setCurrentUser(User user) {
         Timber.d("setCurrentUser: " + user);
-        this.user = user;
+        userPreferences.setCurrentUser(user);
     }
 
     public void logout() {
-        this.user = null;
+        setCurrentUser(null);
         cart.empty();
     }
 
     public boolean isLoggedIn() {
-        Timber.d("isLoggedIn: " + user);
-        return user != null;
+        boolean loggedIn = getCurrentUser() != null;
+        Timber.d("isLoggedIn: " + loggedIn);
+        return loggedIn;
     }
 }
