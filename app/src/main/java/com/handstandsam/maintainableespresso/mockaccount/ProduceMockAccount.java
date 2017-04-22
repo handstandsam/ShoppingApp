@@ -29,7 +29,6 @@ public class ProduceMockAccount extends MockAccount {
         fruitItems.add(new ItemBuilder("Granny Smith Apple").image("granny-smith-apple.jpg").build());
         fruitItems.add(new ItemBuilder("Gala Apple").image("gala-apple.jpg").build());
         fruitItems.add(new ItemBuilder("Pineapple").image("pineapple.jpg").build());
-        fruitItems.add(new ItemBuilder("Cucumber").image("cucumber.jpg").build());
         fruitItems.add(new ItemBuilder("Red Delicious Apple").image("red-delicious-apple.jpg").build());
         fruitItems.add(new ItemBuilder("Fuji Apple").image("fuji-apple.jpg").build());
         fruitItems.add(new ItemBuilder("Lemon").image("lemons.jpg").build());
@@ -53,6 +52,8 @@ public class ProduceMockAccount extends MockAccount {
 
         Category vegetableCategory = new CategoryBuilder("Vegetables").image("broccoli.jpg").build();
         List<Item> vegetableItems = new ArrayList<>();
+        vegetableItems.add(new ItemBuilder("Carrot").image("carrots.jpg").build());
+        vegetableItems.add(new ItemBuilder("Cucumber").image("cucumber.jpg").build());
         vegetableItems.add(new ItemBuilder("Kale").image("kale.jpg").build());
         vegetableItems.add(new ItemBuilder("Romaine Lettuce").image("romaine-lettuce.jpg").build());
         vegetableItems.add(new ItemBuilder("Artichoke").image("artichoke.jpg").build());
@@ -64,7 +65,6 @@ public class ProduceMockAccount extends MockAccount {
         vegetableItems.add(new ItemBuilder("Red Bell Pepper").image("red-bell-pepper.jpg").build());
         vegetableItems.add(new ItemBuilder("Orange Bell Pepper").image("orange-bell-pepper.jpg").build());
         vegetableItems.add(new ItemBuilder("Yellow Bell Pepper").image("yellow-bell-pepper.jpg").build());
-        vegetableItems.add(new ItemBuilder("Carrot").image("carrots.jpg").build());
         itemByCategoryMap.put(vegetableCategory.getLabel(), vegetableItems);
 
         categories = Arrays.asList(fruitCategory, vegetableCategory, seafoodCategory, floralCategory);

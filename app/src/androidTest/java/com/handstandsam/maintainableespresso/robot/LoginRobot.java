@@ -29,7 +29,7 @@ public class LoginRobot {
     }
 
     public LoginRobot toggleRememberMe() {
-        ViewInteraction rememberMeCheckbox = onView(allOf(withId(R.id.rememberme), isDisplayed()));
+        ViewInteraction rememberMeCheckbox = onView(allOf(withId(R.id.remember_me), isDisplayed()));
         rememberMeCheckbox.perform(scrollTo(), click());
         return this;
     }

@@ -4,6 +4,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:padding="@dimen/two"
     android:layout_height="match_parent">
 
     <TextView
@@ -18,19 +19,19 @@
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/image"
+        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/add_to_cart"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/title_text"
         android:adjustViewBounds="true"
-        android:padding="@dimen/two"
-        android:scaleType="centerCrop" />
+        android:minHeight="200dp"
+        android:scaleType="fitCenter" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/add_to_cart"
+        android:layout_below="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/two"
         android:text="@string/add_to_cart" />
 </RelativeLayout>

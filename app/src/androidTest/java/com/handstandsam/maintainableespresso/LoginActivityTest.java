@@ -38,7 +38,7 @@ public class LoginActivityTest {
         ViewInteraction passwordEditText = onView(allOf(withId(R.id.password), isDisplayed()));
         passwordEditText.perform(replaceText("password"), closeSoftKeyboard());
 
-        ViewInteraction rememberMeCheckbox = onView(allOf(withId(R.id.rememberme), isDisplayed()));
+        ViewInteraction rememberMeCheckbox = onView(allOf(withId(R.id.remember_me), isDisplayed()));
         rememberMeCheckbox.perform(scrollTo(), click());
 
         ViewInteraction submitButton = onView(allOf(withId(R.id.submit), isDisplayed()));
@@ -50,6 +50,10 @@ public class LoginActivityTest {
 
     @Test
     public void loginActivityTestWithRobot() {
-        new LoginRobot().username("handstandsam").password("password").toggleRememberMe().login();
+        new LoginRobot()
+                .username("handstandsam")
+                .password("password")
+                .toggleRememberMe()
+                .login();
     }
 }
