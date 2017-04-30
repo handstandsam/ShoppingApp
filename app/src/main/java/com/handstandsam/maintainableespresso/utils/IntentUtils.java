@@ -11,7 +11,7 @@ import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.R;
 
 public class IntentUtils {
-    
+
     public static Intent getIntentForUsername(Context context, String username) {
         Intent intent = new Intent(context, LoginActivity.class);
         Bundle bundle = new Bundle();

@@ -43,11 +43,8 @@ public class Stubberator {
     public Stubberator(Context context) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        WireMock.configureFor("10.0.2.2", 8080);
-        WireMock.reset();
 
         wireMockServer.start();
-        wireMockServer.setGlobalFixedDelay(500);
         wireMockServer.resetMappings();
 
         Timber.d("new Stubberator()");
@@ -56,7 +53,6 @@ public class Stubberator {
     }
 
     public StubMapping stubFor(MappingBuilder mappingBuilder) {
-        WireMock.stubFor(mappingBuilder);
         return wireMockServer.stubFor(mappingBuilder);
     }
 
