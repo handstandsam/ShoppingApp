@@ -10,6 +10,9 @@ import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailPrese
 import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.features.login.LoginPresenter;
 import com.handstandsam.maintainableespresso.mockaccount.Stubberator;
+import com.handstandsam.maintainableespresso.repository.CategoryRepository;
+import com.handstandsam.maintainableespresso.repository.ItemRepository;
+import com.handstandsam.maintainableespresso.repository.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -37,4 +40,12 @@ public interface AppComponent {
     void inject(ItemDetailPresenter clazz);
 
     void inject(CheckoutPresenter clazz);
+
+    void inject(CategoryRepository clazz);
+
+    void inject(UserRepository clazz);
+
+    void inject(ItemRepository clazz);
+
+
 }

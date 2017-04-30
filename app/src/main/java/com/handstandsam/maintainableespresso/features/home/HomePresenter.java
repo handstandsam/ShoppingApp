@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class HomePresenter {
@@ -36,8 +38,22 @@ public class HomePresenter {
     }
 
     public void onResume(Intent intent) {
-        List<Category> categories = categoryRepository.getCategories();
-        view.showCategories(categories);
+        categoryRepository.getCategories().subscribe(new SingleObserver<List<Category>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Category> categories) {
+                view.showCategories(categories);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
 
         User currentUser = sessionManager.getCurrentUser();
         String welcomeStr = "Welcome back " + currentUser.getFirstname() + " " + currentUser.getLastname();

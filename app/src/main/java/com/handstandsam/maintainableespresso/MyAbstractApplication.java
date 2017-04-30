@@ -24,8 +24,8 @@ public class MyAbstractApplication extends Application {
     protected AppComponent createAppComponent() {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .networkModule(new NetworkModule("https://api.github.com/"))
-                .repositoryModule(new RepositoryModule())
+                .networkModule(new NetworkModule("http://localhost:8080/"))
+                .repositoryModule(new RepositoryModule(this))
                 .build();
     }
 

@@ -11,8 +11,7 @@ import com.handstandsam.maintainableespresso.features.login.LoginActivity;
 import com.handstandsam.maintainableespresso.R;
 
 public class IntentUtils {
-
-
+    
     public static Intent getIntentForUsername(Context context, String username) {
         Intent intent = new Intent(context, LoginActivity.class);
         Bundle bundle = new Bundle();
@@ -26,9 +25,9 @@ public class IntentUtils {
         PendingIntent pIntent = PendingIntent.getActivity(context, id, getIntentForUsername(context, username), PendingIntent.FLAG_ONE_SHOT);
 
         Notification n = new Notification.Builder(context)
-                .setContentTitle("New PR from " + username)
+                .setContentTitle("New Order from " + username)
                 .setContentText("Added Debug Features to App.")
-                .setSmallIcon(R.drawable.ic_github_logo)
+                .setSmallIcon(R.drawable.ic_shopping_cart_white_24px)
                 .setContentIntent(pIntent)
                 .setAutoCancel(true).build();
 
@@ -38,20 +37,4 @@ public class IntentUtils {
         notificationManager.notify(id, n);
     }
 
-//        public static void triggerPRNotification(Context context, String username, Intent intent) {
-//        int id = (int) System.currentTimeMillis();
-//        PendingIntent pIntent = PendingIntent.getContext(context, id, intent, PendingIntent.FLAG_ONE_SHOT);
-//
-//        Notification n = new Notification.Builder(context)
-//                .setContentTitle("New PR from " + username)
-//                .setContentText("Added Debug Features to App.")
-//                .setSmallIcon(R.drawable.ic_github_logo)
-//                .setContentIntent(pIntent)
-//                .setAutoCancel(true).build();
-//
-//        NotificationManager notificationManager =
-//                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        notificationManager.notify(id, n);
-//    }
 }

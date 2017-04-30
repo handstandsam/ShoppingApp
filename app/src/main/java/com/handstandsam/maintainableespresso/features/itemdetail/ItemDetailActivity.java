@@ -37,6 +37,7 @@ public class ItemDetailActivity extends LoggedInActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 

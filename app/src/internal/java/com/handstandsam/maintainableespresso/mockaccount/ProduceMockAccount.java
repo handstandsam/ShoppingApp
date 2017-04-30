@@ -9,17 +9,13 @@ import com.handstandsam.maintainableespresso.models.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProduceMockAccount extends MockAccount {
 
     User user;
 
     List<Category> categories = new ArrayList<>();
-
-    Map<String, List<Item>> itemByCategoryMap = new HashMap<>();
 
     public ProduceMockAccount() {
         user = new User("Sam", "Edwards");

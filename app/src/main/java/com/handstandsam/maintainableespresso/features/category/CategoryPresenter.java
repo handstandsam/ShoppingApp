@@ -17,6 +17,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class CategoryPresenter {
@@ -45,8 +47,22 @@ public class CategoryPresenter {
     public void onResume(Intent intent) {
         Bundle extras = intent.getExtras();
         Category category = (Category) extras.get(BUNDLE_PARAM_CATEGORY);
-        List<Item> items = itemRepository.getItemsForCategory(category.getLabel());
         view.setActionBarTitle(category.getLabel());
-        view.showItems(items);
+        itemRepository.getItemsForCategory(category.getLabel()).subscribe(new SingleObserver<List<Item>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Item> items) {
+                view.showItems(items);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 }

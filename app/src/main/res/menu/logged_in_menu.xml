@@ -1,7 +1,11 @@
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/view_cart"
-        android:title="@string/view_cart" />x
-    <item android:id="@+id/logout"
-        android:title="@string/logout" />x
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/view_cart"
+        android:icon="@drawable/ic_shopping_cart_white_24px"
+        android:title="@string/view_cart"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout" />
 </menu>

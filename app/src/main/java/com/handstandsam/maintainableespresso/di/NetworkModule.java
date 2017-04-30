@@ -3,6 +3,7 @@ package com.handstandsam.maintainableespresso.di;
 import android.app.Application;
 
 import com.handstandsam.maintainableespresso.network.GitHubService;
+import com.handstandsam.maintainableespresso.network.ShoppingService;
 import com.squareup.moshi.Moshi;
 
 import dagger.Module;
@@ -47,5 +48,10 @@ public class NetworkModule {
     @Provides
     GitHubService gitHubService(Retrofit retrofit) {
         return retrofit.create(GitHubService.class);
+    }
+
+    @Provides
+    ShoppingService shoppingService(Retrofit retrofit) {
+        return retrofit.create(ShoppingService.class);
     }
 }

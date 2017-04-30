@@ -1,6 +1,7 @@
 package com.handstandsam.maintainableespresso.features.checkout;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.TextView;
 
 import com.handstandsam.maintainableespresso.LoggedInActivity;
@@ -23,13 +24,20 @@ public class CheckoutActivity extends LoggedInActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Checkout Cart");
+        getSupportActionBar().setTitle(R.string.cart);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_checkout);
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 
         view = new MyCheckoutView();
         presenter = new CheckoutPresenter(view);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.checkout_menu, menu);
+        return true;
     }
 
     public interface CheckoutView {

@@ -46,6 +46,10 @@ public class LoggedInActivity extends AppCompatActivity {
             case R.id.view_cart:
                 startActivity(new Intent(this, CheckoutActivity.class));
                 return true;
+            case android.R.id.home: {
+                onBackPressed();
+                return true;
+            }
             default:
                 return super.onContextItemSelected(item);
         }

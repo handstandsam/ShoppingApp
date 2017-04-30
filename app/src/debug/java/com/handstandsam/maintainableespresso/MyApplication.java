@@ -48,10 +48,9 @@ public class MyApplication extends MyAbstractApplication {
         }
     }
 
-
     @Override
     protected AppComponent createAppComponent() {
-        String endpoint = "https://api.github.com/";
+        String endpoint = "http://localhost:8080/";
         if (new DebugPreferences(this).isMockMode()) {
             startMockWebServer();
             endpoint = server.url("/").toString();
@@ -66,7 +65,7 @@ public class MyApplication extends MyAbstractApplication {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new DebugNetworkModule(endpoint))
-                .repositoryModule(new RepositoryModule())
+                .repositoryModule(new RepositoryModule(this))
                 .build();
     }
 

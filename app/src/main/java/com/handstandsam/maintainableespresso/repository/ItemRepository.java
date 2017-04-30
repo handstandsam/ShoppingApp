@@ -1,29 +1,29 @@
 package com.handstandsam.maintainableespresso.repository;
 
 import com.handstandsam.maintainableespresso.models.Item;
+import com.handstandsam.maintainableespresso.network.ShoppingService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class ItemRepository {
 
-    Map<String, List<Item>> itemMap = new HashMap<>();
+    @Inject
+    ShoppingService shoppingService;
 
-    public ItemRepository() {
-
+    public ItemRepository(ShoppingService shoppingService) {
+        this.shoppingService = shoppingService;
     }
 
-    public void save(String categoryLabel, List<Item> items) {
-        Timber.d("Saving Items: "+ items);
-        synchronized (itemMap) {
-            itemMap.put(categoryLabel, items);
-        }
-    }
-
-    public List<Item> getItemsForCategory(String categoryLabel) {
-        return itemMap.get(categoryLabel);
+    public Single<List<Item>> getItemsForCategory(String categoryLabel) {
+        return shoppingService.getItemsForCategory(categoryLabel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -2,6 +2,7 @@ package com.handstandsam.maintainableespresso.features.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
@@ -14,18 +15,13 @@ import com.handstandsam.maintainableespresso.R;
 import com.handstandsam.maintainableespresso.di.AppComponent;
 import com.handstandsam.maintainableespresso.features.home.HomeActivity;
 import com.handstandsam.maintainableespresso.network.GitHubService;
-import com.handstandsam.maintainableespresso.network.model.GitHubUser;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,24 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.username)
     AppCompatEditText usernameEditText;
 
+    @BindView(R.id.password)
+    AppCompatEditText passwordEditText;
+
     Disposable disposable;
     private MyLoginView loginView;
     private LoginPresenter presenter;
-
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        //Process Bundle
-        String username = intent.getStringExtra(EXTRA_USERNAME);
-        if (username != null && !username.isEmpty()) {
-            username = username.trim();
-            usernameEditText.setText(username);
-            search(username);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginView = new MyLoginView();
         presenter = new LoginPresenter(loginView);
-
-        handleIntent(getIntent());
 
         usernameEditText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -87,39 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.submit)
     public void submit() {
-        String username = usernameEditText.getText().toString();
-
         presenter.loginClicked();
-//        search(username);
     }
-
-    private void search(final String username) {
-        gitHubService.user(username).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<GitHubUser>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                disposable = d;
-            }
-
-            @Override
-            public void onNext(GitHubUser gitHubUser) {
-                Timber.v(gitHubUser.avatar_url);
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-                usernameEditText.setText("");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(LoginActivity.this, "Could not find user '" + username + "'", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete() {
-                Timber.v("onComplete");
-            }
-        });
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -143,6 +94,10 @@ public class LoginActivity extends AppCompatActivity {
         void setRememberMe(boolean rememberMe);
 
         void kickToHomeScreen();
+
+        String getPassword();
+
+        void showToast(@StringRes int stringResourceId);
     }
 
 
@@ -183,6 +138,16 @@ public class LoginActivity extends AppCompatActivity {
         public void kickToHomeScreen() {
             LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
+        }
+
+        @Override
+        public String getPassword() {
+            return passwordEditText.getText().toString();
+        }
+
+        @Override
+        public void showToast(@StringRes int stringResourceId) {
+            Toast.makeText(getApplicationContext(), stringResourceId, Toast.LENGTH_SHORT).show();
         }
 
     }
