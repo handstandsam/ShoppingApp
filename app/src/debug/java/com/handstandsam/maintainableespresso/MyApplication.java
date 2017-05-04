@@ -11,6 +11,7 @@ import com.handstandsam.maintainableespresso.di.AppComponent;
 import com.handstandsam.maintainableespresso.di.AppModule;
 import com.handstandsam.maintainableespresso.di.DaggerAppComponent;
 import com.handstandsam.maintainableespresso.di.DebugNetworkModule;
+import com.handstandsam.maintainableespresso.di.NetworkModule;
 import com.handstandsam.maintainableespresso.di.RepositoryModule;
 
 import java.io.IOException;
@@ -50,7 +51,13 @@ public class MyApplication extends MyAbstractApplication {
 
     @Override
     protected AppComponent createAppComponent() {
-        String endpoint = "http://localhost:8080/";
+        String endpoint;
+        if (NetworkModule.USE_LOCAL_SERVER) {
+            endpoint = NetworkModule.LOCALHOST_ENDPOINT;
+        } else {
+            endpoint = NetworkModule.REMOTE_EMULATOR_ENDPOINT;
+        }
+
         if (new DebugPreferences(this).isMockMode()) {
             startMockWebServer();
             endpoint = server.url("/").toString();

@@ -60,7 +60,7 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
         this.category = category;
 
 
-        Glide.with(imageView.getContext()).load(NetworkModule.IMAGE_BASE_URL + category.getImage()).into(imageView);
+        Glide.with(imageView.getContext()).load(category.getImage()).into(imageView);
         textView.setText(this.category.getLabel());
     }
 }

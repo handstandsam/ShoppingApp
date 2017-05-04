@@ -11,6 +11,7 @@ import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.handstandsam.maintainableespresso.MyAbstractApplication;
+import com.handstandsam.maintainableespresso.di.NetworkModule;
 import com.handstandsam.maintainableespresso.models.Item;
 import com.handstandsam.maintainableespresso.repository.CategoryRepository;
 import com.handstandsam.maintainableespresso.repository.ItemRepository;
@@ -34,7 +35,7 @@ public class Stubberator {
     @Inject
     SessionManager sessionManager;
 
-    WireMockServer wireMockServer = new WireMockServer();
+    WireMockServer wireMockServer;
 
     Context applicationContext;
 
@@ -44,8 +45,14 @@ public class Stubberator {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        wireMockServer.start();
-        wireMockServer.resetMappings();
+        if (NetworkModule.USE_LOCAL_SERVER) {
+            wireMockServer = new WireMockServer();
+            wireMockServer.start();
+            wireMockServer.resetMappings();
+        } else {
+            WireMock.configureFor(NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST, 8080);
+            WireMock.reset();
+        }
 
         Timber.d("new Stubberator()");
         this.applicationContext = context.getApplicationContext();
@@ -53,7 +60,11 @@ public class Stubberator {
     }
 
     public StubMapping stubFor(MappingBuilder mappingBuilder) {
-        return wireMockServer.stubFor(mappingBuilder);
+        if (NetworkModule.USE_LOCAL_SERVER) {
+            return wireMockServer.stubFor(mappingBuilder);
+        } else {
+            return WireMock.stubFor(mappingBuilder);
+        }
     }
 
     public void stubItAll(MockAccount mockAccount) {

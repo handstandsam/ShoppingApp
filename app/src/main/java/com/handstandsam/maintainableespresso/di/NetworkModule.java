@@ -18,6 +18,14 @@ public class NetworkModule {
 
     public static final String IMAGE_BASE_URL = "https://s3.amazonaws.com/maintainable-espresso/images/";
 
+    public static final String LOCALHOST_ENDPOINT = "http://localhost:8080/";
+
+    public static final boolean USE_LOCAL_SERVER = true;
+
+    public static final String REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2";
+
+    public static final String REMOTE_EMULATOR_ENDPOINT = "http://10.0.2.2:8080/";
+
     protected String baseUrl;
 
     public NetworkModule(String baseUrl) {

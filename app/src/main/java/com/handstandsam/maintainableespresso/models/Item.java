@@ -6,7 +6,10 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     String label;
-    public String image;
+
+    String image;
+
+    String link;
 
     public Item(String label) {
         this.label = label;

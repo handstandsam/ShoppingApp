@@ -3,14 +3,10 @@ package com.handstandsam.maintainableespresso;
 import android.app.Application;
 
 import com.handstandsam.maintainableespresso.di.AppComponent;
-import com.handstandsam.maintainableespresso.di.AppModule;
-import com.handstandsam.maintainableespresso.di.DaggerAppComponent;
-import com.handstandsam.maintainableespresso.di.NetworkModule;
-import com.handstandsam.maintainableespresso.di.RepositoryModule;
-import com.handstandsam.maintainableespresso.mockaccount.ProduceMockAccount;
 import com.handstandsam.maintainableespresso.mockaccount.Stubberator;
+import com.handstandsam.maintainableespresso.mockaccount.VideoGameMockAccount;
 
-public class MyAbstractApplication extends Application {
+public abstract class MyAbstractApplication extends Application {
 
     private AppComponent appComponent;
 
@@ -18,16 +14,11 @@ public class MyAbstractApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appComponent = createAppComponent();
-        new Stubberator(this).stubItAll(new ProduceMockAccount());
+//        new Stubberator(this).stubItAll(new ProduceMockAccount());
+        new Stubberator(this).stubItAll(new VideoGameMockAccount());
     }
 
-    protected AppComponent createAppComponent() {
-        return DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .networkModule(new NetworkModule("http://localhost:8080/"))
-                .repositoryModule(new RepositoryModule(this))
-                .build();
-    }
+    protected abstract AppComponent createAppComponent();
 
     public AppComponent getAppComponent() {
         return appComponent;

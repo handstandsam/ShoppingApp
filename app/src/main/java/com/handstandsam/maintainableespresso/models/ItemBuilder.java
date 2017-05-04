@@ -19,7 +19,12 @@ public class ItemBuilder {
     }
 
     public ItemBuilder image(String image) {
-        item.image=image;
+        item.image = image;
+        return this;
+    }
+
+    public ItemBuilder link(String link) {
+        item.link = link;
         return this;
     }
 }

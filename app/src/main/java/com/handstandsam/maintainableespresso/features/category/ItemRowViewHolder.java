@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.handstandsam.maintainableespresso.R;
-import com.handstandsam.maintainableespresso.di.NetworkModule;
 import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailActivity;
 import com.handstandsam.maintainableespresso.features.itemdetail.ItemDetailPresenter;
 import com.handstandsam.maintainableespresso.models.Item;
@@ -59,7 +58,7 @@ class ItemRowViewHolder extends RecyclerView.ViewHolder {
         itemView.setBackgroundResource(colorResource);
         this.item = item;
 
-        Glide.with(imageView.getContext()).load(NetworkModule.IMAGE_BASE_URL + item.getImage()).into(imageView);
+        Glide.with(imageView.getContext()).load(item.getImage()).into(imageView);
         textView.setText(this.item.getLabel());
     }
 }

@@ -5,8 +5,6 @@ public class CategoryBuilder {
 
     Category category;
 
-    private String image;
-
     public CategoryBuilder() {
         category = new Category();
     }
@@ -27,6 +25,11 @@ public class CategoryBuilder {
 
     public CategoryBuilder image(String image) {
         category.image = image;
+        return this;
+    }
+
+    public CategoryBuilder link(String link) {
+        category.link = link;
         return this;
     }
 }

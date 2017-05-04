@@ -9,6 +9,8 @@ public class Category implements Serializable {
 
     String image;
 
+    String link;
+
     public Category() {
 
     }

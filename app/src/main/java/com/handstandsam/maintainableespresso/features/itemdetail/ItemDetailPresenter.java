@@ -36,7 +36,7 @@ public class ItemDetailPresenter {
         this.item = item;
 
         view.setLabel(item.getLabel());
-        view.setImageUrl(NetworkModule.IMAGE_BASE_URL + item.getImage());
+        view.setImageUrl(item.getImage());
         view.setActionBarTitle(item.getLabel());
     }
 
