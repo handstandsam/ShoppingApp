@@ -2,7 +2,7 @@
     <string name="app_name">Shopping App</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Log in</string>
     <string name="logout">Log out</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="view_cart">View Cart</string>

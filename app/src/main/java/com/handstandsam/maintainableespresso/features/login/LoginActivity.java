@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setTitle("Sign In to Shopping App");
+        getSupportActionBar().setTitle("Log in to Shopping App");
         ButterKnife.bind(this);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 

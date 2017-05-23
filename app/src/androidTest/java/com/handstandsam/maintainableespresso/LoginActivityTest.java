@@ -51,7 +51,7 @@ public class LoginActivityTest {
     @Test
     public void loginActivityTestWithRobot() {
         new LoginRobot()
-                .username("handstandsam")
+                .username("sam")
                 .password("password")
                 .toggleRememberMe()
                 .login();

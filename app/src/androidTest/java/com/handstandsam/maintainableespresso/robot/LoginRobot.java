@@ -34,7 +34,6 @@ public class LoginRobot {
         return this;
     }
 
-
     public LoginRobot login() {
         ViewInteraction submitButton = onView(allOf(withId(R.id.submit), isDisplayed()));
         submitButton.perform(click());
