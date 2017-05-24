@@ -35,7 +35,6 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    flavorDimensions "type"
 
     productFlavors {
         internal {
