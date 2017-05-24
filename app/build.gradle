@@ -9,7 +9,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -83,16 +82,6 @@ dependencies {
     debugCompile 'com.readystatesoftware.chuck:library:1.0.4'
     //JVM Tests Only
     testCompile 'junit:junit:4.12'
-    //Instrumentation Tests Only
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    }
 
     //WireMock
     internalCompile("com.github.tomakehurst:wiremock:2.6.0") {
