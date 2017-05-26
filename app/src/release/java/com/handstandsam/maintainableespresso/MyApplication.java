@@ -1,4 +1,4 @@
-package com.handstandsam.maintainableespresso;
+package com.handstandsam.shoppingapp;
 
 public class MyApplication extends MyAbstractApplication {
 

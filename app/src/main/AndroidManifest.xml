@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.handstandsam.maintainableespresso">
+    package="com.handstandsam.shoppingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.handstandsam.shoppingapp.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".features.login.LoginActivity"
+            android:name="com.handstandsam.shoppingapp.features.login.LoginActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
             <intent-filter>
@@ -25,18 +25,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".features.home.HomeActivity"
+            android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
             android:launchMode="singleTask"></activity>
 
         <activity
-            android:name=".features.category.CategoryActivity"
+            android:name="com.handstandsam.shoppingapp.features.category.CategoryActivity"
             android:launchMode="singleTask"></activity>
 
         <activity
-            android:name=".features.itemdetail.ItemDetailActivity"
+            android:name="com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity"
             android:launchMode="singleTask"></activity>
         <activity
-            android:name=".features.checkout.CheckoutActivity"
+            android:name="com.handstandsam.shoppingapp.features.checkout.CheckoutActivity"
             android:launchMode="singleTask"></activity>
     </application>
 

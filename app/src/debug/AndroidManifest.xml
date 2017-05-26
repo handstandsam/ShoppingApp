@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.handstandsam.maintainableespresso">
+    package="com.handstandsam.shoppingapp">
 
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application>
         <activity
-            android:name="com.handstandsam.maintainableespresso.DebugActivity"
+            android:name="com.handstandsam.shoppingapp.DebugActivity"
             android:icon="@drawable/magnifying_glass"
             android:label="My Debug Activity"
+            android:taskAffinity="com.handstandsam.shoppingapp.debugging"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

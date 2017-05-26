@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.handstandsam.maintainableespresso"
+        applicationId "com.handstandsam.shoppingapp"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -33,16 +33,6 @@ android {
         release {
             minifyEnabled false
             signingConfig signingConfigs.release
-        }
-    }
-
-    productFlavors {
-        internal {
-
-        }
-
-        external {
-
         }
     }
 
@@ -83,7 +73,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //WireMock
-    internalCompile("com.github.tomakehurst:wiremock:2.6.0") {
+    debugCompile("com.github.tomakehurst:wiremock:2.6.0") {
         //Using Android Version Instead
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
 
@@ -95,6 +85,6 @@ dependencies {
         //In case of problem, please repackage with jarjar to change the class packages
         exclude group: 'org.json', module: 'json'
     }
-    internalCompile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-    internalCompile 'commons-io:commons-io:2.4'
+    debugCompile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    debugCompile 'commons-io:commons-io:2.4'
 }
