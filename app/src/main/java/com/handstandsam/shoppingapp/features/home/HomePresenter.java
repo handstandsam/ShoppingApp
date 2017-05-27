@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.google.gson.GsonBuilder;
 import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.models.Category;
 import com.handstandsam.shoppingapp.models.User;
@@ -17,7 +16,6 @@ import javax.inject.Inject;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
-import timber.log.Timber;
 
 public class HomePresenter {
 
@@ -34,7 +32,6 @@ public class HomePresenter {
         this.view = homeView;
         this.applicationContext = homeView.getContext().getApplicationContext();
         ((MyAbstractApplication) applicationContext).getAppComponent().inject(this);
-        Timber.d("HomePresenter: " + new GsonBuilder().create().toJson(categoryRepository));
     }
 
     public void onResume(Intent intent) {

@@ -13,8 +13,6 @@ import com.handstandsam.shoppingapp.di.DaggerAppComponent;
 import com.handstandsam.shoppingapp.di.DebugNetworkModule;
 import com.handstandsam.shoppingapp.di.NetworkModule;
 import com.handstandsam.shoppingapp.di.RepositoryModule;
-import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount;
-import com.handstandsam.shoppingapp.mockaccount.Stubberator;
 
 import java.io.IOException;
 
@@ -27,10 +25,8 @@ public class MyApplication extends MyAbstractApplication {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         Timber.plant(new Timber.DebugTree());
-        new Stubberator(this).stubItAll(new ProduceMockAccount());
-//        new Stubberator(this).stubItAll(new VideoGameMockAccount());
+        super.onCreate();
     }
 
     private void startMockWebServer() {

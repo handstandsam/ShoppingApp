@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.google.gson.GsonBuilder;
 import com.handstandsam.shoppingapp.LoggedInActivity;
 import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.R;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class CategoryActivity extends LoggedInActivity {
 
@@ -68,7 +66,6 @@ public class CategoryActivity extends LoggedInActivity {
         @Override
         public void showItems(List<Item> items) {
             recyclerViewAdapter.setItems(items);
-            Timber.d("showItems: " + new GsonBuilder().create().toJson(items));
         }
 
         @Override

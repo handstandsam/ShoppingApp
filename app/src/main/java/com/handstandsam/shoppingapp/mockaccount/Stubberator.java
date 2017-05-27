@@ -8,14 +8,14 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.di.NetworkModule;
 import com.handstandsam.shoppingapp.models.Item;
+import com.handstandsam.shoppingapp.models.User;
 import com.handstandsam.shoppingapp.repository.CategoryRepository;
 import com.handstandsam.shoppingapp.repository.ItemRepository;
 import com.handstandsam.shoppingapp.repository.SessionManager;
+import com.squareup.moshi.Moshi;
 
 import java.util.List;
 import java.util.Map;
@@ -35,11 +35,11 @@ public class Stubberator {
     @Inject
     SessionManager sessionManager;
 
+    Moshi moshi = new Moshi.Builder().build();
+
     WireMockServer wireMockServer;
 
     Context applicationContext;
-
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public Stubberator(Context context) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -74,7 +74,7 @@ public class Stubberator {
     }
 
     public void stubCategories(MockAccount mockAccount) {
-        String json = gson.toJson(mockAccount.getCategories());
+        String json = moshi.adapter(List.class).toJson(mockAccount.getCategories());
         stubFor(StubMappings.getCategories().willReturn(WireMock.aResponse().withStatus(200).withBody(json)));
     }
 
@@ -83,13 +83,15 @@ public class Stubberator {
         for (Map.Entry<String, List<Item>> entry : itemsByCategory.entrySet()) {
             String categoryId = entry.getKey();
             List<Item> items = entry.getValue();
-            stubFor(StubMappings.getItemsForCategory(categoryId).willReturn(WireMock.aResponse().withStatus(200).withBody(gson.toJson(items))));
+            String json = moshi.adapter(List.class).toJson(items);
+            stubFor(StubMappings.getItemsForCategory(categoryId).willReturn(WireMock.aResponse().withStatus(200).withBody(json)));
         }
     }
 
     public void stubLogin(MockAccount mockAccount) {
+        String json = moshi.adapter(User.class).toJson(mockAccount.getUser());
         stubFor(StubMappings.login().willReturn(WireMock.aResponse()
-                .withStatus(200).withBody(gson.toJson(mockAccount.getUser()))));
+                .withStatus(200).withBody(json)));
     }
 
 }

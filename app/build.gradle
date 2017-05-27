@@ -72,8 +72,8 @@ dependencies {
     //JVM Tests Only
     testCompile 'junit:junit:4.12'
 
-    //WireMock
-    debugCompile("com.github.tomakehurst:wiremock:2.6.0") {
+    //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
+    compile("com.github.tomakehurst:wiremock:2.6.0") {
         //Using Android Version Instead
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
 
@@ -85,6 +85,6 @@ dependencies {
         //In case of problem, please repackage with jarjar to change the class packages
         exclude group: 'org.json', module: 'json'
     }
-    debugCompile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-    debugCompile 'commons-io:commons-io:2.4'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile 'commons-io:commons-io:2.4'
 }
