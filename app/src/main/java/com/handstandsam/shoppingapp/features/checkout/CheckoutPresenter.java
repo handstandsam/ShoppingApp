@@ -29,7 +29,7 @@ public class CheckoutPresenter {
     public void onResume(Intent intent) {
         List<Item> items = cart.getItems();
         StringBuilder sb = new StringBuilder();
-        sb.append(items.size() + " items in your cart.\n");
+        sb.append(items.size() + " item(s) in your cart.\n");
         for (Item item : items) {
             sb.append("* " + item.getLabel() + ".\n");
         }
