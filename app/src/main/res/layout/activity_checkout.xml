@@ -8,7 +8,7 @@
     android:padding="@dimen/two">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/item_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,4 +16,15 @@
         android:gravity="center"
         android:textSize="@dimen/item_title"
         tools:text="0 item(s) in Cart." />
+
+
+    <TextView
+        android:id="@+id/items"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/item_count"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/two"
+        android:gravity="left"
+        android:textSize="@dimen/item_title"
+        tools:text="* Apple." />
 </RelativeLayout>

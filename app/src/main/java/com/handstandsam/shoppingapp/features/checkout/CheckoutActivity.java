@@ -14,8 +14,11 @@ import butterknife.ButterKnife;
 
 public class CheckoutActivity extends LoggedInActivity {
 
-    @BindView(R.id.text)
-    TextView textView;
+    @BindView(R.id.item_count)
+    TextView itemCountTextView;
+
+    @BindView(R.id.items)
+    TextView itemsText;
 
     private CheckoutView view;
 
@@ -44,7 +47,9 @@ public class CheckoutActivity extends LoggedInActivity {
 
         AppComponent getAppComponent();
 
-        void setText(String message);
+        void setItemCountText(String text);
+
+        void setItemsText(String text);
     }
 
     public class MyCheckoutView implements CheckoutView {
@@ -58,8 +63,13 @@ public class CheckoutActivity extends LoggedInActivity {
         }
 
         @Override
-        public void setText(String message) {
-            textView.setText(message);
+        public void setItemCountText(String text) {
+            itemCountTextView.setText(text);
+        }
+
+        @Override
+        public void setItemsText(String text) {
+            itemsText.setText(text);
         }
 
     }
@@ -67,6 +77,6 @@ public class CheckoutActivity extends LoggedInActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onResume(getIntent());
+        presenter.onResume();
     }
 }
