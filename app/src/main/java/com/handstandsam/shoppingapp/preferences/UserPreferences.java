@@ -61,6 +61,10 @@ public class UserPreferences {
         return null;
     }
 
+    public void clearRememberMe() {
+        setRememberMe(false, null);
+    }
+
     public void setRememberMe(boolean rememberMe, String username) {
         sharedPreferences.edit().putBoolean(REMEMBER_ME, rememberMe).apply();
         if (rememberMe) {
