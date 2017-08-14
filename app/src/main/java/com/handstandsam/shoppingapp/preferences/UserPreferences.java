@@ -63,6 +63,7 @@ public class UserPreferences {
 
     public void clearRememberMe() {
         setRememberMe(false, null);
+        setCurrentUser(null);
     }
 
     public void setRememberMe(boolean rememberMe, String username) {
