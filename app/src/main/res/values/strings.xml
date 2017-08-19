@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Shopping App</string>
+    <string name="message">Welcome</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Log in</string>
