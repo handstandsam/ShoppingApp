@@ -75,7 +75,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
-    compile("com.github.tomakehurst:wiremock:2.6.0") {
+    compile("com.github.tomakehurst:wiremock:2.8.0") {
         //Using Android Version Instead
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
 
@@ -89,10 +89,10 @@ dependencies {
     }
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile 'commons-io:commons-io:2.4'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'
