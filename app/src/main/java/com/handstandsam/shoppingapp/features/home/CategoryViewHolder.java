@@ -16,7 +16,6 @@ import com.handstandsam.shoppingapp.models.Category;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 
 class CategoryViewHolder extends RecyclerView.ViewHolder {
@@ -44,22 +43,16 @@ class CategoryViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private static final int colors[] = {R.color.material_amber, R.color.material_blue,
-            R.color.material_blue_grey, R.color.material_pink,
-            R.color.material_cyan, R.color.material_light_blue,
-            R.color.material_deep_orange, R.color.material_deep_purple,
-            R.color.material_green, R.color.material_blue,
-            R.color.material_brown, R.color.material_amber};
-
     public void bindData(Category category, int position) {
-        int colorIdx = position % colors.length;
-        Timber.d("idx: " + colorIdx);
-        int colorResource = colors[colorIdx];
-        itemView.setBackgroundResource(colorResource);
         this.category = category;
 
+        String imageUrl = category.getImage();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(imageView.getContext()).load(category.getImage()).into(imageView);
+        } else {
+            itemView.setBackgroundResource(ColorInts.getColor(position));
+        }
 
-        Glide.with(imageView.getContext()).load(category.getImage()).into(imageView);
         textView.setText(this.category.getLabel());
     }
 }

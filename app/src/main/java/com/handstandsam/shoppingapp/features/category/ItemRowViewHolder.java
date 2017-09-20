@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.handstandsam.shoppingapp.R;
+import com.handstandsam.shoppingapp.features.home.ColorInts;
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity;
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter;
 import com.handstandsam.shoppingapp.models.Item;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 
 class ItemRowViewHolder extends RecyclerView.ViewHolder {
@@ -45,20 +45,16 @@ class ItemRowViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private static final int colors[] = {R.color.material_amber, R.color.material_blue,
-            R.color.material_blue_grey, R.color.material_pink,
-            R.color.material_cyan, R.color.material_deep_orange, R.color.material_deep_purple,
-            R.color.material_green, R.color.material_blue, R.color.material_light_blue,
-            R.color.material_brown, R.color.material_amber};
-
     public void bindData(Item item, int position) {
-        int colorIdx = position % colors.length;
-        Timber.d("idx: " + colorIdx);
-        int colorResource = colors[colorIdx];
-        itemView.setBackgroundResource(colorResource);
         this.item = item;
 
-        Glide.with(imageView.getContext()).load(item.getImage()).into(imageView);
+        String imageUrl = item.getImage();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(imageView.getContext()).load(item.getImage()).into(imageView);
+        } else {
+            itemView.setBackgroundResource(ColorInts.getColor(position));
+        }
+
         textView.setText(this.item.getLabel());
     }
 }

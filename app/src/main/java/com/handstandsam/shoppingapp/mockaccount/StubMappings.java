@@ -1,6 +1,8 @@
 package com.handstandsam.shoppingapp.mockaccount;
 
 
+import android.net.Uri;
+
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -15,7 +17,7 @@ public class StubMappings {
     }
 
     public static MappingBuilder getItemsForCategory(String categoryId) {
-        return get(urlEqualTo("/category/" + categoryId + "/items"));
+        return get(urlEqualTo("/category/" + Uri.encode(categoryId) + "/items"));
     }
 
     public static MappingBuilder login() {
