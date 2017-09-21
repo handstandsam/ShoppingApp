@@ -16,13 +16,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 public class NetworkModule {
 
-    public static final String LOCALHOST_ENDPOINT = "http://localhost:8080/";
+    public static final int LOCALHOST_PORT = 9999;
+    public static final String LOCALHOST_ENDPOINT = "http://localhost:" + LOCALHOST_PORT + "/";
 
-    public static final boolean USE_LOCAL_SERVER = true;
+    public static final boolean USE_LOCAL_SERVER = false;
 
+    public static final int REMOTE_PORT = 8080;
     public static final String REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2";
-
-    public static final String REMOTE_EMULATOR_ENDPOINT = "http://10.0.2.2:8080/";
+    public static final String REMOTE_EMULATOR_ENDPOINT = "http://" + REMOTE_EMULATOR_ENDPOINT_HOST + ":" + REMOTE_PORT + "/";
 
     protected String baseUrl;
 

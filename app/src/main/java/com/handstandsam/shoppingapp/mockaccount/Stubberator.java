@@ -50,7 +50,7 @@ public class Stubberator {
             wireMockServer.start();
             wireMockServer.resetMappings();
         } else {
-            WireMock.configureFor(NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST, 8080);
+            WireMock.configureFor(NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST, NetworkModule.REMOTE_PORT);
             WireMock.reset();
         }
 
