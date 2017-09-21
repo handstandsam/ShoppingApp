@@ -24,6 +24,8 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+
 public class Stubberator {
 
     @Inject
@@ -46,7 +48,7 @@ public class Stubberator {
         StrictMode.setThreadPolicy(policy);
 
         if (NetworkModule.USE_LOCAL_SERVER) {
-            wireMockServer = new WireMockServer();
+            wireMockServer = new WireMockServer(wireMockConfig().port(NetworkModule.LOCALHOST_PORT));
             wireMockServer.start();
             wireMockServer.resetMappings();
         } else {

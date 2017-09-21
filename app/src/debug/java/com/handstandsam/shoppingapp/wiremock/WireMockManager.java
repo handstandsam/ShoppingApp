@@ -22,17 +22,18 @@ public class WireMockManager {
     public static class Builder {
         private final Context contextForAssets;
 
-        public Builder(Context contextForAssets) {
+        private final int httpPort;
+
+        public Builder(Context contextForAssets, int httpPort) {
             this.contextForAssets = contextForAssets;
+            this.httpPort = httpPort;
         }
 
         public WireMockManager build() {
-            return new WireMockManager(contextForAssets);
+            return new WireMockManager(contextForAssets, httpPort);
         }
     }
 
-
-    public static int HTTP_PORT = 9999;
 
     enum WireMockMode {
         RECORD, PLAYBACK, NONE
@@ -40,7 +41,6 @@ public class WireMockManager {
 
     private static String dataDirectory = "/data/data";
     private static String wireMockDirectory = "wiremock";
-
 
     private String WILDCARD = ".*";
     private String remoteBaseUrl;
@@ -52,7 +52,10 @@ public class WireMockManager {
 
     private static Context contextForAssets;
 
-    private WireMockManager(Context contextForAssets) {
+    public int httpPort;
+
+    private WireMockManager(Context contextForAssets, int httpPort) {
+        this.httpPort = httpPort;
         this.contextForAssets = contextForAssets;
         this.fileUtils = new FileUtils(contextForAssets);
     }
@@ -89,14 +92,14 @@ public class WireMockManager {
     }
 
     private void instantiateProxyServer() {
-        wireMockServer = new WireMockServer(wireMockConfig().port(HTTP_PORT)
+        wireMockServer = new WireMockServer(wireMockConfig().port(httpPort)
                 .withRootDirectory(getRootDirectory()));
         wireMockServer.enableRecordMappings(new SingleRootFileSource(getMappingDirectory()), new SingleRootFileSource(getFileDirectory()));
         wireMockServer.stubFor(any(urlMatching(WILDCARD)).willReturn(aResponse().proxiedFrom(remoteBaseUrl)));
     }
 
     private void instantiatePlayBackServer() {
-        wireMockServer = new WireMockServer(wireMockConfig().port(HTTP_PORT)
+        wireMockServer = new WireMockServer(wireMockConfig().port(httpPort)
                 .withRootDirectory(getRootDirectory()));
     }
 
