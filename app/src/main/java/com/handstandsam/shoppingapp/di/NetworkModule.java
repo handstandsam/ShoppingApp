@@ -19,7 +19,7 @@ public class NetworkModule {
     public static final int LOCALHOST_PORT = 9999;
     public static final String LOCALHOST_ENDPOINT = "http://localhost:" + LOCALHOST_PORT + "/";
 
-    public static final boolean USE_LOCAL_SERVER = false;
+    public static final boolean USE_LOCAL_SERVER = true;
 
     public static final int REMOTE_PORT = 8080;
     public static final String REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2";
