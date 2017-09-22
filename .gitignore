@@ -40,4 +40,4 @@ captures/
 *.jks
 
 .idea
-wiremock/wiremock-standalone-2.8.0.jar
+wiremock

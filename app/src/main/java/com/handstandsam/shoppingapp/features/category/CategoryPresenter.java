@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 public class CategoryPresenter {
 
@@ -58,7 +59,10 @@ public class CategoryPresenter {
 
             @Override
             public void onError(Throwable e) {
-
+                Timber.w("Networking Error", e);
+                Timber.w(e.getMessage());
+                Timber.w(e);
+                view.showNetworkError();
             }
         });
     }
