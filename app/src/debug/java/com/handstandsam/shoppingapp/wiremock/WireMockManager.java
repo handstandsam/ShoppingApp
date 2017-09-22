@@ -34,11 +34,6 @@ public class WireMockManager {
         }
     }
 
-
-    enum WireMockMode {
-        RECORD, PLAYBACK, NONE
-    }
-
     private static String dataDirectory = "/data/data";
     private static String wireMockDirectory = "wiremock";
 
@@ -60,8 +55,7 @@ public class WireMockManager {
         this.fileUtils = new FileUtils(contextForAssets);
     }
 
-    public void startProxyAndRecord(Context contextForAssets, String remoteBaseUrl) {
-        this.contextForAssets = contextForAssets;
+    public void startProxyAndRecord(String remoteBaseUrl) {
         if (wireMockServer != null && wireMockServer.isRunning()) {
             wireMockServer.stop();
         }

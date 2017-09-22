@@ -3,8 +3,7 @@ package com.handstandsam.shoppingapp;
 import android.app.Application;
 
 import com.handstandsam.shoppingapp.di.AppComponent;
-import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount;
-import com.handstandsam.shoppingapp.mockaccount.Stubberator;
+import com.handstandsam.shoppingapp.di.NetworkModule;
 
 public abstract class MyAbstractApplication extends Application {
 
@@ -13,25 +12,23 @@ public abstract class MyAbstractApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = createAppComponent();
 
+        String endpoint;
+        endpoint = NetworkModule.LOCALHOST_ENDPOINT;
+//        endpoint = NetworkModule.REMOTE_EMULATOR_ENDPOINT;
+//        endpoint = NetworkModule.S3_ENDPOINT;
+        appComponent = createAppComponent(endpoint);
 
-        //Stubberator (Local)
-        new Stubberator(this).stubItAll(new ProduceMockAccount());
-//        new Stubberator(this).stubItAll(new VideoGameMockAccount());
-//        new Stubberator(this).stubItAll(new AndroidLibsMockAccount());
+        NetworkConfig networkConfig = new NetworkConfig(this);
+//        networkConfig.startNormally();
+//        networkConfig.stubLocalWireMock(new VideoGameMockAccount());
+//        networkConfig.stubRemoteWireMock(new ProduceMockAccount());
+//        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT);
+        networkConfig.playbackRecordedMappings();
 
-
-        //Record
-//        WireMockManager wireMockManager = new WireMockManager.Builder(getApplicationContext()).build();
-//        wireMockManager.startProxyAndRecord(getApplicationContext(), "http://10.0.2.2:8080");
-
-        //Playback
-//        WireMockManager wireMockManager = new WireMockManager.Builder(getApplicationContext(), NetworkModule.LOCALHOST_PORT).build();
-//        wireMockManager.startPlayBack();
     }
 
-    protected abstract AppComponent createAppComponent();
+    protected abstract AppComponent createAppComponent(String endpoint);
 
     public AppComponent getAppComponent() {
         return appComponent;
