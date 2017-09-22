@@ -18,7 +18,7 @@ public class NetworkModule {
 
     public static int LOCALHOST_PORT = 8080;
     public static final String LOCALHOST_ENDPOINT = "http://localhost:" + LOCALHOST_PORT;
-    public static final String S3_ENDPOINT = "https://shopping-app.s3.amazonaws.com/mocks";
+    public static final String S3_ENDPOINT = "https://shopping-app.s3.amazonaws.com";
 
     public static boolean USE_LOCAL_SERVER = true;
 
