@@ -1,0 +1,22 @@
+{
+  "id" : "5edef8ec-b4c4-3bb5-be1b-3023cd5d4be8",
+  "request" : {
+    "url" : "/category/Nintendo/items",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName" : "body-Nintendo-items-9UOg3.json",
+    "headers" : {
+      "x-amz-id-2" : "HCpbC5VXI1bJR+IjlQJ3IYY13j3ubEPrAtJ5tX/yiSa/4UihNm6ub1eiuNzaCXr22g2LGt0Zk1Q=",
+      "x-amz-request-id" : "59CEB6AC90D4A476",
+      "Date" : "Fri, 22 Sep 2017 17:47:23 GMT",
+      "Last-Modified" : "Fri, 22 Sep 2017 02:32:16 GMT",
+      "ETag" : "\"5f44d86b62cc538c51dd839da75ba144\"",
+      "Accept-Ranges" : "bytes",
+      "Content-Type" : "binary/octet-stream",
+      "Server" : "AmazonS3"
+    }
+  },
+  "uuid" : "5edef8ec-b4c4-3bb5-be1b-3023cd5d4be8"
+}

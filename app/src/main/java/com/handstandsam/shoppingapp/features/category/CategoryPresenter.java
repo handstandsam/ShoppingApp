@@ -62,7 +62,7 @@ public class CategoryPresenter {
                 Timber.w("Networking Error", e);
                 Timber.w(e.getMessage());
                 Timber.w(e);
-                view.showNetworkError();
+                view.showNetworkError(e.getMessage());
             }
         });
     }

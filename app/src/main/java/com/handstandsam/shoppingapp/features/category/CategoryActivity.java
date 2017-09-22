@@ -57,7 +57,7 @@ public class CategoryActivity extends LoggedInActivity {
 
         void setActionBarTitle(String title);
 
-        void showNetworkError();
+        void showNetworkError(String message);
     }
 
     public class MyCategoryView implements CategoryView {
@@ -78,9 +78,13 @@ public class CategoryActivity extends LoggedInActivity {
         }
 
         @Override
-        public void showNetworkError() {
-            new AlertDialog.Builder(
-                    CategoryActivity.this).setMessage("Networking Error").setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        public void showNetworkError(String message) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    CategoryActivity.this).setTitle("Networking Error");
+            if (message != null) {
+                builder.setMessage(message);
+            }
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     CategoryActivity.this.finish();

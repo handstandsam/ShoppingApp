@@ -16,15 +16,15 @@ public abstract class MyAbstractApplication extends Application {
         String endpoint;
         NetworkConfig networkConfig = new NetworkConfig(this);
 
-//        endpoint = NetworkModule.LOCALHOST_ENDPOINT;
+        endpoint = NetworkModule.LOCALHOST_ENDPOINT;
 //        endpoint = NetworkModule.LAPTOP_FROM_EMULATOR_ENDPOINT;
-        endpoint = NetworkModule.S3_ENDPOINT;
+//        endpoint = NetworkModule.S3_ENDPOINT;
         appComponent = createAppComponent(endpoint);
 
-        networkConfig.startNormally();
+//        networkConfig.startNormally();
 //        networkConfig.stubLocalWireMock(new VideoGameMockAccount());
 //        networkConfig.stubRemoteWireMock(new ProduceMockAccount());
-//        networkConfig.recordMappingsAndProxy(endpoint);
+        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT);
 //        networkConfig.playbackRecordedMappings();
 
     }

@@ -1,0 +1,22 @@
+{
+  "id" : "6e8f9b97-50f9-3baa-a0c0-80f5d8018a19",
+  "request" : {
+    "url" : "/category/Sega/items",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "bodyFileName" : "body-Sega-items-eUx31.json",
+    "headers" : {
+      "x-amz-id-2" : "eqQYUExhU2k0fR/oHr8PfkrCqvueCQmIZZIyQLnYx2P5cfP9sG6G3xCBjLoqQgxxampP5IAJC1Y=",
+      "x-amz-request-id" : "80A3DF1706570897",
+      "Date" : "Fri, 22 Sep 2017 17:48:06 GMT",
+      "Last-Modified" : "Fri, 22 Sep 2017 02:32:16 GMT",
+      "ETag" : "\"0047e64c50046a7095466570252cdde8\"",
+      "Accept-Ranges" : "bytes",
+      "Content-Type" : "binary/octet-stream",
+      "Server" : "AmazonS3"
+    }
+  },
+  "uuid" : "6e8f9b97-50f9-3baa-a0c0-80f5d8018a19"
+}
