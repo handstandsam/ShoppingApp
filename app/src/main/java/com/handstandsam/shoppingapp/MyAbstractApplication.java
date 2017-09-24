@@ -14,11 +14,9 @@ public abstract class MyAbstractApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-//        startNormally();
-//        record();
+        record();
 //        playback();
 //        connectToLaptop();
-        localWireMock();
     }
 
 
