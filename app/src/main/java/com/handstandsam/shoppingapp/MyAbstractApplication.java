@@ -20,6 +20,20 @@ public abstract class MyAbstractApplication extends Application {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     protected abstract AppComponent createAppComponent(String endpoint);
 
     public AppComponent getAppComponent() {
