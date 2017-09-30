@@ -42,7 +42,7 @@ class CategoryActivity : LoggedInActivity() {
 
         fun setActionBarTitle(title: String)
 
-        fun showNetworkError(message: String)
+        fun showNetworkError(message: String?)
     }
 
     inner class MyCategoryView : CategoryView {
@@ -58,7 +58,7 @@ class CategoryActivity : LoggedInActivity() {
             supportActionBar!!.title = title
         }
 
-        override fun showNetworkError(message: String) {
+        override fun showNetworkError(message: String?) {
             val builder = AlertDialog.Builder(
                     this@CategoryActivity).setTitle("Networking Error")
             if (message != null) {
