@@ -1,6 +1,51 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.1.51'
+
+    ext.versions = [
+            'minSdk'        : 21,
+            'compileSdk'    : 26,
+            'buildTools'    : '26.0.2'
+    ]
+
+    ext.deps = [
+            'android'       : [
+                    'runtime'     : 'com.google.android:android:4.1.1.4',
+                    'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",
+            ],
+            'support'     : [
+                    'compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
+                    'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
+                    'test'       : [
+                            'runner': 'com.android.support.test:runner:1.0.1',
+                    ],
+            ],
+            'lint'        : [
+                    'core'  : "com.android.tools.lint:lint:${versions.androidTools}",
+                    'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
+                    'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
+                    'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",
+            ],
+            javapoet      : 'com.squareup:javapoet:1.9.0',
+            javaparser    : 'com.github.javaparser:javaparser-core:3.3.5',
+            junit         : 'junit:junit:4.12',
+            truth         : 'com.google.truth:truth:0.35',
+            robolectric   : 'org.robolectric:robolectric:3.4.2',
+            compiletesting: 'com.google.testing.compile:compile-testing:0.12',
+            'auto'        : [
+                    'service': 'com.google.auto.service:auto-service:1.0-rc3',
+                    'common' : 'com.google.auto:auto-common:0.8',
+            ],
+            'release'     : [
+                    'runtime' : "com.jakewharton:butterknife:${versions.release}",
+                    'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"
+            ],
+            'kotlin'      : [
+                    'stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
+            ]
+    ]
+
     repositories {
         jcenter()
         maven {
@@ -10,6 +55,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-beta2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -25,6 +71,15 @@ allprojects {
         }
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.squareup.okhttp3:okhttp:3.9.0'
+        force 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+        force 'com.squareup.okhttp3:mockwebserver:3.9.0'
+    }
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
