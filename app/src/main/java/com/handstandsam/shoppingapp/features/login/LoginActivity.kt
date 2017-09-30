@@ -26,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var passwordEditText: AppCompatEditText
 
     internal var disposable: Disposable? = null
-    private var loginView: MyLoginView? = null
-    private var presenter: LoginPresenter? = null
+    lateinit private var loginView: MyLoginView
+    lateinit private var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +36,11 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = findViewById<AppCompatEditText>(R.id.password)
         usernameEditText = findViewById<AppCompatEditText>(R.id.username)
         rememberMeCheckbox = findViewById<AppCompatCheckBox>(R.id.remember_me)
-        findViewById<View>(R.id.submit).setOnClickListener { presenter!!.loginClicked() }
+        findViewById<View>(R.id.submit).setOnClickListener { presenter.loginClicked() }
         (application as MyAbstractApplication).appComponent.inject(this)
 
         loginView = MyLoginView()
-        presenter = LoginPresenter(loginView!!)
+        presenter = LoginPresenter(loginView)
 
         usernameEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             // If the event is a key-down event on the "enter" button
@@ -116,6 +116,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        presenter!!.onResume(intent)
+        presenter.onResume(intent)
     }
 }
