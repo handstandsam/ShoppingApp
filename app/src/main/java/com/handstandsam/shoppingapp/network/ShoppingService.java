@@ -3,7 +3,7 @@ package com.handstandsam.shoppingapp.network;
 import com.handstandsam.shoppingapp.models.Category;
 import com.handstandsam.shoppingapp.models.Item;
 import com.handstandsam.shoppingapp.models.User;
-import com.handstandsam.shoppingapp.network.model.LoginRequest;
+import com.handstandsam.shoppingapp.models.LoginRequest;
 
 import java.util.List;
 

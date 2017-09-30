@@ -1,4 +1,4 @@
-package com.handstandsam.shoppingapp.network.model
+package com.handstandsam.shoppingapp.models
 
 import java.io.Serializable
 
