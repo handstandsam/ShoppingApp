@@ -11,7 +11,6 @@ import com.handstandsam.shoppingapp.di.AppComponent;
 import com.handstandsam.shoppingapp.di.AppModule;
 import com.handstandsam.shoppingapp.di.DaggerAppComponent;
 import com.handstandsam.shoppingapp.di.DebugNetworkModule;
-import com.handstandsam.shoppingapp.di.NetworkModule;
 import com.handstandsam.shoppingapp.di.RepositoryModule;
 
 import java.io.IOException;
@@ -49,14 +48,7 @@ public class MyApplication extends MyAbstractApplication {
     }
 
     @Override
-    protected AppComponent createAppComponent() {
-        String endpoint;
-        if (NetworkModule.USE_LOCAL_SERVER) {
-            endpoint = NetworkModule.LOCALHOST_ENDPOINT;
-        } else {
-            endpoint = NetworkModule.REMOTE_EMULATOR_ENDPOINT;
-        }
-
+    protected AppComponent createAppComponent(String endpoint) {
         if (new DebugPreferences(this).isMockMode()) {
             startMockWebServer();
             endpoint = server.url("/").toString();

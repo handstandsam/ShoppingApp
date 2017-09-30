@@ -3,7 +3,7 @@ package com.handstandsam.shoppingapp;
 import android.app.Application;
 
 import com.handstandsam.shoppingapp.di.AppComponent;
-import com.handstandsam.shoppingapp.mockaccount.Stubberator;
+import com.handstandsam.shoppingapp.di.NetworkModule;
 import com.handstandsam.shoppingapp.mockaccount.VideoGameMockAccount;
 
 public abstract class MyAbstractApplication extends Application {
@@ -13,16 +13,72 @@ public abstract class MyAbstractApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = createAppComponent();
-//        new Stubberator(this).stubItAll(new ProduceMockAccount());
-        new Stubberator(this).stubItAll(new VideoGameMockAccount());
-//        new Stubberator(this).stubItAll(new AndroidLibsMockAccount());
+
+        record();
+//        playback();
+//        connectToLaptop();
     }
 
-    protected abstract AppComponent createAppComponent();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    protected abstract AppComponent createAppComponent(String endpoint);
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public void startNormally() {
+        appComponent = createAppComponent(NetworkModule.S3_ENDPOINT);
+        NetworkConfig networkConfig = new NetworkConfig(this);
+        networkConfig.startNormally();
+    }
+
+    public void record() {
+        appComponent = createAppComponent("http://localhost:8080");
+        NetworkConfig networkConfig = new NetworkConfig(this);
+        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT);
+    }
+
+    public void playback() {
+        appComponent = createAppComponent("http://localhost:8080");
+        NetworkConfig networkConfig = new NetworkConfig(this);
+        networkConfig.playbackRecordedMappings();
+    }
+
+    public void connectToLaptop() {
+        appComponent = createAppComponent("http://10.0.2.2:8080");
+        NetworkConfig networkConfig = new NetworkConfig(this);
+        networkConfig.startNormally();
+    }
+
+    public void localWireMock() {
+
+        String endpoint;
+
+        endpoint = "http://localhost:8080"; //LOCALHOST_ENDPOINT
+//        endpoint = ;//LAPTOP_FROM_EMULATOR_ENDPOINT;
+//        endpoint = NetworkModule.S3_ENDPOINT;
+        appComponent = createAppComponent(endpoint);
+
+        NetworkConfig networkConfig = new NetworkConfig(this);
+//        networkConfig.startNormally();
+        networkConfig.stubLocalWireMock(new VideoGameMockAccount());
+//        networkConfig.stubRemoteWireMock(new AndroidLibsMockAccount());
+//        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT);
+//        networkConfig.playbackRecordedMappings();
     }
 
 }

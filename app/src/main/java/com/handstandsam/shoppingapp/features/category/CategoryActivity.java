@@ -1,7 +1,9 @@
 package com.handstandsam.shoppingapp.features.category;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -54,6 +56,8 @@ public class CategoryActivity extends LoggedInActivity {
         void showItems(List<Item> items);
 
         void setActionBarTitle(String title);
+
+        void showNetworkError(String message);
     }
 
     public class MyCategoryView implements CategoryView {
@@ -71,6 +75,21 @@ public class CategoryActivity extends LoggedInActivity {
         @Override
         public void setActionBarTitle(String title) {
             getSupportActionBar().setTitle(title);
+        }
+
+        @Override
+        public void showNetworkError(String message) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    CategoryActivity.this).setTitle("Networking Error");
+            if (message != null) {
+                builder.setMessage(message);
+            }
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    CategoryActivity.this.finish();
+                }
+            }).show();
         }
     }
 
