@@ -13,25 +13,11 @@ public abstract class MyAbstractApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        record();
+        localWireMock();
+//        record();
 //        playback();
 //        connectToLaptop();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     protected abstract AppComponent createAppComponent(String endpoint);
@@ -65,20 +51,14 @@ public abstract class MyAbstractApplication extends Application {
     }
 
     public void localWireMock() {
-
         String endpoint;
 
         endpoint = "http://localhost:8080"; //LOCALHOST_ENDPOINT
-//        endpoint = ;//LAPTOP_FROM_EMULATOR_ENDPOINT;
-//        endpoint = NetworkModule.S3_ENDPOINT;
         appComponent = createAppComponent(endpoint);
 
         NetworkConfig networkConfig = new NetworkConfig(this);
-//        networkConfig.startNormally();
         networkConfig.stubLocalWireMock(new VideoGameMockAccount());
 //        networkConfig.stubRemoteWireMock(new AndroidLibsMockAccount());
-//        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT);
-//        networkConfig.playbackRecordedMappings();
     }
 
 }
