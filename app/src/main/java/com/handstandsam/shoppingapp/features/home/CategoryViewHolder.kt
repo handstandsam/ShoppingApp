@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
@@ -23,7 +22,6 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
     var category: Category? = null
 
     init {
-        ButterKnife.bind(this, itemView)
         itemView.setOnClickListener {
             val context = itemView.context
             val intent = Intent(context, CategoryActivity::class.java)

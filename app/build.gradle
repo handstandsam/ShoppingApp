@@ -62,10 +62,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.google.dagger:dagger:2.9'
-    implementation 'com.jakewharton:butterknife:8.5.1'
     //Logging
     implementation 'com.jakewharton.timber:timber:4.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor "com.google.dagger:dagger-compiler:2.9"
     //DEBUG ONLY
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'

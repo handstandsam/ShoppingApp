@@ -15,22 +15,14 @@ import com.handstandsam.shoppingapp.R;
 import com.handstandsam.shoppingapp.di.AppComponent;
 import com.handstandsam.shoppingapp.features.home.HomeActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String EXTRA_USERNAME = "username";
-
-    @BindView(R.id.remember_me)
     AppCompatCheckBox rememberMeCheckbox;
 
-    @BindView(R.id.username)
     AppCompatEditText usernameEditText;
 
-    @BindView(R.id.password)
     AppCompatEditText passwordEditText;
 
     Disposable disposable;
@@ -42,7 +34,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().setTitle("Log in to Shopping App");
-        ButterKnife.bind(this);
+        passwordEditText = findViewById(R.id.password);
+        usernameEditText = findViewById(R.id.username);
+        rememberMeCheckbox = findViewById(R.id.remember_me);
+        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.loginClicked();
+            }
+        });
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 
         loginView = new MyLoginView();
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    submit();
+                    presenter.loginClicked();
                     return true;
                 }
                 return false;
@@ -61,10 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.submit)
-    public void submit() {
-        presenter.loginClicked();
-    }
 
     @Override
     protected void onDestroy() {

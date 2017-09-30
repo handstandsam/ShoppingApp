@@ -14,19 +14,12 @@ import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.R;
 import com.handstandsam.shoppingapp.di.AppComponent;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ItemDetailActivity extends LoggedInActivity {
 
-    @BindView(R.id.add_to_cart)
     AppCompatButton addToCartButton;
 
-
-    @BindView(R.id.image)
     AppCompatImageView imageView;
 
-    @BindView(R.id.title_text)
     TextView titleText;
 
     private ItemDetailView view;
@@ -38,7 +31,9 @@ public class ItemDetailActivity extends LoggedInActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ButterKnife.bind(this);
+        titleText = findViewById(R.id.title_text);
+        imageView = findViewById(R.id.image);
+        addToCartButton = findViewById(R.id.add_to_cart);
         ((MyAbstractApplication) getApplication()).getAppComponent().inject(this);
 
         view = new MyItemDetailView();
