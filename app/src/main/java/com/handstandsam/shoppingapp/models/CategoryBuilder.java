@@ -6,7 +6,7 @@ public class CategoryBuilder {
     Category category;
 
     public CategoryBuilder() {
-        category = new Category();
+        category = new Category(null, null, null);
     }
 
     public CategoryBuilder(String label) {
@@ -15,7 +15,7 @@ public class CategoryBuilder {
     }
 
     public CategoryBuilder label(String label) {
-        category.label = label;
+        category.setLabel(label);
         return this;
     }
 
@@ -24,12 +24,12 @@ public class CategoryBuilder {
     }
 
     public CategoryBuilder image(String image) {
-        category.image = image;
+        category.setImage(image);
         return this;
     }
 
     public CategoryBuilder link(String link) {
-        category.link = link;
+        category.setLink(link);
         return this;
     }
 }
