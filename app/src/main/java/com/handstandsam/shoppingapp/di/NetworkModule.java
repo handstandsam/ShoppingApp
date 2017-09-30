@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp.di;
 
 import android.app.Application;
 
-import com.handstandsam.shoppingapp.network.GitHubService;
 import com.handstandsam.shoppingapp.network.ShoppingService;
 import com.squareup.moshi.Moshi;
 
@@ -54,11 +53,6 @@ public class NetworkModule {
     @Provides
     Retrofit retrofit(OkHttpClient.Builder okHttpClientBuilder) {
         return retrofitBuilder(okHttpClientBuilder).build();
-    }
-
-    @Provides
-    GitHubService gitHubService(Retrofit retrofit) {
-        return retrofit.create(GitHubService.class);
     }
 
     @Provides

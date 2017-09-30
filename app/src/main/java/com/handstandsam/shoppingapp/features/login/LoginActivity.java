@@ -14,9 +14,6 @@ import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.R;
 import com.handstandsam.shoppingapp.di.AppComponent;
 import com.handstandsam.shoppingapp.features.home.HomeActivity;
-import com.handstandsam.shoppingapp.network.GitHubService;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +23,6 @@ import io.reactivex.disposables.Disposable;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String EXTRA_USERNAME = "username";
-
-    @Inject
-    GitHubService gitHubService;
 
     @BindView(R.id.remember_me)
     AppCompatCheckBox rememberMeCheckbox;

@@ -11,11 +11,8 @@ import android.widget.CompoundButton;
 
 import com.handstandsam.shoppingapp.debug.DebugPreferences;
 import com.handstandsam.shoppingapp.debug.HomeScreenShortcutBuilder;
-import com.handstandsam.shoppingapp.network.GitHubService;
 import com.handstandsam.shoppingapp.utils.IntentUtils;
 import com.jakewharton.processphoenix.ProcessPhoenix;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,9 +20,6 @@ import butterknife.ButterKnife;
 import static com.handstandsam.shoppingapp.utils.IntentUtils.getIntentForUsername;
 
 public class DebugActivity extends AppCompatActivity {
-
-    @Inject
-    GitHubService gitHubService;
 
     @BindView(R.id.mocks_on)
     CheckBox mocksCheckbox;
@@ -41,7 +35,6 @@ public class DebugActivity extends AppCompatActivity {
 
     @BindView(R.id.username)
     AppCompatEditText usernameEditText;
-
 
     @BindView(R.id.add_shortcut)
     AppCompatButton addShortcutButton;

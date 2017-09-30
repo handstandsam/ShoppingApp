@@ -11,19 +11,13 @@ import com.handstandsam.shoppingapp.LoggedInActivity;
 import com.handstandsam.shoppingapp.MyAbstractApplication;
 import com.handstandsam.shoppingapp.R;
 import com.handstandsam.shoppingapp.models.Item;
-import com.handstandsam.shoppingapp.network.GitHubService;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CategoryActivity extends LoggedInActivity {
-
-    @Inject
-    GitHubService gitHubService;
 
     @BindView(R.id.categories)
     RecyclerView recyclerView;
