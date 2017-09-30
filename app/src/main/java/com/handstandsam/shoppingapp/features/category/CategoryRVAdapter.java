@@ -15,9 +15,6 @@ class CategoryRVAdapter extends RecyclerView.Adapter<ItemRowViewHolder> {
 
     List<Item> items = new ArrayList<>();
 
-    public CategoryRVAdapter() {
-    }
-
     @Override
     public ItemRowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_recyclerview_item_row, parent, false);

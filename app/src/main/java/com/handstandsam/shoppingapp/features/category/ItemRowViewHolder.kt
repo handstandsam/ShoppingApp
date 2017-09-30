@@ -16,9 +16,9 @@ import com.handstandsam.shoppingapp.models.Item
 
 internal class ItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var textView: TextView = itemView.findViewById(R.id.text)
+    val textView: TextView = itemView.findViewById(R.id.text)
 
-    var imageView: AppCompatImageView = itemView.findViewById(R.id.image)
+    val imageView: AppCompatImageView = itemView.findViewById(R.id.image)
 
     private var item: Item? = null
 
