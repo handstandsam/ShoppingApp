@@ -6,11 +6,11 @@ public class ItemBuilder {
     Item item;
 
     public ItemBuilder(String label) {
-        item = new Item(label);
+        item = new Item(label, null, null);
     }
 
     public ItemBuilder label(String label) {
-        item.label = label;
+        item.setLabel(label);
         return this;
     }
 
@@ -19,12 +19,12 @@ public class ItemBuilder {
     }
 
     public ItemBuilder image(String image) {
-        item.image = image;
+        item.setImage(image);
         return this;
     }
 
     public ItemBuilder link(String link) {
-        item.link = link;
+        item.setLink(link);
         return this;
     }
 }
