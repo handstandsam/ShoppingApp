@@ -40,11 +40,11 @@ class DebugActivity : AppCompatActivity() {
 
         mocksCheckbox.isChecked = debugPreferences.isMockMode
 
-        mocksCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences.isMockMode = b }
+        mocksCheckbox.setOnCheckedChangeListener { _, b -> debugPreferences.isMockMode = b }
 
         chuckEnabledCheckbox.isChecked = debugPreferences.isChuckEnabled
 
-        chuckEnabledCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences.isChuckEnabled = b }
+        chuckEnabledCheckbox.setOnCheckedChangeListener { _, b -> debugPreferences.isChuckEnabled = b }
 
         applyChangesButton.setOnClickListener { ProcessPhoenix.triggerRebirth(this@DebugActivity) }
 

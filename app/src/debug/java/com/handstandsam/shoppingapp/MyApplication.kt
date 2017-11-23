@@ -38,8 +38,8 @@ class MyApplication : MyAbstractApplication() {
 
     }
 
-    override fun createAppComponent(endpoint: String): AppComponent {
-        var endpoint = endpoint
+    override fun createAppComponent(pEndpoint: String): AppComponent {
+        var endpoint = pEndpoint
         if (DebugPreferences(this).isMockMode) {
             startMockWebServer()
             endpoint = server!!.url("/").toString()

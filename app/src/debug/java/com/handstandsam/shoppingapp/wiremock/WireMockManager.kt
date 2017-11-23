@@ -1,27 +1,27 @@
 package com.handstandsam.shoppingapp.wiremock
 
 import android.content.Context
-
 import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.common.SingleRootFileSource
 import com.github.tomakehurst.wiremock.core.WireMockApp
-
-import java.io.File
-import java.util.ArrayList
-
-import timber.log.Timber
-
-import com.github.tomakehurst.wiremock.client.WireMock.aResponse
-import com.github.tomakehurst.wiremock.client.WireMock.any
-import com.github.tomakehurst.wiremock.client.WireMock.urlMatching
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
+import timber.log.Timber
+import java.io.File
+import java.util.*
 
-class WireMockManager private constructor(contextForAssets: Context, var httpPort: Int) {
+class WireMockManager private constructor(private val contextForAssets: Context, private val httpPort: Int) {
+
+
+    private val dataDirectory = "/data/data"
+    private val wireMockDirectory = "wiremock"
+
+    private var wireMockServer: WireMockServer? = null
 
     private val WILDCARD = ".*"
     private var remoteBaseUrl: String? = null
 
-    private val fileUtils: FileUtils
+    private val fileUtils: FileUtils = FileUtils(contextForAssets)
 
     private val rootDirectory: String
         get() {
@@ -49,11 +49,6 @@ class WireMockManager private constructor(contextForAssets: Context, var httpPor
         fun build(): WireMockManager {
             return WireMockManager(contextForAssets, httpPort)
         }
-    }
-
-    init {
-        this.contextForAssets = contextForAssets
-        this.fileUtils = FileUtils(contextForAssets)
     }
 
     fun startProxyAndRecord(remoteBaseUrl: String) {
@@ -120,17 +115,6 @@ class WireMockManager private constructor(contextForAssets: Context, var httpPor
 
     private fun copyNewWireMockStubs() {
         fileUtils.copyFileOrDir(wireMockDirectory)
-    }
-
-    companion object {
-
-        private val dataDirectory = "/data/data"
-        private val wireMockDirectory = "wiremock"
-
-
-        private var wireMockServer: WireMockServer? = null
-
-        private val contextForAssets: Context
     }
 
 

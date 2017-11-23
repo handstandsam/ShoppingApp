@@ -14,7 +14,7 @@ class CategoryActivity : LoggedInActivity() {
 
     lateinit var recyclerView: RecyclerView
 
-    private var recyclerViewAdapter: CategoryRVAdapter? = null
+    lateinit private var recyclerViewAdapter: CategoryRVAdapter
 
     private var view: CategoryView? = null
 
@@ -27,9 +27,9 @@ class CategoryActivity : LoggedInActivity() {
         recyclerView = findViewById(R.id.categories)
         (application as MyAbstractApplication).appComponent.inject(this)
 
-        recyclerView!!.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerViewAdapter = CategoryRVAdapter()
-        recyclerView!!.adapter = recyclerViewAdapter
+        recyclerView.adapter = recyclerViewAdapter
         view = MyCategoryView()
         presenter = CategoryPresenter(view!!)
     }
@@ -51,11 +51,11 @@ class CategoryActivity : LoggedInActivity() {
             get() = this@CategoryActivity.applicationContext
 
         override fun showItems(items: List<Item>) {
-            recyclerViewAdapter!!.setItems(items)
+            recyclerViewAdapter.setItems(items)
         }
 
         override fun setActionBarTitle(title: String) {
-            supportActionBar!!.title = title
+            supportActionBar?.title = title
         }
 
         override fun showNetworkError(message: String?) {

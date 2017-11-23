@@ -8,6 +8,11 @@ import java.io.*
 
 class FileUtils(private val contextForAssets: Context) {
 
+    private val tempDirectoryName = "files"
+    private val replacementDirectoryName = WireMockApp.FILES_ROOT
+
+    private val dataDirectory = "/data/data"
+
     private val packageName = contextForAssets.packageName
 
     fun copyFileOrDir(path: String) {
@@ -59,23 +64,15 @@ class FileUtils(private val contextForAssets: Context) {
 
     }
 
-    companion object {
-
-
-        private val tempDirectoryName = "files"
-        private val replacementDirectoryName = WireMockApp.FILES_ROOT
-
-        private val dataDirectory = "/data/data"
-
-        fun deleteRecursive(fileOrDirectory: File) {
-            if (fileOrDirectory.isDirectory) {
-                for (child in fileOrDirectory.listFiles()!!) {
-                    deleteRecursive(child)
-                }
+    fun deleteRecursive(fileOrDirectory: File) {
+        if (fileOrDirectory.isDirectory) {
+            for (child in fileOrDirectory.listFiles()!!) {
+                deleteRecursive(child)
             }
-
-            fileOrDirectory.delete()
         }
+
+        fileOrDirectory.delete()
     }
+
 
 }

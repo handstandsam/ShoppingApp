@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -57,14 +58,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //Networking
     implementation 'com.github.bumptech.glide:glide:4.1.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    kapt 'com.github.bumptech.glide:compiler:4.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.google.dagger:dagger:2.9'
+    implementation 'com.google.dagger:dagger:2.13'
+    kapt "com.google.dagger:dagger-compiler:2.13"
     //Logging
     implementation 'com.jakewharton.timber:timber:4.5.1'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
     //DEBUG ONLY
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
     debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
