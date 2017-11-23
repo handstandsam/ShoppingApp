@@ -13,38 +13,38 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 
 class DebugActivity : AppCompatActivity() {
 
-    internal lateinit var mocksCheckbox: CheckBox
+    private lateinit var mocksCheckbox: CheckBox
 
-    internal lateinit var chuckEnabledCheckbox: CheckBox
+    private lateinit var chuckEnabledCheckbox: CheckBox
 
-    internal lateinit var applyChangesButton: AppCompatButton
+    private lateinit var applyChangesButton: AppCompatButton
 
-    internal lateinit var triggerNotificationButton: AppCompatButton
+    private lateinit var triggerNotificationButton: AppCompatButton
 
-    internal lateinit var usernameEditText: AppCompatEditText
+    private lateinit var usernameEditText: AppCompatEditText
 
-    internal lateinit var addShortcutButton: AppCompatButton
+    private lateinit var addShortcutButton: AppCompatButton
 
-    internal var debugPreferences: DebugPreferences? = null
+    private lateinit var debugPreferences: DebugPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_debug)
-        triggerNotificationButton = findViewById<AppCompatButton>(R.id.trigger_notification)
-        usernameEditText = findViewById<AppCompatEditText>(R.id.username)
-        addShortcutButton = findViewById<AppCompatButton>(R.id.add_shortcut)
-        mocksCheckbox = findViewById<CheckBox>(R.id.mocks_on)
-        chuckEnabledCheckbox = findViewById<CheckBox>(R.id.chuck)
-        applyChangesButton = findViewById<AppCompatButton>(R.id.apply_changes)
+        triggerNotificationButton = findViewById(R.id.trigger_notification)
+        usernameEditText = findViewById(R.id.username)
+        addShortcutButton = findViewById(R.id.add_shortcut)
+        mocksCheckbox = findViewById(R.id.mocks_on)
+        chuckEnabledCheckbox = findViewById(R.id.chuck)
+        applyChangesButton = findViewById(R.id.apply_changes)
         debugPreferences = DebugPreferences(this)
 
-        mocksCheckbox.isChecked = debugPreferences!!.isMockMode
+        mocksCheckbox.isChecked = debugPreferences.isMockMode
 
-        mocksCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences!!.isMockMode = b }
+        mocksCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences.isMockMode = b }
 
-        chuckEnabledCheckbox.isChecked = debugPreferences!!.isChuckEnabled
+        chuckEnabledCheckbox.isChecked = debugPreferences.isChuckEnabled
 
-        chuckEnabledCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences!!.isChuckEnabled = b }
+        chuckEnabledCheckbox.setOnCheckedChangeListener { compoundButton, b -> debugPreferences.isChuckEnabled = b }
 
         applyChangesButton.setOnClickListener { ProcessPhoenix.triggerRebirth(this@DebugActivity) }
 
