@@ -30,7 +30,7 @@ class AndroidLibsMockAccount : MockAccount() {
                     .image(IMAGE_BASE_URL + "mockito.png")
                     .link("https://github.com/mockito/mockito").build())
 
-            itemByCategoryMap.put(category.label, items)
+            itemsByCategory.put(category.label!!, items)
             categories.add(category)
         }
         run {
@@ -42,7 +42,7 @@ class AndroidLibsMockAccount : MockAccount() {
                     .image("http://jakewharton.github.io/butterknife/static/logo.png")
                     .link("http://jakewharton.github.io/butterknife/").build())
 
-            itemByCategoryMap.put(category.label, items)
+            itemsByCategory.put(category.label!!, items)
             categories.add(category)
         }
 
@@ -62,7 +62,7 @@ class AndroidLibsMockAccount : MockAccount() {
                     .link("https://en.wikipedia.org/wiki/Altered_Beast").build())
 
 
-            itemByCategoryMap.put(category.label, items)
+            itemsByCategory.put(category.label!!, items)
             categories.add(category)
         }
 
@@ -78,8 +78,7 @@ class AndroidLibsMockAccount : MockAccount() {
                     .image("http://square.github.io/picasso/static/sample.png")
                     .link("https://square.github.io/picasso/").build())
 
-
-            itemByCategoryMap.put(category.label, items)
+            itemsByCategory.put(category.label!!, items)
             categories.add(category)
         }
     }
@@ -98,7 +97,7 @@ class AndroidLibsMockAccount : MockAccount() {
     }
 
     override fun getItemsForCategory(categoryLabel: String): MutableList<Item>? {
-        return itemByCategoryMap[categoryLabel]
+        return itemsByCategory[categoryLabel]
     }
 
     companion object {

@@ -1,6 +1,5 @@
 package com.handstandsam.shoppingapp.features.login
 
-import android.content.Intent
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount
 import com.handstandsam.shoppingapp.models.LoginRequest

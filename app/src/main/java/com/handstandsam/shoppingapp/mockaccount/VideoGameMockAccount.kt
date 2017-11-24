@@ -6,6 +6,7 @@ import java.util.*
 
 class VideoGameMockAccount : MockAccount() {
 
+
     private var imageBaseUrl = "http://shopping-app.s3.amazonaws.com" + "/video-games/images/"
 
     internal var user: User = User("Sam", "Edwards")
@@ -31,7 +32,7 @@ class VideoGameMockAccount : MockAccount() {
                     .link("https://en.wikipedia.org/wiki/Punch-Out!!_(NES)").build())
 
 
-            itemByCategoryMap.put(nesCategory.label, nesGames)
+            itemsByCategory[nesCategory.label!!] = nesGames
             categories.add(nesCategory)
         }
         run {
@@ -50,7 +51,7 @@ class VideoGameMockAccount : MockAccount() {
                     .link("https://en.wikipedia.org/wiki/Altered_Beast").build())
 
 
-            itemByCategoryMap.put(segaCategory.label, segaGames)
+            itemsByCategory[segaCategory.label!!] = segaGames
             categories.add(segaCategory)
         }
         run {
@@ -71,7 +72,7 @@ class VideoGameMockAccount : MockAccount() {
                     .link("https://en.wikipedia.org/wiki/Pac-Man_(Atari_2600)").build())
 
 
-            itemByCategoryMap.put(category.label, games)
+            itemsByCategory[category.label!!] = games
             categories.add(category)
         }
     }
@@ -93,6 +94,6 @@ class VideoGameMockAccount : MockAccount() {
     }
 
     override fun getItemsForCategory(categoryLabel: String): MutableList<Item>? {
-        return itemByCategoryMap[categoryLabel]
+        return itemsByCategory[categoryLabel]
     }
 }

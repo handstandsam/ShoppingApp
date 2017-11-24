@@ -1,10 +1,9 @@
 package com.handstandsam.shoppingapp
 
 import android.app.Application
-
 import com.handstandsam.shoppingapp.di.AppComponent
 import com.handstandsam.shoppingapp.di.NetworkModule
-import com.handstandsam.shoppingapp.mockaccount.VideoGameMockAccount
+import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount
 
 abstract class MyAbstractApplication : Application() {
 
@@ -52,8 +51,8 @@ abstract class MyAbstractApplication : Application() {
         appComponent = createAppComponent(endpoint)
 
         val networkConfig = NetworkConfig(this)
-        networkConfig.stubLocalWireMock(VideoGameMockAccount())
-        //        networkConfig.stubRemoteWireMock(new AndroidLibsMockAccount());
+//        networkConfig.stubLocalWireMock(VideoGameMockAccount())
+        networkConfig.stubLocalWireMock(ProduceMockAccount())
     }
 
 }

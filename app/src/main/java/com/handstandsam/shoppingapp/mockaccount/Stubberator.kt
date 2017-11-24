@@ -68,20 +68,21 @@ class Stubberator(context: Context) {
     }
 
     fun stubCategories(mockAccount: MockAccount) {
-        val json = moshi.adapter(List::class.java).toJson(mockAccount.categories)
+        val json = moshi.adapter(List::class.java).toJson(mockAccount.getCategories())
         stubFor(StubMappings.categories.willReturn(WireMock.aResponse().withStatus(200).withBody(json)))
     }
 
     fun stubItems(mockAccount: MockAccount) {
-        val itemsByCategory = mockAccount.itemsByCategory
-        for ((categoryId, items) in itemsByCategory) {
+        mockAccount.itemsByCategory.keys.forEach({ categoryId ->
+            val items = mockAccount.itemsByCategory[categoryId]
             val json = moshi.adapter(List::class.java).toJson(items)
             stubFor(StubMappings.getItemsForCategory(categoryId).willReturn(WireMock.aResponse().withStatus(200).withBody(json)))
-        }
+
+        })
     }
 
     fun stubLogin(mockAccount: MockAccount) {
-        val json = moshi.adapter(User::class.java).toJson(mockAccount.user)
+        val json = moshi.adapter(User::class.java).toJson(mockAccount.getUser())
         stubFor(StubMappings.login().willReturn(WireMock.aResponse()
                 .withStatus(200).withBody(json)))
     }

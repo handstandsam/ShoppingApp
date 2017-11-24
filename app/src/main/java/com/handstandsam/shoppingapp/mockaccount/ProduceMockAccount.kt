@@ -22,20 +22,20 @@ class ProduceMockAccount : MockAccount() {
         fruitItems.add(ItemBuilder("Grapefruit").image(IMAGE_BASE_URL + "grapefruit.jpg").build())
         fruitItems.add(ItemBuilder("Lime").image(IMAGE_BASE_URL + "lime.jpg").build())
         fruitItems.add(ItemBuilder("Orange").image(IMAGE_BASE_URL + "orange.jpg").build())
-        itemByCategoryMap.put(fruitCategory.label, fruitItems)
+        itemsByCategory.put(fruitCategory.label!!, fruitItems)
 
         val floralCategory = CategoryBuilder("Floral").image(IMAGE_BASE_URL + "white-rose.jpg").build()
         val floralItems = ArrayList<Item>()
         floralItems.add(ItemBuilder("White Rose").image(IMAGE_BASE_URL + "white-rose.jpg").build())
         floralItems.add(ItemBuilder("Sunflower").image(IMAGE_BASE_URL + "sunflower.jpg").build())
-        itemByCategoryMap.put(floralCategory.label, floralItems)
+        itemsByCategory.put(floralCategory.label!!, floralItems)
 
         val seafoodCategory = CategoryBuilder("Seafood").image(IMAGE_BASE_URL + "shrimp.jpg").build()
         val seafoodItems = ArrayList<Item>()
         seafoodItems.add(ItemBuilder("Lobster Tail").image(IMAGE_BASE_URL + "lobster-tail.jpg").build())
         seafoodItems.add(ItemBuilder("Shrimp").image(IMAGE_BASE_URL + "shrimp.jpg").build())
         seafoodItems.add(ItemBuilder("Scallop").image(IMAGE_BASE_URL + "scallops.jpg").build())
-        itemByCategoryMap.put(seafoodCategory.label, seafoodItems)
+        itemsByCategory.put(seafoodCategory.label!!, seafoodItems)
 
         val vegetableCategory = CategoryBuilder("Vegetables").image(IMAGE_BASE_URL + "kale.jpg").build()
         val vegetableItems = ArrayList<Item>()
@@ -52,7 +52,7 @@ class ProduceMockAccount : MockAccount() {
         vegetableItems.add(ItemBuilder("Red Bell Pepper").image(IMAGE_BASE_URL + "red-bell-pepper.jpg").build())
         vegetableItems.add(ItemBuilder("Orange Bell Pepper").image(IMAGE_BASE_URL + "orange-bell-pepper.jpg").build())
         vegetableItems.add(ItemBuilder("Yellow Bell Pepper").image(IMAGE_BASE_URL + "yellow-bell-pepper.jpg").build())
-        itemByCategoryMap.put(vegetableCategory.label, vegetableItems)
+        itemsByCategory.put(vegetableCategory.label!!, vegetableItems)
 
         categories = Arrays.asList(fruitCategory, vegetableCategory, seafoodCategory, floralCategory)
     }
@@ -71,7 +71,7 @@ class ProduceMockAccount : MockAccount() {
     }
 
     override fun getItemsForCategory(categoryLabel: String): MutableList<Item>? {
-        return itemByCategoryMap[categoryLabel]
+        return itemsByCategory[categoryLabel]
     }
 
     companion object {
