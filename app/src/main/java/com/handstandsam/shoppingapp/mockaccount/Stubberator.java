@@ -47,12 +47,12 @@ public class Stubberator {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if (NetworkModule.USE_LOCAL_SERVER) {
-            wireMockServer = new WireMockServer(wireMockConfig().port(NetworkModule.LOCALHOST_PORT));
+        if (NetworkModule.Companion.getUSE_LOCAL_SERVER()) {
+            wireMockServer = new WireMockServer(wireMockConfig().port(NetworkModule.Companion.getLOCALHOST_PORT()));
             wireMockServer.start();
             wireMockServer.resetMappings();
         } else {
-            WireMock.configureFor(NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST, NetworkModule.REMOTE_PORT);
+            WireMock.configureFor(NetworkModule.Companion.getREMOTE_EMULATOR_ENDPOINT_HOST(), NetworkModule.Companion.getREMOTE_PORT());
             WireMock.reset();
         }
 
@@ -62,7 +62,7 @@ public class Stubberator {
     }
 
     public StubMapping stubFor(MappingBuilder mappingBuilder) {
-        if (NetworkModule.USE_LOCAL_SERVER) {
+        if (NetworkModule.Companion.getUSE_LOCAL_SERVER()) {
             return wireMockServer.stubFor(mappingBuilder);
         } else {
             return WireMock.stubFor(mappingBuilder);

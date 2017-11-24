@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 class DebugNetworkModule(baseUrl: String) : NetworkModule(baseUrl) {
 
-    internal override fun okHttpClientBuilder(application: Application): OkHttpClient.Builder {
+    override fun okHttpClientBuilder(application: Application): OkHttpClient.Builder {
         val builder = super.okHttpClientBuilder(application)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor(StethoInterceptor())
