@@ -27,7 +27,7 @@ class LoginPresenter(private val view: LoginActivity.LoginView) {
         view.appComponent.inject(this)
     }
 
-    fun onResume(intent: Intent) {
+    fun onResume() {
 
         if (sessionManager.isLoggedIn) {
             view.kickToHomeScreen()

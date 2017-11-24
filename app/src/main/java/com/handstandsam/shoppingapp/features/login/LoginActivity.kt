@@ -116,6 +116,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume(intent)
+        presenter.onResume()
     }
 }
