@@ -10,7 +10,7 @@ import java.io.IOException
 
 class UserPreferences(context: Context) {
 
-    internal var moshi = Moshi.Builder().build()
+    private var moshi = Moshi.Builder().build()
 
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 

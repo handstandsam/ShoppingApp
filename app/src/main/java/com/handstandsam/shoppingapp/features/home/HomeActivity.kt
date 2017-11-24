@@ -13,13 +13,13 @@ import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
 
-    internal lateinit var presenter: HomePresenter
+    private lateinit var presenter: HomePresenter
 
-    internal var recyclerView: RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
 
-    internal var welcomeMessageText: TextView? = null
+    private var welcomeMessageText: TextView? = null
 
-    internal lateinit var homeView: HomeView
+    private lateinit var homeView: HomeView
 
     private var recyclerViewAdapter: HomeRVAdapter? = null
 
