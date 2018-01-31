@@ -11,7 +11,16 @@ buildscript {
             supportLibrary: '27.0.2',
             kotlin        : '1.2.21',
             stetho        : '1.5.0',
-            okhttp        : '3.9.0'
+            okhttp        : '3.9.0',
+            rxJava        : '2.1.4',
+            rxAndroid     : '2.0.1',
+            retrofit      : '2.3.0',
+            glide         : '4.1.1',
+            dagger        : '2.13',
+            processPhoenix: '2.0.0',
+            chuck         : '1.0.4',
+            junit         : '4.12',
+            wiremock      : '2.8.0'
     ]
 
     ext.deps = [
@@ -53,7 +62,20 @@ buildscript {
             ],
             'kotlin'                : [
                     'stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-            ]
+            ],
+            'rxJava'                : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
+            'rxAndroid'             : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
+            'retrofit'              : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            'retrofitRxJavaAdapter' : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+            'retrofitMoshiConverter': "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
+            'glide'                 : "com.github.bumptech.glide:glide:${versions.glide}",
+            'glideKapt'             : "com.github.bumptech.glide:compiler:${versions.glide}",
+            'dagger'                : "com.google.dagger:dagger:${versions.dagger}",
+            'daggerKapt'            : "com.google.dagger:dagger-compiler:${versions.dagger}",
+            'processPhoenix'        : "com.jakewharton:process-phoenix:${versions.processPhoenix}",
+            'chuck'                 : "com.readystatesoftware.chuck:library:${versions.chuck}",
+            'junit'                 : "junit:junit:${versions.junit}",
+            'wiremock'              : "com.github.tomakehurst:wiremock:${versions.wiremock}"
     ]
 
     repositories {
@@ -66,7 +88,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
