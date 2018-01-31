@@ -2,12 +2,10 @@ package com.handstandsam.shoppingapp.features.category
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 
 import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.repository.CategoryRepository
 import com.handstandsam.shoppingapp.repository.ItemRepository
 import com.handstandsam.shoppingapp.repository.SessionManager
 

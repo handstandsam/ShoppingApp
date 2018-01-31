@@ -3,7 +3,7 @@ package com.handstandsam.shoppingapp
 import android.app.Application
 import com.handstandsam.shoppingapp.di.AppComponent
 import com.handstandsam.shoppingapp.di.NetworkModule
-import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount
+import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
 
 abstract class MyAbstractApplication : Application() {
 

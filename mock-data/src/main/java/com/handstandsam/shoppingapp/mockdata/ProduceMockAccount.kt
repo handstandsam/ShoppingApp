@@ -1,7 +1,9 @@
-package com.handstandsam.shoppingapp.mockaccount
+package com.handstandsam.shoppingapp.mockdata
 
 
 import com.handstandsam.shoppingapp.models.*
+import com.handstandsam.shoppingapp.models.builders.CategoryBuilder
+import com.handstandsam.shoppingapp.models.builders.ItemBuilder
 import java.util.*
 
 class ProduceMockAccount : MockAccount() {

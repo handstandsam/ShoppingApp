@@ -1,7 +1,7 @@
 package com.handstandsam.shoppingapp.features.login
 
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.mockaccount.ProduceMockAccount
+import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
 import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences

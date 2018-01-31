@@ -1,4 +1,6 @@
-package com.handstandsam.shoppingapp.models
+package com.handstandsam.shoppingapp.models.builders
+
+import com.handstandsam.shoppingapp.models.Item
 
 
 class ItemBuilder(label: String) {
