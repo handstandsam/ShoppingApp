@@ -55,10 +55,10 @@ dependencies {
     implementation project(":mock-data")
 
     //Support Libraries
-    implementation 'com.android.support:support-v4:27.0.2'
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
-    implementation 'com.android.support:design:27.0.2'
+    implementation deps.support.supportV4
+    implementation deps.support.appCompatV7
+    implementation deps.support.recyclerViewV7
+    implementation deps.support.design
     //Rx
     implementation deps.rxJava
     implementation deps.rxAndroid
@@ -68,7 +68,7 @@ dependencies {
     kapt deps.glideKapt
     implementation deps.retrofit
     implementation deps.retrofitMoshiConverter
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation deps.okhttp
     implementation deps.dagger
     kapt deps.daggerKapt
     //Logging
@@ -95,19 +95,12 @@ dependencies {
         //In case of problem, please repackage with jarjar to change the class packages
         exclude group: 'org.json', module: 'json'
     }
-    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    implementation deps.apacheHttpClientAndroid
     implementation 'commons-io:commons-io:2.4'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-    }
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
+    androidTestImplementation deps.support.test.espressoCore
+    androidTestImplementation deps.support.test.espressoContrib
+    androidTestImplementation deps.support.test.runner
+    androidTestUtil deps.support.test.orchestrator
     implementation deps.kotlinStdLib
 }
 repositories {

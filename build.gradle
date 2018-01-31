@@ -28,56 +28,64 @@ buildscript {
     ]
 
     ext.deps = [
-            'android'               : [
+            'android'                : [
                     'runtime'     : 'com.google.android:android:4.1.1.4',
                     'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",
             ],
-            'support'               : [
-                    'compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
-                    'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
-                    'test'       : [
-                            'runner': 'com.android.support.test:runner:1.0.1',
+            'support'                : [
+                    'supportV4'     : "com.android.support:support-v4:${versions.supportLibrary}",
+                    'appCompatV7'   : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                    'design'        : "com.android.support:design:${versions.supportLibrary}",
+                    'recyclerViewV7': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
+                    'annotations'   : "com.android.support:support-annotations:${versions.supportLibrary}",
+                    'test'          : [
+                            'runner'         : 'com.android.support.test:runner:1.0.1',
+                            'orchestrator'   : 'com.android.support.test:orchestrator:1.0.1',
+                            'espressoCore'   : 'com.android.support.test.espresso:espresso-core:3.0.1',
+                            'espressoContrib': 'com.android.support.test.espresso:espresso-contrib:3.0.1'
                     ],
             ],
-            'lint'                  : [
+            'lint'                   : [
                     'core'  : "com.android.tools.lint:lint:${versions.androidTools}",
                     'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
                     'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
                     'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",
             ],
-            javapoet                : 'com.squareup:javapoet:1.9.0',
-            javaparser              : 'com.github.javaparser:javaparser-core:3.3.5',
-            junit                   : 'junit:junit:4.12',
-            truth                   : 'com.google.truth:truth:0.35',
-            timber                  : 'com.jakewharton.timber:timber:4.5.1',
-            stetho                  : "com.facebook.stetho:stetho:${versions.stetho}",
-            stethoOkHttp3           : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",
-            okhttpMockWebServer     : "com.squareup.okhttp3:mockwebserver:${versions.okhttp}",
-            okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
-            robolectric             : 'org.robolectric:robolectric:3.4.2',
-            compiletesting          : 'com.google.testing.compile:compile-testing:0.12',
-            'auto'                  : [
+            javapoet                 : 'com.squareup:javapoet:1.9.0',
+            javaparser               : 'com.github.javaparser:javaparser-core:3.3.5',
+            junit                    : 'junit:junit:4.12',
+            truth                    : 'com.google.truth:truth:0.35',
+            timber                   : 'com.jakewharton.timber:timber:4.5.1',
+            stetho                   : "com.facebook.stetho:stetho:${versions.stetho}",
+            stethoOkHttp3            : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",
+            robolectric              : 'org.robolectric:robolectric:3.4.2',
+            compiletesting           : 'com.google.testing.compile:compile-testing:0.12',
+            'auto'                   : [
                     'service': 'com.google.auto.service:auto-service:1.0-rc3',
                     'common' : 'com.google.auto:auto-common:0.8',
             ],
-            'release'               : [
+            'release'                : [
                     'runtime' : "com.jakewharton:butterknife:${versions.release}",
                     'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"
             ],
-            'kotlinStdLib'          : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-            'rxJava'                : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
-            'rxAndroid'             : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
-            'retrofit'              : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-            'retrofitRxJavaAdapter' : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-            'retrofitMoshiConverter': "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
-            'glide'                 : "com.github.bumptech.glide:glide:${versions.glide}",
-            'glideKapt'             : "com.github.bumptech.glide:compiler:${versions.glide}",
-            'dagger'                : "com.google.dagger:dagger:${versions.dagger}",
-            'daggerKapt'            : "com.google.dagger:dagger-compiler:${versions.dagger}",
-            'processPhoenix'        : "com.jakewharton:process-phoenix:${versions.processPhoenix}",
-            'chuck'                 : "com.readystatesoftware.chuck:library:${versions.chuck}",
-            'junit'                 : "junit:junit:${versions.junit}",
-            'wiremock'              : "com.github.tomakehurst:wiremock:${versions.wiremock}"
+            'kotlinStdLib'           : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
+            'rxJava'                 : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
+            'rxAndroid'              : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
+            'retrofit'               : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            'retrofitRxJavaAdapter'  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+            'retrofitMoshiConverter' : "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
+            'glide'                  : "com.github.bumptech.glide:glide:${versions.glide}",
+            'glideKapt'              : "com.github.bumptech.glide:compiler:${versions.glide}",
+            'dagger'                 : "com.google.dagger:dagger:${versions.dagger}",
+            'daggerKapt'             : "com.google.dagger:dagger-compiler:${versions.dagger}",
+            'processPhoenix'         : "com.jakewharton:process-phoenix:${versions.processPhoenix}",
+            'chuck'                  : "com.readystatesoftware.chuck:library:${versions.chuck}",
+            'junit'                  : "junit:junit:${versions.junit}",
+            'wiremock'               : "com.github.tomakehurst:wiremock:${versions.wiremock}",
+            'okhttp'                 : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+            okhttpMockWebServer      : "com.squareup.okhttp3:mockwebserver:${versions.okhttp}",
+            okhttpLoggingInterceptor : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
+            'apacheHttpClientAndroid': 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     ]
 
     repositories {
