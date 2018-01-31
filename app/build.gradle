@@ -108,7 +108,7 @@ dependencies {
     }
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestUtil 'com.android.support.test:orchestrator:1.0.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${versions.kotlin}"
+    implementation deps.kotlinStdLib
 }
 repositories {
     mavenCentral()

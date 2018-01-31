@@ -23,6 +23,10 @@ buildscript {
             wiremock      : '2.8.0'
     ]
 
+    ext.projects = [
+            'models': ':models'
+    ]
+
     ext.deps = [
             'android'               : [
                     'runtime'     : 'com.google.android:android:4.1.1.4',
@@ -60,9 +64,7 @@ buildscript {
                     'runtime' : "com.jakewharton:butterknife:${versions.release}",
                     'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"
             ],
-            'kotlin'                : [
-                    'stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-            ],
+            'kotlinStdLib'          : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
             'rxJava'                : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
             'rxAndroid'             : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
             'retrofit'              : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
