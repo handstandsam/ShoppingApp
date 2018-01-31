@@ -4,6 +4,7 @@ import android.app.Application
 import com.handstandsam.shoppingapp.di.AppComponent
 import com.handstandsam.shoppingapp.di.NetworkModule
 import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
+import timber.log.Timber
 
 abstract class MyAbstractApplication : Application() {
 
@@ -11,6 +12,7 @@ abstract class MyAbstractApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
         localWireMock()
         //        record();
         //        playback();

@@ -1,4 +1,4 @@
-package com.handstandsam.shoppingapp.mockaccount
+package com.handstandsam.shoppingapp.mockdata
 
 
 import com.handstandsam.shoppingapp.models.Category

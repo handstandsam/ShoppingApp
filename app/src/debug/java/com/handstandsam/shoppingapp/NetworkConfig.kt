@@ -1,10 +1,9 @@
 package com.handstandsam.shoppingapp
 
 import android.content.Context
-
 import com.handstandsam.shoppingapp.di.NetworkModule
-import com.handstandsam.shoppingapp.mockaccount.MockAccount
 import com.handstandsam.shoppingapp.mockaccount.Stubberator
+import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.wiremock.WireMockManager
 
 

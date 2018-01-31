@@ -14,13 +14,13 @@ import javax.inject.Inject
 class LoginPresenter(private val view: LoginActivity.LoginView) {
 
     @Inject
-    lateinit internal var sessionManager: SessionManager
+    internal lateinit var sessionManager: SessionManager
 
     @Inject
-    lateinit internal var userPreferences: UserPreferences
+    internal lateinit var userPreferences: UserPreferences
 
     @Inject
-    lateinit internal var userRepository: UserRepository
+    internal lateinit var userRepository: UserRepository
 
     init {
         view.appComponent.inject(this)
@@ -52,7 +52,7 @@ class LoginPresenter(private val view: LoginActivity.LoginView) {
 
             override fun onSuccess(user: User) {
                 userPreferences.setRememberMe(rememberMe, view.username)
-                sessionManager.currentUser = ProduceMockAccount().user
+                sessionManager.currentUser = ProduceMockAccount().getUser()
                 view.startHomeActivity()
             }
 

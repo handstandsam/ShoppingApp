@@ -10,6 +10,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.di.NetworkModule
+import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.repository.CategoryRepository
 import com.handstandsam.shoppingapp.repository.ItemRepository

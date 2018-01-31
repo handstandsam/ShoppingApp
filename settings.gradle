@@ -1,1 +1,1 @@
-include ':app', ':models', ':mock-data'
+include ':app', ':mock-data', ':models'
