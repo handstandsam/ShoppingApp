@@ -1,1 +1,4 @@
-include ':app', ':mock-data', ':models'
+include ':app',
+        ':mock-data',
+        ':models',
+        ':debug'

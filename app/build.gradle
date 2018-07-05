@@ -67,41 +67,23 @@ dependencies {
     implementation Libs.glide
     implementation Libs.retrofit
     implementation Libs.retrofit_moshi_converter
-    implementation Libs.okHttp
+    implementation Libs.okhttp
     implementation Libs.dagger
     kapt Libs.daggerKapt
+    implementation Libs.kotlinStdLib
+
     //Logging
     implementation Libs.timber
-    //DEBUG ONLY
-    debugImplementation Libs.stetho
-    debugImplementation Libs.stethoOkHttp3
-    debugImplementation Libs.okHttp3LoggingInterceptor
-    debugImplementation Libs.processPhoenix
-    debugImplementation Libs.chuck
+
+    debugImplementation project(":debug")
 
     //JVM Tests Only
     testImplementation Libs.junit
 
-    //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
-    implementation(Libs.wiremock) {
-        //Using Android Version Instead
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-
-        //Was getting a classpath conflict for org.objectweb.asm.AnnotationVisitor which is a part of 'net.minidev:asm'
-        exclude group: 'org.ow2.asm', module: 'asm'
-
-        //Was getting this warning, so decided to ignore this version included by WireMock.
-        //Warning:Dependency org.json:json:20090211 is ignored as it may be conflicting with the internal version provided by Android.
-        //In case of problem, please repackage with jarjar to change the class packages
-        exclude group: 'org.json', module: 'json'
-    }
-    implementation Libs.apacheHttpClientAndroid
-    implementation 'commons-io:commons-io:2.4'
     androidTestImplementation Libs.espressoCore
     androidTestImplementation Libs.espressoContrib
     androidTestImplementation Libs.runner
     androidTestUtil Libs.orchestrator
-    implementation Libs.kotlinStdLib
 }
 repositories {
     mavenCentral()

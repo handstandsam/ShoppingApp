@@ -14,7 +14,7 @@ class WireMockManager private constructor(private val contextForAssets: Context,
 
 
     private val dataDirectory = "/data/data"
-    private val wireMockDirectory = "wiremock"
+    private val wireMockDirectory = "debug/src/main/assets/wiremock"
 
     private var wireMockServer: WireMockServer? = null
 

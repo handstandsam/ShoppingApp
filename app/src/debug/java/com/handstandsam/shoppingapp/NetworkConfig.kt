@@ -24,14 +24,16 @@ internal class NetworkConfig(var applicationContext: Context) {
 
     fun recordMappingsAndProxy(remoteBaseUrl: String) {
         // Record
-        val wireMockManager = WireMockManager.Builder(applicationContext, NetworkModule.LOCALHOST_PORT).build()
+        val wireMockManager =
+            WireMockManager.Builder(applicationContext, NetworkModule.LOCALHOST_PORT).build()
         wireMockManager.startProxyAndRecord(remoteBaseUrl)
     }
 
 
     fun playbackRecordedMappings() {
         // Playback
-        val wireMockManager = WireMockManager.Builder(applicationContext, NetworkModule.LOCALHOST_PORT).build()
+        val wireMockManager =
+            WireMockManager.Builder(applicationContext, NetworkModule.LOCALHOST_PORT).build()
         wireMockManager.startPlayBack()
     }
 }

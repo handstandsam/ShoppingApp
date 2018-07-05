@@ -7,7 +7,6 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 
 object StubMappings {
 
-
     val categories: MappingBuilder
         @JvmStatic
         get() = get(urlEqualTo("/categories"))

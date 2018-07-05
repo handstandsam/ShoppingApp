@@ -52,13 +52,10 @@ object Libs {
     val retrofit_moshi_converter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     val processPhoenix = "com.jakewharton:process-phoenix:${Versions.process_phoenix}"
 
-    object Kotlin {
-    }
-
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     val daggerKapt = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+    val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     val okHttp3LoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     val okHttp3MockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     val retrofitConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
