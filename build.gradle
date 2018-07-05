@@ -1,108 +1,24 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.21'
-
-    ext.versions = [
-            minSdk        : 21,
-            targetSdk     : 26,
-            compileSdk    : 26,
-            buildTools    : '26.0.2',
-            supportLibrary: '27.0.2',
-            kotlin        : '1.2.21',
-            stetho        : '1.5.0',
-            okhttp        : '3.9.0',
-            rxJava        : '2.1.4',
-            rxAndroid     : '2.0.1',
-            retrofit      : '2.3.0',
-            glide         : '4.1.1',
-            dagger        : '2.13',
-            processPhoenix: '2.0.0',
-            chuck         : '1.0.4',
-            junit         : '4.12',
-            wiremock      : '2.8.0'
-    ]
-
-    ext.projects = [
-            'models': ':models'
-    ]
-
-    ext.deps = [
-            'android'                : [
-                    'runtime'     : 'com.google.android:android:4.1.1.4',
-                    'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",
-            ],
-            'support'                : [
-                    'supportV4'     : "com.android.support:support-v4:${versions.supportLibrary}",
-                    'appCompatV7'   : "com.android.support:appcompat-v7:${versions.supportLibrary}",
-                    'design'        : "com.android.support:design:${versions.supportLibrary}",
-                    'recyclerViewV7': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
-                    'annotations'   : "com.android.support:support-annotations:${versions.supportLibrary}",
-                    'test'          : [
-                            'runner'         : 'com.android.support.test:runner:1.0.1',
-                            'orchestrator'   : 'com.android.support.test:orchestrator:1.0.1',
-                            'espressoCore'   : 'com.android.support.test.espresso:espresso-core:3.0.1',
-                            'espressoContrib': 'com.android.support.test.espresso:espresso-contrib:3.0.1'
-                    ],
-            ],
-            'lint'                   : [
-                    'core'  : "com.android.tools.lint:lint:${versions.androidTools}",
-                    'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
-                    'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
-                    'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",
-            ],
-            javapoet                 : 'com.squareup:javapoet:1.9.0',
-            javaparser               : 'com.github.javaparser:javaparser-core:3.3.5',
-            junit                    : 'junit:junit:4.12',
-            truth                    : 'com.google.truth:truth:0.35',
-            timber                   : 'com.jakewharton.timber:timber:4.5.1',
-            stetho                   : "com.facebook.stetho:stetho:${versions.stetho}",
-            stethoOkHttp3            : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",
-            robolectric              : 'org.robolectric:robolectric:3.4.2',
-            compiletesting           : 'com.google.testing.compile:compile-testing:0.12',
-            'auto'                   : [
-                    'service': 'com.google.auto.service:auto-service:1.0-rc3',
-                    'common' : 'com.google.auto:auto-common:0.8',
-            ],
-            'release'                : [
-                    'runtime' : "com.jakewharton:butterknife:${versions.release}",
-                    'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"
-            ],
-            'kotlinStdLib'           : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-            'rxJava'                 : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
-            'rxAndroid'              : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
-            'retrofit'               : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-            'retrofitRxJavaAdapter'  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-            'retrofitMoshiConverter' : "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
-            'glide'                  : "com.github.bumptech.glide:glide:${versions.glide}",
-            'glideKapt'              : "com.github.bumptech.glide:compiler:${versions.glide}",
-            'dagger'                 : "com.google.dagger:dagger:${versions.dagger}",
-            'daggerKapt'             : "com.google.dagger:dagger-compiler:${versions.dagger}",
-            'processPhoenix'         : "com.jakewharton:process-phoenix:${versions.processPhoenix}",
-            'chuck'                  : "com.readystatesoftware.chuck:library:${versions.chuck}",
-            'junit'                  : "junit:junit:${versions.junit}",
-            'wiremock'               : "com.github.tomakehurst:wiremock:${versions.wiremock}",
-            'okhttp'                 : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
-            okhttpMockWebServer      : "com.squareup.okhttp3:mockwebserver:${versions.okhttp}",
-            okhttpLoggingInterceptor : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
-            'apacheHttpClientAndroid': 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-    ]
-
     repositories {
         jcenter()
         maven {
             url 'https://maven.google.com'
             // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
         }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
 
         // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // in the individual module build.gradle.kts files
     }
 }
+apply plugin: 'kotlin'
 
 allprojects {
     repositories {
@@ -116,13 +32,28 @@ allprojects {
 
 configurations.all {
     resolutionStrategy {
-        force 'com.squareup.okhttp3:okhttp:3.9.0'
-        force 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-        force 'com.squareup.okhttp3:mockwebserver:3.9.0'
+        force "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+        force "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+        force "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     }
 }
 
+repositories {
+    mavenCentral()
+}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion versions.buildTools
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
     defaultConfig {
         applicationId "com.handstandsam.shoppingapp"
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -55,35 +55,35 @@ dependencies {
     implementation project(":mock-data")
 
     //Support Libraries
-    implementation deps.support.supportV4
-    implementation deps.support.appCompatV7
-    implementation deps.support.recyclerViewV7
-    implementation deps.support.design
+    implementation Libs.supportV4
+    implementation Libs.support_appcompat_v7
+    implementation Libs.supportRecyclerView
+    implementation Libs.supportDesign
     //Rx
-    implementation deps.rxJava
-    implementation deps.rxAndroid
-    implementation deps.retrofitRxJavaAdapter
+    implementation Libs.rxjava2
+    implementation Libs.rx_android
+    implementation Libs.retrofit_rxjava_adapter
     //Networking
-    implementation deps.glide
-    kapt deps.glideKapt
-    implementation deps.retrofit
-    implementation deps.retrofitMoshiConverter
-    implementation deps.okhttp
-    implementation deps.dagger
-    kapt deps.daggerKapt
+    implementation Libs.glide
+    implementation Libs.retrofit
+    implementation Libs.retrofit_moshi_converter
+    implementation Libs.okHttp
+    implementation Libs.dagger
+    kapt Libs.daggerKapt
     //Logging
-    implementation deps.timber
+    implementation Libs.timber
     //DEBUG ONLY
-    debugImplementation deps.stetho
-    debugImplementation deps.stethoOkHttp3
-    debugImplementation deps.okhttpLoggingInterceptor
-    debugImplementation deps.processPhoenix
-    debugImplementation deps.chuck
+    debugImplementation Libs.stetho
+    debugImplementation Libs.stethoOkHttp3
+    debugImplementation Libs.okHttp3LoggingInterceptor
+    debugImplementation Libs.processPhoenix
+    debugImplementation Libs.chuck
+
     //JVM Tests Only
-    testImplementation deps.junit
+    testImplementation Libs.junit
 
     //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
-    implementation(deps.wiremock) {
+    implementation(Libs.wiremock) {
         //Using Android Version Instead
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
 
@@ -95,13 +95,13 @@ dependencies {
         //In case of problem, please repackage with jarjar to change the class packages
         exclude group: 'org.json', module: 'json'
     }
-    implementation deps.apacheHttpClientAndroid
+    implementation Libs.apacheHttpClientAndroid
     implementation 'commons-io:commons-io:2.4'
-    androidTestImplementation deps.support.test.espressoCore
-    androidTestImplementation deps.support.test.espressoContrib
-    androidTestImplementation deps.support.test.runner
-    androidTestUtil deps.support.test.orchestrator
-    implementation deps.kotlinStdLib
+    androidTestImplementation Libs.espressoCore
+    androidTestImplementation Libs.espressoContrib
+    androidTestImplementation Libs.runner
+    androidTestUtil Libs.orchestrator
+    implementation Libs.kotlinStdLib
 }
 repositories {
     mavenCentral()
