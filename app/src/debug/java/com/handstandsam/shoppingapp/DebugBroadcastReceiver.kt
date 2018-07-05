@@ -19,7 +19,7 @@ class DebugBroadcastReceiver : BroadcastReceiver() {
         if (intentAction == null || PR_NOTIFICATION != intentAction) {
             return
         }
-        Timber.d("processing " + PR_NOTIFICATION)
+        Timber.d("processing $PR_NOTIFICATION")
 
         val extras = intent.extras ?: return
 
@@ -31,6 +31,6 @@ class DebugBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
 
-        private val PR_NOTIFICATION = "PR_NOTIFICATION"
+        private const val PR_NOTIFICATION = "PR_NOTIFICATION"
     }
 }
