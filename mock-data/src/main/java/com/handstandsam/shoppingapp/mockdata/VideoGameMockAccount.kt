@@ -1,9 +1,9 @@
 package com.handstandsam.shoppingapp.mockdata
 
 
-import com.handstandsam.shoppingapp.models.*
-import com.handstandsam.shoppingapp.models.builders.CategoryBuilder
-import com.handstandsam.shoppingapp.models.builders.ItemBuilder
+import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.User
 import java.util.*
 
 class VideoGameMockAccount : MockAccount() {
@@ -17,64 +17,38 @@ class VideoGameMockAccount : MockAccount() {
 
     init {
         run {
-            val nesCategory = CategoryBuilder("Nintendo").image(imageUrl("console-nes.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Nintendo_Entertainment_System").build()
+            val nesCategory = Category("Nintendo",imageUrl("console-nes.jpg"),"https://en.wikipedia.org/wiki/Nintendo_Entertainment_System")
             val nesGames = ArrayList<Item>()
-            nesGames.add(ItemBuilder("Super Mario Bros. 3")
-                    .image(imageUrl("nes-mario3.png"))
-                    .link("https://en.wikipedia.org/wiki/Super_Mario_Bros._3").build())
-            nesGames.add(ItemBuilder("Tetris")
-                    .image(imageUrl("nes-tetris.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Tetris").build())
-            nesGames.add(ItemBuilder("Duck Hunt")
-                    .image(imageUrl("nes-duckhunt.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Duck_Hunt").build())
-            nesGames.add(ItemBuilder("Punch-Out!!")
-                    .image(imageUrl("nes-punchout.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Punch-Out!!_(NES)").build())
+            nesGames.add(Item("Super Mario Bros. 3",imageUrl("nes-mario3.png"),"https://en.wikipedia.org/wiki/Super_Mario_Bros._3"))
+            nesGames.add(Item("Tetris",imageUrl("nes-tetris.jpg"),"https://en.wikipedia.org/wiki/Tetris"))
+            nesGames.add(Item("Duck Hunt",imageUrl("nes-duckhunt.jpg"),"https://en.wikipedia.org/wiki/Duck_Hunt"))
+            nesGames.add(Item("Punch-Out!!",imageUrl("nes-punchout.jpg"),"https://en.wikipedia.org/wiki/Punch-Out!!_(NES)"))
 
 
-            itemsByCategory[nesCategory.label!!] = nesGames
+            itemsByCategory[nesCategory.label] = nesGames
             categories.add(nesCategory)
         }
         run {
-            val segaCategory = CategoryBuilder("Sega")
-                    .image(imageUrl("console-sega.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Sega_Genesis").build()
+            val segaCategory = Category("Sega",imageUrl("console-sega.jpg"),"https://en.wikipedia.org/wiki/Sega_Genesis")
             val segaGames = ArrayList<Item>()
-            segaGames.add(ItemBuilder("Sonic the Hedgehog")
-                    .image(imageUrl("sega-sonic.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(1991_video_game)").build())
-            segaGames.add(ItemBuilder("Mortal Kombat")
-                    .image(imageUrl("sega-mortalkombat.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Mortal_Kombat_(1992_video_game)").build())
-            segaGames.add(ItemBuilder("Altered Beast")
-                    .image(imageUrl("sega-alteredbeast.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Altered_Beast").build())
+            segaGames.add(Item("Sonic the Hedgehog",imageUrl("sega-sonic.jpg"),"https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(1991_video_game)"))
+            segaGames.add(Item("Mortal Kombat",imageUrl("sega-mortalkombat.jpg"),"https://en.wikipedia.org/wiki/Mortal_Kombat_(1992_video_game)"))
+            segaGames.add(Item("Altered Beast",imageUrl("sega-alteredbeast.jpg"),"https://en.wikipedia.org/wiki/Altered_Beast"))
 
 
-            itemsByCategory[segaCategory.label!!] = segaGames
+            itemsByCategory[segaCategory.label] = segaGames
             categories.add(segaCategory)
         }
         run {
-            val category = CategoryBuilder("Atari")
-                    .image(imageBaseUrl + "console-atari.jpg")
-                    .link("https://en.wikipedia.org/wiki/Atari").build()
+            val category = Category("Atari",imageBaseUrl + "console-atari.jpg","https://en.wikipedia.org/wiki/Atari")
             val games = ArrayList<Item>()
-            games.add(ItemBuilder("Breakout")
-                    .image(imageUrl("atari-breakout.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Breakout_(video_game)").build())
-            games.add(ItemBuilder("Asteroids")
-                    .image(imageUrl("atari-asteroids.jpg")).build())
-            games.add(ItemBuilder("Pac Man")
-                    .image(imageUrl("atari-pacman.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Pac-Man_(Atari_2600)").build())
-            games.add(ItemBuilder("Galaxian")
-                    .image(imageUrl("atari-galaxian.jpg"))
-                    .link("https://en.wikipedia.org/wiki/Pac-Man_(Atari_2600)").build())
+            games.add(Item("Breakout",imageUrl("atari-breakout.jpg"),"https://en.wikipedia.org/wiki/Breakout_(video_game)"))
+            games.add(Item("Asteroids",imageUrl("atari-asteroids.jpg")))
+            games.add(Item("Pac Man",imageUrl("atari-pacman.jpg"),"https://en.wikipedia.org/wiki/Pac-Man_(Atari_2600)"))
+            games.add(Item("Galaxian",imageUrl("atari-galaxian.jpg"),"https://en.wikipedia.org/wiki/Pac-Man_(Atari_2600)"))
 
 
-            itemsByCategory[category.label!!] = games
+            itemsByCategory[category.label] = games
             categories.add(category)
         }
     }

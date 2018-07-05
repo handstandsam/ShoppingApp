@@ -7,7 +7,7 @@ import com.handstandsam.shoppingapp.models.User
 
 abstract class MockAccount {
 
-    var itemsByCategory: MutableMap<String, MutableList<Item>?> = mutableMapOf()
+    val itemsByCategory: MutableMap<String, MutableList<Item>?> = mutableMapOf()
 
     abstract fun getUsername(): String
 

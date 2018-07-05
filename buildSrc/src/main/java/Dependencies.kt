@@ -96,7 +96,7 @@ object Libs {
     val supportDesign = "com.android.support:design:${Versions.support_lib}"
     val supportPreferenceV7 = "com.android.support:preference-v7:${Versions.support_lib}"
     val supportPreferenceV14 = "com.android.support:preference-v14:${Versions.support_lib}"
-    val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jre8:${Versions.kotlin}"
+    val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"

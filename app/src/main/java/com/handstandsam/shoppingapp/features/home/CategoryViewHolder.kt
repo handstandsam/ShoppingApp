@@ -11,6 +11,7 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.category.CategoryPresenter
 import com.handstandsam.shoppingapp.models.Category
+import kotlin.jvm.java
 
 
 internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,7 +20,7 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
 
     val imageView: ImageView = itemView.findViewById(R.id.image)
 
-    var category: Category? = null
+    lateinit var category: Category
 
     init {
         itemView.setOnClickListener {
@@ -42,6 +43,6 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
             itemView.setBackgroundResource(ColorInts.getColor(position))
         }
 
-        textView.text = this.category!!.label
+        textView.text = this.category.label
     }
 }

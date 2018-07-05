@@ -32,7 +32,7 @@ class CategoryPresenter(private val view: CategoryActivity.CategoryView) {
     fun onResume(intent: Intent) {
         val extras = intent.extras
         val (label) = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
-        view.setActionBarTitle(label!!)
+        view.setActionBarTitle(label)
         itemRepo.getItemsForCategory(label).subscribe(object : SingleObserver<List<Item>> {
             override fun onSubscribe(d: Disposable) {
 

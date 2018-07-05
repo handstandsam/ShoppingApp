@@ -26,14 +26,14 @@ class ItemDetailPresenter(private val view: ItemDetailActivity.ItemDetailView) {
         val item = extras!!.get(BUNDLE_PARAM_ITEM) as Item
         this.item = item
 
-        view.setLabel(item.label!!)
-        view.setImageUrl(item.image!!)
-        view.setActionBarTitle(item.label!!)
+        view.setLabel(item.label)
+        view.setImageUrl(item.image)
+        view.setActionBarTitle(item.label)
     }
 
     fun addToCardClicked() {
         cart.addItem(item)
-        view.showToast(item.label!! + " added to cart.")
+        view.showToast(item.label + " added to cart.")
     }
 
     companion object {

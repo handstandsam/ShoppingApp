@@ -1,9 +1,9 @@
 package com.handstandsam.shoppingapp.mockdata
 
 
-import com.handstandsam.shoppingapp.models.*
-import com.handstandsam.shoppingapp.models.builders.CategoryBuilder
-import com.handstandsam.shoppingapp.models.builders.ItemBuilder
+import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.User
 import java.util.*
 
 class ProduceMockAccount : MockAccount() {
@@ -13,50 +13,54 @@ class ProduceMockAccount : MockAccount() {
     internal var categories: List<Category> = ArrayList()
 
     init {
-        val fruitCategory = CategoryBuilder("Fruits").image(IMAGE_BASE_URL + "fuji-apple.jpg").build()
+        val fruitCategory = Category("Fruits", IMAGE_BASE_URL + "fuji-apple.jpg")
         val fruitItems = ArrayList<Item>()
-        fruitItems.add(ItemBuilder("Granny Smith Apple").image(IMAGE_BASE_URL + "granny-smith-apple.jpg").build())
-        fruitItems.add(ItemBuilder("Gala Apple").image(IMAGE_BASE_URL + "gala-apple.jpg").build())
-        fruitItems.add(ItemBuilder("Pineapple").image(IMAGE_BASE_URL + "pineapple.jpg").build())
-        fruitItems.add(ItemBuilder("Red Delicious Apple").image(IMAGE_BASE_URL + "red-delicious-apple.jpg").build())
-        fruitItems.add(ItemBuilder("Fuji Apple").image(IMAGE_BASE_URL + "fuji-apple.jpg").build())
-        fruitItems.add(ItemBuilder("Lemon").image(IMAGE_BASE_URL + "lemons.jpg").build())
-        fruitItems.add(ItemBuilder("Grapefruit").image(IMAGE_BASE_URL + "grapefruit.jpg").build())
-        fruitItems.add(ItemBuilder("Lime").image(IMAGE_BASE_URL + "lime.jpg").build())
-        fruitItems.add(ItemBuilder("Orange").image(IMAGE_BASE_URL + "orange.jpg").build())
-        itemsByCategory.put(fruitCategory.label!!, fruitItems)
+        fruitItems.add(Item("Granny Smith Apple", IMAGE_BASE_URL + "granny-smith-apple.jpg"))
+        fruitItems.add(Item("Gala Apple", IMAGE_BASE_URL + "gala-apple.jpg"))
+        fruitItems.add(Item("Pineapple", IMAGE_BASE_URL + "pineapple.jpg"))
+        fruitItems.add(Item("Red Delicious Apple", IMAGE_BASE_URL + "red-delicious-apple.jpg"))
+        fruitItems.add(Item("Fuji Apple", IMAGE_BASE_URL + "fuji-apple.jpg"))
+        fruitItems.add(Item("Lemon", IMAGE_BASE_URL + "lemons.jpg"))
+        fruitItems.add(Item("Grapefruit", IMAGE_BASE_URL + "grapefruit.jpg"))
+        fruitItems.add(Item("Lime", IMAGE_BASE_URL + "lime.jpg"))
+        fruitItems.add(Item("Orange", IMAGE_BASE_URL + "orange.jpg"))
+        itemsByCategory[fruitCategory.label] = fruitItems
 
-        val floralCategory = CategoryBuilder("Floral").image(IMAGE_BASE_URL + "white-rose.jpg").build()
+        val floralCategory =
+            Category("Floral", IMAGE_BASE_URL + "white-rose.jpg")
         val floralItems = ArrayList<Item>()
-        floralItems.add(ItemBuilder("White Rose").image(IMAGE_BASE_URL + "white-rose.jpg").build())
-        floralItems.add(ItemBuilder("Sunflower").image(IMAGE_BASE_URL + "sunflower.jpg").build())
-        itemsByCategory.put(floralCategory.label!!, floralItems)
+        floralItems.add(Item("White Rose", IMAGE_BASE_URL + "white-rose.jpg"))
+        floralItems.add(Item("Sunflower", IMAGE_BASE_URL + "sunflower.jpg"))
+        itemsByCategory[floralCategory.label] = floralItems
 
-        val seafoodCategory = CategoryBuilder("Seafood").image(IMAGE_BASE_URL + "shrimp.jpg").build()
+        val seafoodCategory =
+            Category("Seafood", IMAGE_BASE_URL + "shrimp.jpg")
         val seafoodItems = ArrayList<Item>()
-        seafoodItems.add(ItemBuilder("Lobster Tail").image(IMAGE_BASE_URL + "lobster-tail.jpg").build())
-        seafoodItems.add(ItemBuilder("Shrimp").image(IMAGE_BASE_URL + "shrimp.jpg").build())
-        seafoodItems.add(ItemBuilder("Scallop").image(IMAGE_BASE_URL + "scallops.jpg").build())
-        itemsByCategory.put(seafoodCategory.label!!, seafoodItems)
+        seafoodItems.add(Item("Lobster Tail", IMAGE_BASE_URL + "lobster-tail.jpg"))
+        seafoodItems.add(Item("Shrimp", IMAGE_BASE_URL + "shrimp.jpg"))
+        seafoodItems.add(Item("Scallop", IMAGE_BASE_URL + "scallops.jpg"))
+        itemsByCategory[seafoodCategory.label] = seafoodItems
 
-        val vegetableCategory = CategoryBuilder("Vegetables").image(IMAGE_BASE_URL + "kale.jpg").build()
+        val vegetableCategory =
+            Category("Vegetables", IMAGE_BASE_URL + "kale.jpg")
         val vegetableItems = ArrayList<Item>()
-        vegetableItems.add(ItemBuilder("Carrot").image(IMAGE_BASE_URL + "carrots.jpg").build())
-        vegetableItems.add(ItemBuilder("Cucumber").image(IMAGE_BASE_URL + "cucumber.jpg").build())
-        vegetableItems.add(ItemBuilder("Kale").image(IMAGE_BASE_URL + "kale.jpg").build())
-        vegetableItems.add(ItemBuilder("Romaine Lettuce").image(IMAGE_BASE_URL + "romaine-lettuce.jpg").build())
-        vegetableItems.add(ItemBuilder("Artichoke").image(IMAGE_BASE_URL + "artichoke.jpg").build())
-        vegetableItems.add(ItemBuilder("Beet").image(IMAGE_BASE_URL + "beet.jpg").build())
-        vegetableItems.add(ItemBuilder("Radish").image(IMAGE_BASE_URL + "radish.jpg").build())
-        vegetableItems.add(ItemBuilder("Tomato").image(IMAGE_BASE_URL + "tomato.jpg").build())
-        vegetableItems.add(ItemBuilder("Broccoli").image(IMAGE_BASE_URL + "broccoli.jpg").build())
-        vegetableItems.add(ItemBuilder("Avocado").image(IMAGE_BASE_URL + "avocado.jpg").build())
-        vegetableItems.add(ItemBuilder("Red Bell Pepper").image(IMAGE_BASE_URL + "red-bell-pepper.jpg").build())
-        vegetableItems.add(ItemBuilder("Orange Bell Pepper").image(IMAGE_BASE_URL + "orange-bell-pepper.jpg").build())
-        vegetableItems.add(ItemBuilder("Yellow Bell Pepper").image(IMAGE_BASE_URL + "yellow-bell-pepper.jpg").build())
-        itemsByCategory.put(vegetableCategory.label!!, vegetableItems)
+        vegetableItems.add(Item("Carrot", IMAGE_BASE_URL + "carrots.jpg"))
+        vegetableItems.add(Item("Cucumber", IMAGE_BASE_URL + "cucumber.jpg"))
+        vegetableItems.add(Item("Kale", IMAGE_BASE_URL + "kale.jpg"))
+        vegetableItems.add(Item("Romaine Lettuce", IMAGE_BASE_URL + "romaine-lettuce.jpg"))
+        vegetableItems.add(Item("Artichoke", IMAGE_BASE_URL + "artichoke.jpg"))
+        vegetableItems.add(Item("Beet", IMAGE_BASE_URL + "beet.jpg"))
+        vegetableItems.add(Item("Radish", IMAGE_BASE_URL + "radish.jpg"))
+        vegetableItems.add(Item("Tomato", IMAGE_BASE_URL + "tomato.jpg"))
+        vegetableItems.add(Item("Broccoli", IMAGE_BASE_URL + "broccoli.jpg"))
+        vegetableItems.add(Item("Avocado", IMAGE_BASE_URL + "avocado.jpg"))
+        vegetableItems.add(Item("Red Bell Pepper", IMAGE_BASE_URL + "red-bell-pepper.jpg"))
+        vegetableItems.add(Item("Orange Bell Pepper", IMAGE_BASE_URL + "orange-bell-pepper.jpg"))
+        vegetableItems.add(Item("Yellow Bell Pepper", IMAGE_BASE_URL + "yellow-bell-pepper.jpg"))
+        itemsByCategory[vegetableCategory.label] = vegetableItems
 
-        categories = Arrays.asList(fruitCategory, vegetableCategory, seafoodCategory, floralCategory)
+        categories =
+                Arrays.asList(fruitCategory, vegetableCategory, seafoodCategory, floralCategory)
     }
 
 
