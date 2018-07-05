@@ -6,7 +6,7 @@ import android.content.Intent
 import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.repository.ItemRepository
+import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class CategoryPresenter(private val view: CategoryActivity.CategoryView) {
     lateinit internal var sessionManager: SessionManager
 
     @Inject
-    lateinit internal var itemRepository: ItemRepository
+    lateinit internal var itemRepo: ItemRepo
 
     init {
         (applicationContext as MyAbstractApplication).appComponent.inject(this)
@@ -33,7 +33,7 @@ class CategoryPresenter(private val view: CategoryActivity.CategoryView) {
         val extras = intent.extras
         val (label) = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
         view.setActionBarTitle(label!!)
-        itemRepository.getItemsForCategory(label).subscribe(object : SingleObserver<List<Item>> {
+        itemRepo.getItemsForCategory(label).subscribe(object : SingleObserver<List<Item>> {
             override fun onSubscribe(d: Disposable) {
 
             }

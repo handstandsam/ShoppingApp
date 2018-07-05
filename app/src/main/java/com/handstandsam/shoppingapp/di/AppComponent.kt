@@ -10,9 +10,9 @@ import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
 import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.features.login.LoginPresenter
 import com.handstandsam.shoppingapp.mockaccount.Stubberator
-import com.handstandsam.shoppingapp.repository.CategoryRepository
-import com.handstandsam.shoppingapp.repository.ItemRepository
-import com.handstandsam.shoppingapp.repository.UserRepository
+import com.handstandsam.shoppingapp.repository.CategoryRepo
+import com.handstandsam.shoppingapp.repository.ItemRepo
+import com.handstandsam.shoppingapp.repository.UserRepo
 import dagger.Component
 import javax.inject.Singleton
 
@@ -39,11 +39,11 @@ interface AppComponent {
 
     fun inject(clazz: CheckoutPresenter)
 
-    fun inject(clazz: CategoryRepository)
+    fun inject(clazz: CategoryRepo)
 
-    fun inject(clazz: UserRepository)
+    fun inject(clazz: UserRepo)
 
-    fun inject(clazz: ItemRepository)
+    fun inject(clazz: ItemRepo)
 
 
 }

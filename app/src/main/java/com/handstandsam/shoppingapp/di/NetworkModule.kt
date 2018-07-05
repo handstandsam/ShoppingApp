@@ -24,10 +24,10 @@ open class NetworkModule(private var baseUrl: String) {
     @Provides
     internal fun retrofitBuilder(okHttpClientBuilder: OkHttpClient.Builder): Retrofit.Builder {
         return Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClientBuilder.build())
+            .baseUrl(baseUrl)
+            .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClientBuilder.build())
     }
 
     @Provides

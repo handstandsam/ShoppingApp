@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.models.Category
-import com.handstandsam.shoppingapp.repository.CategoryRepository
+import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
@@ -18,14 +18,14 @@ class HomePresenter(private val view: HomeActivity.HomeView) {
     lateinit var sessionManager: SessionManager
 
     @Inject
-    lateinit var categoryRepository: CategoryRepository
+    lateinit var categoryRepo: CategoryRepo
 
     init {
         (applicationContext as MyAbstractApplication).appComponent.inject(this)
     }
 
     fun onResume(intent: Intent) {
-        categoryRepository.getCategories().subscribe(object : SingleObserver<List<Category>> {
+        categoryRepo.getCategories().subscribe(object : SingleObserver<List<Category>> {
             override fun onSubscribe(d: Disposable) {
 
             }

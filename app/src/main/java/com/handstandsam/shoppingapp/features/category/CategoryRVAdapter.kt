@@ -11,7 +11,8 @@ internal class CategoryRVAdapter : RecyclerView.Adapter<ItemRowViewHolder>() {
     val items: MutableList<Item> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemRowViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_recyclerview_item_row, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.view_recyclerview_item_row, parent, false)
         return ItemRowViewHolder(view)
     }
 

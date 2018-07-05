@@ -12,7 +12,8 @@ class UserPreferences(context: Context) {
 
     private var moshi = Moshi.Builder().build()
 
-    private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+    private val sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
     val rememberMe: Boolean
         get() {
@@ -37,7 +38,10 @@ class UserPreferences(context: Context) {
             }
             return null
         }
-        set(user) = sharedPreferences.edit().putString(CURRENT_USER, moshi.adapter(User::class.java).toJson(user)).apply()
+        set(user) = sharedPreferences.edit().putString(
+            CURRENT_USER,
+            moshi.adapter(User::class.java).toJson(user)
+        ).apply()
 
     fun clearRememberMe() {
         setRememberMe(false, null)

@@ -60,11 +60,13 @@ class CategoryActivity : LoggedInActivity() {
 
         override fun showNetworkError(message: String?) {
             val builder = AlertDialog.Builder(
-                    this@CategoryActivity).setTitle("Networking Error")
+                this@CategoryActivity
+            ).setTitle("Networking Error")
             if (message != null) {
                 builder.setMessage(message)
             }
-            builder.setPositiveButton("OK") { dialogInterface, i -> this@CategoryActivity.finish() }.show()
+            builder.setPositiveButton("OK") { dialogInterface, i -> this@CategoryActivity.finish() }
+                .show()
         }
     }
 

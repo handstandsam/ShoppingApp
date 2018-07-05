@@ -8,19 +8,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class UserRepository(var shoppingService: ShoppingService) {
+class NetworkUserRepo(var shoppingService: ShoppingService) : UserRepo {
 
     internal var user: User? = null
 
-    fun save(user: User) {
+    override fun save(user: User) {
         Timber.d("Saving User: " + user)
         this.user = user
     }
 
-    fun login(loginRequest: LoginRequest): Single<User> {
+    override fun login(loginRequest: LoginRequest): Single<User> {
         return shoppingService
-                .login(loginRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .login(loginRequest)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

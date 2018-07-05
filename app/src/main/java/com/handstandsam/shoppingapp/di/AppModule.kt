@@ -21,7 +21,10 @@ class AppModule(internal var mApplication: Application) {
 
     @Singleton
     @Provides
-    internal fun sessionManager(checkoutCart: CheckoutCart, userPreferences: UserPreferences): SessionManager {
+    internal fun sessionManager(
+        checkoutCart: CheckoutCart,
+        userPreferences: UserPreferences
+    ): SessionManager {
         return SessionManager(checkoutCart, userPreferences)
     }
 

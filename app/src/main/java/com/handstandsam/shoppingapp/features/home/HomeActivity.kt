@@ -30,10 +30,16 @@ class HomeActivity : LoggedInActivity() {
         welcomeMessageText = findViewById(R.id.welcome_message)
         recyclerView = findViewById(R.id.categories)
         (application as MyAbstractApplication).appComponent.inject(this)
-        recyclerView!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView!!.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewAdapter = HomeRVAdapter()
         recyclerView!!.adapter = recyclerViewAdapter
-        recyclerView!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recyclerView!!.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         homeView = MyHomeView()
         presenter = HomePresenter(homeView)

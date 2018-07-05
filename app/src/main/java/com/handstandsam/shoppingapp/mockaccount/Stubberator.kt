@@ -12,8 +12,8 @@ import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.di.NetworkModule
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.User
-import com.handstandsam.shoppingapp.repository.CategoryRepository
-import com.handstandsam.shoppingapp.repository.ItemRepository
+import com.handstandsam.shoppingapp.repository.CategoryRepo
+import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 import com.squareup.moshi.Moshi
 import timber.log.Timber
@@ -22,10 +22,10 @@ import javax.inject.Inject
 class Stubberator(context: Context) {
 
     @Inject
-    lateinit var itemRepository: ItemRepository
+    lateinit var itemRepo: ItemRepo
 
     @Inject
-    lateinit var categoryRepository: CategoryRepository
+    lateinit var categoryRepo: CategoryRepo
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -45,7 +45,10 @@ class Stubberator(context: Context) {
             wireMockServer.start()
             wireMockServer.resetMappings()
         } else {
-            WireMock.configureFor(NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST, NetworkModule.REMOTE_PORT)
+            WireMock.configureFor(
+                NetworkModule.REMOTE_EMULATOR_ENDPOINT_HOST,
+                NetworkModule.REMOTE_PORT
+            )
             WireMock.reset()
         }
 
@@ -70,22 +73,38 @@ class Stubberator(context: Context) {
 
     fun stubCategories(mockAccount: MockAccount) {
         val json = moshi.adapter(List::class.java).toJson(mockAccount.getCategories())
-        stubFor(StubMappings.categories.willReturn(WireMock.aResponse().withStatus(200).withBody(json)))
+        stubFor(
+            StubMappings.categories.willReturn(
+                WireMock.aResponse().withStatus(200).withBody(
+                    json
+                )
+            )
+        )
     }
 
     fun stubItems(mockAccount: MockAccount) {
         mockAccount.itemsByCategory.keys.forEach({ categoryId ->
             val items = mockAccount.itemsByCategory[categoryId]
             val json = moshi.adapter(List::class.java).toJson(items)
-            stubFor(StubMappings.getItemsForCategory(categoryId).willReturn(WireMock.aResponse().withStatus(200).withBody(json)))
+            stubFor(
+                StubMappings.getItemsForCategory(categoryId).willReturn(
+                    WireMock.aResponse().withStatus(
+                        200
+                    ).withBody(json)
+                )
+            )
 
         })
     }
 
     fun stubLogin(mockAccount: MockAccount) {
         val json = moshi.adapter(User::class.java).toJson(mockAccount.getUser())
-        stubFor(StubMappings.login().willReturn(WireMock.aResponse()
-                .withStatus(200).withBody(json)))
+        stubFor(
+            StubMappings.login().willReturn(
+                WireMock.aResponse()
+                    .withStatus(200).withBody(json)
+            )
+        )
     }
 
 }

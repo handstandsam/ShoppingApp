@@ -6,7 +6,7 @@ import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences
 import com.handstandsam.shoppingapp.repository.SessionManager
-import com.handstandsam.shoppingapp.repository.UserRepository
+import com.handstandsam.shoppingapp.repository.UserRepo
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class LoginPresenter(private val view: LoginActivity.LoginView) {
     internal lateinit var userPreferences: UserPreferences
 
     @Inject
-    internal lateinit var userRepository: UserRepository
+    internal lateinit var userRepo: UserRepo
 
     init {
         view.appComponent.inject(this)
@@ -45,7 +45,7 @@ class LoginPresenter(private val view: LoginActivity.LoginView) {
         val rememberMe = view.isRememberMeChecked
         val username = view.username
         val password = view.password
-        userRepository.login(LoginRequest(username, password)).subscribe(object : SingleObserver<User> {
+        userRepo.login(LoginRequest(username, password)).subscribe(object : SingleObserver<User> {
             override fun onSubscribe(d: Disposable) {
 
             }
