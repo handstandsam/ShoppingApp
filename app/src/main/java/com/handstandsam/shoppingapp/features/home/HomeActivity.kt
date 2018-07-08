@@ -7,11 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.handstandsam.shoppingapp.LoggedInActivity
-import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
+
+    private val appGraph: AppGraph by lazy { AppGraph.instance }
 
     private lateinit var presenter: HomePresenter
 
@@ -29,7 +31,6 @@ class HomeActivity : LoggedInActivity() {
         setContentView(R.layout.activity_home)
         welcomeMessageText = findViewById(R.id.welcome_message)
         recyclerView = findViewById(R.id.categories)
-        (application as MyAbstractApplication).appComponent.inject(this)
         recyclerView!!.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewAdapter = HomeRVAdapter()
@@ -42,7 +43,11 @@ class HomeActivity : LoggedInActivity() {
         )
 
         homeView = MyHomeView()
-        presenter = HomePresenter(homeView)
+        presenter = HomePresenter(
+            view = homeView,
+            sessionManager = appGraph.sessionGraph.sessionManager,
+            categoryRepo = appGraph.networkGraph.categoryRepo
+        )
     }
 
     interface HomeView {
