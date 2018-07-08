@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion Versions.targetSdk
+    compileSdkVersion Versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
         versionCode 1
         versionName "1.0"
 
@@ -26,13 +26,13 @@ dependencies {
     implementation project(":models")
     implementation Libs.timber
     implementation Libs.okhttp
-    implementation 'commons-io:commons-io:2.4'
-    implementation Libs.kotlinStdLib
+    implementation Libs.apache_commons
+    implementation Libs.kotlin_std_lib
 
     api Libs.stetho
-    api Libs.stethoOkHttp3
-    api Libs.okHttp3LoggingInterceptor
-    api Libs.processPhoenix
+    api Libs.stetho_okhttp3
+    api Libs.okhttp_logging_interceptor
+    api Libs.process_phoenix
     api Libs.chuck
 
     //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.

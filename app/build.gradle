@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion Versions.compileSdk
-    buildToolsVersion Versions.buildTools
+    compileSdkVersion Versions.compile_sdk
+    buildToolsVersion Versions.build_tools
     defaultConfig {
         applicationId "com.handstandsam.shoppingapp"
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -56,10 +56,10 @@ dependencies {
     implementation project(":mock-data")
 
     //Support Libraries
-    implementation Libs.supportV4
+    implementation Libs.support_v4
     implementation Libs.support_appcompat_v7
-    implementation Libs.supportRecyclerView
-    implementation Libs.supportDesign
+    implementation Libs.support_recycler_view
+    implementation Libs.support_design
     //Rx
     implementation Libs.rxjava2
     implementation Libs.rx_android
@@ -70,8 +70,8 @@ dependencies {
     implementation Libs.retrofit_moshi_converter
     implementation Libs.okhttp
     implementation Libs.dagger
-    kapt Libs.daggerKapt
-    implementation Libs.kotlinStdLib
+    kapt Libs.dagger_kapt
+    implementation Libs.kotlin_std_lib
 
     //Logging
     implementation Libs.timber
@@ -79,12 +79,12 @@ dependencies {
     debugImplementation project(":debug")
 
     //JVM Tests Only
-    testImplementation Libs.junit
+    testImplementation TestLibs.junit
 
-    androidTestImplementation Libs.espressoCore
-    androidTestImplementation Libs.espressoContrib
-    androidTestImplementation Libs.runner
-    androidTestUtil Libs.orchestrator
+    androidTestImplementation TestLibs.espresso_core
+    androidTestImplementation TestLibs.espresso_contrib
+    androidTestImplementation TestLibs.runner
+    androidTestUtil TestLibs.orchestrator
 }
 repositories {
     mavenCentral()

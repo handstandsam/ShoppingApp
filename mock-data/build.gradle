@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion Versions.compileSdk
+    compileSdkVersion Versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
         versionCode 1
         versionName "1.0"
 
@@ -25,8 +25,9 @@ android {
 
 dependencies {
     implementation project(':models')
-    implementation Libs.kotlinStdLib
+    implementation Libs.kotlin_std_lib
 }
+
 repositories {
     mavenCentral()
 }
