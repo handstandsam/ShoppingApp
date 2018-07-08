@@ -12,10 +12,10 @@ class MyApplication : MyAbstractApplication() {
         super.onCreate()
     }
 
-    override fun createAppComponent(baseUrl: String): AppGraph {
+    override fun createAppGraph(): AppGraph {
         return AppGraph(
             sessionGraph = SessionGraphImpl(applicationContext),
-            networkGraph = DebugNetworkGraph(applicationContext, baseUrl)
+            networkGraph = DebugNetworkGraph(applicationContext)
         )
     }
 }

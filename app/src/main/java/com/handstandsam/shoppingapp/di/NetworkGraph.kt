@@ -19,10 +19,11 @@ interface NetworkGraph {
     val shoppingService: ShoppingService
 }
 
-open class NetworkGraphImpl(val appContext: Context, private var baseUrl: String) :
+open class NetworkGraphImpl(val appContext: Context) :
     NetworkGraph {
 
     override val retrofitBuilder: Retrofit.Builder by lazy {
+        var baseUrl = NetworkConstants.LOCALHOST_ENDPOINT
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/"
         }
@@ -41,11 +42,11 @@ open class NetworkGraphImpl(val appContext: Context, private var baseUrl: String
 
     override val shoppingService by lazy { retrofit.create(ShoppingService::class.java) }
 
-    override val categoryRepo by lazy { NetworkCategoryRepo(shoppingService)}
+    override val categoryRepo by lazy { NetworkCategoryRepo(shoppingService) }
 
-    override val itemRepo by lazy { NetworkItemRepo(shoppingService)}
+    override val itemRepo by lazy { NetworkItemRepo(shoppingService) }
 
-    override val userRepo by lazy { NetworkUserRepo(shoppingService)}
+    override val userRepo by lazy { NetworkUserRepo(shoppingService) }
 
 }
 

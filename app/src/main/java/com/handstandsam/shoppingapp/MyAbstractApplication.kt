@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp
 
 import android.app.Application
 import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.di.NetworkConstants
 import com.handstandsam.shoppingapp.di.NetworkGraphImpl
 import com.handstandsam.shoppingapp.di.SessionGraphImpl
 import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
@@ -15,7 +14,7 @@ abstract class MyAbstractApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        createAppComponent(NetworkConstants.LOCALHOST_ENDPOINT)
+        appGraph = createAppGraph()
         localWireMock()
         //        record();
         //        playback();
@@ -23,34 +22,33 @@ abstract class MyAbstractApplication : Application() {
     }
 
 
-    protected open fun createAppComponent(baseUrl: String): AppGraph {
-        appGraph = AppGraph(
+    protected open fun createAppGraph(): AppGraph {
+        return AppGraph(
             sessionGraph = SessionGraphImpl(applicationContext),
-            networkGraph = NetworkGraphImpl(applicationContext, baseUrl)
+            networkGraph = NetworkGraphImpl(applicationContext)
         )
-        return appGraph
     }
 
     //    fun startNormally() {
-//        appComponent = createAppComponent(NetworkModule.S3_ENDPOINT)
+//        appComponent = createAppGraph(NetworkModule.S3_ENDPOINT)
 //        val networkConfig = NetworkConfig(this)
 //        networkConfig.startNormally()
 //    }
 //
 //    fun record() {
-//        appComponent = createAppComponent("http://localhost:8080")
+//        appComponent = createAppGraph("http://localhost:8080")
 //        val networkConfig = NetworkConfig(this)
 //        networkConfig.recordMappingsAndProxy(NetworkModule.S3_ENDPOINT)
 //    }
 //
 //    fun playback() {
-//        appComponent = createAppComponent("http://localhost:8080")
+//        appComponent = createAppGraph("http://localhost:8080")
 //        val networkConfig = NetworkConfig(this)
 //        networkConfig.playbackRecordedMappings()
 //    }
 //
 //    fun connectToLaptop() {
-//        appComponent = createAppComponent("http://10.0.2.2:8080")
+//        appComponent = createAppGraph("http://10.0.2.2:8080")
 //        val networkConfig = NetworkConfig(this)
 //        networkConfig.startNormally()
 //    }
@@ -60,5 +58,8 @@ abstract class MyAbstractApplication : Application() {
 //        networkConfig.stubLocalWireMock(VideoGameMockAccount())
         networkConfig.stubLocalWireMock(ProduceMockAccount())
     }
+}
 
+fun Application.appGraph(): AppGraph {
+    return (this as MyAbstractApplication).appGraph
 }

@@ -8,9 +8,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 class DebugNetworkGraph(
-    appContext: Context,
-    baseUrl: String
-) : NetworkGraphImpl(appContext, baseUrl) {
+    appContext: Context
+) : NetworkGraphImpl(appContext) {
 
     override val okHttpClientBuilder: OkHttpClient.Builder by lazy {
         val builder = OkHttpClient.Builder()

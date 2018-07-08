@@ -12,11 +12,12 @@ import android.widget.Toast
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.home.HomeActivity
+import com.handstandsam.shoppingapp.appGraph
 import io.reactivex.disposables.Disposable
 
 class LoginActivity : AppCompatActivity() {
 
-    private val appGraph: AppGraph by lazy { AppGraph.instance }
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     lateinit var rememberMeCheckbox: AppCompatCheckBox
 

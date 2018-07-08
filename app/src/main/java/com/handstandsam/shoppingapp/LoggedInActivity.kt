@@ -13,7 +13,7 @@ import com.handstandsam.shoppingapp.repository.SessionManager
 
 open class LoggedInActivity : AppCompatActivity() {
 
-    private val appGraph: AppGraph by lazy { AppGraph.instance }
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     lateinit var sessionManager: SessionManager
 

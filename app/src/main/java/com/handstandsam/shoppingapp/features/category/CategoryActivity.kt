@@ -8,11 +8,12 @@ import android.support.v7.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.appGraph
 import com.handstandsam.shoppingapp.models.Item
 
 class CategoryActivity : LoggedInActivity() {
 
-    private val appGraph: AppGraph by lazy { AppGraph.instance }
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     private lateinit var recyclerView: RecyclerView
 
