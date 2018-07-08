@@ -23,8 +23,8 @@ class CheckoutActivity : LoggedInActivity() {
         supportActionBar!!.setTitle(R.string.cart)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_checkout)
-        itemCountTextView = findViewById<TextView>(R.id.item_count)
-        itemsText = findViewById<TextView>(R.id.items)
+        itemCountTextView = findViewById(R.id.item_count)
+        itemsText = findViewById(R.id.items)
         (application as MyAbstractApplication).appComponent.inject(this)
 
         view = MyCheckoutView()

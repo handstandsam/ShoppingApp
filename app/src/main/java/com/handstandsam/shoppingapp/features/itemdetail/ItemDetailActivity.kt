@@ -29,8 +29,8 @@ class ItemDetailActivity : LoggedInActivity() {
         setContentView(R.layout.activity_item_detail)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         titleText = findViewById(R.id.title_text)
-        imageView = findViewById<AppCompatImageView>(R.id.image)
-        addToCartButton = findViewById<AppCompatButton>(R.id.add_to_cart)
+        imageView = findViewById(R.id.image)
+        addToCartButton = findViewById(R.id.add_to_cart)
         (application as MyAbstractApplication).appComponent.inject(this)
 
         view = MyItemDetailView()

@@ -33,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar!!.title = "Log in to Shopping App"
-        passwordEditText = findViewById<AppCompatEditText>(R.id.password)
-        usernameEditText = findViewById<AppCompatEditText>(R.id.username)
-        rememberMeCheckbox = findViewById<AppCompatCheckBox>(R.id.remember_me)
+        passwordEditText = findViewById(R.id.password)
+        usernameEditText = findViewById(R.id.username)
+        rememberMeCheckbox = findViewById(R.id.remember_me)
         findViewById<View>(R.id.submit).setOnClickListener { presenter.loginClicked() }
         (application as MyAbstractApplication).appComponent.inject(this)
 
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             // If the event is a key-down event on the "enter" button
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                presenter!!.loginClicked()
+                presenter.loginClicked()
                 return@OnKeyListener true
             }
             false
