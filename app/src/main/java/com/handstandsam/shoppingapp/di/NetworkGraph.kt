@@ -2,6 +2,7 @@ package com.handstandsam.shoppingapp.di
 
 import android.content.Context
 import com.handstandsam.shoppingapp.NetworkConfigs
+import com.handstandsam.shoppingapp.debugDimensionAddInterceptors
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.NetworkManager
 import com.handstandsam.shoppingapp.network.ShoppingService
@@ -16,24 +17,20 @@ interface NetworkGraph {
     val categoryRepo: CategoryRepo
     val itemRepo: ItemRepo
     val userRepo: UserRepo
-    val retrofitBuilder: Retrofit.Builder
-    val okHttpClientBuilder: OkHttpClient.Builder
-    val retrofit: Retrofit
-    val shoppingService: ShoppingService
-    val networkConfig: NetworkConfig
-    val networkManager: NetworkManager
 }
 
-open class NetworkGraphImpl(val appContext: Context) :
+open class NetworkGraphImpl(private val appContext: Context) :
     NetworkGraph {
 
-    override val networkConfig: NetworkConfig = NetworkConfigs.LOCALHOST
-
-    override val networkManager: NetworkManager by lazy {
-        NetworkManager(appContext, networkConfig)
+    open val networkConfig: NetworkConfig by lazy {
+        NetworkConfigs.LOCALHOST
     }
 
-    override val retrofitBuilder: Retrofit.Builder by lazy {
+    init {
+        NetworkManager(appContext, networkConfig).init()
+    }
+
+    private val retrofitBuilder: Retrofit.Builder by lazy {
         Retrofit.Builder()
             .baseUrl(networkConfig.fullUrl)
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
@@ -41,19 +38,19 @@ open class NetworkGraphImpl(val appContext: Context) :
             .client(okHttpClientBuilder.build())
     }
 
-    override val okHttpClientBuilder by lazy {
-        OkHttpClient.Builder()
+    protected open val okHttpClientBuilder by lazy {
+        OkHttpClient.Builder().debugDimensionAddInterceptors(appContext)
     }
 
-    override val retrofit: Retrofit by lazy { retrofitBuilder.build() }
+    private val retrofit: Retrofit by lazy { retrofitBuilder.build() }
 
-    override val shoppingService: ShoppingService by lazy { retrofit.create(ShoppingService::class.java) }
+    private val shoppingService: ShoppingService by lazy { retrofit.create(ShoppingService::class.java) }
 
-    override val categoryRepo by lazy { NetworkCategoryRepo(shoppingService) }
+    override val categoryRepo: CategoryRepo by lazy { NetworkCategoryRepo(shoppingService) }
 
-    override val itemRepo by lazy { NetworkItemRepo(shoppingService) }
+    override val itemRepo: ItemRepo by lazy { NetworkItemRepo(shoppingService) }
 
-    override val userRepo by lazy { NetworkUserRepo(shoppingService) }
+    override val userRepo: UserRepo by lazy { NetworkUserRepo(shoppingService) }
 
 }
 

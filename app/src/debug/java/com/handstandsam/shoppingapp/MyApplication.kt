@@ -1,8 +1,5 @@
 package com.handstandsam.shoppingapp
 
-import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.di.DebugNetworkGraph
-import com.handstandsam.shoppingapp.di.SessionGraphImpl
 import timber.log.Timber
 
 class MyApplication : MyAbstractApplication() {
@@ -10,12 +7,5 @@ class MyApplication : MyAbstractApplication() {
     override fun onCreate() {
         Timber.plant(Timber.DebugTree())
         super.onCreate()
-    }
-
-    override val appGraph: AppGraph by lazy {
-        AppGraph(
-            sessionGraph = SessionGraphImpl(applicationContext),
-            networkGraph = DebugNetworkGraph(applicationContext)
-        )
     }
 }

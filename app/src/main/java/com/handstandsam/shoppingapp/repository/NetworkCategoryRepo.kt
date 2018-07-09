@@ -10,7 +10,7 @@ class NetworkCategoryRepo(private val shoppingService: ShoppingService) : Catego
 
     override fun getCategories(): Single<List<Category>> {
         return shoppingService
-            .categories
+            .categories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

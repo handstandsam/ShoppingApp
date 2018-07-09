@@ -6,6 +6,7 @@ import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 class HomePresenter(
     private val view: HomeActivity.HomeView,
@@ -16,7 +17,7 @@ class HomePresenter(
     fun onResume(intent: Intent) {
         categoryRepo.getCategories().subscribe(object : SingleObserver<List<Category>> {
             override fun onSubscribe(d: Disposable) {
-
+                Timber.d("onSubscribe")
             }
 
             override fun onSuccess(categories: List<Category>) {
@@ -24,6 +25,7 @@ class HomePresenter(
             }
 
             override fun onError(e: Throwable) {
+                Timber.d("onError")
 
             }
         })

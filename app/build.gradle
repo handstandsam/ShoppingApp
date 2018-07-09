@@ -48,6 +48,38 @@ android {
         execution 'ANDROID_TEST_ORCHESTRATOR'
         animationsDisabled = true
     }
+
+    flavorDimensions "server"
+
+    productFlavors {
+        memory {
+            dimension "server"
+        }
+
+        mock {
+            dimension "server"
+        }
+
+        live {
+            dimension "server"
+        }
+    }
+
+    variantFilter { variant ->
+        def fullName = variant.name
+        def names = variant.flavors*.name
+        println(fullName)
+//        println(names)
+//        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+//        if (fullName.endsWith("debug")) {
+//            // Gradle ignores any variants that satisfy the conditions above.
+//            setIgnore(false)
+//        } else {
+//            setIgnore(true)
+//        }
+    }
+
+
 }
 
 dependencies {

@@ -74,7 +74,6 @@ class Stubberator(val useLocalServer: Boolean) {
                     ).withBody(json)
                 )
             )
-
         }
     }
 

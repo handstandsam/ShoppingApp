@@ -15,8 +15,8 @@ interface ShoppingService {
     @POST("login")
     fun login(@Body loginRequest: LoginRequest): Single<User>
 
-    @get:GET("categories")
-    val categories: Single<List<Category>>
+    @GET("categories")
+    fun categories(): Single<List<Category>>
 
     @GET("category/{categoryName}/items")
     fun getItemsForCategory(@Path("categoryName") categoryName: String): Single<List<Item>>
