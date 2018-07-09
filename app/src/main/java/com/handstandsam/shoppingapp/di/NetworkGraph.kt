@@ -1,6 +1,8 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
+import com.handstandsam.shoppingapp.NetworkConfigs
+import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.NetworkManager
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.*
@@ -65,35 +67,4 @@ object NetworkConstants {
     val REMOTE_PORT = 8080
     val REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2"
     var LAPTOP_FROM_EMULATOR_ENDPOINT = "http://$REMOTE_EMULATOR_ENDPOINT_HOST:$REMOTE_PORT"
-}
-
-data class NetworkConfig(
-    val baseUrl: String = "http://localhost",
-    val recordProxyEndpoint: String? = null,
-    val loadAndPlaybackFileBasedMappings: Boolean = false,
-    val port: Int = 8080,
-    val isWireMockServer: Boolean = true
-) {
-    val fullUrl by lazy {
-        var fullUrl = "$baseUrl:$port"
-        if (!baseUrl.endsWith("/")) {
-            fullUrl += "/"
-        }
-        fullUrl
-    }
-
-    val isLocalhostServer by lazy {
-        baseUrl.contains("//127.0.0.1") || baseUrl.contains("//localhost")
-    }
-}
-
-object NetworkConfigs {
-    val LOCALHOST: NetworkConfig = NetworkConfig()
-    val LAPTOP: NetworkConfig = NetworkConfig(baseUrl = "http://10.0.2.2:8080")
-    val S_3_LIVE_ENDPOINT: NetworkConfig =
-        NetworkConfig(baseUrl = "https://shopping-app.s3.amazonaws.com")
-    val RECORD_S_3_LIVE_ENDPOINT: NetworkConfig =
-        NetworkConfig(recordProxyEndpoint = "https://shopping-app.s3.amazonaws.com")
-    val PLAYBACK_FILE_BASED_MAPPINGS: NetworkConfig =
-        NetworkConfig(loadAndPlaybackFileBasedMappings = true)
 }

@@ -27,6 +27,7 @@ dependencies {
     implementation Libs.retrofit
     implementation Libs.retrofit_rxjava_adapter
     implementation Libs.rxjava2
+    implementation Libs.kotlin_std_lib
 
 }
 repositories {

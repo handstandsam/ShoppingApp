@@ -84,11 +84,11 @@ class WireMockManager(
             wireMockConfig().port(httpPort)
                 .withRootDirectory(rootDirectory)
         )
-        wireMockServer!!.enableRecordMappings(
+        wireMockServer.enableRecordMappings(
             SingleRootFileSource(mappingDirectory),
             SingleRootFileSource(fileDirectory)
         )
-        wireMockServer!!.stubFor(
+        wireMockServer.stubFor(
             any(urlMatching(WILDCARD)).willReturn(
                 aResponse().proxiedFrom(
                     remoteBaseUrl

@@ -2,7 +2,9 @@ package com.handstandsam.shoppingapp.di
 
 import android.content.Context
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.handstandsam.shoppingapp.NetworkConfigs
 import com.handstandsam.shoppingapp.debug.DebugPreferences
+import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

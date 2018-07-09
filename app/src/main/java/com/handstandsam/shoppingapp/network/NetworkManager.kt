@@ -1,10 +1,10 @@
 package com.handstandsam.shoppingapp.network
 
 import android.content.Context
-import com.handstandsam.shoppingapp.di.NetworkConfig
 import com.handstandsam.shoppingapp.mockaccount.Stubberator
 import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
 import com.handstandsam.shoppingapp.wiremock.WireMockManager
+import com.handstandsam.shoppingapp.models.NetworkConfig
 
 
 class NetworkManager(private val appContext: Context, private val networkConfig: NetworkConfig) {
