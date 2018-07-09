@@ -11,6 +11,8 @@ class DebugNetworkGraph(
     appContext: Context
 ) : NetworkGraphImpl(appContext) {
 
+    override val networkConfig: NetworkConfig = NetworkConfigs.LOCALHOST
+
     override val okHttpClientBuilder: OkHttpClient.Builder by lazy {
         val builder = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

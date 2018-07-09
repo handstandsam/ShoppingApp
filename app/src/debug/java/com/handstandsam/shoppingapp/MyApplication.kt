@@ -12,8 +12,8 @@ class MyApplication : MyAbstractApplication() {
         super.onCreate()
     }
 
-    override fun createAppGraph(): AppGraph {
-        return AppGraph(
+    override val appGraph: AppGraph by lazy {
+        AppGraph(
             sessionGraph = SessionGraphImpl(applicationContext),
             networkGraph = DebugNetworkGraph(applicationContext)
         )

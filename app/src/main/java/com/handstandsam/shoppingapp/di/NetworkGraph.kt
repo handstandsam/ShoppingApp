@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
+import com.handstandsam.shoppingapp.network.NetworkManager
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.*
 import com.squareup.moshi.Moshi
@@ -17,18 +18,22 @@ interface NetworkGraph {
     val okHttpClientBuilder: OkHttpClient.Builder
     val retrofit: Retrofit
     val shoppingService: ShoppingService
+    val networkConfig: NetworkConfig
+    val networkManager: NetworkManager
 }
 
 open class NetworkGraphImpl(val appContext: Context) :
     NetworkGraph {
 
+    override val networkConfig: NetworkConfig = NetworkConfigs.LOCALHOST
+
+    override val networkManager: NetworkManager by lazy {
+        NetworkManager(appContext, networkConfig)
+    }
+
     override val retrofitBuilder: Retrofit.Builder by lazy {
-        var baseUrl = NetworkConstants.LOCALHOST_ENDPOINT
-        if (!baseUrl.endsWith("/")) {
-            baseUrl += "/"
-        }
         Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(networkConfig.fullUrl)
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClientBuilder.build())
@@ -38,9 +43,9 @@ open class NetworkGraphImpl(val appContext: Context) :
         OkHttpClient.Builder()
     }
 
-    override val retrofit by lazy { retrofitBuilder.build() }
+    override val retrofit: Retrofit by lazy { retrofitBuilder.build() }
 
-    override val shoppingService by lazy { retrofit.create(ShoppingService::class.java) }
+    override val shoppingService: ShoppingService by lazy { retrofit.create(ShoppingService::class.java) }
 
     override val categoryRepo by lazy { NetworkCategoryRepo(shoppingService) }
 
@@ -60,4 +65,35 @@ object NetworkConstants {
     val REMOTE_PORT = 8080
     val REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2"
     var LAPTOP_FROM_EMULATOR_ENDPOINT = "http://$REMOTE_EMULATOR_ENDPOINT_HOST:$REMOTE_PORT"
+}
+
+data class NetworkConfig(
+    val baseUrl: String = "http://localhost",
+    val recordProxyEndpoint: String? = null,
+    val loadAndPlaybackFileBasedMappings: Boolean = false,
+    val port: Int = 8080,
+    val isWireMockServer: Boolean = true
+) {
+    val fullUrl by lazy {
+        var fullUrl = "$baseUrl:$port"
+        if (!baseUrl.endsWith("/")) {
+            fullUrl += "/"
+        }
+        fullUrl
+    }
+
+    val isLocalhostServer by lazy {
+        baseUrl.contains("//127.0.0.1") || baseUrl.contains("//localhost")
+    }
+}
+
+object NetworkConfigs {
+    val LOCALHOST: NetworkConfig = NetworkConfig()
+    val LAPTOP: NetworkConfig = NetworkConfig(baseUrl = "http://10.0.2.2:8080")
+    val S_3_LIVE_ENDPOINT: NetworkConfig =
+        NetworkConfig(baseUrl = "https://shopping-app.s3.amazonaws.com")
+    val RECORD_S_3_LIVE_ENDPOINT: NetworkConfig =
+        NetworkConfig(recordProxyEndpoint = "https://shopping-app.s3.amazonaws.com")
+    val PLAYBACK_FILE_BASED_MAPPINGS: NetworkConfig =
+        NetworkConfig(loadAndPlaybackFileBasedMappings = true)
 }

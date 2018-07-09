@@ -10,87 +10,98 @@ import timber.log.Timber
 import java.io.File
 import java.util.*
 
-class WireMockManager private constructor(private val contextForAssets: Context, private val httpPort: Int) {
-
+class WireMockManager(
+    private val contextForAssets: Context,
+    private val httpPort: Int
+) {
 
     private val dataDirectory = "/data/data"
+
     private val wireMockDirectory = "debug/src/main/assets/wiremock"
 
-    private var wireMockServer: WireMockServer? = null
+    private lateinit var wireMockServer: WireMockServer
 
     private val WILDCARD = ".*"
+
     private var remoteBaseUrl: String? = null
 
     private val fileUtils: FileUtils = FileUtils(contextForAssets)
 
     private val rootDirectory: String
         get() {
-            val rootDirectory = dataDirectory + "/" + contextForAssets.packageName + "/" + wireMockDirectory
-            Timber.d("rootDirectory " + rootDirectory)
+            val rootDirectory =
+                dataDirectory + "/" + contextForAssets.packageName + "/" + wireMockDirectory
+            Timber.d("rootDirectory $rootDirectory")
             return rootDirectory
         }
 
     private val mappingDirectory: String
         get() {
             val mappingDirectory = rootDirectory + "/" + WireMockApp.MAPPINGS_ROOT
-            Timber.d("mappingDirectory " + mappingDirectory)
+            Timber.d("mappingDirectory $mappingDirectory")
             return mappingDirectory
         }
 
     private val fileDirectory: String
         get() {
             val fileDirectory = rootDirectory + "/" + WireMockApp.FILES_ROOT
-            Timber.d("fileDirectory " + fileDirectory)
+            Timber.d("fileDirectory $fileDirectory")
             return fileDirectory
         }
 
-    class Builder(private val contextForAssets: Context, private val httpPort: Int) {
-
-        fun build(): WireMockManager {
-            return WireMockManager(contextForAssets, httpPort)
-        }
-    }
-
     fun startProxyAndRecord(remoteBaseUrl: String) {
-        if (wireMockServer != null && wireMockServer!!.isRunning) {
-            wireMockServer!!.stop()
+        if (wireMockServer.isRunning) {
+            wireMockServer.stop()
         }
 
         this.remoteBaseUrl = remoteBaseUrl
         removeOldWireMockStubs()
         createWireMockFolderStructure()
         instantiateProxyServer()
-        wireMockServer!!.start()
+        wireMockServer.start()
     }
 
     fun startPlayBack() {
-        if (wireMockServer != null && wireMockServer!!.isRunning) {
-            wireMockServer!!.stop()
+        if (wireMockServer.isRunning) {
+            wireMockServer.stop()
         }
 
         removeOldWireMockStubs()
         createWireMockFolderStructure()
         copyNewWireMockStubs()
         instantiatePlayBackServer()
-        wireMockServer!!.start()
+        wireMockServer.start()
     }
 
     fun stopServer() {
-        if (wireMockServer!!.isRunning) {
-            wireMockServer!!.stop()
+        if (wireMockServer.isRunning) {
+            wireMockServer.stop()
         }
     }
 
     private fun instantiateProxyServer() {
-        wireMockServer = WireMockServer(wireMockConfig().port(httpPort)
-                .withRootDirectory(rootDirectory))
-        wireMockServer!!.enableRecordMappings(SingleRootFileSource(mappingDirectory), SingleRootFileSource(fileDirectory))
-        wireMockServer!!.stubFor(any(urlMatching(WILDCARD)).willReturn(aResponse().proxiedFrom(remoteBaseUrl)))
+        wireMockServer = WireMockServer(
+            wireMockConfig().port(httpPort)
+                .withRootDirectory(rootDirectory)
+        )
+        wireMockServer!!.enableRecordMappings(
+            SingleRootFileSource(mappingDirectory),
+            SingleRootFileSource(fileDirectory)
+        )
+        wireMockServer!!.stubFor(
+            any(urlMatching(WILDCARD)).willReturn(
+                aResponse().proxiedFrom(
+                    remoteBaseUrl
+                )
+            )
+        )
     }
 
     private fun instantiatePlayBackServer() {
-        wireMockServer = WireMockServer(wireMockConfig().port(httpPort)
-                .withRootDirectory(rootDirectory))
+        wireMockServer = WireMockServer(
+            wireMockConfig().port(httpPort)
+                .withRootDirectory(rootDirectory)
+        )
     }
 
     private fun removeOldWireMockStubs() {
@@ -116,6 +127,4 @@ class WireMockManager private constructor(private val contextForAssets: Context,
     private fun copyNewWireMockStubs() {
         fileUtils.copyFileOrDir(wireMockDirectory)
     }
-
-
 }
