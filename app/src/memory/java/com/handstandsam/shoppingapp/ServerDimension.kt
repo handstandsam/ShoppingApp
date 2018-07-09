@@ -3,8 +3,8 @@ package com.handstandsam.shoppingapp
 import android.content.Context
 import com.handstandsam.shoppingapp.di.NetworkGraph
 import com.handstandsam.shoppingapp.di.NetworkGraphImpl
+import com.handstandsam.shoppingapp.mockdata.AndroidLibsMockAccount
 import com.handstandsam.shoppingapp.mockdata.MockAccount
-import com.handstandsam.shoppingapp.mockdata.VideoGameMockAccount
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.LoginRequest
@@ -15,7 +15,7 @@ import com.handstandsam.shoppingapp.repository.UserRepo
 import io.reactivex.Single
 import timber.log.Timber
 
-val mockAccount: MockAccount = VideoGameMockAccount()
+val mockAccount: MockAccount = AndroidLibsMockAccount()
 
 class InMemoryNetworkGraph(appContext: Context) : NetworkGraphImpl(appContext) {
     override val categoryRepo: CategoryRepo by lazy {

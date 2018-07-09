@@ -4,7 +4,6 @@ import android.content.Context
 import com.handstandsam.shoppingapp.NetworkConfigs
 import com.handstandsam.shoppingapp.debugDimensionAddInterceptors
 import com.handstandsam.shoppingapp.models.NetworkConfig
-import com.handstandsam.shoppingapp.network.NetworkManager
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.*
 import com.squareup.moshi.Moshi
@@ -22,13 +21,7 @@ interface NetworkGraph {
 open class NetworkGraphImpl(private val appContext: Context) :
     NetworkGraph {
 
-    open val networkConfig: NetworkConfig by lazy {
-        NetworkConfigs.LOCALHOST
-    }
-
-    init {
-        NetworkManager(appContext, networkConfig).init()
-    }
+    open val networkConfig: NetworkConfig = NetworkConfigs.LOCALHOST
 
     private val retrofitBuilder: Retrofit.Builder by lazy {
         Retrofit.Builder()

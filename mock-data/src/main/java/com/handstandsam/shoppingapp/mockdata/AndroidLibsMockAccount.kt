@@ -19,36 +19,28 @@ class AndroidLibsMockAccount : MockAccount() {
                 "https://www.kullabs.com/uploads/Communication11.jpg",
                 "https://www.kullabs.com/classes/subjects/units/lessons/notes/note-detail/6823"
             )
-            val items = ArrayList<Item>()
-            items.add(
+            val items = listOf(
+
                 Item(
                     "WireMock",
                     IMAGE_BASE_URL + "wiremock.png",
                     "https://github.com/tomakehurst/wiremock"
-                )
-            )
-            items.add(
+                ),
                 Item(
                     "Mock Web Server",
                     IMAGE_BASE_URL + "mockwebserver.png",
                     "https://github.com/square/okhttp/tree/master/mockwebserver"
-                )
-            )
-            items.add(
+                ),
                 Item(
                     "RESTMock",
                     IMAGE_BASE_URL + "restmock.png",
                     "https://github.com/andrzejchm/RESTMock"
-                )
-            )
-            items.add(
+                ),
                 Item(
                     "OkReplay",
                     IMAGE_BASE_URL + "okreplay.png",
                     "https://github.com/airbnb/okreplay"
-                )
-            )
-            items.add(
+                ),
                 Item(
                     "Mockito",
                     IMAGE_BASE_URL + "mockito.png",
@@ -85,22 +77,18 @@ class AndroidLibsMockAccount : MockAccount() {
                 "https://upload.wikimedia.org/wikipedia/commons/1/10/W3sDesign_Dependency_Injection_Design_Pattern_UML.jpg",
                 "https://en.wikipedia.org/wiki/Dependency_injection"
             )
-            val items = ArrayList<Item>()
-            items.add(
+            val items = listOf(
                 Item(
                     "Dagger 2",
                     "https://upload.wikimedia.org/wikipedia/en/b/ba/Sonic_the_Hedgehog_1_Genesis_box_art.jpg",
                     "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(1991_video_game)"
                 )
-            )
-            items.add(
-                Item(
+                , Item(
                     "Toothpick",
                     "https://upload.wikimedia.org/wikipedia/en/3/33/Mortal_Kombat_cover.JPG",
                     "https://en.wikipedia.org/wiki/Mortal_Kombat_(1992_video_game)"
                 )
-            )
-            items.add(
+                ,
                 Item(
                     "Altered Beast",
                     "https://upload.wikimedia.org/wikipedia/en/0/05/Altered_Beast_cover.jpg",
@@ -119,15 +107,13 @@ class AndroidLibsMockAccount : MockAccount() {
                 "https://developer.android.com/images/tools/vas-materialicon_2-2_2x.png",
                 "https://developer.android.com/studio/write/vector-asset-studio.html"
             )
-            val items = ArrayList<Item>()
-            items.add(
+            val items = listOf(
                 Item(
                     "Glide",
                     "https://github.com/bumptech/glide/raw/master/static/glide_logo.png",
                     "https://github.com/bumptech/glide"
                 )
-            )
-            items.add(
+                ,
                 Item(
                     "Picasso",
                     "http://square.github.io/picasso/static/sample.png",
@@ -153,7 +139,7 @@ class AndroidLibsMockAccount : MockAccount() {
         return categories
     }
 
-    override fun getItemsForCategory(categoryLabel: String): MutableList<Item>? {
+    override fun getItemsForCategory(categoryLabel: String): List<Item>? {
         return itemsByCategory[categoryLabel]
     }
 

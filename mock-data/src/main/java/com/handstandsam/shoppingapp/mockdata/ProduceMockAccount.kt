@@ -76,7 +76,7 @@ class ProduceMockAccount : MockAccount() {
         return categories
     }
 
-    override fun getItemsForCategory(categoryLabel: String): MutableList<Item>? {
+    override fun getItemsForCategory(categoryLabel: String): List<Item>? {
         return itemsByCategory[categoryLabel]
     }
 

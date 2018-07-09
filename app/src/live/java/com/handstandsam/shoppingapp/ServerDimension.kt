@@ -6,6 +6,6 @@ import com.handstandsam.shoppingapp.models.NetworkConfig
 
 fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
     return object : NetworkGraphImpl(applicationContext) {
-        override val networkConfig: NetworkConfig by lazy { NetworkConfigs.S_3_LIVE_ENDPOINT }
+        override val networkConfig: NetworkConfig = NetworkConfigs.S_3_LIVE_ENDPOINT
     }
 }
