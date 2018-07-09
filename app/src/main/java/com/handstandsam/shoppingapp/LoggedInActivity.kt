@@ -6,21 +6,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
+import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.repository.SessionManager
 
-import javax.inject.Inject
-
 open class LoggedInActivity : AppCompatActivity() {
 
-    @Inject
+    private val appGraph: AppGraph by lazy { application.appGraph() }
+
     lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (application as MyAbstractApplication).appComponent.inject(this)
+        sessionManager = appGraph.sessionGraph.sessionManager
         if (!sessionManager.isLoggedIn) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()

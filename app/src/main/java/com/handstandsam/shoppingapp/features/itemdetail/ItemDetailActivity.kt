@@ -8,21 +8,23 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.LoggedInActivity
-import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.di.AppComponent
+import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.appGraph
 
 class ItemDetailActivity : LoggedInActivity() {
 
-    lateinit internal var addToCartButton: AppCompatButton
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
-    lateinit internal var imageView: AppCompatImageView
+    internal lateinit var addToCartButton: AppCompatButton
 
-    lateinit internal var titleText: TextView
+    internal lateinit var imageView: AppCompatImageView
 
-    lateinit private var view: ItemDetailView
+    internal lateinit var titleText: TextView
 
-    lateinit private var presenter: ItemDetailPresenter
+    private lateinit var view: ItemDetailView
+
+    private lateinit var presenter: ItemDetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +33,12 @@ class ItemDetailActivity : LoggedInActivity() {
         titleText = findViewById(R.id.title_text)
         imageView = findViewById(R.id.image)
         addToCartButton = findViewById(R.id.add_to_cart)
-        (application as MyAbstractApplication).appComponent.inject(this)
 
         view = MyItemDetailView()
-        presenter = ItemDetailPresenter(view)
+        presenter = ItemDetailPresenter(
+            view = view,
+            cart = appGraph.sessionGraph.checkoutCart
+        )
     }
 
     interface ItemDetailView {
@@ -42,8 +46,6 @@ class ItemDetailActivity : LoggedInActivity() {
         val context: Context
 
         fun setActionBarTitle(title: String)
-
-        val appComponent: AppComponent
 
         fun setLabel(label: String)
 
@@ -54,7 +56,7 @@ class ItemDetailActivity : LoggedInActivity() {
 
     inner class MyItemDetailView : ItemDetailView {
         init {
-            addToCartButton.setOnClickListener { presenter!!.addToCardClicked() }
+            addToCartButton.setOnClickListener { presenter.addToCardClicked() }
         }
 
         override val context: Context
@@ -63,9 +65,6 @@ class ItemDetailActivity : LoggedInActivity() {
         override fun setActionBarTitle(title: String) {
             supportActionBar!!.title = title
         }
-
-        override val appComponent: AppComponent
-            get() = (application as MyAbstractApplication).appComponent
 
         override fun setLabel(label: String) {
             titleText.text = label

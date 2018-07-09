@@ -2,21 +2,12 @@ package com.handstandsam.shoppingapp.features.checkout
 
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.CheckoutCart
-import com.handstandsam.shoppingapp.repository.SessionManager
 import java.util.*
-import javax.inject.Inject
 
-class CheckoutPresenter(private val view: CheckoutActivity.CheckoutView) {
-
-    @Inject
-    lateinit internal var sessionManager: SessionManager
-
-    @Inject
-    lateinit internal var cart: CheckoutCart
-
-    init {
-        view.appComponent.inject(this)
-    }
+class CheckoutPresenter(
+    private val view: CheckoutActivity.CheckoutView,
+    private var cart: CheckoutCart
+) {
 
     fun onResume() {
         val items = cart.items

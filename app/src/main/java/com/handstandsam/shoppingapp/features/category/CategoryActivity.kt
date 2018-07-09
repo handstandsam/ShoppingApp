@@ -6,17 +6,20 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
-import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.appGraph
 import com.handstandsam.shoppingapp.models.Item
 
 class CategoryActivity : LoggedInActivity() {
 
-    lateinit var recyclerView: RecyclerView
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
-    lateinit private var recyclerViewAdapter: CategoryRVAdapter
+    private lateinit var recyclerView: RecyclerView
 
-    private var view: CategoryView? = null
+    private lateinit var recyclerViewAdapter: CategoryRVAdapter
+
+    private val view: CategoryView = MyCategoryView()
 
     private var presenter: CategoryPresenter? = null
 
@@ -25,13 +28,14 @@ class CategoryActivity : LoggedInActivity() {
         setContentView(R.layout.activity_category)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         recyclerView = findViewById(R.id.categories)
-        (application as MyAbstractApplication).appComponent.inject(this)
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerViewAdapter = CategoryRVAdapter()
         recyclerView.adapter = recyclerViewAdapter
-        view = MyCategoryView()
-        presenter = CategoryPresenter(view!!)
+        presenter = CategoryPresenter(
+            view = view,
+            itemRepo = appGraph.networkGraph.itemRepo
+        )
     }
 
     interface CategoryView {

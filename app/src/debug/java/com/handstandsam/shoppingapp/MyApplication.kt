@@ -1,6 +1,8 @@
 package com.handstandsam.shoppingapp
 
-import com.handstandsam.shoppingapp.di.*
+import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.di.DebugNetworkGraph
+import com.handstandsam.shoppingapp.di.SessionGraphImpl
 import timber.log.Timber
 
 class MyApplication : MyAbstractApplication() {
@@ -10,11 +12,10 @@ class MyApplication : MyAbstractApplication() {
         super.onCreate()
     }
 
-    override fun createAppComponent(pEndpoint: String): AppComponent {
-        return DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .networkModule(DebugNetworkModule(NetworkModule.LOCALHOST_ENDPOINT))
-                .repositoryModule(RepositoryModule(this))
-                .build()
+    override fun createAppGraph(): AppGraph {
+        return AppGraph(
+            sessionGraph = SessionGraphImpl(applicationContext),
+            networkGraph = DebugNetworkGraph(applicationContext)
+        )
     }
 }

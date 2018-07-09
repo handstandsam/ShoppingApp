@@ -9,15 +9,15 @@ import android.support.v7.widget.AppCompatEditText
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
-
-import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.di.AppComponent
+import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.home.HomeActivity
-
+import com.handstandsam.shoppingapp.appGraph
 import io.reactivex.disposables.Disposable
 
 class LoginActivity : AppCompatActivity() {
+
+    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     lateinit var rememberMeCheckbox: AppCompatCheckBox
 
@@ -25,9 +25,11 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var passwordEditText: AppCompatEditText
 
-    internal var disposable: Disposable? = null
-    lateinit private var loginView: MyLoginView
-    lateinit private var presenter: LoginPresenter
+    private var disposable: Disposable? = null
+
+    private lateinit var loginView: MyLoginView
+
+    private lateinit var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +39,14 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.username)
         rememberMeCheckbox = findViewById(R.id.remember_me)
         findViewById<View>(R.id.submit).setOnClickListener { presenter.loginClicked() }
-        (application as MyAbstractApplication).appComponent.inject(this)
 
         loginView = MyLoginView()
-        presenter = LoginPresenter(loginView)
+        presenter = LoginPresenter(
+            view = loginView,
+            sessionManager = appGraph.sessionGraph.sessionManager,
+            userPreferences = appGraph.sessionGraph.userPreferences,
+            userRepo = appGraph.networkGraph.userRepo
+        )
 
         usernameEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             // If the event is a key-down event on the "enter" button
@@ -61,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     interface LoginView {
-        val appComponent: AppComponent
 
         fun startHomeActivity()
 
@@ -78,11 +83,7 @@ class LoginActivity : AppCompatActivity() {
         fun showToast(@StringRes stringResourceId: Int)
     }
 
-
     inner class MyLoginView : LoginView {
-
-        override val appComponent: AppComponent
-            get() = (application as MyAbstractApplication).appComponent
 
         override fun startHomeActivity() {
             val intent = Intent(this@LoginActivity, HomeActivity::class.java)

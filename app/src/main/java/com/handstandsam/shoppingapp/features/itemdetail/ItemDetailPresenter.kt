@@ -3,22 +3,12 @@ package com.handstandsam.shoppingapp.features.itemdetail
 import android.content.Intent
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.CheckoutCart
-import com.handstandsam.shoppingapp.repository.SessionManager
-import javax.inject.Inject
 
-class ItemDetailPresenter(private val view: ItemDetailActivity.ItemDetailView) {
-
-    @Inject
-    lateinit internal var sessionManager: SessionManager
-
-    @Inject
-    lateinit internal var cart: CheckoutCart
-
-    lateinit internal var item: Item
-
-    init {
-        view.appComponent.inject(this)
-    }
+class ItemDetailPresenter(
+    private val view: ItemDetailActivity.ItemDetailView,
+    private var cart: CheckoutCart
+) {
+    internal lateinit var item: Item
 
     fun onResume(intent: Intent) {
 
@@ -37,7 +27,6 @@ class ItemDetailPresenter(private val view: ItemDetailActivity.ItemDetailView) {
     }
 
     companion object {
-
-        val BUNDLE_PARAM_ITEM = "item"
+        const val BUNDLE_PARAM_ITEM = "item"
     }
 }

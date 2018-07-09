@@ -9,22 +9,14 @@ import com.handstandsam.shoppingapp.repository.SessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
 
-class LoginPresenter(private val view: LoginActivity.LoginView) {
+class LoginPresenter(
+    private val view: LoginActivity.LoginView,
+    internal var sessionManager: SessionManager,
+    internal var userPreferences: UserPreferences,
+    internal var userRepo: UserRepo
+) {
 
-    @Inject
-    internal lateinit var sessionManager: SessionManager
-
-    @Inject
-    internal lateinit var userPreferences: UserPreferences
-
-    @Inject
-    internal lateinit var userRepo: UserRepo
-
-    init {
-        view.appComponent.inject(this)
-    }
 
     fun onResume() {
 

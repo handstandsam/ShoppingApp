@@ -1,33 +1,17 @@
 package com.handstandsam.shoppingapp.features.category
 
-import android.content.Context
 import android.content.Intent
-
-import com.handstandsam.shoppingapp.MyAbstractApplication
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.SessionManager
-
-import javax.inject.Inject
-
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
-class CategoryPresenter(private val view: CategoryActivity.CategoryView) {
-
-    private val applicationContext: Context = view.context
-
-    @Inject
-    lateinit internal var sessionManager: SessionManager
-
-    @Inject
-    lateinit internal var itemRepo: ItemRepo
-
-    init {
-        (applicationContext as MyAbstractApplication).appComponent.inject(this)
-    }
+class CategoryPresenter(
+    private val view: CategoryActivity.CategoryView,
+    private var itemRepo: ItemRepo
+) {
 
     fun onResume(intent: Intent) {
         val extras = intent.extras
@@ -52,7 +36,6 @@ class CategoryPresenter(private val view: CategoryActivity.CategoryView) {
     }
 
     companion object {
-
-        val BUNDLE_PARAM_CATEGORY = "category"
+        const val BUNDLE_PARAM_CATEGORY = "category"
     }
 }
