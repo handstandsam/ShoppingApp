@@ -9,6 +9,7 @@ import java.io.*
 class FileUtils(private val contextForAssets: Context) {
 
     private val tempDirectoryName = "files"
+
     private val replacementDirectoryName = WireMockApp.FILES_ROOT
 
     private val dataDirectory = "/data/data"
@@ -19,8 +20,8 @@ class FileUtils(private val contextForAssets: Context) {
         val assets: Array<String>
         try {
             assets = contextForAssets.assets.list(path)
-            Timber.v(path + " - " + assets)
-            if (assets.size == 0) {
+            Timber.v("$path - $assets")
+            if (assets.isEmpty()) {
                 copyFile(path)
             } else {
                 var fullPath = "$dataDirectory/$packageName/$path"
