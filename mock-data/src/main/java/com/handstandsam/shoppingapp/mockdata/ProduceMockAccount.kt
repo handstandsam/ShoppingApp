@@ -8,9 +8,9 @@ import java.util.*
 
 class ProduceMockAccount : MockAccount() {
 
-    internal var user: User = User("Sam", "Edwards")
+    internal val user: User = User("Sam", "Edwards")
 
-    internal var categories: List<Category> = ArrayList()
+    internal val categories: MutableList<Category> = mutableListOf()
 
     init {
         val fruitCategory = Category("Fruits", IMAGE_BASE_URL + "fuji-apple.jpg")
@@ -59,8 +59,14 @@ class ProduceMockAccount : MockAccount() {
         vegetableItems.add(Item("Yellow Bell Pepper", IMAGE_BASE_URL + "yellow-bell-pepper.jpg"))
         itemsByCategory[vegetableCategory.label] = vegetableItems
 
-        categories =
-                Arrays.asList(fruitCategory, vegetableCategory, seafoodCategory, floralCategory)
+        categories.addAll(
+            listOf(
+                fruitCategory,
+                vegetableCategory,
+                seafoodCategory,
+                floralCategory
+            )
+        )
     }
 
 

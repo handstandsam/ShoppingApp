@@ -8,11 +8,11 @@ import java.util.*
 
 class VideoGameMockAccount : MockAccount() {
 
-    private var imageBaseUrl = "http://shopping-app.s3.amazonaws.com" + "/video-games/images/"
+    private val imageBaseUrl = "http://shopping-app.s3.amazonaws.com" + "/video-games/images/"
 
-    internal var user: User = User("Sam", "Edwards")
+    internal val user: User = User("Sam", "Edwards")
 
-    internal var categories: MutableList<Category> = ArrayList()
+    internal val categories: MutableList<Category> = ArrayList()
 
     init {
         run {
