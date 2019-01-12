@@ -100,8 +100,6 @@ dependencies {
     implementation Libs.retrofit
     implementation Libs.retrofit_moshi_converter
     implementation Libs.okhttp
-    implementation Libs.dagger
-    kapt Libs.dagger_kapt
     implementation Libs.kotlin_std_lib
 
     //Logging
