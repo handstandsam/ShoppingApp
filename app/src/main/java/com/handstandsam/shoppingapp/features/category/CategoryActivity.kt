@@ -30,7 +30,7 @@ class CategoryActivity : LoggedInActivity() {
         recyclerView.adapter = recyclerViewAdapter
         presenter = CategoryPresenter(
             view = view,
-            itemRepo = appGraph.networkGraph.itemRepo
+            itemRepo = graph.networkGraph.itemRepo
         )
     }
 

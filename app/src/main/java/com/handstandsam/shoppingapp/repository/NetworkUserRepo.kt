@@ -6,16 +6,8 @@ import com.handstandsam.shoppingapp.network.ShoppingService
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 
-class NetworkUserRepo(var shoppingService: ShoppingService) : UserRepo {
-
-    internal var user: User? = null
-
-    override fun save(user: User) {
-        Timber.d("Saving User: " + user)
-        this.user = user
-    }
+class NetworkUserRepo(private val shoppingService: ShoppingService) : UserRepo {
 
     override fun login(loginRequest: LoginRequest): Single<User> {
         return shoppingService

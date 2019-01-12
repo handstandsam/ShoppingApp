@@ -13,9 +13,9 @@ import com.handstandsam.shoppingapp.repository.SessionManager
 
 open class LoggedInActivity : AppCompatActivity() {
 
-    protected val appGraph: AppGraph get() = application.graph()
+    protected val graph: AppGraph get() = application.graph()
 
-    private val sessionManager: SessionManager get() = appGraph.sessionGraph.sessionManager
+    private val sessionManager: SessionManager get() = graph.sessionGraph.sessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

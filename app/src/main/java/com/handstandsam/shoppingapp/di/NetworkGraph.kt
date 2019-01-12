@@ -17,7 +17,7 @@ interface NetworkGraph {
     val userRepo: UserRepo
 }
 
-class BaseNetworkGraph(
+open class BaseNetworkGraph(
     appContext: Context,
     networkConfig: NetworkConfig
 ) : NetworkGraph {

@@ -11,14 +11,13 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.category.CategoryPresenter
 import com.handstandsam.shoppingapp.models.Category
-import kotlin.jvm.java
 
 
 internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val textView: TextView = itemView.findViewById(R.id.text)
+    private val textView: TextView = itemView.findViewById(R.id.text)
 
-    val imageView: ImageView = itemView.findViewById(R.id.image)
+    private val imageView: ImageView = itemView.findViewById(R.id.image)
 
     lateinit var category: Category
 
@@ -37,8 +36,8 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
         this.category = category
 
         val imageUrl = category.image
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(imageView.context).load(category.image).into(imageView!!)
+        if (!imageUrl.isEmpty()) {
+            Glide.with(imageView.context).load(category.image).into(imageView)
         } else {
             itemView.setBackgroundResource(ColorInts.getColor(position))
         }

@@ -1,7 +1,6 @@
 package com.handstandsam.shoppingapp.features.login
 
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
 import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences
@@ -16,7 +15,6 @@ class LoginPresenter(
     internal var userPreferences: UserPreferences,
     internal var userRepo: UserRepo
 ) {
-
 
     fun onResume() {
 
@@ -44,7 +42,7 @@ class LoginPresenter(
 
             override fun onSuccess(user: User) {
                 userPreferences.setRememberMe(rememberMe, view.username)
-                sessionManager.currentUser = ProduceMockAccount().getUser()
+                sessionManager.currentUser = user
                 view.startHomeActivity()
             }
 

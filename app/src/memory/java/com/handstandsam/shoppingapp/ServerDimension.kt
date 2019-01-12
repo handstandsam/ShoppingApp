@@ -37,10 +37,6 @@ class InMemoryNetworkGraph() : NetworkGraph {
             override fun login(loginRequest: LoginRequest): Single<User> {
                 return Single.fromCallable { mockAccount.getUser() }
             }
-
-            override fun save(user: User) {
-                Timber.d("Doing nothing with this UserRepo.save() for now...")
-            }
         }
 
 }

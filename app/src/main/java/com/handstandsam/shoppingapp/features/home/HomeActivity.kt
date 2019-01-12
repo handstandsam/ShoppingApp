@@ -12,6 +12,10 @@ import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
 
+    private val sessionManager get() = graph.sessionGraph.sessionManager
+
+    private val categoryRepo get() = graph.networkGraph.categoryRepo
+
     private lateinit var presenter: HomePresenter
 
     private var recyclerView: RecyclerView? = null
@@ -42,8 +46,8 @@ class HomeActivity : LoggedInActivity() {
         homeView = MyHomeView()
         presenter = HomePresenter(
             view = homeView,
-            sessionManager = appGraph.sessionGraph.sessionManager,
-            categoryRepo = appGraph.networkGraph.categoryRepo
+            sessionManager = sessionManager,
+            categoryRepo = categoryRepo
         )
     }
 

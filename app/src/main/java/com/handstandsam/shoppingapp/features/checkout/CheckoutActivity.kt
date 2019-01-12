@@ -25,7 +25,7 @@ class CheckoutActivity : LoggedInActivity() {
         itemsText = findViewById(R.id.items)
         presenter = CheckoutPresenter(
             view = checkoutView,
-            cart = appGraph.sessionGraph.checkoutCart
+            cart = graph.sessionGraph.checkoutCart
         )
     }
 
