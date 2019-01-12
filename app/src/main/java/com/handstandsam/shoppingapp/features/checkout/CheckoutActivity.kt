@@ -5,12 +5,8 @@ import android.view.Menu
 import android.widget.TextView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.appGraph
-import com.handstandsam.shoppingapp.di.AppGraph
 
 class CheckoutActivity : LoggedInActivity() {
-
-    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     lateinit var itemCountTextView: TextView
 

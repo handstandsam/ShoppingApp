@@ -7,7 +7,6 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
-import com.handstandsam.shoppingapp.di.NetworkConstants
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.User
 import com.squareup.moshi.Moshi
@@ -87,4 +86,16 @@ class Stubberator(val useLocalServer: Boolean) {
         )
     }
 
+}
+
+private object NetworkConstants {
+    var LOCALHOST_PORT = 8080
+    val LOCALHOST_ENDPOINT = "http://localhost:" + LOCALHOST_PORT
+    val S3_ENDPOINT = "https://shopping-app.s3.amazonaws.com"
+
+    var USE_LOCAL_SERVER = true
+
+    val REMOTE_PORT = 8080
+    val REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2"
+    var LAPTOP_FROM_EMULATOR_ENDPOINT = "http://$REMOTE_EMULATOR_ENDPOINT_HOST:$REMOTE_PORT"
 }

@@ -9,12 +9,8 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.appGraph
 
 class ItemDetailActivity : LoggedInActivity() {
-
-    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     internal lateinit var addToCartButton: AppCompatButton
 

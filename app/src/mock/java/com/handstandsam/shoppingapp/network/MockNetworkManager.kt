@@ -7,11 +7,15 @@ import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.wiremock.WireMockManager
 
 
-class MockNetworkManager(private val appContext: Context, private val networkConfig: NetworkConfig) {
+class MockNetworkManager(
+    private val appContext: Context,
+    private val networkConfig: NetworkConfig,
+    mockAccount: MockAccount
+) {
 
     lateinit var stubberator: Stubberator
 
-    fun init(mockAccount: MockAccount) {
+    private fun init(mockAccount: MockAccount) {
         if (networkConfig.isWireMockServer) {
             stubberator = Stubberator(
                 useLocalServer = networkConfig.isLocalhostServer
@@ -30,5 +34,9 @@ class MockNetworkManager(private val appContext: Context, private val networkCon
                 wireMockManager.startPlayBack()
             }
         }
+    }
+
+    init {
+        init(mockAccount)
     }
 }

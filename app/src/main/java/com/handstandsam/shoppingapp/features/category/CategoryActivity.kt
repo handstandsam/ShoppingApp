@@ -7,13 +7,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.appGraph
 import com.handstandsam.shoppingapp.models.Item
 
 class CategoryActivity : LoggedInActivity() {
-
-    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     private lateinit var recyclerView: RecyclerView
 
@@ -66,10 +62,14 @@ class CategoryActivity : LoggedInActivity() {
             val builder = AlertDialog.Builder(
                 this@CategoryActivity
             ).setTitle("Networking Error")
+
             if (message != null) {
                 builder.setMessage(message)
             }
-            builder.setPositiveButton("OK") { dialogInterface, i -> this@CategoryActivity.finish() }
+            builder
+                .setPositiveButton("OK") { _, i ->
+                    this@CategoryActivity.finish()
+                }
                 .show()
         }
     }

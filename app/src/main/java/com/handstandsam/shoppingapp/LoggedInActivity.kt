@@ -13,13 +13,12 @@ import com.handstandsam.shoppingapp.repository.SessionManager
 
 open class LoggedInActivity : AppCompatActivity() {
 
-    private val appGraph: AppGraph by lazy { application.appGraph() }
+    protected val appGraph: AppGraph get() = application.graph()
 
-    lateinit var sessionManager: SessionManager
+    private val sessionManager: SessionManager get() = appGraph.sessionGraph.sessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sessionManager = appGraph.sessionGraph.sessionManager
         if (!sessionManager.isLoggedIn) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()

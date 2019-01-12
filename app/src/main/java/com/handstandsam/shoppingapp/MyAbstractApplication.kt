@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp
 
 import android.app.Application
+import android.content.Context
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraphImpl
 import timber.log.Timber
@@ -21,6 +22,6 @@ abstract class MyAbstractApplication : Application() {
 
 }
 
-fun Application.appGraph(): AppGraph {
-    return (this as MyAbstractApplication).appGraph
+fun Context.graph(): AppGraph {
+    return (this.applicationContext as MyAbstractApplication).appGraph
 }

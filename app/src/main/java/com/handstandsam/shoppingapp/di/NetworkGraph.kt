@@ -1,7 +1,6 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
-import com.handstandsam.shoppingapp.NetworkConfigs
 import com.handstandsam.shoppingapp.debugDimensionAddInterceptors
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.ShoppingService
@@ -18,43 +17,29 @@ interface NetworkGraph {
     val userRepo: UserRepo
 }
 
-open class NetworkGraphImpl(private val appContext: Context) :
-    NetworkGraph {
+class BaseNetworkGraph(
+    appContext: Context,
+    networkConfig: NetworkConfig
+) : NetworkGraph {
 
-    open val networkConfig: NetworkConfig = NetworkConfigs.LOCALHOST
+    private val okHttpClientBuilder =
+        OkHttpClient.Builder().debugDimensionAddInterceptors(appContext)
 
-    private val retrofitBuilder: Retrofit.Builder by lazy {
+    private val retrofitBuilder: Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(networkConfig.fullUrl)
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClientBuilder.build())
-    }
 
-    protected open val okHttpClientBuilder by lazy {
-        OkHttpClient.Builder().debugDimensionAddInterceptors(appContext)
-    }
+    private val retrofit: Retrofit = retrofitBuilder.build()
 
-    private val retrofit: Retrofit by lazy { retrofitBuilder.build() }
+    private val shoppingService: ShoppingService = retrofit.create(ShoppingService::class.java)
 
-    private val shoppingService: ShoppingService by lazy { retrofit.create(ShoppingService::class.java) }
+    override val categoryRepo: CategoryRepo = NetworkCategoryRepo(shoppingService)
 
-    override val categoryRepo: CategoryRepo by lazy { NetworkCategoryRepo(shoppingService) }
+    override val itemRepo: ItemRepo = NetworkItemRepo(shoppingService)
 
-    override val itemRepo: ItemRepo by lazy { NetworkItemRepo(shoppingService) }
+    override val userRepo: UserRepo = NetworkUserRepo(shoppingService)
 
-    override val userRepo: UserRepo by lazy { NetworkUserRepo(shoppingService) }
-
-}
-
-object NetworkConstants {
-    var LOCALHOST_PORT = 8080
-    val LOCALHOST_ENDPOINT = "http://localhost:" + LOCALHOST_PORT
-    val S3_ENDPOINT = "https://shopping-app.s3.amazonaws.com"
-
-    var USE_LOCAL_SERVER = true
-
-    val REMOTE_PORT = 8080
-    val REMOTE_EMULATOR_ENDPOINT_HOST = "10.0.2.2"
-    var LAPTOP_FROM_EMULATOR_ENDPOINT = "http://$REMOTE_EMULATOR_ENDPOINT_HOST:$REMOTE_PORT"
 }

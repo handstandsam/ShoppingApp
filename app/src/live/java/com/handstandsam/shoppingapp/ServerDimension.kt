@@ -1,11 +1,11 @@
 package com.handstandsam.shoppingapp
 
+import com.handstandsam.shoppingapp.di.BaseNetworkGraph
 import com.handstandsam.shoppingapp.di.NetworkGraph
-import com.handstandsam.shoppingapp.di.NetworkGraphImpl
-import com.handstandsam.shoppingapp.models.NetworkConfig
 
 fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
-    return object : NetworkGraphImpl(applicationContext) {
-        override val networkConfig: NetworkConfig = NetworkConfigs.S_3_LIVE_ENDPOINT
-    }
+    return BaseNetworkGraph(
+        appContext = applicationContext,
+        networkConfig = NetworkConfigs.S_3_LIVE_ENDPOINT
+    )
 }

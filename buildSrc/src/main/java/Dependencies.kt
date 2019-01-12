@@ -36,7 +36,7 @@ object Versions {
 
     // android
     val support_lib = "27.1.1"
-    val android_gradle_plugin = "3.1.3"
+    val android_gradle_plugin = "3.2.1"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 }

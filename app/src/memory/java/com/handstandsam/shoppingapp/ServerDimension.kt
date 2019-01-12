@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp
 
 import android.content.Context
 import com.handstandsam.shoppingapp.di.NetworkGraph
-import com.handstandsam.shoppingapp.di.NetworkGraphImpl
 import com.handstandsam.shoppingapp.mockdata.AndroidLibsMockAccount
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.Category
@@ -17,24 +16,23 @@ import timber.log.Timber
 
 val mockAccount: MockAccount = AndroidLibsMockAccount()
 
-class InMemoryNetworkGraph(appContext: Context) : NetworkGraphImpl(appContext) {
-    override val categoryRepo: CategoryRepo by lazy {
+class InMemoryNetworkGraph() : NetworkGraph {
+    override val categoryRepo: CategoryRepo =
         object : CategoryRepo {
             override fun getCategories(): Single<List<Category>> {
                 return Single.fromCallable { mockAccount.getCategories() }
             }
         }
-    }
 
-    override val itemRepo: ItemRepo by lazy {
+
+    override val itemRepo: ItemRepo =
         object : ItemRepo {
             override fun getItemsForCategory(categoryLabel: String): Single<List<Item>> {
                 return Single.fromCallable { mockAccount.getItemsForCategory(categoryLabel) }
             }
         }
-    }
 
-    override val userRepo: UserRepo by lazy {
+    override val userRepo: UserRepo =
         object : UserRepo {
             override fun login(loginRequest: LoginRequest): Single<User> {
                 return Single.fromCallable { mockAccount.getUser() }
@@ -43,12 +41,10 @@ class InMemoryNetworkGraph(appContext: Context) : NetworkGraphImpl(appContext) {
             override fun save(user: User) {
                 Timber.d("Doing nothing with this UserRepo.save() for now...")
             }
-
         }
-    }
 
 }
 
 fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
-    return InMemoryNetworkGraph(applicationContext)
+    return InMemoryNetworkGraph()
 }

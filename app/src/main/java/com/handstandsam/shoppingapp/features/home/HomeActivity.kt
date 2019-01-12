@@ -8,13 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.appGraph
 import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
-
-    private val appGraph: AppGraph by lazy { application.appGraph() }
 
     private lateinit var presenter: HomePresenter
 
