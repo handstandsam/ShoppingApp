@@ -14,11 +14,11 @@ object Versions {
     val min_sdk = 21
     val target_sdk = 27
     val compile_sdk = 27
-    val build_tools = "27.0.3"
+    val build_tools = "28.0.3"
 
     // Kotlin
-    val kotlin = "1.2.51"
-    val kotlin_coroutines = "0.23.4"
+    val kotlin = "1.2.71"
+    val kotlin_coroutines = "0.26.1"
     val apache_commons = "2.4"
 
     val stetho = "1.5.0"
@@ -68,6 +68,8 @@ object Libs {
     val wiremock = "com.github.tomakehurst:wiremock:${Versions.wiremock}"
     val apacheHttpClientAndroid = "org.apache.httpcomponents:httpclient-android:4.3.5.1"
     val kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+    val kotlin_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
+    val kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 
    val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     val coroutines =
