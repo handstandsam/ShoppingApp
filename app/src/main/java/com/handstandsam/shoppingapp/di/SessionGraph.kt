@@ -9,11 +9,10 @@ interface SessionGraph {
     val sessionManager: SessionManager
     val checkoutCart: CheckoutCart
     val userPreferences: UserPreferences
-    val appContext: Context
 }
 
 class SessionGraphImpl(
-    override val appContext: Context
+    appContext: Context
 ) : SessionGraph {
 
     override val checkoutCart = CheckoutCart()
