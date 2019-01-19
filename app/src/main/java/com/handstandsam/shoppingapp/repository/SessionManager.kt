@@ -6,7 +6,10 @@ import com.handstandsam.shoppingapp.preferences.UserPreferences
 
 import timber.log.Timber
 
-class SessionManager(private val cart: CheckoutCart, private val userPreferences: UserPreferences) {
+class SessionManager(
+    private val cart: CheckoutCart,
+    private val userPreferences: UserPreferences
+) {
 
     var currentUser: User?
         get() = userPreferences.currentUser

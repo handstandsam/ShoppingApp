@@ -13,11 +13,24 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.home.HomeActivity
 import com.handstandsam.shoppingapp.graph
+import com.handstandsam.shoppingapp.preferences.UserPreferences
+import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.UserRepo
 import io.reactivex.disposables.Disposable
 
 class LoginActivity : AppCompatActivity() {
 
-    private val appGraph: AppGraph by lazy { application.graph() }
+    private val graph: AppGraph
+        get() = application.graph()
+
+    private val sessionManager: SessionManager
+        get() = graph.sessionGraph.sessionManager
+
+    private val userPreferences: UserPreferences
+        get() = graph.sessionGraph.userPreferences
+
+    private val userRepo: UserRepo
+        get() = graph.networkGraph.userRepo
 
     lateinit var rememberMeCheckbox: AppCompatCheckBox
 
@@ -43,9 +56,9 @@ class LoginActivity : AppCompatActivity() {
         loginView = MyLoginView()
         presenter = LoginPresenter(
             view = loginView,
-            sessionManager = appGraph.sessionGraph.sessionManager,
-            userPreferences = appGraph.sessionGraph.userPreferences,
-            userRepo = appGraph.networkGraph.userRepo
+            sessionManager = sessionManager,
+            userPreferences = userPreferences,
+            userRepo = userRepo
         )
 
         usernameEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->

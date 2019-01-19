@@ -12,9 +12,11 @@ import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
 
+    // Example of `get() =`
     private val sessionManager get() = graph.sessionGraph.sessionManager
 
-    private val categoryRepo get() = graph.networkGraph.categoryRepo
+    // Example of `by lazy`
+    private val categoryRepo by lazy { graph.networkGraph.categoryRepo }
 
     private lateinit var presenter: HomePresenter
 

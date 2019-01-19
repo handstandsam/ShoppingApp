@@ -18,18 +18,24 @@ interface NetworkGraph {
 }
 
 open class BaseNetworkGraph(
-    appContext: Context,
-    networkConfig: NetworkConfig
+    networkConfig: NetworkConfig,
+    appContext: Context
 ) : NetworkGraph {
 
     private val okHttpClientBuilder =
         OkHttpClient.Builder().debugDimensionAddInterceptors(appContext)
 
+    private val moshi = Moshi.Builder().build()
+
+    private val moshiConverterFactory = MoshiConverterFactory.create(moshi)
+
+    private val rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
+
     private val retrofitBuilder: Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(networkConfig.fullUrl)
-            .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(moshiConverterFactory)
+            .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .client(okHttpClientBuilder.build())
 
     private val retrofit: Retrofit = retrofitBuilder.build()
