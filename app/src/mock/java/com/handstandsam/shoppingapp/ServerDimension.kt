@@ -19,6 +19,7 @@ fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
     )
 
     return BaseNetworkGraph(
-        networkConfig = networkConfig
+        networkConfig = networkConfig,
+        appContext = applicationContext
     )
 }

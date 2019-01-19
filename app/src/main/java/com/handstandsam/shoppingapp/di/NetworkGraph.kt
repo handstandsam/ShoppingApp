@@ -1,5 +1,7 @@
 package com.handstandsam.shoppingapp.di
 
+import android.content.Context
+import com.handstandsam.shoppingapp.debugDimensionAddInterceptors
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.*
@@ -16,10 +18,12 @@ interface NetworkGraph {
 }
 
 open class BaseNetworkGraph(
-    networkConfig: NetworkConfig
+    networkConfig: NetworkConfig,
+    appContext: Context
 ) : NetworkGraph {
 
-    private val okHttpClientBuilder = OkHttpClient.Builder()
+    private val okHttpClientBuilder =
+        OkHttpClient.Builder().debugDimensionAddInterceptors(appContext)
 
     private val moshi = Moshi.Builder().build()
 

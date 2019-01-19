@@ -9,8 +9,9 @@ import com.handstandsam.shoppingapp.repository.UserRepo
 import io.reactivex.Single
 
 
-class LiveNetworkGraph() : BaseNetworkGraph(
-    networkConfig = NetworkConfigs.S_3_LIVE_ENDPOINT
+class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
+    networkConfig = NetworkConfigs.S_3_LIVE_ENDPOINT,
+    appContext = appContext
 ) {
 
     /**
