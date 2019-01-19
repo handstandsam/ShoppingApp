@@ -10,7 +10,6 @@ fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
 
     val networkConfig = NetworkConfigs.LOCALHOST
 
-//          val mockAccount = VideoGameMockAccount()
     val mockAccount = ProduceMockAccount()
 
     MockNetworkManager(
@@ -20,7 +19,6 @@ fun MyAbstractApplication.serverDimensionNetworkGraph(): NetworkGraph {
     )
 
     return BaseNetworkGraph(
-        appContext = applicationContext,
         networkConfig = networkConfig
     )
 }
