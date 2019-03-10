@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion Versions.compile_sdk
+
+    defaultConfig {
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    implementation Libs.kotlin_std_lib
+
+    implementation Libs.support_annotations
+    implementation Libs.support_appcompat_v7
+
+    implementation Libs.retrofit
+
+    implementation Libs.rxjava2
+    implementation Libs.rx_android
+    implementation Libs.retrofit_rxjava_adapter
+
+    implementation Libs.moshi
+    implementation Libs.moshiKotlin
+    implementation Libs.retrofit_moshi_converter
+
+
+    implementation project(":models")
+}

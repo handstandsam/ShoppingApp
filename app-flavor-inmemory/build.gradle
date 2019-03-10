@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion Versions.compile_sdk
+
+    defaultConfig {
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    implementation Libs.support_annotations
+    implementation Libs.support_appcompat_v7
+    implementation Libs.retrofit
+    implementation Libs.retrofit_rxjava_adapter
+    implementation Libs.rxjava2
+    implementation Libs.kotlin_std_lib
+
+    implementation project(":models")
+    implementation project(":networking")
+    implementation project(":mock-data")
+
+}
