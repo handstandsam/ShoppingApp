@@ -52,15 +52,15 @@ android {
     flavorDimensions "server"
 
     productFlavors {
-        memory {
+        inmemory {
             dimension "server"
         }
 
-        mock {
+        mockserver {
             dimension "server"
         }
 
-        live {
+        liveserver {
             dimension "server"
         }
     }
@@ -95,17 +95,27 @@ dependencies {
     implementation Libs.rxjava2
     implementation Libs.rx_android
     implementation Libs.retrofit_rxjava_adapter
+
     //Networking
     implementation Libs.glide
     implementation Libs.retrofit
-    implementation Libs.retrofit_moshi_converter
     implementation Libs.okhttp
     implementation Libs.kotlin_std_lib
+
+    implementation Libs.moshi
+
+    //Flavor Modules
+    inmemoryImplementation project(":app-flavor-inmemory")
+    mockserverImplementation project(":app-flavor-mockserver")
+    liveserverImplementation project(":app-flavor-liveserver")
 
     //Logging
     implementation Libs.timber
 
     debugImplementation project(":debug")
+
+
+    implementation project(":networking")
 
     //JVM Tests Only
     testImplementation TestLibs.junit

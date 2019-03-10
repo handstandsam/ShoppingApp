@@ -1,4 +1,8 @@
 include ':app',
+        ':app-flavor-inmemory',
+        ':app-flavor-liveserver',
+        ':app-flavor-mockserver',
+        ':networking',
         ':mock-data',
         ':models',
         ':debug'
