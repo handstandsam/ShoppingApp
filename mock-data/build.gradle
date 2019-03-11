@@ -16,6 +16,6 @@ android {
 }
 
 dependencies {
-    implementation project(':models')
+    implementation project(Modules.models)
     implementation Libs.kotlin_std_lib
 }

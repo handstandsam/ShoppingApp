@@ -83,8 +83,8 @@ android {
 
 dependencies {
 
-    implementation project(':models')
-    implementation project(":mock-data")
+    implementation project(Modules.models)
+    implementation project(Modules.mockData)
 
     //Support Libraries
     implementation Libs.support_v4
@@ -105,17 +105,17 @@ dependencies {
     implementation Libs.moshi
 
     //Flavor Modules
-    inmemoryImplementation project(":app-flavor-inmemory")
-    mockserverImplementation project(":app-flavor-mockserver")
-    liveserverImplementation project(":app-flavor-liveserver")
+    inmemoryImplementation project(Modules.flavorInmemory)
+    mockserverImplementation project(Modules.flavorMockserver)
+    liveserverImplementation project(Modules.flavorLiveserver)
 
     //Logging
     implementation Libs.timber
 
-    debugImplementation project(":debug")
+    debugImplementation project(Modules.debug)
 
 
-    implementation project(":networking")
+    implementation project(Modules.networking)
 
     //JVM Tests Only
     testImplementation TestLibs.junit

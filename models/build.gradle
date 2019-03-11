@@ -17,9 +17,6 @@ android {
 dependencies {
     implementation Libs.support_annotations
     implementation Libs.support_appcompat_v7
-    implementation Libs.retrofit
-    implementation Libs.retrofit_rxjava_adapter
-    implementation Libs.rxjava2
     implementation Libs.kotlin_std_lib
 
 }
