@@ -31,5 +31,5 @@ dependencies {
     implementation Libs.retrofit_moshi_converter
 
 
-    implementation project(":models")
+    implementation project(Modules.models)
 }

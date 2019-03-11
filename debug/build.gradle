@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    api project(":mock-data")
-    implementation project(":networking")
-    implementation project(":models")
+    api project(Modules.mockData)
+    implementation project(Modules.networking)
+    implementation project(Modules.models)
 
     implementation Libs.timber
     implementation Libs.okhttp

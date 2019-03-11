@@ -22,7 +22,7 @@ dependencies {
     implementation Libs.rxjava2
     implementation Libs.kotlin_std_lib
 
-    implementation project(":models")
-    implementation project(":networking")
+    implementation project(Modules.models)
+    implementation project(Modules.networking)
 
 }

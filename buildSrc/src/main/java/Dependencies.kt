@@ -1,9 +1,14 @@
 // https://github.com/handstandsam/ShoppingApp/tree/master/buildSrc
 
-object Projects {
+object Modules {
     val models = ":models"
-    val mock_data = ":mock-data"
+    val mockData = ":mock-data"
     val sample = ":sample"
+    val networking = ":networking"
+    val debug = ":debug"
+    val flavorInmemory = ":app-flavor-inmemory"
+    val flavorMockserver = ":app-flavor-mockserver"
+    val flavorLiveserver = ":app-flavor-liveserver"
 }
 
 object Versions {
@@ -98,13 +103,6 @@ object TestLibs {
 object GradlePlugins {
     val android = "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
     val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-}
-
-object Modules {
-    val support_annotations = mapOf(
-        GROUP to "com.android.support",
-        MODULE to "support-annotations"
-    )
 }
 
 private const val GROUP = "group"

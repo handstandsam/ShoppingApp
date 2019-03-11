@@ -22,8 +22,8 @@ dependencies {
     implementation Libs.rxjava2
     implementation Libs.kotlin_std_lib
 
-    implementation project(":models")
-    implementation project(":networking")
-    implementation project(":mock-data")
+    implementation project(Modules.models)
+    implementation project(Modules.networking)
+    implementation project(Modules.mockData)
 
 }
