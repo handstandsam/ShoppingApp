@@ -24,7 +24,7 @@ object Versions {
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
     val rx_android = "2.0.2"
-    val glide = "4.7.1"
+    val glide = "4.9.0"
     val dagger = "2.16"
     val process_phoenix = "2.0.0"
     val chuck = "1.1.0"
