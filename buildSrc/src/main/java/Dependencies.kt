@@ -17,14 +17,14 @@ object Versions {
     val build_tools = "28.0.3"
 
     // Kotlin
-    val kotlin = "1.2.71"
+    val kotlin = "1.3.21"
     val kotlin_coroutines = "0.26.1"
     val apache_commons = "2.4"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
     val rx_android = "2.0.2"
-    val glide = "4.7.1"
+    val glide = "4.9.0"
     val dagger = "2.16"
     val process_phoenix = "2.0.0"
     val chuck = "1.1.0"
@@ -36,7 +36,7 @@ object Versions {
 
     // android
     val support_lib = "27.1.1"
-    val android_gradle_plugin = "3.2.1"
+    val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 }
