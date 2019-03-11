@@ -17,7 +17,7 @@ object Versions {
     val build_tools = "28.0.3"
 
     // Kotlin
-    val kotlin = "1.2.71"
+    val kotlin = "1.3.21"
     val kotlin_coroutines = "0.26.1"
     val apache_commons = "2.4"
 
