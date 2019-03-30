@@ -4,9 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraphImpl
-import timber.log.Timber
 
-abstract class MyAbstractApplication : Application() {
+class MyApplication : Application() {
 
     open val appGraph: AppGraph by lazy {
         AppGraph(
@@ -17,11 +16,12 @@ abstract class MyAbstractApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        this.debugDimensionInitializeLogging()
+        appGraph
     }
 
 }
 
 fun Context.graph(): AppGraph {
-    return (this.applicationContext as MyAbstractApplication).appGraph
+    return (this.applicationContext as MyApplication).appGraph
 }
