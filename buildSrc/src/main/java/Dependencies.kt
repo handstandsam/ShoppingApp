@@ -23,7 +23,7 @@ object Versions {
 
     // Kotlin
     val kotlin = "1.3.21"
-    val kotlin_coroutines = "0.26.1"
+    val kotlin_coroutines = "1.2.0-alpha"
     val apache_commons = "2.4"
 
     val stetho = "1.5.0"
@@ -76,7 +76,7 @@ object Libs {
     val kotlin_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
     val kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 
-   val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
+    val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     val coroutines =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
     val coroutines_android =
