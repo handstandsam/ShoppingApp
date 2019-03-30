@@ -7,7 +7,7 @@ import com.handstandsam.shoppingapp.di.SessionGraphImpl
 
 class MyApplication : Application() {
 
-    open val appGraph: AppGraph by lazy {
+    val appGraph: AppGraph by lazy {
         AppGraph(
             sessionGraph = SessionGraphImpl(applicationContext),
             networkGraph = this.serverDimensionNetworkGraph()
@@ -17,7 +17,6 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         this.debugDimensionInitializeLogging()
-        appGraph
     }
 
 }
