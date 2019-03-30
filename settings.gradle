@@ -2,7 +2,8 @@ include ':app',
         ':app-flavor-inmemory',
         ':app-flavor-liveserver',
         ':app-flavor-mockserver',
-        ':networking',
+        ':db',
+        ':debug',
         ':mock-data',
         ':models',
-        ':debug'
+        ':networking'

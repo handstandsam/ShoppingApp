@@ -1,0 +1,6 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+
+dependencies {
+    implementation project(Modules.models)
+    implementation Libs.kotlin_std_lib
+}
