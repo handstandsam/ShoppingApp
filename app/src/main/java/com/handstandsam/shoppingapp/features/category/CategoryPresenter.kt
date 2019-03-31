@@ -3,7 +3,7 @@ package com.handstandsam.shoppingapp.features.category
 import android.content.Intent
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.ItemsForCategoryResult
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,12 +22,12 @@ class CategoryPresenter(
         launch {
             val itemsResult = itemRepo.getItemsForCategory(label)
             when (itemsResult) {
-                is ItemsForCategoryResult.Success -> {
-                    view.showItems(itemsResult.items)
+                is NetworkResult.Success -> {
+                    view.showItems(itemsResult.body)
                 }
-                is ItemsForCategoryResult.Failure -> {
-                    Timber.w("Networking Error", itemsResult.networkErrorResponse)
-                    view.showNetworkError(itemsResult.networkErrorResponse.toString())
+                is NetworkResult.Failure -> {
+                    Timber.w("Networking Error", itemsResult.errorResponse)
+                    view.showNetworkError(itemsResult.errorResponse.toString())
                 }
             }.exhaustive
         }

@@ -1,8 +1,8 @@
 package com.handstandsam.shoppingapp.features.home
 
 import android.content.Intent
-import com.handstandsam.shoppingapp.repository.CategoriesResult
 import com.handstandsam.shoppingapp.repository.CategoryRepo
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
@@ -20,10 +20,10 @@ class HomePresenter(
         launch {
             val categoriesResult = categoryRepo.getCategories()
             when (categoriesResult) {
-                is CategoriesResult.Success -> {
-                    view.showCategories(categoriesResult.categories)
+                is NetworkResult.Success -> {
+                    view.showCategories(categoriesResult.body)
                 }
-                is CategoriesResult.Failure -> {
+                is NetworkResult.Failure -> {
                     Timber.d("onError")
                 }
             }.exhaustive

@@ -1,5 +1,7 @@
 package com.handstandsam.shoppingapp.repository
 
+import com.handstandsam.shoppingapp.models.Category
+
 interface CategoryRepo {
-    suspend fun getCategories(): CategoriesResult
+    suspend fun getCategories(): NetworkResult<List<Category>>
 }
