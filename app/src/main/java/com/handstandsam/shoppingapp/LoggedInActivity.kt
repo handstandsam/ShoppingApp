@@ -10,8 +10,11 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.di.SessionGraph
 import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
+import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.repository.CheckoutCart
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +28,11 @@ open class LoggedInActivity : AppCompatActivity(),
 
     protected val graph: AppGraph get() = application.graph()
 
-    private val sessionManager: SessionManager get() = graph.sessionGraph.sessionManager
+    private val sessionGraph: SessionGraph get() = graph.sessionGraph
+
+    private val sessionManager: SessionManager get() = sessionGraph.sessionManager
+
+    private val checkoutCart: CheckoutCart get() = sessionGraph.checkoutCart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,35 +43,10 @@ open class LoggedInActivity : AppCompatActivity(),
         }
     }
 
-    lateinit var redCircle: FrameLayout
-    lateinit var countTextView: TextView
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.logged_in_menu, menu)
-        val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
-        val rootView = (alertMenuItem.actionView as FrameLayout)
-
-        redCircle = rootView.findViewById(R.id.view_alert_red_circle)
-
-        countTextView = rootView.findViewById(R.id.view_alert_count_textview)
-        rootView.setOnClickListener {
-            startActivity(Intent(this, CheckoutActivity::class.java))
-        }
-
-        launch {
-            graph.sessionGraph.checkoutCart.itemsInCartStream().consumeEach { itemsInCart ->
-                withContext(Dispatchers.Main) {
-                    val itemsInCartCount = itemsInCart.size
-                    if (itemsInCartCount == 0) {
-                        redCircle.visibility = View.GONE
-                    } else {
-                        redCircle.visibility = View.VISIBLE
-                        countTextView.text = itemsInCartCount.toString()
-                    }
-                }
-            }
-        }
+        LoggedInMenuUi(menu)
         return true
     }
 
@@ -81,6 +63,42 @@ open class LoggedInActivity : AppCompatActivity(),
                 return true
             }
             else -> return super.onContextItemSelected(item)
+        }
+    }
+
+    private inner class LoggedInMenuUi(menu: Menu) {
+        private val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
+
+        private val rootView = (alertMenuItem.actionView as FrameLayout).apply {
+            setOnClickListener {
+                startActivity(Intent(this@LoggedInActivity, CheckoutActivity::class.java))
+            }
+        }
+
+        private val redCircle: FrameLayout = rootView.findViewById(R.id.view_alert_red_circle)
+
+        private val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
+
+        init {
+            launch {
+                checkoutCart
+                    .itemsInCartStream()
+                    .consumeEach { itemsInCart ->
+                        updateItemCount(itemsInCart)
+                    }
+            }
+        }
+
+        private suspend fun updateItemCount(itemsInCart: List<Item>) {
+            withContext(Dispatchers.Main) {
+                val itemsInCartCount = itemsInCart.size
+                if (itemsInCartCount == 0) {
+                    redCircle.visibility = View.GONE
+                } else {
+                    redCircle.visibility = View.VISIBLE
+                    countTextView.text = itemsInCartCount.toString()
+                }
+            }
         }
     }
 }
