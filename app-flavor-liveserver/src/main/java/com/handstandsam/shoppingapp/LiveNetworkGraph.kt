@@ -5,8 +5,8 @@ import com.handstandsam.shoppingapp.di.BaseNetworkGraph
 import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
-import com.handstandsam.shoppingapp.repository.UserResult
 
 class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
     networkConfig = NetworkConfig(
@@ -21,8 +21,8 @@ class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
      * so we are just returning a mock for this call.
      */
     override val userRepo: UserRepo = object : UserRepo {
-        override suspend fun login(loginRequest: LoginRequest): UserResult {
-            return UserResult.Success(
+        override suspend fun login(loginRequest: LoginRequest): NetworkResult<User> {
+            return NetworkResult.Success(
                 User(
                     firstname = "Live",
                     lastname = "User"

@@ -3,9 +3,9 @@ package com.handstandsam.shoppingapp.features.login
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.preferences.UserPreferences
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
-import com.handstandsam.shoppingapp.repository.UserResult
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,16 +41,15 @@ class LoginPresenter(
         launch(Dispatchers.Main) {
             val userResult = userRepo.login(LoginRequest(username, password))
             when (userResult) {
-                is UserResult.Success -> {
+                is NetworkResult.Success -> {
                     userPreferences.setRememberMe(rememberMe, view.username)
-                    sessionManager.currentUser = userResult.user
+                    sessionManager.currentUser = userResult.body
                     view.startHomeActivity()
                 }
-                is UserResult.Failure -> {
+                is NetworkResult.Failure -> {
                     view.showToast(R.string.invalid_username_or_password)
                 }
             }.exhaustive
         }
-
     }
 }

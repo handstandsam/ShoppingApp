@@ -7,11 +7,11 @@ import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.LoginRequest
+import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
-import com.handstandsam.shoppingapp.repository.UserResult
 
 val mockAccount: MockAccount = AndroidLibsMockAccount()
 
@@ -38,8 +38,8 @@ class InMemoryNetworkGraph : NetworkGraph {
 
     override val userRepo: UserRepo =
         object : UserRepo {
-            override suspend fun login(loginRequest: LoginRequest): UserResult {
-                return UserResult.Success(mockAccount.getUser())
+            override suspend fun login(loginRequest: LoginRequest): NetworkResult<User> {
+                return NetworkResult.Success(mockAccount.getUser())
             }
         }
 
