@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 open class LoggedInActivity : AppCompatActivity(),
@@ -53,7 +54,7 @@ open class LoggedInActivity : AppCompatActivity(),
 
         launch {
             graph.sessionGraph.checkoutCart.itemsInCartStream().consumeEach { itemsInCart ->
-                runOnUiThread {
+                withContext(Dispatchers.Main) {
                     val itemsInCartCount = itemsInCart.size
                     if (itemsInCartCount == 0) {
                         redCircle.visibility = View.GONE

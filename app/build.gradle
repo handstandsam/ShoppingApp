@@ -104,6 +104,7 @@ dependencies {
     implementation Libs.okhttp
     implementation Libs.kotlin_std_lib
     implementation Libs.kotlin_coroutines
+    implementation Libs.kotlin_coroutines_android
 
     implementation Libs.moshi
 
