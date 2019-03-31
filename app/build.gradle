@@ -42,6 +42,7 @@ android {
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
 
     testOptions {
@@ -91,6 +92,7 @@ dependencies {
     implementation Libs.support_appcompat_v7
     implementation Libs.support_recycler_view
     implementation Libs.support_design
+
     //Rx
     implementation Libs.rxjava2
     implementation Libs.rx_android
@@ -101,6 +103,7 @@ dependencies {
     implementation Libs.retrofit
     implementation Libs.okhttp
     implementation Libs.kotlin_std_lib
+    implementation Libs.kotlin_coroutines
 
     implementation Libs.moshi
 
