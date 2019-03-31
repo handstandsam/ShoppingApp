@@ -18,8 +18,10 @@ import com.handstandsam.shoppingapp.repository.CheckoutCart
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 open class LoggedInActivity : AppCompatActivity(),
@@ -42,6 +44,49 @@ open class LoggedInActivity : AppCompatActivity(),
         }
     }
 
+    private fun initLoggedInMenuUi(
+        menu: Menu,
+        checkoutCartStream: ReceiveChannel<List<Item>>,
+        startCheckoutActivity: () -> Unit
+    ) {
+        val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
+
+        val rootView = (alertMenuItem.actionView as FrameLayout).apply {
+            setOnClickListener { startCheckoutActivity() }
+        }
+        val redCircle: FrameLayout = rootView.findViewById(R.id.view_alert_red_circle)
+
+        val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
+
+        suspend fun updateItemCount(itemsInCart: List<Item>) {
+            withContext(Dispatchers.Main) {
+                val itemsInCartCount = itemsInCart.size
+                if (itemsInCartCount == 0) {
+                    redCircle.visibility = View.GONE
+                } else {
+                    redCircle.visibility = View.VISIBLE
+                    countTextView.text = itemsInCartCount.toString()
+                }
+            }
+        }
+
+        launch {
+            checkoutCartStream
+                .consumeEach { itemsInCart ->
+                    updateItemCount(itemsInCart)
+                }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.logged_in_menu, menu)
+        initLoggedInMenuUi(menu, checkoutCart.itemsInCartStream()) {
+            startActivity(Intent(this, CheckoutActivity::class.java))
+        }
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
@@ -58,44 +103,5 @@ open class LoggedInActivity : AppCompatActivity(),
         }
     }
 
-    private inner class LoggedInMenuUi(menu: Menu) {
-        private val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
 
-        private val rootView = (alertMenuItem.actionView as FrameLayout).apply {
-            setOnClickListener {
-                startActivity(Intent(this@LoggedInActivity, CheckoutActivity::class.java))
-            }
-        }
-
-        private val redCircle: FrameLayout = rootView.findViewById(R.id.view_alert_red_circle)
-
-        private val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
-
-        init {
-            launch {
-                checkoutCart
-                    .itemsInCartStream()
-                    .consumeEach { itemsInCart ->
-                        updateItemCount(itemsInCart)
-                    }
-            }
-        }
-
-        private fun updateItemCount(itemsInCart: List<Item>) {
-            val itemsInCartCount = itemsInCart.size
-            if (itemsInCartCount == 0) {
-                redCircle.visibility = View.GONE
-            } else {
-                redCircle.visibility = View.VISIBLE
-                countTextView.text = itemsInCartCount.toString()
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.logged_in_menu, menu)
-        LoggedInMenuUi(menu)
-        return true
-    }
 }
