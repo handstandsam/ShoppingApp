@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.handstandsam.shoppingapp.di.AppGraph
@@ -14,7 +15,7 @@ import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
 
@@ -50,11 +51,15 @@ open class LoggedInActivity : AppCompatActivity(),
         }
 
         launch {
-            for (count in 1..9) {
+            graph.sessionGraph.checkoutCart.itemsInCartStream().consumeEach { itemsInCartCount ->
                 runOnUiThread {
-                    countTextView.text = count.toString()
+                    if (itemsInCartCount == 0) {
+                        redCircle.visibility = View.GONE
+                    } else {
+                        redCircle.visibility = View.VISIBLE
+                        countTextView.text = itemsInCartCount.toString()
+                    }
                 }
-                delay(1000)
             }
         }
         return true
