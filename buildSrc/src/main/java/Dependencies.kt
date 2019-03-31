@@ -25,6 +25,7 @@ object Versions {
     val kotlin = "1.3.21"
     val kotlin_coroutines = "1.2.0-alpha"
     val apache_commons = "2.4"
+    val retrofit_coroutines_adapter = "0.9.2"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
@@ -73,9 +74,12 @@ object Libs {
     val wiremock = "com.github.tomakehurst:wiremock:${Versions.wiremock}"
     val apacheHttpClientAndroid = "org.apache.httpcomponents:httpclient-android:4.3.5.1"
     val kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-    val kotlin_coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
-    val kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
-
+    val kotlin_coroutines =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
+    val kotlin_coroutines_android =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
+    val retrofit_coroutines_adapter =
+        "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofit_coroutines_adapter}"
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     val coroutines =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"

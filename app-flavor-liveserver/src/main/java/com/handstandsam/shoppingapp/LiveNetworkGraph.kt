@@ -6,7 +6,6 @@ import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.repository.UserRepo
-import io.reactivex.Single
 
 class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
     networkConfig = NetworkConfig(
@@ -22,12 +21,11 @@ class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
      */
     override val userRepo: UserRepo =
         object : UserRepo {
-            override fun login(loginRequest: LoginRequest): Single<User> {
-                val user = User(
+            override suspend fun login(loginRequest: LoginRequest): User {
+                return User(
                     firstname = "Live",
                     lastname = "User"
                 )
-                return Single.fromCallable { user }
             }
         }
 }

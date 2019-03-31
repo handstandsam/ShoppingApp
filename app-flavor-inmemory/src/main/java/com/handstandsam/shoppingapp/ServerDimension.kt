@@ -11,30 +11,29 @@ import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.UserRepo
-import io.reactivex.Single
 
 val mockAccount: MockAccount = AndroidLibsMockAccount()
 
 class InMemoryNetworkGraph : NetworkGraph {
     override val categoryRepo: CategoryRepo =
         object : CategoryRepo {
-            override fun getCategories(): Single<List<Category>> {
-                return Single.fromCallable { mockAccount.getCategories() }
+            override suspend fun getCategories(): List<Category> {
+                return mockAccount.getCategories()
             }
         }
 
 
     override val itemRepo: ItemRepo =
         object : ItemRepo {
-            override fun getItemsForCategory(categoryLabel: String): Single<List<Item>> {
-                return Single.fromCallable { mockAccount.getItemsForCategory(categoryLabel) }
+            override suspend fun getItemsForCategory(categoryLabel: String): List<Item>? {
+                return mockAccount.getItemsForCategory(categoryLabel)
             }
         }
 
     override val userRepo: UserRepo =
         object : UserRepo {
-            override fun login(loginRequest: LoginRequest): Single<User> {
-                return Single.fromCallable { mockAccount.getUser() }
+            override suspend fun login(loginRequest: LoginRequest): User {
+                return mockAccount.getUser()
             }
         }
 

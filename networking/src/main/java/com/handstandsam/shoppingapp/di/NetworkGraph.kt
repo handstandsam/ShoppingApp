@@ -3,6 +3,7 @@ package com.handstandsam.shoppingapp.di
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.*
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -33,12 +34,15 @@ open class BaseNetworkGraph(
 
     private val moshiConverterFactory = MoshiConverterFactory.create(moshi)
 
+    private val coroutinesCallAdapterFactory = CoroutineCallAdapterFactory()
+
     private val rxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
 
     private val retrofitBuilder: Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(networkConfig.fullUrl)
             .addConverterFactory(moshiConverterFactory)
+            .addCallAdapterFactory(coroutinesCallAdapterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .client(okHttpClientBuilder.build())
 

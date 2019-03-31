@@ -102,6 +102,8 @@ dependencies {
     implementation Libs.glide
     implementation Libs.retrofit
     implementation Libs.okhttp
+
+    //Kotlin
     implementation Libs.kotlin_std_lib
     implementation Libs.kotlin_coroutines
     implementation Libs.kotlin_coroutines_android
