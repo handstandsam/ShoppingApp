@@ -6,12 +6,20 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
+import android.widget.TextView
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.repository.SessionManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-open class LoggedInActivity : AppCompatActivity() {
+
+open class LoggedInActivity : AppCompatActivity(),
+    CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     protected val graph: AppGraph get() = application.graph()
 
@@ -26,9 +34,30 @@ open class LoggedInActivity : AppCompatActivity() {
         }
     }
 
+    lateinit var redCircle: FrameLayout
+    lateinit var countTextView: TextView
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.logged_in_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
+        val rootView = (alertMenuItem.actionView as FrameLayout)
+
+        redCircle = rootView.findViewById(R.id.view_alert_red_circle)
+        countTextView = rootView.findViewById(R.id.view_alert_count_textview)
+        rootView.setOnClickListener {
+            startActivity(Intent(this, CheckoutActivity::class.java))
+        }
+
+        launch {
+            for (count in 1..9) {
+                runOnUiThread {
+                    countTextView.text = count.toString()
+                }
+                delay(1000)
+            }
+        }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -37,10 +66,6 @@ open class LoggedInActivity : AppCompatActivity() {
                 sessionManager.logout()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
-                return true
-            }
-            R.id.view_cart -> {
-                startActivity(Intent(this, CheckoutActivity::class.java))
                 return true
             }
             android.R.id.home -> {
