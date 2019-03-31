@@ -20,11 +20,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 open class LoggedInActivity : AppCompatActivity(),
-    CoroutineScope by CoroutineScope(Dispatchers.Default) {
+    CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     protected val graph: AppGraph get() = application.graph()
 
@@ -89,15 +88,13 @@ open class LoggedInActivity : AppCompatActivity(),
             }
         }
 
-        private suspend fun updateItemCount(itemsInCart: List<Item>) {
-            withContext(Dispatchers.Main) {
-                val itemsInCartCount = itemsInCart.size
-                if (itemsInCartCount == 0) {
-                    redCircle.visibility = View.GONE
-                } else {
-                    redCircle.visibility = View.VISIBLE
-                    countTextView.text = itemsInCartCount.toString()
-                }
+        private fun updateItemCount(itemsInCart: List<Item>) {
+            val itemsInCartCount = itemsInCart.size
+            if (itemsInCartCount == 0) {
+                redCircle.visibility = View.GONE
+            } else {
+                redCircle.visibility = View.VISIBLE
+                countTextView.text = itemsInCartCount.toString()
             }
         }
     }

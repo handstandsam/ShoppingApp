@@ -8,14 +8,11 @@ dependencies {
 
     implementation Libs.retrofit
 
-    implementation Libs.rxjava2
-    implementation Libs.rx_android
-    implementation Libs.retrofit_rxjava_adapter
-
     implementation Libs.moshi
     implementation Libs.moshiKotlin
     implementation Libs.retrofit_moshi_converter
 
+    implementation Libs.retrofit_coroutines_adapter
 
     implementation project(Modules.models)
 }

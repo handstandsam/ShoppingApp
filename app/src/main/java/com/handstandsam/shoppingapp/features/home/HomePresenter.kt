@@ -1,37 +1,36 @@
 package com.handstandsam.shoppingapp.features.home
 
 import android.content.Intent
-import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.repository.CategoryRepo
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
+import com.handstandsam.shoppingapp.utils.exhaustive
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class HomePresenter(
     private val view: HomeActivity.HomeView,
     private val sessionManager: SessionManager,
     private val categoryRepo: CategoryRepo
-) {
+) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     fun onResume(intent: Intent) {
-        categoryRepo.getCategories().subscribe(object : SingleObserver<List<Category>> {
-            override fun onSubscribe(d: Disposable) {
-                Timber.d("onSubscribe")
-            }
-
-            override fun onSuccess(categories: List<Category>) {
-                view.showCategories(categories)
-            }
-
-            override fun onError(e: Throwable) {
-                Timber.d("onError")
-
-            }
-        })
+        launch {
+            val categoriesResult = categoryRepo.getCategories()
+            when (categoriesResult) {
+                is NetworkResult.Success -> {
+                    view.showCategories(categoriesResult.body)
+                }
+                is NetworkResult.Failure -> {
+                    Timber.d("onError")
+                }
+            }.exhaustive
+        }
 
         val currentUser = sessionManager.currentUser
-        val welcomeStr = "Welcome back " + currentUser!!.firstname + " " + currentUser.lastname
+        val welcomeStr = "Welcome back " + currentUser?.firstname + " " + currentUser?.lastname
         view.setWelcomeMessage(welcomeStr)
     }
 }

@@ -2,19 +2,21 @@ package com.handstandsam.shoppingapp.features.login
 
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.models.LoginRequest
-import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.Disposable
+import com.handstandsam.shoppingapp.utils.exhaustive
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginPresenter(
     private val view: LoginActivity.LoginView,
     internal var sessionManager: SessionManager,
     internal var userPreferences: UserPreferences,
     internal var userRepo: UserRepo
-) {
+) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     fun onResume() {
 
@@ -35,20 +37,19 @@ class LoginPresenter(
         val rememberMe = view.isRememberMeChecked
         val username = view.username
         val password = view.password
-        userRepo.login(LoginRequest(username, password)).subscribe(object : SingleObserver<User> {
-            override fun onSubscribe(d: Disposable) {
 
-            }
-
-            override fun onSuccess(user: User) {
-                userPreferences.setRememberMe(rememberMe, view.username)
-                sessionManager.currentUser = user
-                view.startHomeActivity()
-            }
-
-            override fun onError(e: Throwable) {
-                view.showToast(R.string.invalid_username_or_password)
-            }
-        })
+        launch(Dispatchers.Main) {
+            val userResult = userRepo.login(LoginRequest(username, password))
+            when (userResult) {
+                is NetworkResult.Success -> {
+                    userPreferences.setRememberMe(rememberMe, view.username)
+                    sessionManager.currentUser = userResult.body
+                    view.startHomeActivity()
+                }
+                is NetworkResult.Failure -> {
+                    view.showToast(R.string.invalid_username_or_password)
+                }
+            }.exhaustive
+        }
     }
 }
