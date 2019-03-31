@@ -42,13 +42,6 @@ open class LoggedInActivity : AppCompatActivity(),
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.logged_in_menu, menu)
-        LoggedInMenuUi(menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
@@ -97,5 +90,12 @@ open class LoggedInActivity : AppCompatActivity(),
                 countTextView.text = itemsInCartCount.toString()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.logged_in_menu, menu)
+        LoggedInMenuUi(menu)
+        return true
     }
 }

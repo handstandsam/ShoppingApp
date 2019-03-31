@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
-import com.handstandsam.shoppingapp.features.category.CategoryPresenter
+import com.handstandsam.shoppingapp.features.category.CategoryActivity.Companion.BUNDLE_PARAM_CATEGORY
 import com.handstandsam.shoppingapp.models.Category
 
 
@@ -26,7 +26,7 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
             val context = itemView.context
             val intent = Intent(context, CategoryActivity::class.java)
             val extras = Bundle()
-            extras.putSerializable(CategoryPresenter.BUNDLE_PARAM_CATEGORY, category)
+            extras.putSerializable(BUNDLE_PARAM_CATEGORY, category)
             intent.putExtras(extras)
             context.startActivity(intent)
         }

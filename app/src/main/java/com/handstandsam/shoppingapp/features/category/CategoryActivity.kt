@@ -7,7 +7,13 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.repository.ItemRepo
+import com.handstandsam.shoppingapp.repository.NetworkResult
+import com.handstandsam.shoppingapp.utils.exhaustive
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CategoryActivity : LoggedInActivity() {
 
@@ -15,9 +21,6 @@ class CategoryActivity : LoggedInActivity() {
 
     private lateinit var recyclerViewAdapter: CategoryRVAdapter
 
-    private val view: CategoryView = MyCategoryView()
-
-    private var presenter: CategoryPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,37 +31,42 @@ class CategoryActivity : LoggedInActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerViewAdapter = CategoryRVAdapter()
         recyclerView.adapter = recyclerViewAdapter
-        presenter = CategoryPresenter(
-            view = view,
-            itemRepo = graph.networkGraph.itemRepo
-        )
+
+        Ui(graph.networkGraph.itemRepo)
+
     }
 
-    interface CategoryView {
+    inner class Ui(itemRepo: ItemRepo) {
+        init {
+            val extras = intent.extras
+            val (label) = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
+            setActionBarTitle(label)
+            launch {
+                val itemsResult = itemRepo.getItemsForCategory(label)
+                when (itemsResult) {
+                    is NetworkResult.Success -> {
+                        showItems(itemsResult.body)
+                    }
+                    is NetworkResult.Failure -> {
+                        Timber.w("Networking Error", itemsResult.errorResponse)
+                        showNetworkError(itemsResult.errorResponse.toString())
+                    }
+                }.exhaustive
+            }
+        }
 
         val context: Context
-
-        fun showItems(items: List<Item>)
-
-        fun setActionBarTitle(title: String)
-
-        fun showNetworkError(message: String?)
-    }
-
-    inner class MyCategoryView : CategoryView {
-
-        override val context: Context
             get() = this@CategoryActivity.applicationContext
 
-        override fun showItems(items: List<Item>) {
+        fun showItems(items: List<Item>) {
             recyclerViewAdapter.setItems(items)
         }
 
-        override fun setActionBarTitle(title: String) {
+        fun setActionBarTitle(title: String) {
             supportActionBar?.title = title
         }
 
-        override fun showNetworkError(message: String?) {
+        fun showNetworkError(message: String?) {
             val builder = AlertDialog.Builder(
                 this@CategoryActivity
             ).setTitle("Networking Error")
@@ -74,8 +82,8 @@ class CategoryActivity : LoggedInActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter!!.onResume(intent)
+
+    companion object {
+        const val BUNDLE_PARAM_CATEGORY = "category"
     }
 }
