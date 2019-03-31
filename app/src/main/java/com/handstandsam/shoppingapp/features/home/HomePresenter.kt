@@ -1,11 +1,14 @@
 package com.handstandsam.shoppingapp.features.home
 
 import android.content.Intent
+import com.handstandsam.shoppingapp.repository.CategoriesResult
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomePresenter(
     private val view: HomeActivity.HomeView,
@@ -15,22 +18,16 @@ class HomePresenter(
 
     fun onResume(intent: Intent) {
         launch {
-            val categories = categoryRepo.getCategories()
-            view.showCategories(categories)
+            val categoriesResult = categoryRepo.getCategories()
+            when (categoriesResult) {
+                is CategoriesResult.Success -> {
+                    view.showCategories(categoriesResult.categories)
+                }
+                is CategoriesResult.Failure -> {
+                    Timber.d("onError")
+                }
+            }.exhaustive
         }
-//            .subscribe(object : SingleObserver<List<Category>> {
-//            override fun onSubscribe(d: Disposable) {
-//                Timber.d("onSubscribe")
-//            }
-//
-//            override fun onSuccess(categories: List<Category>) {
-//            }
-//
-//            override fun onError(e: Throwable) {
-//                Timber.d("onError")
-//
-//            }
-//        })
 
         val currentUser = sessionManager.currentUser
         val welcomeStr = "Welcome back " + currentUser?.firstname + " " + currentUser?.lastname
