@@ -10,22 +10,21 @@ import kotlinx.coroutines.launch
 data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
     CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
-
     private val channel = ConflatedBroadcastChannel<List<Item>>(itemsInCart.toList())
 
     fun empty() {
         itemsInCart.clear()
+        sendUpdateChannel()
     }
 
     fun addItem(item: Item) {
         itemsInCart.add(item)
-        launch {
-            channel.send(itemsInCart.toList())
-        }
+        sendUpdateChannel()
     }
 
     fun removeItem(item: Item) {
         itemsInCart.remove(item)
+        sendUpdateChannel()
     }
 
     fun itemsInCartStream(): ReceiveChannel<List<Item>> {
@@ -34,4 +33,11 @@ data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
 
     val items: List<Item>
         get() = itemsInCart.toList()
+
+
+    private fun sendUpdateChannel() {
+        launch {
+            channel.send(itemsInCart.toList())
+        }
+    }
 }
