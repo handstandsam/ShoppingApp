@@ -93,11 +93,6 @@ dependencies {
     implementation Libs.support_recycler_view
     implementation Libs.support_design
 
-    //Rx
-    implementation Libs.rxjava2
-    implementation Libs.rx_android
-    implementation Libs.retrofit_rxjava_adapter
-
     //Networking
     implementation Libs.glide
     implementation Libs.retrofit

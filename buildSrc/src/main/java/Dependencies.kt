@@ -13,7 +13,6 @@ object Modules {
 
 object Versions {
     val retrofit = "2.3.0"
-    val rxjava = "2.1.9"
     val source_compat = "1.8"
     val target_compat = "1.8"
     val min_sdk = 21
@@ -29,7 +28,6 @@ object Versions {
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
-    val rx_android = "2.0.2"
     val glide = "4.9.0"
     val dagger = "2.16"
     val process_phoenix = "2.0.0"
@@ -37,7 +35,6 @@ object Versions {
     val junit = "4.12"
     val wiremock = "2.18.0"
     val timber = "4.5.1"
-    val rx_java = "2.1.16"
     val moshi = "1.6.0"
 
     // android
@@ -52,9 +49,6 @@ object Libs {
     val support_annotations = "com.android.support:support-annotations:${Versions.support_lib}"
     val support_appcompat_v7 = "com.android.support:appcompat-v7:${Versions.support_lib}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    val retrofit_rxjava_adapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
-    val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
-    val rx_android = "io.reactivex.rxjava2:rxandroid:${Versions.rx_android}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val retrofit_moshi_converter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     val process_phoenix = "com.jakewharton:process-phoenix:${Versions.process_phoenix}"
@@ -68,7 +62,6 @@ object Libs {
     val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     val okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
-    val retrofit_adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
     val wiremock = "com.github.tomakehurst:wiremock:${Versions.wiremock}"

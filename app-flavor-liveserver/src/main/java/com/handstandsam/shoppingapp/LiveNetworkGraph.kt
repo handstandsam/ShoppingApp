@@ -20,15 +20,14 @@ class LiveNetworkGraph(appContext: Context) : BaseNetworkGraph(
      * Our S3 server can't support POST calls,
      * so we are just returning a mock for this call.
      */
-    override val userRepo: UserRepo =
-        object : UserRepo {
-            override suspend fun login(loginRequest: LoginRequest): UserResult {
-                return UserResult.Success(
-                    User(
-                        firstname = "Live",
-                        lastname = "User"
-                    )
+    override val userRepo: UserRepo = object : UserRepo {
+        override suspend fun login(loginRequest: LoginRequest): UserResult {
+            return UserResult.Success(
+                User(
+                    firstname = "Live",
+                    lastname = "User"
                 )
-            }
+            )
         }
+    }
 }

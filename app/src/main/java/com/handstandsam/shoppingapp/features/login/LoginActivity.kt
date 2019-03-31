@@ -16,7 +16,6 @@ import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.preferences.UserPreferences
 import com.handstandsam.shoppingapp.repository.SessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
-import io.reactivex.disposables.Disposable
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,8 +36,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var usernameEditText: AppCompatEditText
 
     lateinit var passwordEditText: AppCompatEditText
-
-    private var disposable: Disposable? = null
 
     private lateinit var loginView: MyLoginView
 
@@ -69,14 +66,6 @@ class LoginActivity : AppCompatActivity() {
             }
             false
         })
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (disposable != null && !disposable!!.isDisposed) {
-            disposable!!.dispose()
-        }
     }
 
     interface LoginView {
