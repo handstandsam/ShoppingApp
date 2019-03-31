@@ -58,7 +58,6 @@ open class LoggedInActivity : AppCompatActivity(),
 
         val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
 
-
         suspend fun updateItemCount(itemsInCart: List<Item>) {
             withContext(Dispatchers.Main) {
                 val itemsInCartCount = itemsInCart.size
