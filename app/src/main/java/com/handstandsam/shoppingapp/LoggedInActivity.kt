@@ -45,14 +45,16 @@ open class LoggedInActivity : AppCompatActivity(),
         val rootView = (alertMenuItem.actionView as FrameLayout)
 
         redCircle = rootView.findViewById(R.id.view_alert_red_circle)
+
         countTextView = rootView.findViewById(R.id.view_alert_count_textview)
         rootView.setOnClickListener {
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
 
         launch {
-            graph.sessionGraph.checkoutCart.itemsInCartStream().consumeEach { itemsInCartCount ->
+            graph.sessionGraph.checkoutCart.itemsInCartStream().consumeEach { itemsInCart ->
                 runOnUiThread {
+                    val itemsInCartCount = itemsInCart.size
                     if (itemsInCartCount == 0) {
                         redCircle.visibility = View.GONE
                     } else {

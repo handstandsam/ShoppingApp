@@ -11,7 +11,7 @@ data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
     CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
 
-    private val channel = ConflatedBroadcastChannel<Int>(itemsInCart.size)
+    private val channel = ConflatedBroadcastChannel<List<Item>>(itemsInCart.toList())
 
     fun empty() {
         itemsInCart.clear()
@@ -20,7 +20,7 @@ data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
     fun addItem(item: Item) {
         itemsInCart.add(item)
         launch {
-            channel.send(itemsInCart.size)
+            channel.send(itemsInCart.toList())
         }
     }
 
@@ -28,10 +28,10 @@ data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
         itemsInCart.remove(item)
     }
 
-    fun itemsInCartStream(): ReceiveChannel<Int> {
+    fun itemsInCartStream(): ReceiveChannel<List<Item>> {
         return channel.openSubscription()
     }
 
     val items: List<Item>
-        get() = itemsInCart
+        get() = itemsInCart.toList()
 }
