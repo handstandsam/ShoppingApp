@@ -1,32 +1,29 @@
 package com.handstandsam.shoppingapp.features.checkout
 
 import android.os.Bundle
+import android.support.v7.widget.AppCompatButton
+import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CheckoutActivity : LoggedInActivity() {
 
-    lateinit var itemCountTextView: TextView
-
-    lateinit var itemsText: TextView
-
-    private val checkoutView: CheckoutView = MyCheckoutView()
-
-    private var presenter: CheckoutPresenter? = null
+    val cart get() = graph.sessionGraph.checkoutCart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar!!.setTitle(R.string.cart)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.cart)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_checkout)
-        itemCountTextView = findViewById(R.id.item_count)
-        itemsText = findViewById(R.id.items)
-        presenter = CheckoutPresenter(
-            view = checkoutView,
-            cart = graph.sessionGraph.checkoutCart
-        )
+        MyCheckoutUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -34,27 +31,43 @@ class CheckoutActivity : LoggedInActivity() {
         return true
     }
 
-    interface CheckoutView {
 
-        fun setItemCountText(text: String)
-
-        fun setItemsText(text: String)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.empty_cart -> {
+                cart.empty()
+                return true
+            }
+            else -> return super.onContextItemSelected(item)
+        }
     }
 
-    inner class MyCheckoutView : CheckoutView {
+    private inner class MyCheckoutUi {
 
-        override fun setItemCountText(text: String) {
-            itemCountTextView.text = text
+        private val itemCountTextView: TextView = findViewById(R.id.item_count)
+        private val itemsText: TextView = findViewById(R.id.items)
+        private val checkoutButton = findViewById<AppCompatButton>(R.id.checkout_button).apply {
+            setOnClickListener {
+                val toast = Toast.makeText(
+                    applicationContext,
+                    "TODO: Checkout Feature Not Implemented",
+                    Toast.LENGTH_SHORT
+                )
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+            }
         }
 
-        override fun setItemsText(text: String) {
-            itemsText.text = text
+        init {
+            launch {
+                cart.itemsInCartStream().consumeEach {
+                    withContext(Dispatchers.Main) {
+                        itemCountTextView.text = CartContentsMessage.itemCountText(cart.items)
+                        itemsText.text = CartContentsMessage.itemsText(cart.items)
+                    }
+                }
+            }
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter!!.onResume()
     }
 }

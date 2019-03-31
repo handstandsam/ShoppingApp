@@ -23,7 +23,6 @@ class ItemDetailPresenter(
 
     fun addToCardClicked() {
         cart.addItem(item)
-        view.showToast(item.label + " added to cart.")
     }
 
     companion object {

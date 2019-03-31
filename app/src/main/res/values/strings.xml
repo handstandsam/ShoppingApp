@@ -4,8 +4,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Log in</string>
+    <string name="empty_cart">Empty Cart</string>
     <string name="logout">Log out</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="checkout">Checkout</string>
     <string name="view_cart">View Cart</string>
     <string name="remember_me">Remember Me</string>
     <string name="invalid_username_or_password">Invalid Username or Password</string>
