@@ -82,7 +82,7 @@ open class LoggedInActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.logged_in_menu, menu)
-        initLoggedInMenuUi(menu, checkoutCart.itemsInCart()) {
+        initLoggedInMenuUi(menu, checkoutCart.itemsInCartChannel()) {
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
         return true

@@ -9,9 +9,12 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
 
-
 class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Default),
     ShoppingCart {
+
+    override fun itemsInCart(): List<ItemWithQuantity> {
+        return itemsInCart.values.toList()
+    }
 
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
@@ -39,7 +42,7 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
         sendUpdateChannel()
     }
 
-    override fun itemsInCart(): ReceiveChannel<List<ItemWithQuantity>> {
+    override fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
     }
 

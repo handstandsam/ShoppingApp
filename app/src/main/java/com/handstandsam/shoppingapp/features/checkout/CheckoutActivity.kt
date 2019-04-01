@@ -76,7 +76,7 @@ class CheckoutActivity : LoggedInActivity() {
 
         init {
             launch {
-                cart.itemsInCart().consumeEach { itemsInCart: List<ItemWithQuantity> ->
+                cart.itemsInCartChannel().consumeEach { itemsInCart: List<ItemWithQuantity> ->
                     withContext(Dispatchers.Main) {
                         itemCountTextView.text =
                             itemsInCart.totalItemCount().toString() + " item(s) in your cart."
