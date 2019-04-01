@@ -11,11 +11,9 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
-
 class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
     CoroutineScope by CoroutineScope(Dispatchers.IO),
     ShoppingCart {
-
 
     private val itemInCartEntityQueries = Database(sqlDriver).itemInCartEntityQueries
 
@@ -61,7 +59,6 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
     override fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
     }
-
 
     override fun itemsInCart(): List<ItemWithQuantity> {
         return selectAll()
