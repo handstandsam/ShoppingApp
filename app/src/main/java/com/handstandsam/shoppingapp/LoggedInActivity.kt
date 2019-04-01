@@ -16,6 +16,7 @@ import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.repository.CheckoutCart
 import com.handstandsam.shoppingapp.repository.ItemWithQuantity
 import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.totalItemCount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -64,12 +65,8 @@ open class LoggedInActivity : AppCompatActivity(),
                 if (itemsInCartCount == 0) {
                     redCircle.visibility = View.GONE
                 } else {
-                    var total = 0
-                    itemsInCart.forEach {
-                        total += it.quantity
-                    }
                     redCircle.visibility = View.VISIBLE
-                    countTextView.text = total.toString()
+                    countTextView.text = itemsInCart.totalItemCount().toString()
                 }
             }
         }

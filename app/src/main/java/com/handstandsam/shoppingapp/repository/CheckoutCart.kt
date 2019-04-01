@@ -19,7 +19,7 @@ class CheckoutCart : CoroutineScope by CoroutineScope(Dispatchers.Default) {
     }
 
     fun addItem(item: Item) {
-        val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 1)
+        val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 0)
         itemsInCart[item.label] = value.copy(quantity = value.quantity + 1)
         sendUpdateChannel()
     }

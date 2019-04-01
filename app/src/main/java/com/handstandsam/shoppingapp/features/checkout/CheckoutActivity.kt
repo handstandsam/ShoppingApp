@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.repository.ItemWithQuantity
+import com.handstandsam.shoppingapp.repository.totalItemCount
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
@@ -74,7 +75,7 @@ class CheckoutActivity : LoggedInActivity() {
                 cart.itemsInCartStream().consumeEach { itemsInCart: List<ItemWithQuantity> ->
                     withContext(Dispatchers.Main) {
                         itemCountTextView.text =
-                            itemsInCart.size.toString() + " item(s) in your cart."
+                            itemsInCart.totalItemCount().toString() + " item(s) in your cart."
                         recyclerViewAdapter.setItems(itemsInCart)
                     }
                 }
