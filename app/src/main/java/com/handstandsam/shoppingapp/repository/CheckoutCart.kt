@@ -7,10 +7,11 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
-data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
-    CoroutineScope by CoroutineScope(Dispatchers.Default) {
+class CheckoutCart : CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
-    private val channel = ConflatedBroadcastChannel<List<Item>>(itemsInCart.toList())
+    private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
+
+    private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
 
     fun empty() {
         itemsInCart.clear()
@@ -18,26 +19,33 @@ data class CheckoutCart(val itemsInCart: MutableList<Item> = mutableListOf()) :
     }
 
     fun addItem(item: Item) {
-        itemsInCart.add(item)
+        val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 0)
+        itemsInCart[item.label] = value.copy(quantity = value.quantity + 1)
         sendUpdateChannel()
     }
 
     fun removeItem(item: Item) {
-        itemsInCart.remove(item)
+        val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 1)
+        val newValue = value.copy(quantity = value.quantity - 1)
+        if (newValue.quantity == 0) {
+            itemsInCart.remove(item.label)
+        } else {
+            itemsInCart[item.label] = newValue
+        }
         sendUpdateChannel()
     }
 
-    fun itemsInCartStream(): ReceiveChannel<List<Item>> {
+    fun itemsInCartStream(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
     }
 
-    val items: List<Item>
-        get() = itemsInCart.toList()
+    val items: List<ItemWithQuantity>
+        get() = itemsInCart.values.toList()
 
 
     private fun sendUpdateChannel() {
         launch {
-            channel.send(itemsInCart.toList())
+            channel.send(items)
         }
     }
 }

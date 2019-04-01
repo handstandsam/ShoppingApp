@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/selector"
+    android:orientation="horizontal"
+    android:padding="@dimen/one">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:alpha="@dimen/alpha"
+        android:background="@color/material_red"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/ic_shopping_cart_white_24px" />
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/CartItemRowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image"
+        tools:text="Item" />
+
+    <LinearLayout
+        android:id="@+id/add_remove_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/one">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_add_circle_24px" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/remove_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one"
+            android:src="@drawable/ic_baseline_remove_circle_24px" />
+    </LinearLayout>
+</RelativeLayout>

@@ -13,9 +13,10 @@ import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraph
 import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
-import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.CheckoutCart
+import com.handstandsam.shoppingapp.repository.ItemWithQuantity
 import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.totalItemCount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -46,7 +47,7 @@ open class LoggedInActivity : AppCompatActivity(),
 
     private fun initLoggedInMenuUi(
         menu: Menu,
-        checkoutCartStream: ReceiveChannel<List<Item>>,
+        checkoutCartStream: ReceiveChannel<List<ItemWithQuantity>>,
         startCheckoutActivity: () -> Unit
     ) {
         val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
@@ -58,14 +59,14 @@ open class LoggedInActivity : AppCompatActivity(),
 
         val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
 
-        suspend fun updateItemCount(itemsInCart: List<Item>) {
+        suspend fun updateItemCount(itemsInCart: List<ItemWithQuantity>) {
             withContext(Dispatchers.Main) {
                 val itemsInCartCount = itemsInCart.size
                 if (itemsInCartCount == 0) {
                     redCircle.visibility = View.GONE
                 } else {
                     redCircle.visibility = View.VISIBLE
-                    countTextView.text = itemsInCartCount.toString()
+                    countTextView.text = itemsInCart.totalItemCount().toString()
                 }
             }
         }
