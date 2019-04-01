@@ -1,10 +1,10 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    implementation project(Modules.models)
+    api project(Modules.models)
 
     //Kotlin
-    implementation Libs.kotlin_std_lib
-    implementation Libs.kotlin_coroutines
-    implementation Libs.kotlin_coroutines_android
+    api Libs.kotlin_std_lib
+    api Libs.kotlin_coroutines
+    api Libs.kotlin_coroutines_android
 }
