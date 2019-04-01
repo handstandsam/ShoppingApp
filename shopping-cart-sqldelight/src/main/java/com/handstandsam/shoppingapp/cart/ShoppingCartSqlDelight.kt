@@ -58,8 +58,13 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
 
     private val channel = ConflatedBroadcastChannel(selectAll())
 
-    override fun itemsInCart(): ReceiveChannel<List<ItemWithQuantity>> {
+    override fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
+    }
+
+
+    override fun itemsInCart(): List<ItemWithQuantity> {
+        return selectAll()
     }
 
     private val changeListener = object : Query.Listener {
