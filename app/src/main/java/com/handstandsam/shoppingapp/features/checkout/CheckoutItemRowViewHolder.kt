@@ -11,38 +11,38 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.home.ColorInts
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
-import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.repository.ItemWithQuantity
 
 
 internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val textView: TextView = itemView.findViewById(R.id.text)
+    private val textView: TextView = itemView.findViewById(R.id.text)
 
-    val imageView: AppCompatImageView = itemView.findViewById(R.id.image)
+    private val imageView: AppCompatImageView = itemView.findViewById(R.id.image)
 
-    private var item: Item? = null
+    private var _itemWithQuantity: ItemWithQuantity? = null
 
     init {
         itemView.setOnClickListener { view ->
             val context = itemView.context
             val intent = Intent(view.context, ItemDetailActivity::class.java)
             val extras = Bundle()
-            extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, item)
+            extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, _itemWithQuantity?.item)
             intent.putExtras(extras)
             context.startActivity(intent)
         }
     }
 
-    fun bindData(item: Item, position: Int) {
-        this.item = item
+    fun bindData(itemWithQuantity: ItemWithQuantity, position: Int) {
+        this._itemWithQuantity = itemWithQuantity
 
-        val imageUrl = item.image
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(imageView.context).load(item.image).into(imageView!!)
+        val imageUrl = itemWithQuantity.item.image
+        if (!imageUrl.isEmpty()) {
+            Glide.with(imageView.context).load(imageUrl).into(imageView)
         } else {
             itemView.setBackgroundResource(ColorInts.getColor(position))
         }
 
-        textView.text = this.item!!.label
+        textView.text = itemWithQuantity.quantity.toString() + " x " + itemWithQuantity.item.label
     }
 }
