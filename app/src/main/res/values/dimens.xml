@@ -7,6 +7,7 @@
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="alpha">0.8</dimen>
 
+    <dimen name="item_in_cart_label">20sp</dimen>
     <dimen name="item_title">24sp</dimen>
     <dimen name="category_title">32sp</dimen>
     <dimen name="welcome_message">20sp</dimen>

@@ -33,4 +33,17 @@
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 
+
+    <style name="CartItemRowTitle" parent="TextAppearance.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="android:paddingLeft">@dimen/two</item>
+        <item name="android:paddingRight">@dimen/two</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/item_in_cart_label</item>
+    </style>
+
 </resources>
