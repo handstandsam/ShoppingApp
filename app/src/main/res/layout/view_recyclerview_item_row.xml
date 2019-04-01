@@ -18,5 +18,5 @@
     <TextView
         android:id="@+id/text"
         style="@style/ItemRowTitle"
-        tools:text="Item"></TextView>
+        tools:text="Item" />
 </RelativeLayout>
