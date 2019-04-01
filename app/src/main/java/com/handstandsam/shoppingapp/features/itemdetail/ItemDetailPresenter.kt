@@ -1,12 +1,12 @@
 package com.handstandsam.shoppingapp.features.itemdetail
 
 import android.content.Intent
+import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.repository.CheckoutCart
 
 class ItemDetailPresenter(
     private val view: ItemDetailActivity.ItemDetailView,
-    private var cart: CheckoutCart
+    private var cart: ShoppingCart
 ) {
     internal lateinit var item: Item
 

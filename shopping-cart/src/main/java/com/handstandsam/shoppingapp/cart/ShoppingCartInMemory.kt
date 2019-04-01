@@ -1,30 +1,34 @@
-package com.handstandsam.shoppingapp.repository
+package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
-class CheckoutCart : CoroutineScope by CoroutineScope(Dispatchers.Default) {
+
+
+class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Default),
+    ShoppingCart {
 
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
     private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
 
-    fun empty() {
+    override fun empty() {
         itemsInCart.clear()
         sendUpdateChannel()
     }
 
-    fun addItem(item: Item) {
+    override fun addItem(item: Item) {
         val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 0)
         itemsInCart[item.label] = value.copy(quantity = value.quantity + 1)
         sendUpdateChannel()
     }
 
-    fun removeItem(item: Item) {
+    override fun removeItem(item: Item) {
         val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 1)
         val newValue = value.copy(quantity = value.quantity - 1)
         if (newValue.quantity == 0) {
@@ -35,17 +39,13 @@ class CheckoutCart : CoroutineScope by CoroutineScope(Dispatchers.Default) {
         sendUpdateChannel()
     }
 
-    fun itemsInCartStream(): ReceiveChannel<List<ItemWithQuantity>> {
+    override fun itemsInCart(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
     }
 
-    val items: List<ItemWithQuantity>
-        get() = itemsInCart.values.toList()
-
-
     private fun sendUpdateChannel() {
         launch {
-            channel.send(items)
+            channel.send(itemsInCart.values.toList())
         }
     }
 }

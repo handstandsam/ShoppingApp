@@ -33,7 +33,7 @@ class ItemDetailActivity : LoggedInActivity() {
         view = MyItemDetailView()
         presenter = ItemDetailPresenter(
             view = view,
-            cart = graph.sessionGraph.checkoutCart
+            cart = graph.sessionGraph.shoppingCart
         )
     }
 

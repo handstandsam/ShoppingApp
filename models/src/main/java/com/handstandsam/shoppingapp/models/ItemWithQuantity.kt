@@ -1,6 +1,4 @@
-package com.handstandsam.shoppingapp.repository
-
-import com.handstandsam.shoppingapp.models.Item
+package com.handstandsam.shoppingapp.models
 
 data class ItemWithQuantity(val item: Item, val quantity: Int)
 

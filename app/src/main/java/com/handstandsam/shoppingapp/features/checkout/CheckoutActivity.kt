@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.repository.ItemWithQuantity
-import com.handstandsam.shoppingapp.repository.totalItemCount
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
+import com.handstandsam.shoppingapp.models.totalItemCount
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 class CheckoutActivity : LoggedInActivity() {
 
-    val cart get() = graph.sessionGraph.checkoutCart
+    val cart get() = graph.sessionGraph.shoppingCart
 
     private lateinit var recyclerView: RecyclerView
 
@@ -51,6 +51,10 @@ class CheckoutActivity : LoggedInActivity() {
                 cart.empty()
                 return true
             }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
             else -> return super.onContextItemSelected(item)
         }
     }
@@ -72,7 +76,7 @@ class CheckoutActivity : LoggedInActivity() {
 
         init {
             launch {
-                cart.itemsInCartStream().consumeEach { itemsInCart: List<ItemWithQuantity> ->
+                cart.itemsInCart().consumeEach { itemsInCart: List<ItemWithQuantity> ->
                     withContext(Dispatchers.Main) {
                         itemCountTextView.text =
                             itemsInCart.totalItemCount().toString() + " item(s) in your cart."

@@ -9,14 +9,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraph
 import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
-import com.handstandsam.shoppingapp.repository.CheckoutCart
-import com.handstandsam.shoppingapp.repository.ItemWithQuantity
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
+import com.handstandsam.shoppingapp.models.totalItemCount
 import com.handstandsam.shoppingapp.repository.SessionManager
-import com.handstandsam.shoppingapp.repository.totalItemCount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -34,7 +34,7 @@ open class LoggedInActivity : AppCompatActivity(),
 
     private val sessionManager: SessionManager get() = sessionGraph.sessionManager
 
-    private val checkoutCart: CheckoutCart get() = sessionGraph.checkoutCart
+    private val checkoutCart: ShoppingCart get() = sessionGraph.shoppingCart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +82,7 @@ open class LoggedInActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.logged_in_menu, menu)
-        initLoggedInMenuUi(menu, checkoutCart.itemsInCartStream()) {
+        initLoggedInMenuUi(menu, checkoutCart.itemsInCart()) {
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
         return true

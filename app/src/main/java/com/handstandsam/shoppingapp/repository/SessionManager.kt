@@ -1,13 +1,13 @@
 package com.handstandsam.shoppingapp.repository
 
 
+import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences
-
 import timber.log.Timber
 
 class SessionManager(
-    private val cart: CheckoutCart,
+    private val cart: ShoppingCart,
     private val userPreferences: UserPreferences
 ) {
 

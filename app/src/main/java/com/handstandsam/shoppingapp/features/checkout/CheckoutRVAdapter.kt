@@ -4,8 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.repository.ItemWithQuantity
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
 
 internal class CheckoutRVAdapter : RecyclerView.Adapter<CheckoutItemRowViewHolder>() {
 

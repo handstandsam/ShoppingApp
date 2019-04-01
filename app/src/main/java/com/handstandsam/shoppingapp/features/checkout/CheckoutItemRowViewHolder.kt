@@ -12,7 +12,7 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.features.home.ColorInts
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
-import com.handstandsam.shoppingapp.repository.ItemWithQuantity
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
 
 
 internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,10 +36,10 @@ internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHold
             context.startActivity(intent)
         }
         addButton.setOnClickListener {
-            application.appGraph.sessionGraph.checkoutCart.addItem(_itemWithQuantity!!.item)
+            application.appGraph.sessionGraph.shoppingCart.addItem(_itemWithQuantity!!.item)
         }
         removeButton.setOnClickListener {
-            application.appGraph.sessionGraph.checkoutCart.removeItem(_itemWithQuantity!!.item)
+            application.appGraph.sessionGraph.shoppingCart.removeItem(_itemWithQuantity!!.item)
         }
     }
 
