@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 interface ShoppingCart {
     fun addItem(item: Item)
     fun removeItem(item: Item)
-    fun itemsInCart(): ReceiveChannel<List<ItemWithQuantity>>
+    fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>>
+    fun itemsInCart(): List<ItemWithQuantity>
     fun empty()
 }
