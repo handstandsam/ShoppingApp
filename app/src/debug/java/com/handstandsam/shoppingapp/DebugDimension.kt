@@ -17,7 +17,7 @@ fun OkHttpClient.Builder.debugDimensionAddInterceptors(appContext: Context): OkH
     return this
 }
 
-fun Application.debugDimensionInitializeLogging() {
+fun Application.debugDimensionOnCreate() {
     Stetho.initializeWithDefaults(this)
     Timber.plant(Timber.DebugTree())
 }
