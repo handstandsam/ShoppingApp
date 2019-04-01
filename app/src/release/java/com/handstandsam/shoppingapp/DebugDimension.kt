@@ -4,6 +4,6 @@ fun OkHttpClient.Builder.debugDimensionAddInterceptors(appContext: Context): OkH
     return this
 }
 
-fun Application.debugDimensionInitializeLogging() {
+fun Application.debugDimensionOnCreate() {
     // No Logging
 }

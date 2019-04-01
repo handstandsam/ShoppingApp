@@ -2,6 +2,7 @@ package com.handstandsam.shoppingapp
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
@@ -16,6 +17,7 @@ fun OkHttpClient.Builder.debugDimensionAddInterceptors(appContext: Context): OkH
     return this
 }
 
-fun Application.debugDimensionInitializeLogging() {
+fun Application.debugDimensionOnCreate() {
+    Stetho.initializeWithDefaults(this)
     Timber.plant(Timber.DebugTree())
 }
