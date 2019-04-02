@@ -23,15 +23,15 @@
         android:layout_above="@id/checkout_button"
         android:layout_below="@id/item_count">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkout_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+            android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
 
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/checkout_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
