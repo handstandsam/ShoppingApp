@@ -19,7 +19,6 @@ INSERT OR REPLACE INTO itemInCart(
 )
 VALUES (?, ?, ?, ?);
 
-
 selectByLabel:
 SELECT *
 FROM itemInCart
