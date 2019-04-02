@@ -5,9 +5,9 @@ import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.channels.ReceiveChannel
 
 interface ShoppingCart {
-    fun addItem(item: Item)
-    fun removeItem(item: Item)
+    suspend fun addItem(item: Item)
+    suspend fun removeItem(item: Item)
     fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>>
-    fun itemsInCart(): List<ItemWithQuantity>
-    fun empty()
+    suspend fun itemsInCart(): List<ItemWithQuantity>
+    suspend fun empty()
 }

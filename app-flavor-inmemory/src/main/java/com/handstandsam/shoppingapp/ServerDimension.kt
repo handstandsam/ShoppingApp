@@ -12,6 +12,7 @@ import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
+import okhttp3.Interceptor
 
 val mockAccount: MockAccount = AndroidLibsMockAccount()
 
@@ -45,6 +46,6 @@ class InMemoryNetworkGraph : NetworkGraph {
 
 }
 
-fun Application.serverDimensionNetworkGraph(): NetworkGraph {
+fun Application.serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
     return InMemoryNetworkGraph()
 }

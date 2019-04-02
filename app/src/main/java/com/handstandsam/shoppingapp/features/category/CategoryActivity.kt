@@ -12,7 +12,9 @@ import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.utils.exhaustive
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class CategoryActivity : LoggedInActivity() {
@@ -20,7 +22,6 @@ class CategoryActivity : LoggedInActivity() {
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var recyclerViewAdapter: CategoryRVAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,6 @@ class CategoryActivity : LoggedInActivity() {
         recyclerView.adapter = recyclerViewAdapter
 
         Ui(graph.networkGraph.itemRepo)
-
     }
 
     inner class Ui(itemRepo: ItemRepo) {
@@ -43,15 +43,17 @@ class CategoryActivity : LoggedInActivity() {
             setActionBarTitle(label)
             launch {
                 val itemsResult = itemRepo.getItemsForCategory(label)
-                when (itemsResult) {
-                    is NetworkResult.Success -> {
-                        showItems(itemsResult.body)
-                    }
-                    is NetworkResult.Failure -> {
-                        Timber.w("Networking Error", itemsResult.errorResponse)
-                        showNetworkError(itemsResult.errorResponse.toString())
-                    }
-                }.exhaustive
+                withContext(Dispatchers.Main) {
+                    when (itemsResult) {
+                        is NetworkResult.Success -> {
+                            showItems(itemsResult.body)
+                        }
+                        is NetworkResult.Failure -> {
+                            Timber.w("Networking Error", itemsResult.errorResponse)
+                            showNetworkError(itemsResult.errorResponse.toString())
+                        }
+                    }.exhaustive
+                }
             }
         }
 

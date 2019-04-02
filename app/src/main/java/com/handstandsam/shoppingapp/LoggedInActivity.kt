@@ -26,7 +26,7 @@ import kotlinx.coroutines.withContext
 
 
 open class LoggedInActivity : AppCompatActivity(),
-    CoroutineScope by CoroutineScope(Dispatchers.Main) {
+    CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     protected val graph: AppGraph get() = application.graph()
 
@@ -91,9 +91,14 @@ open class LoggedInActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
-                sessionManager.logout()
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                val launchIntent = Intent(this, LoginActivity::class.java)
+                launch {
+                    sessionManager.logout()
+                    withContext(Dispatchers.Main) {
+                        startActivity(launchIntent)
+                        finish()
+                    }
+                }
                 return true
             }
             android.R.id.home -> {

@@ -10,7 +10,7 @@ class MyApplication : Application() {
     val appGraph: AppGraph by lazy {
         AppGraph(
             sessionGraph = SessionGraphImpl(applicationContext),
-            networkGraph = this.serverDimensionNetworkGraph()
+            networkGraph = this.serverDimensionNetworkGraph(debugDimensionInterceptors(this))
         )
     }
 
