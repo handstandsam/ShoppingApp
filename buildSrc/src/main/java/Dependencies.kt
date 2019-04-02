@@ -17,8 +17,8 @@ object Versions {
     val source_compat = "1.8"
     val target_compat = "1.8"
     val min_sdk = 21
-    val target_sdk = 27
-    val compile_sdk = 27
+    val target_sdk = 28
+    val compile_sdk = 28
     val build_tools = "28.0.3"
 
     // Kotlin
@@ -39,7 +39,7 @@ object Versions {
     val moshi = "1.6.0"
 
     // android
-    val support_lib = "27.1.1"
+    val support_lib = "28.0.0"
     val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
