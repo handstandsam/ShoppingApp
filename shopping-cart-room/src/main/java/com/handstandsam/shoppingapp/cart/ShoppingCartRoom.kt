@@ -17,16 +17,27 @@ class ShoppingCartRoom(appContext: Context) : CoroutineScope by CoroutineScope(D
     private val itemInCartDatabase: ItemInCartDatabase = Room.databaseBuilder(
         appContext,
         ItemInCartDatabase::class.java,
-        "itemInCart_room"
+        "cart_room"
     ).build()
 
     private val itemInCartDao = itemInCartDatabase.itemInCartDao()
 
-    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+    private fun selectAll(): List<ItemWithQuantity> {
         return itemInCartDao.selectAll().map { it.toItemWithQuantity() }
     }
 
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+        return selectAll()
+    }
+
     private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
+
+    init {
+        launch {
+            channel.send(selectAll())
+        }
+    }
+
 
     override suspend fun empty() {
         itemInCartDao.empty()

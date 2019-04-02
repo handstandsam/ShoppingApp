@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface ItemInCartDao {
     @Query("SELECT * FROM ItemInCart ORDER BY label")
-    suspend fun selectAll(): List<ItemInCart>
+    fun selectAll(): List<ItemInCart>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(vararg itemInCart: ItemInCart)
