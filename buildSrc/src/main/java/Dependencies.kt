@@ -47,7 +47,7 @@ object Versions {
     val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
-    
+
     val assertj = "3.11.1"
 }
 
@@ -92,7 +92,7 @@ object Libs {
     val chuck = "com.readystatesoftware.chuck:library:${Versions.chuck}"
     val chuck_no_op = "com.readystatesoftware.chuck:library-no-op:${Versions.chuck}"
     val apache_commons = "commons-io:commons-io:${Versions.apache_commons}"
-    
+
     val sql_delight_android = "com.squareup.sqldelight:android-driver:${Versions.sql_delight}"
     val sql_delight_jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sql_delight}"
 }
