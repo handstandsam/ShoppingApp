@@ -101,7 +101,7 @@ class ShoppingCartSqlDelightTest {
             println("removeItem finished: ${shoppingCart.itemsInCart()}")
         }
 
-        fun clearDb() = apply {
+        suspend fun clearDb() = apply {
             shoppingCart.empty()
             println("empty finished: ${shoppingCart.itemsInCart()}")
         }

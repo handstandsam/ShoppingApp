@@ -7,7 +7,8 @@ CREATE TABLE itemInCart (
 
 selectAll:
 SELECT *
-FROM itemInCart;
+FROM itemInCart
+ORDER BY label;
 
 insertOrReplace:
 INSERT OR REPLACE INTO itemInCart(

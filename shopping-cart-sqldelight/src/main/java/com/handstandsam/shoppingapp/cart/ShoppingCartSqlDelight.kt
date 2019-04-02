@@ -17,11 +17,11 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
 
     private val itemInCartEntityQueries = Database(sqlDriver).itemInCartEntityQueries
 
-    override fun empty() {
+    override suspend fun empty() {
         itemInCartEntityQueries.empty()
     }
 
-    override fun addItem(item: Item) {
+    override suspend fun addItem(item: Item) {
         val itemInCart = itemInCartEntityQueries
             .selectByLabel(item.label)
             .executeAsOneOrNull()
@@ -35,10 +35,26 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
         )
     }
 
-    override fun removeItem(item: Item) {
-        itemInCartEntityQueries.deleteByLabel(
-            label = item.label
-        )
+    override suspend fun removeItem(item: Item) {
+        val itemInCart = itemInCartEntityQueries
+            .selectByLabel(item.label)
+            .executeAsOneOrNull()
+
+        itemInCart?.let {
+            val newOneLessQuantity: Long = (itemInCart.quantity - 1)
+
+            if (newOneLessQuantity == 0L) {
+                itemInCartEntityQueries.deleteByLabel(item.label)
+            } else {
+                itemInCartEntityQueries.insertOrReplace(
+                    label = itemInCart.label,
+                    link = itemInCart.link,
+                    image = itemInCart.image,
+                    quantity = newOneLessQuantity
+                )
+            }
+        }
+
     }
 
     private fun selectAll(): List<ItemWithQuantity> {
@@ -60,7 +76,7 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
         return channel.openSubscription()
     }
 
-    override fun itemsInCart(): List<ItemWithQuantity> {
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
         return selectAll()
     }
 
