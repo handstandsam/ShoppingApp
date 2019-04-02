@@ -2,11 +2,8 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
-        maven {
-            url 'https://maven.google.com'
-            // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
-        }
         google()
     }
     dependencies {
@@ -22,10 +19,9 @@ apply plugin: 'kotlin'
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url 'https://maven.google.com'
-            // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
-        }
+        google()
+        mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx/" }
     }
 }
 
@@ -35,14 +31,6 @@ configurations.all {
         force "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
         force "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
 }
 
 compileKotlin {
