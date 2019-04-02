@@ -2,8 +2,8 @@ package com.handstandsam.shoppingapp.features.checkout
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.AppCompatImageView
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.bumptech.glide.Glide
