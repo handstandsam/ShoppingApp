@@ -8,6 +8,7 @@ import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class HomePresenter(
@@ -17,17 +18,21 @@ class HomePresenter(
 ) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     fun onResume(intent: Intent) {
-        launch {
+        launch(Dispatchers.IO) {
             val categoriesResult = categoryRepo.getCategories()
-            when (categoriesResult) {
-                is NetworkResult.Success -> {
-                    view.showCategories(categoriesResult.body)
-                }
-                is NetworkResult.Failure -> {
-                    Timber.d("onError")
-                }
-            }.exhaustive
+
+            withContext(Dispatchers.Main) {
+                when (categoriesResult) {
+                    is NetworkResult.Success -> {
+                        view.showCategories(categoriesResult.body)
+                    }
+                    is NetworkResult.Failure -> {
+                        Timber.d("onError")
+                    }
+                }.exhaustive
+            }
         }
+
 
         val currentUser = sessionManager.currentUser
         val welcomeStr = "Welcome back " + currentUser?.firstname + " " + currentUser?.lastname

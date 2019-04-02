@@ -13,9 +13,13 @@ import com.handstandsam.shoppingapp.features.home.ColorInts
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     private val textView: TextView = itemView.findViewById(R.id.text)
 
@@ -36,10 +40,14 @@ internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHold
             context.startActivity(intent)
         }
         addButton.setOnClickListener {
-            application.appGraph.sessionGraph.shoppingCart.addItem(_itemWithQuantity!!.item)
+            launch {
+                application.appGraph.sessionGraph.shoppingCart.addItem(_itemWithQuantity!!.item)
+            }
         }
         removeButton.setOnClickListener {
-            application.appGraph.sessionGraph.shoppingCart.removeItem(_itemWithQuantity!!.item)
+            launch {
+                application.appGraph.sessionGraph.shoppingCart.removeItem(_itemWithQuantity!!.item)
+            }
         }
     }
 

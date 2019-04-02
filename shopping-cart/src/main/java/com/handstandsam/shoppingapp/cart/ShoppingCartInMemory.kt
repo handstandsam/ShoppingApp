@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Default),
     ShoppingCart {
 
-    override fun itemsInCart(): List<ItemWithQuantity> {
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
         return itemsInCart.values.toList()
     }
 
@@ -20,18 +20,18 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
 
     private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
 
-    override fun empty() {
+    override suspend fun empty() {
         itemsInCart.clear()
         sendUpdateChannel()
     }
 
-    override fun addItem(item: Item) {
+    override suspend fun addItem(item: Item) {
         val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 0)
         itemsInCart[item.label] = value.copy(quantity = value.quantity + 1)
         sendUpdateChannel()
     }
 
-    override fun removeItem(item: Item) {
+    override suspend fun removeItem(item: Item) {
         val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 1)
         val newValue = value.copy(quantity = value.quantity - 1)
         if (newValue.quantity == 0) {

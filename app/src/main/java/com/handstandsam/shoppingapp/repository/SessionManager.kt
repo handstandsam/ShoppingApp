@@ -25,7 +25,7 @@ class SessionManager(
             return loggedIn
         }
 
-    fun logout() {
+    suspend fun logout() {
         currentUser = null
         cart.empty()
     }

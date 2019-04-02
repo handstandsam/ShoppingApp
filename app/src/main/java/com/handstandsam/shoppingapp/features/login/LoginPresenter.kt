@@ -10,13 +10,14 @@ import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginPresenter(
     private val view: LoginActivity.LoginView,
     internal var sessionManager: SessionManager,
     internal var userPreferences: UserPreferences,
     internal var userRepo: UserRepo
-) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
+) : CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     fun onResume() {
 
@@ -38,18 +39,20 @@ class LoginPresenter(
         val username = view.username
         val password = view.password
 
-        launch(Dispatchers.Main) {
+        launch {
             val userResult = userRepo.login(LoginRequest(username, password))
-            when (userResult) {
-                is NetworkResult.Success -> {
-                    userPreferences.setRememberMe(rememberMe, view.username)
-                    sessionManager.currentUser = userResult.body
-                    view.startHomeActivity()
-                }
-                is NetworkResult.Failure -> {
-                    view.showToast(R.string.invalid_username_or_password)
-                }
-            }.exhaustive
+            withContext(Dispatchers.Main) {
+                when (userResult) {
+                    is NetworkResult.Success -> {
+                        userPreferences.setRememberMe(rememberMe, view.username)
+                        sessionManager.currentUser = userResult.body
+                        view.startHomeActivity()
+                    }
+                    is NetworkResult.Failure -> {
+                        view.showToast(R.string.invalid_username_or_password)
+                    }
+                }.exhaustive
+            }
         }
     }
 }

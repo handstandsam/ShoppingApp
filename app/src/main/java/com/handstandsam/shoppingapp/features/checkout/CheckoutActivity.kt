@@ -48,7 +48,9 @@ class CheckoutActivity : LoggedInActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.empty_cart -> {
-                cart.empty()
+                launch {
+                    cart.empty()
+                }
                 return true
             }
             android.R.id.home -> {
