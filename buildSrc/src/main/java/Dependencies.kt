@@ -18,8 +18,8 @@ object Versions {
     val source_compat = "1.8"
     val target_compat = "1.8"
     val min_sdk = 21
-    val target_sdk = 27
-    val compile_sdk = 27
+    val target_sdk = 28
+    val compile_sdk = 28
     val build_tools = "28.0.3"
 
     // Kotlin
@@ -43,7 +43,7 @@ object Versions {
     val moshi = "1.6.0"
 
     // android
-    val support_lib = "27.1.1"
+    val androidx = "1.0.0"
     val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
@@ -52,15 +52,17 @@ object Versions {
 }
 
 object Libs {
-    val support_recycler_view = "com.android.support:recyclerview-v7:${Versions.support_lib}"
-    val support_annotations = "com.android.support:support-annotations:${Versions.support_lib}"
-    val support_appcompat_v7 = "com.android.support:appcompat-v7:${Versions.support_lib}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val retrofit_moshi_converter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     val process_phoenix = "com.jakewharton:process-phoenix:${Versions.process_phoenix}"
-    val support_v4 = "com.android.support:support-v4:${Versions.support_lib}"
-    val support_design = "com.android.support:design:${Versions.support_lib}"
+
+    //AndroidX
+    val androidx_material = "com.google.android.material:material:${Versions.androidx}" //com.android.support:design
+    val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}" //com.android.support:recyclerview-v7
+    val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
+    val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx}" //com.android.support:support-v4
+    val androidx_annotations = "androidx.annotation:annotation:${Versions.androidx}" //com.android.support:support-annotations
 
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"

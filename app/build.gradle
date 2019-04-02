@@ -13,7 +13,7 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     dexOptions {
@@ -46,7 +46,7 @@ android {
     }
 
     testOptions {
-        execution 'ANDROID_TEST_ORCHESTRATOR'
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
         animationsDisabled = true
     }
 
@@ -88,10 +88,10 @@ dependencies {
     implementation project(Modules.mockData)
 
     //Support Libraries
-    implementation Libs.support_v4
-    implementation Libs.support_appcompat_v7
-    implementation Libs.support_recycler_view
-    implementation Libs.support_design
+    implementation Libs.androidx_support_v4
+    implementation Libs.androidx_appcompat_v7
+    implementation Libs.androidx_recyclerview
+    implementation Libs.androidx_material
 
     //Networking
     implementation Libs.glide

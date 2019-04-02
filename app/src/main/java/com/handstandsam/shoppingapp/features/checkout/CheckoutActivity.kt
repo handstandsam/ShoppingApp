@@ -1,9 +1,9 @@
 package com.handstandsam.shoppingapp.features.checkout
 
 import android.os.Bundle
-import android.support.v7.widget.AppCompatButton
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
