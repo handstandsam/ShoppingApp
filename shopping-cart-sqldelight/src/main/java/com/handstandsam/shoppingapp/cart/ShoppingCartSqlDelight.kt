@@ -65,7 +65,7 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
                     image = it.image,
                     link = it.link
                 ),
-                quantity = it.quantity.toInt()
+                quantity = it.quantity
             )
         }
     }
