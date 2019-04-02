@@ -34,7 +34,7 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
     override suspend fun removeItem(item: Item) {
         val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 1)
         val newValue = value.copy(quantity = value.quantity - 1)
-        if (newValue.quantity == 0) {
+        if (newValue.quantity == 0L) {
             itemsInCart.remove(item.label)
         } else {
             itemsInCart[item.label] = newValue
