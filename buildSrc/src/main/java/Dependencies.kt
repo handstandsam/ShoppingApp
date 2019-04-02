@@ -43,6 +43,8 @@ object Versions {
     val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
+
+    val assertj = "3.11.1"
 }
 
 object Libs {
@@ -96,6 +98,7 @@ object TestLibs {
     val android_test_runner = "com.android.support.test:runner:${Versions.test_support_lib}"
     val testRules = "com.android.support.test:rules:${Versions.test_support_lib}"
     val junit = "junit:junit:${Versions.junit}"
+    val assertj = "org.assertj:assertj-core:${Versions.assertj}"
 }
 
 object GradlePlugins {
