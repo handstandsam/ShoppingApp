@@ -1,8 +1,6 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    implementation Libs.support_annotations
-    implementation Libs.support_appcompat_v7
     implementation Libs.retrofit
     implementation Libs.kotlin_std_lib
 

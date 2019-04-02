@@ -88,10 +88,10 @@ dependencies {
     implementation project(Modules.mockData)
 
     //Support Libraries
-    implementation Libs.support_v4
-    implementation Libs.support_appcompat_v7
-    implementation Libs.support_recycler_view
-    implementation Libs.support_design
+    implementation Libs.androidx_support_v4
+    implementation Libs.androidx_appcompat_v7
+    implementation Libs.androidx_recyclerview
+    implementation Libs.androidx_material
 
     //Networking
     implementation Libs.glide
