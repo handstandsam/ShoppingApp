@@ -7,6 +7,7 @@ object Modules {
     val networking = ":networking"
     val debug = ":debug"
     val shoppingCart = ":shopping-cart"
+    val shoppingCartRoom = ":shopping-cart-room"
     val flavorInmemory = ":app-flavor-inmemory"
     val flavorMockserver = ":app-flavor-mockserver"
     val flavorLiveserver = ":app-flavor-liveserver"

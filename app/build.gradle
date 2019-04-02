@@ -118,6 +118,7 @@ dependencies {
 
     implementation project(Modules.networking)
     implementation project(Modules.shoppingCart)
+    implementation project(Modules.shoppingCartRoom)
 
     //JVM Tests Only
     testImplementation TestLibs.junit
