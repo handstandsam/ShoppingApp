@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import kotlinx.coroutines.runBlocking
@@ -21,26 +20,44 @@ class ShoppingCartSqlDelightTest {
     }
 
     @Test
-    fun testDbWrapper() = runBlocking<Unit> {
+    fun happyPath() = runBlocking<Unit> {
         testDelegate
-            .assertNumberOfDbEntries(0)
-            .addOrUpdate(itemWithQuantity1)
-            .assertPersisted(itemWithQuantity1)
-            .assertNumberOfDbEntries(1)
-            .addOrUpdate(itemWithQuantity2)
-            .assertPersisted(itemWithQuantity2)
-            .assertNumberOfDbEntries(2)
-            .removeItem(itemWithQuantity1)
-            .assertNumberOfDbEntries(1)
-            .removeItem(
-                itemWithQuantity1.copy(
-                    item = itemWithQuantity1.item.copy(label = "some other label")
-                )
-            )
-            .assertNumberOfDbEntries(1)
+            .assertTotalItemsInCart(0, 0)
+            .addItem(item1)
+            .assertPersisted(item1, 1)
+            .assertTotalItemsInCart(1, 1)
+            .addItem(item2)
+            .assertPersisted(item1, quantity = 1)
+            .assertPersisted(item2, quantity = 1)
+            .assertTotalItemsInCart(2, 2)
+            .addItem(item1)
+            .assertPersisted(item1, quantity = 2)
+            .assertTotalItemsInCart(2, 3)
+            .removeItem(item2)
+            .assertTotalItemsInCart(1, 2)
+            .assertPersisted(item1, quantity = 2)
             .clearDb()
-            .assertNumberOfDbEntries(0)
+            .assertTotalItemsInCart(0, 0)
     }
+
+    @Test
+    fun `remove item that is not there`() = runBlocking<Unit> {
+        testDelegate
+            .assertTotalItemsInCart(0, 0)
+            .removeItem(item2)
+            .assertTotalItemsInCart(0, 0)
+    }
+
+    @Test
+    fun `add 300 items`() = runBlocking<Unit> {
+        val limit = 300
+        (1..limit).forEach { _ ->
+            testDelegate.addItem(item1)
+        }
+
+        testDelegate.assertTotalItemsInCart(1, limit)
+    }
+
 
     inner class TestDelegate {
         private val sqlDriver: SqlDriver = JdbcSqliteDriver()
@@ -53,50 +70,55 @@ class ShoppingCartSqlDelightTest {
             sqlDriver = sqlDriver
         )
 
-        suspend fun addOrUpdate(item: ItemWithQuantity) = apply {
-            shoppingCart.addItem(item.item)
-            println("addOrUpdate finished: ${shoppingCart.itemsInCart().first()}")
+        suspend fun addItem(item: Item) = apply {
+            shoppingCart.addItem(item)
+            println("addItem finished: ${shoppingCart.itemsInCart().first()}")
         }
 
-        suspend fun assertPersisted(itemWithQuantity: ItemWithQuantity) = apply {
-            val matches = shoppingCart.itemsInCart().filter { it == itemWithQuantity }
-            assertThat(matches).isEmpty()
+        suspend fun assertPersisted(item: Item, quantity: Int) = apply {
+            println("asserting there is $quantity of $item")
+            val matchingItemsInCart = shoppingCart.itemsInCart().filter { it.item == item }
+            assertThat(matchingItemsInCart.size).isEqualTo(1)
+            val matchingItemInCart = matchingItemsInCart[0]
+            assertThat(matchingItemInCart.item).isEqualTo(item)
+            assertThat(matchingItemInCart.quantity).isEqualTo(quantity)
         }
 
-        suspend fun assertNumberOfDbEntries(count: Int) = apply {
+        suspend fun assertTotalItemsInCart(typeCount: Int, totalCount: Int) = apply {
+            println("asserting there are $typeCount types of items with a total of $totalCount items")
             val itemsInCart = shoppingCart.itemsInCart()
-            println("itemsInCart: $itemsInCart")
-            val actualCount = itemsInCart.size
-            assertThat(actualCount).isEqualTo(count)
+
+            val itemTypeCount = itemsInCart.size
+            assertThat(itemTypeCount).isEqualTo(typeCount)
+
+            val totalItems = itemsInCart.sumBy { it.quantity }
+            assertThat(totalItems).isEqualTo(totalCount)
         }
 
-        suspend fun removeItem(itemWithQuantity: ItemWithQuantity) = apply {
-            shoppingCart.removeItem(itemWithQuantity.item)
+        suspend fun removeItem(item: Item) = apply {
+            println("removeItem $item")
+            shoppingCart.removeItem(item)
             println("removeItem finished: ${shoppingCart.itemsInCart()}")
         }
 
         fun clearDb() = apply {
             shoppingCart.empty()
+            println("empty finished: ${shoppingCart.itemsInCart()}")
         }
 
     }
 
     companion object {
-        val itemWithQuantity1 = ItemWithQuantity(
-            Item(
-                label = "Cool Thing",
-                image = "https://...jpg",
-                link = null
-            ),
-            5
+        val item1 = Item(
+            label = "Cool Thing 1",
+            image = "https://...jpg",
+            link = null
         )
-        val itemWithQuantity2 = ItemWithQuantity(
-            Item(
-                label = "Cool Thing 2",
-                image = "https://...jpg",
-                link = null
-            ),
-            2
+
+        val item2 = Item(
+            label = "Cool Thing 2",
+            image = "https://...jpg",
+            link = null
         )
     }
 
