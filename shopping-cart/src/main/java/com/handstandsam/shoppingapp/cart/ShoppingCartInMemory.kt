@@ -14,7 +14,7 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
 
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
-    private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
+    private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
 
     override suspend fun empty() {
         itemsInCart.clear()
@@ -44,7 +44,7 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
 
     private fun sendUpdateChannel() {
         launch {
-            channel.send(itemsInCart.values.toList())
+            channel.send(itemsInCart.values.toList().sortedBy { it.item.label })
         }
     }
 }
