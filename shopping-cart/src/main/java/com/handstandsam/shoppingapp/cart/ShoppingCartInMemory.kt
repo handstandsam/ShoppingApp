@@ -12,10 +12,6 @@ import kotlinx.coroutines.launch
 class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Default),
     ShoppingCart {
 
-    override suspend fun itemsInCart(): List<ItemWithQuantity> {
-        return itemsInCart.values.toList()
-    }
-
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
     private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
