@@ -76,10 +76,6 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
         return channel.openSubscription()
     }
 
-    override suspend fun itemsInCart(): List<ItemWithQuantity> {
-        return selectAll()
-    }
-
     private val changeListener = object : Query.Listener {
         override fun queryResultsChanged() {
             launch {
