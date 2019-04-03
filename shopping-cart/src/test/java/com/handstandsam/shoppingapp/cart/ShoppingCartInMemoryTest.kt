@@ -61,13 +61,13 @@ class ShoppingCartInMemoryTest {
         suspend fun addItem(item: Item) = apply {
             println("adding item: $item")
             shoppingCart.addItem(item)
-            println("after adding item: ${shoppingCart.itemsInCartChannel().receive()}")
+            println("after adding item: ${shoppingCart.itemsInCart()}")
         }
 
         suspend fun assertPersisted(item: Item, quantity: Long) = apply {
             println("asserting there is $quantity of $item")
             val matchingItemsInCart =
-                shoppingCart.itemsInCartChannel().receive().filter { it.item.label == item.label }
+                shoppingCart.itemsInCart().filter { it.item.label == item.label }
             assertThat(matchingItemsInCart.size).isEqualTo(1)
             val matchingItemInCart = matchingItemsInCart[0]
             assertThat(matchingItemInCart.item).isEqualTo(item)
@@ -76,7 +76,7 @@ class ShoppingCartInMemoryTest {
 
         suspend fun assertTotalItemsInCart(typeCount: Int, totalCount: Int) = apply {
             println("asserting there are $typeCount types of items with a total of $totalCount items")
-            val itemsInCart = shoppingCart.itemsInCartChannel().receive()
+            val itemsInCart = shoppingCart.itemsInCart()
 
             val itemTypeCount = itemsInCart.size
             assertThat(itemTypeCount).isEqualTo(typeCount)
@@ -88,12 +88,12 @@ class ShoppingCartInMemoryTest {
         suspend fun removeItem(item: Item) = apply {
             println("removeItem $item")
             shoppingCart.removeItem(item)
-            println("removeItem finished: ${shoppingCart.itemsInCartChannel().receive()}")
+            println("removeItem finished: ${shoppingCart.itemsInCart()}")
         }
 
         suspend fun clearDb() = apply {
             shoppingCart.empty()
-            println("empty finished: ${shoppingCart.itemsInCartChannel().receive()}")
+            println("empty finished: ${shoppingCart.itemsInCart()}")
         }
 
     }
@@ -101,7 +101,7 @@ class ShoppingCartInMemoryTest {
     companion object {
         val item1 = Item(
             label = "Cool Thing 1",
-            image = "https://...jpg",
+            image = "https://...jpg",   
             link = null
         )
 
