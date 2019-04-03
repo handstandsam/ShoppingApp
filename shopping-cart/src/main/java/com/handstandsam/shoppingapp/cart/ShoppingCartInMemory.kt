@@ -42,6 +42,10 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
         return channel.openSubscription()
     }
 
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+        return itemsInCart.values.toList()
+    }
+
     private suspend fun sendUpdateChannel() {
         channel.send(itemsInCart.values.toList().sortedBy { it.item.label })
     }
