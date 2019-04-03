@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
+import com.handstandsam.shoppingapp.cart.InMemoryShopingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.cart.ShoppingCartSqlDelight
 import com.handstandsam.shoppingapp.cart.sqldelight.Database
