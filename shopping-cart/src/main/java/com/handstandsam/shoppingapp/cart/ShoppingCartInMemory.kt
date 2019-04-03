@@ -6,19 +6,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.launch
 
 
 class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Default),
     ShoppingCart {
 
-    override suspend fun itemsInCart(): List<ItemWithQuantity> {
-        return itemsInCart.values.toList()
-    }
-
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
-    private val channel = ConflatedBroadcastChannel(itemsInCart.values.toList())
+    private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
 
     override suspend fun empty() {
         itemsInCart.clear()
@@ -26,8 +21,9 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
     }
 
     override suspend fun addItem(item: Item) {
-        val value: ItemWithQuantity = itemsInCart[item.label] ?: ItemWithQuantity(item, 0)
-        itemsInCart[item.label] = value.copy(quantity = value.quantity + 1)
+        val key = item.label
+        val value: ItemWithQuantity = itemsInCart[key] ?: ItemWithQuantity(item, 0)
+        itemsInCart[key] = value.copy(quantity = value.quantity + 1)
         sendUpdateChannel()
     }
 
@@ -46,9 +42,11 @@ class ShoppingCartInMemory : CoroutineScope by CoroutineScope(Dispatchers.Defaul
         return channel.openSubscription()
     }
 
-    private fun sendUpdateChannel() {
-        launch {
-            channel.send(itemsInCart.values.toList())
-        }
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+        return itemsInCart.values.toList()
+    }
+
+    private suspend fun sendUpdateChannel() {
+        channel.send(itemsInCart.values.toList().sortedBy { it.item.label })
     }
 }

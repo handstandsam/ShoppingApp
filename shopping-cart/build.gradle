@@ -7,4 +7,8 @@ dependencies {
     api Libs.kotlin_std_lib
     api Libs.kotlin_coroutines
     api Libs.kotlin_coroutines_android
+
+    //Unit Tests
+    testImplementation TestLibs.junit
+    testImplementation TestLibs.assertj
 }
