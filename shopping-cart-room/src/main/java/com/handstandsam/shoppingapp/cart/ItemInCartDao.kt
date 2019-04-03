@@ -10,6 +10,9 @@ import androidx.room.Query
 @Dao
 interface ItemInCartDao {
     @Query("SELECT * FROM ItemInCart ORDER BY label")
+    fun selectAll(): List<ItemInCart>
+
+    @Query("SELECT * FROM ItemInCart ORDER BY label")
     fun selectAllStream(): LiveData<List<ItemInCart>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

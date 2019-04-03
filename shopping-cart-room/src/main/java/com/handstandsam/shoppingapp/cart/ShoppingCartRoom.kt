@@ -21,14 +21,14 @@ class ShoppingCartRoom(appContext: Context) :
         "cart_room"
     ).build()
 
-    private val itemInCartDao = itemInCartDatabase.itemInCartDao()
+    private val itemInCartDao: ItemInCartDao = itemInCartDatabase.itemInCartDao()
 
     private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
 
     init {
         itemInCartDao.selectAllStream().observeForever { list ->
             launch {
-                channel.send(list.map { it.toItemWithQuantity() })
+                channel.send(list.toItemWithQuantityList())
             }
         }
     }
@@ -66,6 +66,10 @@ class ShoppingCartRoom(appContext: Context) :
         return channel.openSubscription()
     }
 
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+        return itemInCartDao.selectAll().toItemWithQuantityList()
+    }
+
 }
 
 private fun ItemWithQuantity.toItemInCart(): ItemInCart {
@@ -86,4 +90,8 @@ private fun ItemInCart.toItemWithQuantity(): ItemWithQuantity {
         ),
         quantity = this.quantity
     )
+}
+
+private fun List<ItemInCart>.toItemWithQuantityList(): List<ItemWithQuantity> {
+    return map { it.toItemWithQuantity() }
 }
