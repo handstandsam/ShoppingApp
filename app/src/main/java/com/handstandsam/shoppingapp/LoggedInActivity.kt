@@ -3,12 +3,12 @@ package com.handstandsam.shoppingapp
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraph
@@ -19,7 +19,6 @@ import com.handstandsam.shoppingapp.models.totalItemCount
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,7 +46,7 @@ open class LoggedInActivity : AppCompatActivity(),
 
     private fun initLoggedInMenuUi(
         menu: Menu,
-        checkoutCartStream: ReceiveChannel<List<ItemWithQuantity>>,
+        shoppingCart: ShoppingCart,
         startCheckoutActivity: () -> Unit
     ) {
         val alertMenuItem = menu.findItem(R.id.activity_main_alerts_menu_item)
@@ -72,7 +71,8 @@ open class LoggedInActivity : AppCompatActivity(),
         }
 
         launch {
-            checkoutCartStream
+            shoppingCart
+                .itemsInCartChannel()
                 .consumeEach { itemsInCart ->
                     updateItemCount(itemsInCart)
                 }
@@ -82,7 +82,7 @@ open class LoggedInActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.logged_in_menu, menu)
-        initLoggedInMenuUi(menu, checkoutCart.itemsInCartChannel()) {
+        initLoggedInMenuUi(menu, checkoutCart) {
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
         return true

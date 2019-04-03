@@ -2,6 +2,7 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
     api project(Modules.models)
+    api Libs.timber
 
     //Kotlin
     api Libs.kotlin_std_lib

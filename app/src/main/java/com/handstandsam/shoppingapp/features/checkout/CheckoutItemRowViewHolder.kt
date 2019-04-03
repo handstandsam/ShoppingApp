@@ -2,13 +2,14 @@ package com.handstandsam.shoppingapp.features.checkout
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.MyApplication
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.features.home.ColorInts
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
@@ -27,10 +28,15 @@ internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHold
     private val addButton: AppCompatImageView = itemView.findViewById(R.id.add_button)
     private val removeButton: AppCompatImageView = itemView.findViewById(R.id.remove_button)
 
+    private val shoppingCart: ShoppingCart
+        get() {
+            val application = (itemView.context.applicationContext as MyApplication)
+            return application.appGraph.sessionGraph.shoppingCart
+        }
+
     private var _itemWithQuantity: ItemWithQuantity? = null
 
     init {
-        val application = (itemView.context.applicationContext as MyApplication)
         itemView.setOnClickListener { view ->
             val context = itemView.context
             val intent = Intent(view.context, ItemDetailActivity::class.java)
@@ -41,12 +47,12 @@ internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHold
         }
         addButton.setOnClickListener {
             launch {
-                application.appGraph.sessionGraph.shoppingCart.addItem(_itemWithQuantity!!.item)
+                shoppingCart.incrementItemInCart(_itemWithQuantity!!.item)
             }
         }
         removeButton.setOnClickListener {
             launch {
-                application.appGraph.sessionGraph.shoppingCart.removeItem(_itemWithQuantity!!.item)
+                shoppingCart.decrementItemInCart(_itemWithQuantity!!.item)
             }
         }
     }

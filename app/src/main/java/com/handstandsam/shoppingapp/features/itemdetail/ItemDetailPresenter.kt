@@ -25,7 +25,7 @@ class ItemDetailPresenter(
 
     fun addToCardClicked() {
         launch(Dispatchers.Default) {
-            cart.addItem(item)
+            cart.incrementItemInCart(item)
         }
     }
 
