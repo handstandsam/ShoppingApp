@@ -59,7 +59,9 @@ class ShoppingCartInMemoryTest {
         private val shoppingCart: ShoppingCart = ShoppingCartInMemory()
 
         suspend fun addItem(item: Item) = apply {
+            println("adding item: $item")
             shoppingCart.addItem(item)
+            println("after adding item: ${shoppingCart.itemsInCartChannel().receive()}")
         }
 
         suspend fun assertPersisted(item: Item, quantity: Long) = apply {
