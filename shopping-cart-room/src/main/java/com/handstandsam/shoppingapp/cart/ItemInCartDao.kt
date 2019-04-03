@@ -1,5 +1,6 @@
 package com.handstandsam.shoppingapp.cart
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import androidx.room.Query
 @Dao
 interface ItemInCartDao {
     @Query("SELECT * FROM ItemInCart ORDER BY label")
-    fun selectAll(): List<ItemInCart>
+    fun selectAllStream(): LiveData<List<ItemInCart>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(vararg itemInCart: ItemInCart)

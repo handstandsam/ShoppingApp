@@ -11,7 +11,8 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
 
-class ShoppingCartRoom(appContext: Context) : CoroutineScope by CoroutineScope(Dispatchers.IO),
+class ShoppingCartRoom(appContext: Context) :
+    CoroutineScope by CoroutineScope(Dispatchers.IO),
     ShoppingCart {
 
     private val itemInCartDatabase: ItemInCartDatabase = Room.databaseBuilder(
@@ -22,26 +23,18 @@ class ShoppingCartRoom(appContext: Context) : CoroutineScope by CoroutineScope(D
 
     private val itemInCartDao = itemInCartDatabase.itemInCartDao()
 
-    private fun selectAll(): List<ItemWithQuantity> {
-        return itemInCartDao.selectAll().map { it.toItemWithQuantity() }
-    }
-
-    override suspend fun itemsInCart(): List<ItemWithQuantity> {
-        return selectAll()
-    }
-
     private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
 
     init {
-        launch {
-            channel.send(selectAll())
+        itemInCartDao.selectAllStream().observeForever { list ->
+            launch {
+                channel.send(list.map { it.toItemWithQuantity() })
+            }
         }
     }
 
-
     override suspend fun empty() {
         itemInCartDao.empty()
-        sendUpdateChannel()
     }
 
     override suspend fun addItem(item: Item) {
@@ -51,12 +44,9 @@ class ShoppingCartRoom(appContext: Context) : CoroutineScope by CoroutineScope(D
 
         val newValue = identityWithQuantity.copy(quantity = (identityWithQuantity.quantity + 1))
         itemInCartDao.upsert(newValue.toItemInCart())
-
-        sendUpdateChannel()
     }
 
     override suspend fun removeItem(item: Item) {
-
         val itemWithQuantity: ItemWithQuantity? =
             itemInCartDao.findByLabel(item.label)?.toItemWithQuantity()
 
@@ -70,19 +60,11 @@ class ShoppingCartRoom(appContext: Context) : CoroutineScope by CoroutineScope(D
                 itemInCartDao.upsert(newValue.toItemInCart())
             }
         }
-        sendUpdateChannel()
     }
 
     override fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return channel.openSubscription()
     }
-
-    private fun sendUpdateChannel() {
-        launch {
-            channel.send(itemsInCart())
-        }
-    }
-
 
 }
 
