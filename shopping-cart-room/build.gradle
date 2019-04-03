@@ -10,14 +10,17 @@ dependencies {
     api Libs.kotlin_coroutines_android
 
     //Room
-    def room_version = "2.1.0-alpha06"
+    implementation Libs.androidx_persistence_room_runtime // Room
+    kapt Libs.androidx_persistence_room_kapt // Annotation Processor
 
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation Libs.androidx_persistence_room_ktx    // Coroutines support for Room
 
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$room_version"
+    // LiveData
+    implementation Libs.androidx_lifecycle_livedata_core
+    // LiveData for Reactive Streams from Queries
 
-    // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    // Unit Tests
+    testImplementation TestLibs.junit
+    testImplementation TestLibs.assertj
+    testImplementation Libs.androidx_persistence_room_test // Test helpers
 }

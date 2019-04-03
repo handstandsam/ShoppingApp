@@ -41,6 +41,8 @@ object Versions {
 
     // android
     val androidx = "1.0.0"
+    val androidx_lifecycle = "2.0.0"
+    val androidx_persistence = "2.1.0-alpha06"
     val android_gradle_plugin = "3.3.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
@@ -60,6 +62,16 @@ object Libs {
     val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
     val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx}" //com.android.support:support-v4
     val androidx_annotations = "androidx.annotation:annotation:${Versions.androidx}" //com.android.support:support-annotations
+
+
+    val androidx_persistence_room_runtime= "androidx.room:room-runtime:${Versions.androidx_persistence}" // Room
+    val androidx_persistence_room_kapt= "androidx.room:room-compiler:${Versions.androidx_persistence}" // Annotation Processor
+
+    val androidx_lifecycle_livedata_core= "androidx.lifecycle:lifecycle-livedata-core:${Versions.androidx_lifecycle}"
+
+    val androidx_persistence_room_ktx= "androidx.room:room-ktx:${Versions.androidx_persistence}" // optional - Kotlin Extensions and Coroutines support for Room
+
+    val androidx_persistence_room_test= "androidx.room:room-testing:${Versions.androidx_persistence}" // Test helpers
 
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
