@@ -2,6 +2,7 @@ package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import kotlinx.coroutines.runBlocking
@@ -71,40 +72,43 @@ class ShoppingCartSqlDelightTest {
 
         suspend fun addItem(item: Item) = apply {
             shoppingCart.addItem(item)
-            println("addItem finished: ${shoppingCart.itemsInCart().first()}")
+            println("addItem finished: ${getAllItemsInCart()}")
         }
 
         suspend fun assertPersisted(item: Item, quantity: Int) = apply {
             println("asserting there is $quantity of $item")
-            val matchingItemsInCart = shoppingCart.itemsInCart().filter { it.item == item }
+            val matchingItemsInCart = getAllItemsInCart().filter { it.item == item }
             assertThat(matchingItemsInCart.size).isEqualTo(1)
             val matchingItemInCart = matchingItemsInCart[0]
             assertThat(matchingItemInCart.item).isEqualTo(item)
-            assertThat(matchingItemInCart.quantity).isEqualTo(quantity)
+            assertThat(matchingItemInCart.quantity).isEqualTo(quantity.toLong())
         }
 
         suspend fun assertTotalItemsInCart(typeCount: Int, totalCount: Int) = apply {
             println("asserting there are $typeCount types of items with a total of $totalCount items")
-            val itemsInCart = shoppingCart.itemsInCart()
+            val itemsInCart = getAllItemsInCart()
 
             val itemTypeCount = itemsInCart.size
             assertThat(itemTypeCount).isEqualTo(typeCount)
 
-            val totalItems = itemsInCart.sumBy { it.quantity }
+            val totalItems = itemsInCart.sumBy { it.quantity.toInt() }
             assertThat(totalItems).isEqualTo(totalCount)
         }
 
         suspend fun removeItem(item: Item) = apply {
             println("removeItem $item")
             shoppingCart.removeItem(item)
-            println("removeItem finished: ${shoppingCart.itemsInCart()}")
+            println("removeItem finished: ${getAllItemsInCart()}")
         }
 
         suspend fun clearDb() = apply {
             shoppingCart.empty()
-            println("empty finished: ${shoppingCart.itemsInCart()}")
+            println("empty finished: ${getAllItemsInCart()}")
         }
 
+        private suspend fun getAllItemsInCart(): List<ItemWithQuantity> {
+            return shoppingCart.itemsInCart()
+        }
     }
 
     companion object {

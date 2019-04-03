@@ -14,6 +14,9 @@ import kotlinx.coroutines.launch
 class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
     CoroutineScope by CoroutineScope(Dispatchers.IO),
     ShoppingCart {
+    override suspend fun itemsInCart(): List<ItemWithQuantity> {
+        return itemInCartEntityQueries.selectAll().executeAsList().toItemWithQuantityList()
+    }
 
     private val itemInCartEntityQueries = Database(sqlDriver).itemInCartEntityQueries
 
@@ -58,17 +61,9 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
     }
 
     private fun selectAll(): List<ItemWithQuantity> {
-        return itemInCartEntityQueries.selectAll().executeAsList().map {
-            ItemWithQuantity(
-                item = Item(
-                    label = it.label,
-                    image = it.image,
-                    link = it.link
-                ),
-                quantity = it.quantity
-            )
-        }
+        return itemInCartEntityQueries.selectAll().executeAsList().toItemWithQuantityList()
     }
+
 
     private val channel = ConflatedBroadcastChannel(selectAll())
 
@@ -88,4 +83,17 @@ class ShoppingCartSqlDelight(sqlDriver: SqlDriver) :
         itemInCartEntityQueries.selectAll().addListener(changeListener)
     }
 
+}
+
+private fun List<ItemInCart>.toItemWithQuantityList(): List<ItemWithQuantity> {
+    return this.map {
+        ItemWithQuantity(
+            item = Item(
+                label = it.label,
+                image = it.image,
+                link = it.link
+            ),
+            quantity = it.quantity
+        )
+    }
 }
