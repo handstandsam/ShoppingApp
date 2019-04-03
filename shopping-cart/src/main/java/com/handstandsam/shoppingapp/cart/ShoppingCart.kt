@@ -8,6 +8,5 @@ interface ShoppingCart {
     suspend fun addItem(item: Item)
     suspend fun removeItem(item: Item)
     fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>>
-    suspend fun itemsInCart(): List<ItemWithQuantity>
     suspend fun empty()
 }
