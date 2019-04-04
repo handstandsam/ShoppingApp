@@ -29,5 +29,5 @@ dependencies {
     // Unit Tests
     androidTestImplementation TestLibs.junit
     androidTestImplementation Libs.androidx_persistence_room_test // Test helpers
-    androidTestImplementation "androidx.test:runner:1.1.0"
+    androidTestImplementation Libs.androidx_testrunner
 }
