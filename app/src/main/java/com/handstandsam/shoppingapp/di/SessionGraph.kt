@@ -2,11 +2,16 @@ package com.handstandsam.shoppingapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.handstandsam.shoppingapp.cart.InMemoryShopingCartDao
 import com.handstandsam.shoppingapp.cart.RoomItemInCartDatabase
 import com.handstandsam.shoppingapp.cart.RoomShoppingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
+import com.handstandsam.shoppingapp.cart.ShoppingCartDao
+import com.handstandsam.shoppingapp.cart.SqlDelightShoppingCartDao
+import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.preferences.UserPreferences
 import com.handstandsam.shoppingapp.repository.SessionManager
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 
 interface SessionGraph {
     val sessionManager: SessionManager
@@ -18,19 +23,35 @@ class SessionGraphImpl(
     appContext: Context
 ) : SessionGraph {
 
-    /**
-     * We will use the [Room] implementation of our [ShoppingCart]
-     */
-    private val itemInCartDatabase: RoomItemInCartDatabase = Room.databaseBuilder(
-        appContext,
-        RoomItemInCartDatabase::class.java,
-        "cart_room"
-    ).build()
+    private enum class DatabaseType { IN_MEMORY, ROOM, SQLDELIGHT }
 
-    /**
-     * Specifically use our [Room] Database
-     */
-    override val shoppingCart: ShoppingCart = ShoppingCart(RoomShoppingCartDao(itemInCartDatabase))
+    private val dbType = DatabaseType.ROOM
+
+    private val shoppingCartDao: ShoppingCartDao = when (dbType) {
+        DatabaseType.IN_MEMORY -> {
+            InMemoryShopingCartDao()
+        }
+        DatabaseType.ROOM -> {
+            RoomShoppingCartDao(
+                Room.databaseBuilder(
+                    appContext,
+                    RoomItemInCartDatabase::class.java,
+                    "cart_room"
+                ).build()
+            )
+        }
+        DatabaseType.SQLDELIGHT -> {
+            SqlDelightShoppingCartDao(
+                AndroidSqliteDriver(
+                    schema = Database.Schema,
+                    context = appContext,
+                    name = "cart_sqldelight.db"
+                )
+            )
+        }
+    }
+
+    override val shoppingCart: ShoppingCart = ShoppingCart(shoppingCartDao)
 
     override val userPreferences = UserPreferences(appContext)
 

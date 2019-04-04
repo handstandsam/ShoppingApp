@@ -33,6 +33,7 @@ android {
         debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
+            resValue("string", "PORT_NUMBER", "8081") //Android Debug Database Configuration
         }
         release {
             minifyEnabled false
@@ -114,10 +115,11 @@ dependencies {
     implementation Libs.timber
 
     debugImplementation project(Modules.debug)
-
+//    debugImplementation Libs.android_debug_database //Uncomment for Android Debug Database
 
     implementation project(Modules.networking)
     implementation project(Modules.shoppingCart)
+    implementation project(Modules.shoppingCartSqldelight)
     implementation project(Modules.shoppingCartRoom)
 
     //JVM Tests Only
