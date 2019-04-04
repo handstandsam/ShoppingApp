@@ -1,0 +1,33 @@
+CREATE TABLE itemInCart (
+    label TEXT NOT NULL UNIQUE PRIMARY KEY,
+    image TEXT NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 0,
+    link TEXT
+);
+
+selectAll:
+SELECT *
+FROM itemInCart
+ORDER BY label;
+
+insertOrReplace:
+INSERT OR REPLACE INTO itemInCart(
+  label,
+  image,
+  quantity,
+  link
+)
+VALUES (?, ?, ?, ?);
+
+selectByLabel:
+SELECT *
+FROM itemInCart
+WHERE label = ?;
+
+empty:
+DELETE FROM itemInCart;
+
+deleteByLabel:
+DELETE
+FROM itemInCart
+WHERE label = ?;

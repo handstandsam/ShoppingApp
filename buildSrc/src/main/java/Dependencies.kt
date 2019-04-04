@@ -7,6 +7,7 @@ object Modules {
     val networking = ":networking"
     val debug = ":debug"
     val shoppingCart = ":shopping-cart"
+    val shoppingCartSqldelight = ":shopping-cart-sqldelight"
     val flavorInmemory = ":app-flavor-inmemory"
     val flavorMockserver = ":app-flavor-mockserver"
     val flavorLiveserver = ":app-flavor-liveserver"
@@ -26,6 +27,9 @@ object Versions {
     val kotlin_coroutines = "1.2.0-alpha"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
+
+    // SqlDelight
+    val sql_delight = "1.1.1"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
@@ -92,6 +96,9 @@ object Libs {
     val chuck_no_op = "com.readystatesoftware.chuck:library-no-op:${Versions.chuck}"
     val apache_commons = "commons-io:commons-io:${Versions.apache_commons}"
     val android_debug_database = "com.amitshekhar.android:debug-db:${Versions.android_debug_database}"
+
+    val sql_delight_android = "com.squareup.sqldelight:android-driver:${Versions.sql_delight}"
+    val sql_delight_jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sql_delight}"
 }
 
 object TestLibs {
