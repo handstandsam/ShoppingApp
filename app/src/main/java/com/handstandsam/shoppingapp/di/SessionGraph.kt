@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
+import com.handstandsam.shoppingapp.cart.InMemoryShopingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.cart.ShoppingCartRoom
 import com.handstandsam.shoppingapp.preferences.UserPreferences
@@ -16,6 +17,7 @@ class SessionGraphImpl(
     appContext: Context
 ) : SessionGraph {
 
+    override val shoppingCart: ShoppingCart = ShoppingCart(InMemoryShopingCartDao())
     override val shoppingCart: ShoppingCart = ShoppingCartRoom(appContext)
 
     override val userPreferences = UserPreferences(appContext)
