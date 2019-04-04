@@ -11,9 +11,9 @@ interface ShoppingCartDao {
 
     suspend fun findByLabel(label: String): ItemWithQuantity?
 
-    suspend fun upsert(itemInCart: ItemWithQuantity)
+    suspend fun upsert(itemWithQuantity: ItemWithQuantity)
 
-    suspend fun remove(itemInCart: ItemWithQuantity)
+    suspend fun remove(itemWithQuantity: ItemWithQuantity)
 
     suspend fun empty()
 }

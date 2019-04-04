@@ -35,15 +35,23 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
         }
     }
 
+    /**
+     * Exposes a current list of the Items in the Cart
+     */
     suspend fun itemsInCart(): List<ItemWithQuantity> {
         return shoppingCartDao.selectAll()
     }
 
+    /**
+     * Exposes a [ReceiveChannel] which can be subscribed to, to get Cart updates
+     */
     suspend fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return shoppingCartDao.selectAllStream()
     }
 
-
+    /**
+     * Empties the [ShoppingCart]
+     */
     suspend fun empty() {
         shoppingCartDao.empty()
     }

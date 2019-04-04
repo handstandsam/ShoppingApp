@@ -19,13 +19,13 @@ class InMemoryShopingCartDao : ShoppingCartDao {
         return itemsInCart[label]
     }
 
-    override suspend fun upsert(itemInCart: ItemWithQuantity) {
-        itemsInCart[itemInCart.item.label] = itemInCart
+    override suspend fun upsert(itemWithQuantity: ItemWithQuantity) {
+        itemsInCart[itemWithQuantity.item.label] = itemWithQuantity
         sendUpdateChannel()
     }
 
-    override suspend fun remove(itemInCart: ItemWithQuantity) {
-        itemsInCart.remove(itemInCart.item.label)
+    override suspend fun remove(itemWithQuantity: ItemWithQuantity) {
+        itemsInCart.remove(itemWithQuantity.item.label)
         sendUpdateChannel()
     }
 
