@@ -5,6 +5,9 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.handstandsam.shoppingapp.models.Item
 import org.junit.Assert.assertEquals
 
+/**
+ * A TestDelegate is meant to abstract away the test details to make the tests more readable.
+ */
 class RoomShoppingCartTestDelegate {
 
     /**

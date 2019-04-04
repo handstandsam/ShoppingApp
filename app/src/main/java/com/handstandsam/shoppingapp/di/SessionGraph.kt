@@ -18,6 +18,9 @@ class SessionGraphImpl(
     appContext: Context
 ) : SessionGraph {
 
+    /**
+     * We will use the [Room] implementation of our [ShoppingCart]
+     */
     private val itemInCartDatabase: RoomItemInCartDatabase = Room.databaseBuilder(
         appContext,
         RoomItemInCartDatabase::class.java,
