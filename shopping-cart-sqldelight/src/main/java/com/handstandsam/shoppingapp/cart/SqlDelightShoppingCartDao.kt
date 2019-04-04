@@ -44,17 +44,17 @@ class SqlDelightShoppingCartDao(sqlDriver: SqlDriver) :
             ?.toItemWithQuantity()
     }
 
-    override suspend fun upsert(itemInCart: ItemWithQuantity) {
+    override suspend fun upsert(itemWithQuantity: ItemWithQuantity) {
         itemInCartEntityQueries.insertOrReplace(
-            label = itemInCart.item.label,
-            image = itemInCart.item.image,
-            link = itemInCart.item.link,
-            quantity = itemInCart.quantity
+            label = itemWithQuantity.item.label,
+            image = itemWithQuantity.item.image,
+            link = itemWithQuantity.item.link,
+            quantity = itemWithQuantity.quantity
         )
     }
 
-    override suspend fun remove(itemInCart: ItemWithQuantity) {
-        itemInCartEntityQueries.deleteByLabel(itemInCart.item.label)
+    override suspend fun remove(itemWithQuantity: ItemWithQuantity) {
+        itemInCartEntityQueries.deleteByLabel(itemWithQuantity.item.label)
     }
 
     override suspend fun empty() {
