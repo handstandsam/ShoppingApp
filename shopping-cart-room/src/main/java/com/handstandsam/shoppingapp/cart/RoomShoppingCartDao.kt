@@ -1,6 +1,5 @@
 package com.handstandsam.shoppingapp.cart
 
-import android.content.Context
 import androidx.room.Room
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
@@ -13,15 +12,9 @@ import kotlinx.coroutines.launch
 /**
  * Implements the app's [ShoppingCartDao] interface, but makes queries to our [Room] database [RoomItemInCartDatabase]
  */
-class RoomShoppingCartDao(appContext: Context) :
+class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
     CoroutineScope by CoroutineScope(Dispatchers.IO),
     ShoppingCartDao {
-
-    private val itemInCartDatabase: RoomItemInCartDatabase = Room.databaseBuilder(
-        appContext,
-        RoomItemInCartDatabase::class.java,
-        "cart_room"
-    ).build()
 
     private val itemInCartDao: RoomItemInCartDao = itemInCartDatabase.itemInCartDao()
 

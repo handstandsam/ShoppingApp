@@ -1,6 +1,13 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 apply plugin: "kotlin-kapt"
 
+android {
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+}
+
 dependencies {
     api project(Modules.shoppingCart)
 
@@ -10,7 +17,7 @@ dependencies {
     api Libs.kotlin_coroutines_android
 
     //Room
-    implementation Libs.androidx_persistence_room_runtime // Room
+    api Libs.androidx_persistence_room_runtime // Room
     kapt Libs.androidx_persistence_room_kapt // Annotation Processor
 
     implementation Libs.androidx_persistence_room_ktx    // Coroutines support for Room
@@ -20,7 +27,7 @@ dependencies {
     // LiveData for Reactive Streams from Queries
 
     // Unit Tests
-    testImplementation TestLibs.junit
-    testImplementation TestLibs.assertj
-    testImplementation Libs.androidx_persistence_room_test // Test helpers
+    androidTestImplementation TestLibs.junit
+    androidTestImplementation Libs.androidx_persistence_room_test // Test helpers
+    androidTestImplementation "androidx.test:runner:1.1.0"
 }
