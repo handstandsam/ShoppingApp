@@ -49,6 +49,7 @@ object Versions {
     val test_support_lib = "1.0.1"
 
     val assertj = "3.11.1"
+    val android_debug_database = "1.0.6"
 }
 
 object Libs {
@@ -94,6 +95,7 @@ object Libs {
     val chuck = "com.readystatesoftware.chuck:library:${Versions.chuck}"
     val chuck_no_op = "com.readystatesoftware.chuck:library-no-op:${Versions.chuck}"
     val apache_commons = "commons-io:commons-io:${Versions.apache_commons}"
+    val android_debug_database = "com.amitshekhar.android:debug-db:${Versions.android_debug_database}"
 
     val sql_delight_android = "com.squareup.sqldelight:android-driver:${Versions.sql_delight}"
     val sql_delight_jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sql_delight}"
