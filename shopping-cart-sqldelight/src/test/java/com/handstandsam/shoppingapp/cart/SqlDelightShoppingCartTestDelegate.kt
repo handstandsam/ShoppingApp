@@ -6,8 +6,15 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.assertj.core.api.Assertions.assertThat
 
+/**
+ * Our Test Delegate that abstracts away assertions in our unit tests.
+ * Kind of like the Robot pattern.
+ */
 class SqlDelightShoppingCartTestDelegate {
 
+    /**
+     * Our Database Driver that runs on the JVM.
+     */
     private val sqlDriver: SqlDriver = JdbcSqliteDriver()
 
     init {
