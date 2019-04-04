@@ -1,17 +1,30 @@
 package com.handstandsam.shoppingapp.cart
 
+import android.os.Handler
+import android.os.Looper
 import com.handstandsam.shoppingapp.models.Item
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 
+/**
+ * How to test [Room] https://developer.android.com/training/data-storage/room/testing-db
+ */
 class RoomShoppingCartTest {
 
     private lateinit var testDelegate: RoomShoppingCartTestDelegate
 
     @Before
     fun setUp() {
-        testDelegate = RoomShoppingCartTestDelegate()
+        //Using a latch is a hack to force the cart observer to register on the Main thread, but wait until it's done.
+        val latch = CountDownLatch(1)
+        Handler(Looper.getMainLooper()).post {
+            testDelegate = RoomShoppingCartTestDelegate()
+            latch.countDown()
+        }
+        latch.await(1, TimeUnit.SECONDS)
     }
 
     @Test

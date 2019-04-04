@@ -24,11 +24,9 @@ class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
         /**
          * Initialize a Listener/Observer to the Room Database to publish updates to the [ReceiveChannel]
          */
-        launch(Dispatchers.Main) {
-            itemInCartDao.selectAllStream().observeForever { list ->
-                launch(Dispatchers.IO) {
-                    channel.send(list.toItemWithQuantityList())
-                }
+        itemInCartDao.selectAllStream().observeForever { list ->
+            launch {
+                channel.send(list.toItemWithQuantityList())
             }
         }
     }
