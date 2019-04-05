@@ -81,6 +81,7 @@ object Libs {
 
 
     val androidx_testrunner = "androidx.test:runner:${Versions.androidx_test}"
+    val androidx_test_rules = "androidx.test:rules:${Versions.androidx_test}"
 
     val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"

@@ -127,6 +127,7 @@ dependencies {
 
     androidTestImplementation TestLibs.espresso_core
     androidTestImplementation TestLibs.espresso_contrib
+    androidTestImplementation Libs.androidx_test_rules
     androidTestImplementation TestLibs.runner
     androidTestUtil TestLibs.orchestrator
 }
