@@ -5,6 +5,9 @@ import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.channels.ReceiveChannel
 import timber.log.Timber
 
+/**
+ * Application Logic for interacting with the [ShoppingCartDao]
+ */
 class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
     /**
      * Does an Insert/Update and increments the quantity by 1
@@ -43,7 +46,8 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
     }
 
     /**
-     * Exposes a [ReceiveChannel] which can be subscribed to, to get Cart updates
+     * Exposes a reactive stream via a [ReceiveChannel]
+     * which can be subscribed to, to get Shopping Cart updates
      */
     suspend fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
         return shoppingCartDao.selectAllStream()
