@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 
 class TestDelegate {
 
-    private val shoppingCart: ShoppingCart = ShoppingCart(InMemoryShopingCartDao())
+    private val shoppingCart: ShoppingCart = ShoppingCart(InMemoryShoppingCartDao())
 
     suspend fun incrementItemInCart(item: Item) = apply {
         println("adding item: $item")

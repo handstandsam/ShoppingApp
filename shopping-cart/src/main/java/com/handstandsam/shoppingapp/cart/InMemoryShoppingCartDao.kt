@@ -4,8 +4,10 @@ import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
 
-
-class InMemoryShopingCartDao : ShoppingCartDao {
+/**
+ * In memory implementation of our [ShoppingCartDao]
+ */
+class InMemoryShoppingCartDao : ShoppingCartDao {
 
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
