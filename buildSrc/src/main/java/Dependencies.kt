@@ -46,10 +46,10 @@ object Versions {
     // android
     val androidx = "1.0.0"
     val androidx_lifecycle = "2.0.0"
-    val androidx_persistence = "2.1.0-alpha06"
+    val androidx_persistence = "2.2.0-alpha01"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "3.3.2"
+    val android_gradle_plugin = "3.4.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 
