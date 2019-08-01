@@ -15,7 +15,7 @@ class SqlDelightShoppingCartTestDelegate {
     /**
      * Our Database Driver that runs on the JVM.
      */
-    private val sqlDriver: SqlDriver = JdbcSqliteDriver()
+    private val sqlDriver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
 
     init {
         Database.Schema.create(sqlDriver)
