@@ -30,7 +30,7 @@ object Versions {
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.1.1"
+    val sql_delight = "1.1.3"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
@@ -46,10 +46,10 @@ object Versions {
     // android
     val androidx = "1.0.0"
     val androidx_lifecycle = "2.0.0"
-    val androidx_persistence = "2.1.0-alpha06"
+    val androidx_persistence = "2.2.0-alpha01"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "3.3.2"
+    val android_gradle_plugin = "3.4.2"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 
