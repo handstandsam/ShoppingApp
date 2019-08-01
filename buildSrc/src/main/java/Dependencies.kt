@@ -30,7 +30,7 @@ object Versions {
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.1.1"
+    val sql_delight = "1.1.2"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
