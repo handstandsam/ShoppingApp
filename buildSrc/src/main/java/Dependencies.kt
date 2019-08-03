@@ -35,7 +35,6 @@ object Versions {
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
     val glide = "4.9.0"
-    val dagger = "2.16"
     val process_phoenix = "2.0.0"
     val chuck = "1.1.0"
     val junit = "4.12"
@@ -83,9 +82,6 @@ object Libs {
     val androidx_testrunner = "androidx.test:runner:${Versions.androidx_test}"
     val androidx_test_rules = "androidx.test:rules:${Versions.androidx_test}"
 
-    val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    val dagger_kapt = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     val okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
