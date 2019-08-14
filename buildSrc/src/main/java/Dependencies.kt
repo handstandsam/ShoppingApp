@@ -24,8 +24,8 @@ object Versions {
     val build_tools = "28.0.3"
 
     // Kotlin
-    val kotlin = "1.3.21"
-    val kotlin_coroutines = "1.2.0-alpha"
+    val kotlin = "1.3.40"
+    val kotlin_coroutines = "1.2.2"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
