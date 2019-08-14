@@ -16,6 +16,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        appGraph // Touch the graph to ensure it initializes during onCreate()
         this.debugDimensionOnCreate()
     }
 
