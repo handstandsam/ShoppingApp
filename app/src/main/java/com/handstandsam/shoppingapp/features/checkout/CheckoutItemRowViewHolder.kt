@@ -13,6 +13,7 @@ import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.features.home.ColorInts
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
+import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +32,7 @@ internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHold
     private val shoppingCart: ShoppingCart
         get() {
             val application = (itemView.context.applicationContext as MyApplication)
-            return application.appGraph.sessionGraph.shoppingCart
+            return application.graph().sessionGraph.shoppingCart
         }
 
     private var _itemWithQuantity: ItemWithQuantity? = null
