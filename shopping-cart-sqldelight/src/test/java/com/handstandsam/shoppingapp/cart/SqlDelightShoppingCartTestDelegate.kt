@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.models.Item
-import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.assertj.core.api.Assertions.assertThat
 
@@ -12,14 +11,14 @@ import org.assertj.core.api.Assertions.assertThat
  */
 class SqlDelightShoppingCartTestDelegate {
 
+
     /**
      * Our Database Driver that runs on the JVM.
      */
-    private val sqlDriver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-
-    init {
-        Database.Schema.create(sqlDriver)
+    val sqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).apply {
+        Database.Schema.create(this)
     }
+
 
     private val shoppingCart: ShoppingCart = ShoppingCart(
         SqlDelightShoppingCartDao(sqlDriver)
