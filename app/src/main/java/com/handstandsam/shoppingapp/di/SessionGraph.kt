@@ -36,7 +36,7 @@ class SessionGraphImpl(
                 Room.databaseBuilder(
                     appContext,
                     RoomItemInCartDatabase::class.java,
-                    "cart_room"
+                    "cart_room.db"
                 ).build()
             )
         }
