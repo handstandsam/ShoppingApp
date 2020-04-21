@@ -25,7 +25,7 @@ class SessionGraphImpl(
 
     private enum class DatabaseType { IN_MEMORY, ROOM, SQLDELIGHT }
 
-    private val dbType = DatabaseType.IN_MEMORY
+    private val dbType = DatabaseType.SQLDELIGHT
 
     private val shoppingCartDao: ShoppingCartDao = when (dbType) {
         DatabaseType.IN_MEMORY -> {
