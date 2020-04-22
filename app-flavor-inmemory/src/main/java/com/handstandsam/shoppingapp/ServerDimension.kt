@@ -2,8 +2,8 @@ package com.handstandsam.shoppingapp
 
 import android.app.Application
 import com.handstandsam.shoppingapp.di.NetworkGraph
-import com.handstandsam.shoppingapp.mockdata.AndroidLibsMockAccount
 import com.handstandsam.shoppingapp.mockdata.MockAccount
+import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.LoginRequest
@@ -14,7 +14,7 @@ import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
 import okhttp3.Interceptor
 
-val mockAccount: MockAccount = AndroidLibsMockAccount()
+val mockAccount: MockAccount = ProduceMockAccount()
 
 class InMemoryNetworkGraph : NetworkGraph {
     override val categoryRepo: CategoryRepo =
