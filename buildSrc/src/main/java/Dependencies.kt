@@ -24,13 +24,13 @@ object Versions {
     val build_tools = "28.0.3"
 
     // Kotlin
-    val kotlin = "1.3.40"
-    val kotlin_coroutines = "1.2.2"
+    val kotlin = "1.3.72"
+    val kotlin_coroutines = "1.3.5"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.2.0"
+    val sql_delight = "1.3.0"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
@@ -43,12 +43,13 @@ object Versions {
     val moshi = "1.6.0"
 
     // android
-    val androidx = "1.0.0"
+    val androidx = "1.1.0"
     val androidx_lifecycle = "2.0.0"
-    val androidx_persistence = "2.2.0-alpha01"
+    val androidx_support_v4 = "1.0.0"
+    val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "3.4.2"
+    val android_gradle_plugin = "3.6.1"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 
@@ -66,9 +67,9 @@ object Libs {
     val androidx_material = "com.google.android.material:material:${Versions.androidx}" //com.android.support:design
     val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}" //com.android.support:recyclerview-v7
     val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
-    val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx}" //com.android.support:support-v4
     val androidx_annotations = "androidx.annotation:annotation:${Versions.androidx}" //com.android.support:support-annotations
 
+    val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx_support_v4}" //com.android.support:support-v4
 
     val androidx_persistence_room_runtime = "androidx.room:room-runtime:${Versions.androidx_persistence}" // Room
     val androidx_persistence_room_kapt = "androidx.room:room-compiler:${Versions.androidx_persistence}" // Annotation Processor
