@@ -16,8 +16,9 @@ class LoginPresenter(
     private val view: LoginActivity.LoginView,
     internal var sessionManager: SessionManager,
     internal var userPreferences: UserPreferences,
-    internal var userRepo: UserRepo
-) : CoroutineScope by CoroutineScope(Dispatchers.Default) {
+    internal var userRepo: UserRepo,
+    scope: CoroutineScope
+) : CoroutineScope by scope {
 
     fun onResume() {
 
@@ -41,18 +42,16 @@ class LoginPresenter(
 
         launch {
             val userResult = userRepo.login(LoginRequest(username, password))
-            withContext(Dispatchers.Main) {
-                when (userResult) {
-                    is NetworkResult.Success -> {
-                        userPreferences.setRememberMe(rememberMe, view.username)
-                        sessionManager.currentUser = userResult.body
-                        view.startHomeActivity()
-                    }
-                    is NetworkResult.Failure -> {
-                        view.showToast(R.string.invalid_username_or_password)
-                    }
-                }.exhaustive
-            }
+            when (userResult) {
+                is NetworkResult.Success -> {
+                    userPreferences.setRememberMe(rememberMe, view.username)
+                    sessionManager.currentUser = userResult.body
+                    view.startHomeActivity()
+                }
+                is NetworkResult.Failure -> {
+                    view.showToast(R.string.invalid_username_or_password)
+                }
+            }.exhaustive
         }
     }
 }

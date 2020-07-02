@@ -94,6 +94,8 @@ dependencies {
     implementation Libs.androidx_recyclerview
     implementation Libs.androidx_material
 
+    implementation Libs.androidx_lifecycle_runtime_ktx
+
     //Networking
     implementation Libs.glide
     implementation Libs.retrofit

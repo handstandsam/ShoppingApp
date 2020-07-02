@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.models.Category
@@ -49,7 +50,8 @@ class HomeActivity : LoggedInActivity() {
         presenter = HomePresenter(
             view = homeView,
             sessionManager = sessionManager,
-            categoryRepo = categoryRepo
+            categoryRepo = categoryRepo,
+            scope = lifecycleScope
         )
     }
 

@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.features.itemdetail
 
 import android.content.Intent
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.Item
 import kotlinx.coroutines.CoroutineScope
@@ -9,8 +10,9 @@ import kotlinx.coroutines.launch
 
 class ItemDetailPresenter(
     private val view: ItemDetailActivity.ItemDetailView,
-    private var cart: ShoppingCart
-) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
+    private var cart: ShoppingCart,
+    private val lifecycleScope: LifecycleCoroutineScope
+) : CoroutineScope by lifecycleScope {
     internal lateinit var item: Item
 
     fun onResume(intent: Intent) {
@@ -24,7 +26,7 @@ class ItemDetailPresenter(
     }
 
     fun addToCardClicked() {
-        launch(Dispatchers.Default) {
+        launch {
             cart.incrementItemInCart(item)
         }
     }

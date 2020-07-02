@@ -3,6 +3,7 @@ package com.handstandsam.shoppingapp.features.category
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
@@ -41,19 +42,19 @@ class CategoryActivity : LoggedInActivity() {
             val extras = intent.extras
             val (label) = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
             setActionBarTitle(label)
-            launch {
-                val itemsResult = itemRepo.getItemsForCategory(label)
-                withContext(Dispatchers.Main) {
-                    when (itemsResult) {
-                        is NetworkResult.Success -> {
-                            showItems(itemsResult.body)
-                        }
-                        is NetworkResult.Failure -> {
-                            Timber.w("Networking Error", itemsResult.errorResponse)
-                            showNetworkError(itemsResult.errorResponse.toString())
-                        }
-                    }.exhaustive
+            lifecycleScope.launchWhenCreated {
+                val itemsResult = withContext(Dispatchers.Default) {
+                    itemRepo.getItemsForCategory(label)
                 }
+                when (itemsResult) {
+                    is NetworkResult.Success -> {
+                        showItems(itemsResult.body)
+                    }
+                    is NetworkResult.Failure -> {
+                        Timber.w("Networking Error", itemsResult.errorResponse)
+                        showNetworkError(itemsResult.errorResponse.toString())
+                    }
+                }.exhaustive
             }
         }
 
