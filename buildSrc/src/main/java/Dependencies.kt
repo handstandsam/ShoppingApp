@@ -25,7 +25,7 @@ object Versions {
 
     // Kotlin
     val kotlin = "1.3.72"
-    val kotlin_coroutines = "1.3.5"
+    val kotlin_coroutines = "1.3.6"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
@@ -96,6 +96,8 @@ object Libs {
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
     val kotlin_coroutines_android =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
+    val kotlin_coroutines_test =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlin_coroutines}"
     val retrofit_coroutines_adapter =
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofit_coroutines_adapter}"
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
