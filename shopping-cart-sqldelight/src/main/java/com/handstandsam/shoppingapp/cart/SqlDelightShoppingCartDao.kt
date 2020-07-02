@@ -9,6 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -34,9 +36,9 @@ class SqlDelightShoppingCartDao(sqlDriver: SqlDriver) :
             .toItemWithQuantityList()
     }
 
-    override suspend fun selectAllStream(): ReceiveChannel<List<ItemWithQuantity>> {
-        return channel.openSubscription()
-    }
+    override val selectAllStream: Flow<List<ItemWithQuantity>>
+        get() = channel.openSubscription()
+            .consumeAsFlow()
 
     override suspend fun findByLabel(label: String): ItemWithQuantity? {
         return itemInCartEntityQueries.selectByLabel(label)

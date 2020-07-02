@@ -1,7 +1,7 @@
 package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.Flow
 
 /**
  * All actions to access and modify our [ShoppingCart] database.
@@ -10,7 +10,7 @@ interface ShoppingCartDao {
 
     suspend fun selectAll(): List<ItemWithQuantity>
 
-    suspend fun selectAllStream(): ReceiveChannel<List<ItemWithQuantity>>
+    val selectAllStream: Flow<List<ItemWithQuantity>>
 
     suspend fun findByLabel(label: String): ItemWithQuantity?
 
