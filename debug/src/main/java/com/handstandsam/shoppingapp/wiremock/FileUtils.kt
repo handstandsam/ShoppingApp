@@ -19,7 +19,7 @@ class FileUtils(private val contextForAssets: Context) {
     fun copyFileOrDir(path: String) {
         val assets: Array<String>
         try {
-            assets = contextForAssets.assets.list(path)
+            assets = contextForAssets.assets.list(path)!!
             Timber.v("$path - $assets")
             if (assets.isEmpty()) {
                 copyFile(path)

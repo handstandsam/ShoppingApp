@@ -19,18 +19,18 @@ object Versions {
     val source_compat = "1.8"
     val target_compat = "1.8"
     val min_sdk = 21
-    val target_sdk = 28
-    val compile_sdk = 28
-    val build_tools = "28.0.3"
+    val target_sdk = 29
+    val compile_sdk = 29
+    val build_tools = "29.0.3"
 
     // Kotlin
     val kotlin = "1.3.72"
-    val kotlin_coroutines = "1.3.5"
+    val kotlin_coroutines = "1.3.7"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.3.0"
+    val sql_delight = "1.4.0"
 
     val stetho = "1.5.0"
     val okhttp = "3.10.0"
@@ -49,7 +49,7 @@ object Versions {
     val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "3.6.1"
+    val android_gradle_plugin = "4.0.0"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 
@@ -86,7 +86,6 @@ object Libs {
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     val okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
-    val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
     val wiremock = "com.github.tomakehurst:wiremock:${Versions.wiremock}"
