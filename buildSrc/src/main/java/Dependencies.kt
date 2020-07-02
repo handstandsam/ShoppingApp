@@ -99,10 +99,6 @@ object Libs {
     val retrofit_coroutines_adapter =
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofit_coroutines_adapter}"
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
-    val coroutines =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
-    val coroutines_android =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
