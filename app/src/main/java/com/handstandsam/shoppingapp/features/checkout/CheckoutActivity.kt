@@ -38,7 +38,7 @@ class CheckoutActivity : LoggedInActivity() {
 
         recyclerView = findViewById(R.id.checkout_items)
         recyclerView.layoutManager = GridLayoutManager(this, 1)
-        recyclerViewAdapter = CheckoutRVAdapter()
+        recyclerViewAdapter = CheckoutRVAdapter(lifecycleScope)
         recyclerView.adapter = recyclerViewAdapter
     }
 
