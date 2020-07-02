@@ -15,10 +15,6 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
 
     private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
 
-    override suspend fun selectAll(): List<ItemWithQuantity> {
-        return itemsInCart.values.toList().sortedBy { it.item.label }
-    }
-
     override suspend fun findByLabel(label: String): ItemWithQuantity? {
         return itemsInCart[label]
     }
@@ -38,12 +34,15 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
         sendUpdateChannel()
     }
 
-    override val selectAllStream: Flow<List<ItemWithQuantity>>
+    override val allItems: Flow<List<ItemWithQuantity>>
         get() = channel.openSubscription()
             .consumeAsFlow()
 
     private suspend fun sendUpdateChannel() {
-        channel.send(selectAll())
+        channel.send(
+            itemsInCart.values.toList()
+                .sortedBy { it.item.label }
+        )
     }
 
 }

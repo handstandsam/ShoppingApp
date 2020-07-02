@@ -33,11 +33,7 @@ class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
         }
     }
 
-    override suspend fun selectAll(): List<ItemWithQuantity> {
-        return itemInCartDao.selectAll().toItemWithQuantityList()
-    }
-
-    override val selectAllStream: Flow<List<ItemWithQuantity>>
+    override val allItems: Flow<List<ItemWithQuantity>>
         get() = channel.openSubscription()
             .consumeAsFlow()
 

@@ -8,9 +8,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface ShoppingCartDao {
 
-    suspend fun selectAll(): List<ItemWithQuantity>
-
-    val selectAllStream: Flow<List<ItemWithQuantity>>
+    val allItems: Flow<List<ItemWithQuantity>>
 
     suspend fun findByLabel(label: String): ItemWithQuantity?
 
