@@ -38,8 +38,9 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
         sendUpdateChannel()
     }
 
-    override val selectAllStream: Flow<List<ItemWithQuantity>> = channel.openSubscription()
-        .consumeAsFlow()
+    override val selectAllStream: Flow<List<ItemWithQuantity>>
+        get() = channel.openSubscription()
+            .consumeAsFlow()
 
     private suspend fun sendUpdateChannel() {
         channel.send(selectAll())
