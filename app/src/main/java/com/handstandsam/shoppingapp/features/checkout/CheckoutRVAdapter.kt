@@ -7,14 +7,14 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CoroutineScope
 
-internal class CheckoutRVAdapter(private val scope: CoroutineScope) : RecyclerView.Adapter<CheckoutItemRowViewHolder>() {
+internal class CheckoutRVAdapter : RecyclerView.Adapter<CheckoutItemRowViewHolder>() {
 
-    val items: MutableList<ItemWithQuantity> = mutableListOf()
+    private val items: MutableList<ItemWithQuantity> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckoutItemRowViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_recyclerview_cart_item_row, parent, false)
-        return CheckoutItemRowViewHolder(view, scope)
+        return CheckoutItemRowViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CheckoutItemRowViewHolder, position: Int) {

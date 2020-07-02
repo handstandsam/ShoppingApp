@@ -51,8 +51,7 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
      * Exposes a reactive stream via a [Flow]
      * which can be subscribed to, to get Shopping Cart updates
      */
-    val itemsInCart: Flow<List<ItemWithQuantity>>
-        get() = shoppingCartDao.allItems
+    val itemsInCart: Flow<List<ItemWithQuantity>> = shoppingCartDao.allItems
 
     /**
      * Empties the [ShoppingCart]

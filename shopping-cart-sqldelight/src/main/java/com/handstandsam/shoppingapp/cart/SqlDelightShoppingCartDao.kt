@@ -3,19 +3,12 @@ package com.handstandsam.shoppingapp.cart
 import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
-import com.squareup.sqldelight.Query
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 /**
  * A SqlDelight Implementation of our [ShoppingCartDao] to read and write to the Database

@@ -6,9 +6,8 @@ import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -34,8 +33,7 @@ class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
     }
 
     override val allItems: Flow<List<ItemWithQuantity>>
-        get() = channel.openSubscription()
-            .consumeAsFlow()
+        get() = channel.asFlow()
 
     override suspend fun findByLabel(label: String): ItemWithQuantity? {
         return itemInCartDao.findByLabel(label)?.toItemWithQuantity()
