@@ -14,9 +14,6 @@ import androidx.room.Room
 @Dao
 interface RoomItemInCartDao {
     @Query("SELECT * FROM RoomItemInCartEntity ORDER BY label")
-    fun selectAll(): List<RoomItemInCartEntity>
-
-    @Query("SELECT * FROM RoomItemInCartEntity ORDER BY label")
     fun selectAllStream(): LiveData<List<RoomItemInCartEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -3,6 +3,7 @@ package com.handstandsam.shoppingapp.cart
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import timber.log.Timber
 
 /**
@@ -42,7 +43,8 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
      * Exposes a current list of the Items in the Cart
      */
     suspend fun itemsInCart(): List<ItemWithQuantity> {
-        return shoppingCartDao.selectAll()
+        return shoppingCartDao.allItems
+            .first()
     }
 
     /**
@@ -50,7 +52,7 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
      * which can be subscribed to, to get Shopping Cart updates
      */
     val itemsInCart: Flow<List<ItemWithQuantity>>
-        get() = shoppingCartDao.selectAllStream
+        get() = shoppingCartDao.allItems
 
     /**
      * Empties the [ShoppingCart]

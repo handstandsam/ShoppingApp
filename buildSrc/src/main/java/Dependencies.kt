@@ -113,6 +113,7 @@ object Libs {
     val android_debug_database = "com.amitshekhar.android:debug-db:${Versions.android_debug_database}"
 
     val sql_delight_android = "com.squareup.sqldelight:android-driver:${Versions.sql_delight}"
+    val sql_delight_coroutines_extensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sql_delight}"
     val sql_delight_jvm = "com.squareup.sqldelight:sqlite-driver:${Versions.sql_delight}"
 }
 

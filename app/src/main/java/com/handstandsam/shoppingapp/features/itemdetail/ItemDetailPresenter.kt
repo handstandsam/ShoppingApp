@@ -10,9 +10,8 @@ import kotlinx.coroutines.launch
 
 class ItemDetailPresenter(
     private val view: ItemDetailActivity.ItemDetailView,
-    private var cart: ShoppingCart,
-    private val lifecycleScope: LifecycleCoroutineScope
-) : CoroutineScope by lifecycleScope {
+    private var cart: ShoppingCart
+) {
     internal lateinit var item: Item
 
     fun onResume(intent: Intent) {
@@ -26,7 +25,7 @@ class ItemDetailPresenter(
     }
 
     fun addToCardClicked() {
-        launch {
+        CoroutineScope(Dispatchers.IO).launch {
             cart.incrementItemInCart(item)
         }
     }

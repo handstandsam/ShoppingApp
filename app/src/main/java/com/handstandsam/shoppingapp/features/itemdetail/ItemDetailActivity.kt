@@ -2,11 +2,10 @@ package com.handstandsam.shoppingapp.features.itemdetail
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
@@ -34,8 +33,7 @@ class ItemDetailActivity : LoggedInActivity() {
         view = MyItemDetailView()
         presenter = ItemDetailPresenter(
             view = view,
-            cart = graph.sessionGraph.shoppingCart,
-            lifecycleScope = lifecycleScope
+            cart = graph.sessionGraph.shoppingCart
         )
     }
 

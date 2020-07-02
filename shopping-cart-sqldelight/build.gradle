@@ -5,6 +5,7 @@ dependencies {
     implementation project(Modules.shoppingCart)
 
     api Libs.sql_delight_android
+    api Libs.sql_delight_coroutines_extensions
     testImplementation TestLibs.junit
     testImplementation TestLibs.assertj
     testImplementation Libs.sql_delight_jvm
