@@ -1,20 +1,20 @@
 package com.handstandsam.shoppingapp.features.checkout
 
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatButton
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -78,13 +78,14 @@ class CheckoutActivity : LoggedInActivity() {
 
         init {
             launch {
-                cart.itemsInCartChannel().consumeEach { itemsInCart: List<ItemWithQuantity> ->
-                    withContext(Dispatchers.Main) {
-                        itemCountTextView.text =
-                            itemsInCart.totalItemCount().toString() + " item(s) in your cart."
-                        recyclerViewAdapter.setItems(itemsInCart)
+                cart.itemsInCart
+                    .collect { itemsInCart: List<ItemWithQuantity> ->
+                        withContext(Dispatchers.Main) {
+                            itemCountTextView.text =
+                                itemsInCart.totalItemCount().toString() + " item(s) in your cart."
+                            recyclerViewAdapter.setItems(itemsInCart)
+                        }
                     }
-                }
             }
         }
 

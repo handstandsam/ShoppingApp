@@ -2,7 +2,7 @@ package com.handstandsam.shoppingapp.cart
 
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
 /**
@@ -46,12 +46,11 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
     }
 
     /**
-     * Exposes a reactive stream via a [ReceiveChannel]
+     * Exposes a reactive stream via a [Flow]
      * which can be subscribed to, to get Shopping Cart updates
      */
-    suspend fun itemsInCartChannel(): ReceiveChannel<List<ItemWithQuantity>> {
-        return shoppingCartDao.selectAllStream()
-    }
+    val itemsInCart: Flow<List<ItemWithQuantity>>
+        get() = shoppingCartDao.selectAllStream
 
     /**
      * Empties the [ShoppingCart]

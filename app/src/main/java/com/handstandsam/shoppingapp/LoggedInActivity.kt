@@ -19,7 +19,7 @@ import com.handstandsam.shoppingapp.models.totalItemCount
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -72,8 +72,8 @@ open class LoggedInActivity : AppCompatActivity(),
 
         launch {
             shoppingCart
-                .itemsInCartChannel()
-                .consumeEach { itemsInCart ->
+                .itemsInCart
+                .collect { itemsInCart ->
                     updateItemCount(itemsInCart)
                 }
         }
