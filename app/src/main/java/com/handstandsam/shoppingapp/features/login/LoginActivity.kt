@@ -2,13 +2,14 @@ package com.handstandsam.shoppingapp.features.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatEditText
-import android.view.KeyEvent
-import android.view.View
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.home.HomeActivity
@@ -55,7 +56,8 @@ class LoginActivity : AppCompatActivity() {
             view = loginView,
             sessionManager = sessionManager,
             userPreferences = userPreferences,
-            userRepo = userRepo
+            userRepo = userRepo,
+            scope = lifecycleScope
         )
 
         usernameEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->

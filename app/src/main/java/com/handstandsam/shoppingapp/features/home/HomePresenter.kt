@@ -14,23 +14,23 @@ import timber.log.Timber
 class HomePresenter(
     private val view: HomeActivity.HomeView,
     private val sessionManager: SessionManager,
-    private val categoryRepo: CategoryRepo
-) : CoroutineScope by CoroutineScope(Dispatchers.Main) {
+    private val categoryRepo: CategoryRepo,
+    scope: CoroutineScope
+) : CoroutineScope by scope {
 
     fun onResume(intent: Intent) {
-        launch(Dispatchers.IO) {
-            val categoriesResult = categoryRepo.getCategories()
-
-            withContext(Dispatchers.Main) {
-                when (categoriesResult) {
-                    is NetworkResult.Success -> {
-                        view.showCategories(categoriesResult.body)
-                    }
-                    is NetworkResult.Failure -> {
-                        Timber.d("onError")
-                    }
-                }.exhaustive
+        launch {
+            val categoriesResult = withContext(Dispatchers.Default) {
+                categoryRepo.getCategories()
             }
+            when (categoriesResult) {
+                is NetworkResult.Success -> {
+                    view.showCategories(categoriesResult.body)
+                }
+                is NetworkResult.Failure -> {
+                    Timber.d("onError")
+                }
+            }.exhaustive
         }
 
 

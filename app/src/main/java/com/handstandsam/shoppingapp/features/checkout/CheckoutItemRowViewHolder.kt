@@ -20,8 +20,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-internal class CheckoutItemRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-    CoroutineScope by CoroutineScope(Dispatchers.Default) {
+internal class CheckoutItemRowViewHolder(
+    itemView: View,
+    scope: CoroutineScope
+) :
+    RecyclerView.ViewHolder(itemView),
+    CoroutineScope by scope {
 
     private val textView: TextView = itemView.findViewById(R.id.text)
 

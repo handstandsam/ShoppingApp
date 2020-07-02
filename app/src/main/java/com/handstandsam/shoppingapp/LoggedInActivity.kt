@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.di.SessionGraph
@@ -17,15 +18,11 @@ import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
 import com.handstandsam.shoppingapp.repository.SessionManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
-open class LoggedInActivity : AppCompatActivity(),
-    CoroutineScope by CoroutineScope(Dispatchers.Default) {
+open class LoggedInActivity : AppCompatActivity() {
 
     protected val graph: AppGraph get() = application.graph()
 
@@ -58,19 +55,17 @@ open class LoggedInActivity : AppCompatActivity(),
 
         val countTextView: TextView = rootView.findViewById(R.id.view_alert_count_textview)
 
-        suspend fun updateItemCount(itemsInCart: List<ItemWithQuantity>) {
-            withContext(Dispatchers.Main) {
-                val itemsInCartCount = itemsInCart.size
-                if (itemsInCartCount == 0) {
-                    redCircle.visibility = View.GONE
-                } else {
-                    redCircle.visibility = View.VISIBLE
-                    countTextView.text = itemsInCart.totalItemCount().toString()
-                }
+        fun updateItemCount(itemsInCart: List<ItemWithQuantity>) {
+            val itemsInCartCount = itemsInCart.size
+            if (itemsInCartCount == 0) {
+                redCircle.visibility = View.GONE
+            } else {
+                redCircle.visibility = View.VISIBLE
+                countTextView.text = itemsInCart.totalItemCount().toString()
             }
         }
 
-        launch {
+        lifecycleScope.launchWhenCreated {
             shoppingCart
                 .itemsInCart
                 .collect { itemsInCart ->
@@ -92,12 +87,10 @@ open class LoggedInActivity : AppCompatActivity(),
         when (item.itemId) {
             R.id.logout -> {
                 val launchIntent = Intent(this, LoginActivity::class.java)
-                launch {
+                lifecycleScope.launch {
                     sessionManager.logout()
-                    withContext(Dispatchers.Main) {
-                        startActivity(launchIntent)
-                        finish()
-                    }
+                    startActivity(launchIntent)
+                    finish()
                 }
                 return true
             }

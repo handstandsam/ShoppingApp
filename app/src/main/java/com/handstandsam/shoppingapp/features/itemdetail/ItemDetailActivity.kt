@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
@@ -33,7 +34,8 @@ class ItemDetailActivity : LoggedInActivity() {
         view = MyItemDetailView()
         presenter = ItemDetailPresenter(
             view = view,
-            cart = graph.sessionGraph.shoppingCart
+            cart = graph.sessionGraph.shoppingCart,
+            lifecycleScope = lifecycleScope
         )
     }
 

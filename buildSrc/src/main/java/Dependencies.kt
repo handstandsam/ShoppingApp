@@ -44,7 +44,7 @@ object Versions {
 
     // android
     val androidx = "1.1.0"
-    val androidx_lifecycle = "2.0.0"
+    val androidx_lifecycle = "2.2.0"
     val androidx_support_v4 = "1.0.0"
     val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
@@ -75,6 +75,7 @@ object Libs {
     val androidx_persistence_room_kapt = "androidx.room:room-compiler:${Versions.androidx_persistence}" // Annotation Processor
 
     val androidx_lifecycle_livedata_core = "androidx.lifecycle:lifecycle-livedata-core:${Versions.androidx_lifecycle}"
+    val androidx_lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.androidx_lifecycle}"
 
     val androidx_persistence_room_ktx = "androidx.room:room-ktx:${Versions.androidx_persistence}" // optional - Kotlin Extensions and Coroutines support for Room
     val androidx_persistence_room_test = "androidx.room:room-testing:${Versions.androidx_persistence}" // Test helpers
