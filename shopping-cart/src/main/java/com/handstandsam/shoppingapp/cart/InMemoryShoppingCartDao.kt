@@ -3,8 +3,7 @@ package com.handstandsam.shoppingapp.cart
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.asFlow
 
 /**
  * In memory implementation of our [ShoppingCartDao]
@@ -35,8 +34,7 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
     }
 
     override val allItems: Flow<List<ItemWithQuantity>>
-        get() = channel.openSubscription()
-            .consumeAsFlow()
+        get() = channel.asFlow()
 
     private suspend fun sendUpdateChannel() {
         channel.send(
