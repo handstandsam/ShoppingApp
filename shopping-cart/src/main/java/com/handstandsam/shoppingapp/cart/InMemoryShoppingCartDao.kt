@@ -20,27 +20,25 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
 
     override suspend fun upsert(itemWithQuantity: ItemWithQuantity) {
         itemsInCart[itemWithQuantity.item.label] = itemWithQuantity
-        sendUpdateChannel()
+        channel.send(itemsInCart.asSortedList())
     }
 
     override suspend fun remove(itemWithQuantity: ItemWithQuantity) {
         itemsInCart.remove(itemWithQuantity.item.label)
-        sendUpdateChannel()
+        channel.send(itemsInCart.asSortedList())
     }
 
     override suspend fun empty() {
         itemsInCart.clear()
-        sendUpdateChannel()
+        channel.send(itemsInCart.asSortedList())
     }
 
     override val allItems: Flow<List<ItemWithQuantity>>
         get() = channel.asFlow()
 
-    private suspend fun sendUpdateChannel() {
-        channel.send(
-            itemsInCart.values.toList()
-                .sortedBy { it.item.label }
-        )
+    private fun MutableMap<String, ItemWithQuantity>.asSortedList(): List<ItemWithQuantity> {
+        return values.toList()
+            .sortedBy { it.item.label }
     }
 
 }
