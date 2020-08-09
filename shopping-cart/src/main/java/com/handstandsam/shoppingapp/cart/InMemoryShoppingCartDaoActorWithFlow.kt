@@ -45,8 +45,7 @@ class InMemoryShoppingCartDaoActorWithFlow : ShoppingCartDao {
                 is Intention.Empty -> itemsInCart.clear()
             }
 
-            val sortedItems = itemsInCart.values.toList()
-                .sortedBy { it.item.label }
+            val sortedItems = itemsInCart.asSortedList()
 
             if (allItems.value != sortedItems) {
                 allItems.value = sortedItems
