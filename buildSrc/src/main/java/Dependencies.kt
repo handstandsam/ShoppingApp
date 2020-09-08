@@ -32,29 +32,27 @@ object Versions {
     // SqlDelight
     val sql_delight = "1.4.0"
 
-    val stetho = "1.5.0"
     val okhttp = "3.10.0"
     val glide = "4.9.0"
     val process_phoenix = "2.0.0"
-    val chuck = "1.1.0"
     val junit = "4.12"
     val wiremock = "2.18.0"
     val timber = "4.5.1"
     val moshi = "1.6.0"
 
     // android
-    val androidx = "1.1.0"
+    val androidx = "1.2.0"
+    val androidx_recyclerview = "1.1.0"
     val androidx_lifecycle = "2.2.0"
     val androidx_support_v4 = "1.0.0"
     val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "4.0.0"
+    val android_gradle_plugin = "4.2.0-alpha08"
     val espresso = "3.0.1"
     val test_support_lib = "1.0.1"
 
     val assertj = "3.11.1"
-    val android_debug_database = "1.0.6"
 }
 
 object Libs {
@@ -65,9 +63,8 @@ object Libs {
 
     //AndroidX
     val androidx_material = "com.google.android.material:material:${Versions.androidx}" //com.android.support:design
-    val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}" //com.android.support:recyclerview-v7
+    val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx_recyclerview}" //com.android.support:recyclerview-v7
     val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
-    val androidx_annotations = "androidx.annotation:annotation:${Versions.androidx}" //com.android.support:support-annotations
 
     val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx_support_v4}" //com.android.support:support-v4
 
@@ -101,12 +98,7 @@ object Libs {
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
-    val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
-    val stetho_okhttp3 = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
-    val chuck = "com.readystatesoftware.chuck:library:${Versions.chuck}"
-    val chuck_no_op = "com.readystatesoftware.chuck:library-no-op:${Versions.chuck}"
     val apache_commons = "commons-io:commons-io:${Versions.apache_commons}"
-    val android_debug_database = "com.amitshekhar.android:debug-db:${Versions.android_debug_database}"
 
     val sql_delight_android = "com.squareup.sqldelight:android-driver:${Versions.sql_delight}"
     val sql_delight_coroutines_extensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sql_delight}"

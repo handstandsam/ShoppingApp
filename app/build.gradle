@@ -1,6 +1,8 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 android {
     compileSdkVersion Versions.compile_sdk
@@ -14,10 +16,6 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-    }
-
-    dexOptions {
-        jumboMode true
     }
 
     signingConfigs {
@@ -80,6 +78,23 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "${compose_version}"
+        kotlinCompilerVersion "${kotlin_version}"
+    }
 
 }
 
@@ -89,10 +104,8 @@ dependencies {
     implementation project(Modules.mockData)
 
     //Support Libraries
-    implementation Libs.androidx_support_v4
     implementation Libs.androidx_appcompat_v7
     implementation Libs.androidx_recyclerview
-    implementation Libs.androidx_material
 
     implementation Libs.androidx_lifecycle_runtime_ktx
 
@@ -117,12 +130,29 @@ dependencies {
     implementation Libs.timber
 
     debugImplementation project(Modules.debug)
-    debugImplementation Libs.android_debug_database //Uncomment for Android Debug Database
+
+
+    // Network Inspection
+    debugImplementation 'com.ashokvarma.android:gander-imdb:3.1.0'
+    releaseImplementation 'com.ashokvarma.android:gander-no-op:3.1.0'
 
     implementation project(Modules.networking)
     implementation project(Modules.shoppingCart)
     implementation project(Modules.shoppingCartSqldelight)
     implementation project(Modules.shoppingCartRoom)
+
+    // Compose
+    implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.foundation:foundation-layout:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.animation:animation:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.ui:ui-tooling:$compose_version"
+    implementation "com.github.zsoltk:compose-router:0.18.0"
+    implementation "dev.chrisbanes.accompanist:accompanist-coil:0.2.0"
 
     //JVM Tests Only
     testImplementation TestLibs.junit
@@ -133,6 +163,15 @@ dependencies {
     androidTestImplementation TestLibs.runner
     androidTestUtil TestLibs.orchestrator
 }
+
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+    }
+}
+
 repositories {
     mavenCentral()
 }

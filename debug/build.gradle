@@ -13,11 +13,8 @@ dependencies {
     implementation Libs.moshi
     implementation Libs.moshiKotlin
 
-    api Libs.stetho
-    api Libs.stetho_okhttp3
     api Libs.okhttp_logging_interceptor
     api Libs.process_phoenix
-    api Libs.chuck
 
     //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
     api(Libs.wiremock) {
