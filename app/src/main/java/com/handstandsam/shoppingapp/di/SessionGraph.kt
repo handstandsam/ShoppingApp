@@ -2,6 +2,7 @@ package com.handstandsam.shoppingapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.handstandsam.shoppingapp.cart.ActorStateFlowShoppingCartDao
 import com.handstandsam.shoppingapp.cart.InMemoryShoppingCartDao
 import com.handstandsam.shoppingapp.cart.RoomItemInCartDatabase
 import com.handstandsam.shoppingapp.cart.RoomShoppingCartDao
@@ -29,7 +30,7 @@ class SessionGraphImpl(
 
     private val shoppingCartDao: ShoppingCartDao = when (dbType) {
         DatabaseType.IN_MEMORY -> {
-            InMemoryShoppingCartDao()
+            ActorStateFlowShoppingCartDao()
         }
         DatabaseType.ROOM -> {
             RoomShoppingCartDao(
