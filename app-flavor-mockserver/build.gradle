@@ -1,9 +1,34 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
+    implementation project(Modules.mockData)
+    implementation project(Modules.networking)
+    implementation project(Modules.models)
+
+    implementation Libs.timber
+    implementation Libs.okhttp
+    implementation Libs.apache_commons
+    implementation Libs.kotlin_std_lib
+    implementation Libs.moshi
+    implementation Libs.moshiKotlin
     implementation Libs.kotlin_std_lib
 
-    implementation project(Modules.models)
-    implementation project(Modules.networking)
-    implementation project(Modules.debug)
+    api Libs.okhttp_logging_interceptor
+    api Libs.process_phoenix
+
+
+    //WireMock - It's typically bad practice to put WireMock in a release because of it's large size, but this is a sample app.
+    api(Libs.wiremock) {
+        //Using Android Version Instead
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+
+        //Was getting a classpath conflict for org.objectweb.asm.AnnotationVisitor which is a part of 'net.minidev:asm'
+        exclude group: 'org.ow2.asm', module: 'asm'
+
+        //Was getting this warning, so decided to ignore this version included by WireMock.
+        //Warning:Dependency org.json:json:20090211 is ignored as it may be conflicting with the internal version provided by Android.
+        //In case of problem, please repackage with jarjar to change the class packages
+        exclude group: 'org.json', module: 'json'
+    }
+    api Libs.apacheHttpClientAndroid
 }

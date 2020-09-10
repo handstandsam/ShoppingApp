@@ -2,13 +2,12 @@ package com.handstandsam.shoppingapp.wiremock
 
 import android.content.Context
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.common.SingleRootFileSource
 import com.github.tomakehurst.wiremock.core.WireMockApp
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import timber.log.Timber
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import java.io.File
-import java.util.*
+import java.util.ArrayList
 
 class WireMockManager(
     private val contextForAssets: Context,
@@ -31,21 +30,21 @@ class WireMockManager(
         get() {
             val rootDirectory =
                 dataDirectory + "/" + contextForAssets.packageName + "/" + wireMockDirectory
-            Timber.d("rootDirectory $rootDirectory")
+            timber.log.Timber.d("rootDirectory $rootDirectory")
             return rootDirectory
         }
 
     private val mappingDirectory: String
         get() {
             val mappingDirectory = rootDirectory + "/" + WireMockApp.MAPPINGS_ROOT
-            Timber.d("mappingDirectory $mappingDirectory")
+            timber.log.Timber.d("mappingDirectory $mappingDirectory")
             return mappingDirectory
         }
 
     private val fileDirectory: String
         get() {
             val fileDirectory = rootDirectory + "/" + WireMockApp.FILES_ROOT
-            Timber.d("fileDirectory $fileDirectory")
+            timber.log.Timber.d("fileDirectory $fileDirectory")
             return fileDirectory
         }
 
@@ -81,7 +80,7 @@ class WireMockManager(
 
     private fun instantiateProxyServer() {
         wireMockServer = WireMockServer(
-            wireMockConfig().port(httpPort)
+            WireMockConfiguration.wireMockConfig().port(httpPort)
                 .withRootDirectory(rootDirectory)
         )
         wireMockServer.enableRecordMappings(
@@ -89,8 +88,8 @@ class WireMockManager(
             SingleRootFileSource(fileDirectory)
         )
         wireMockServer.stubFor(
-            any(urlMatching(WILDCARD)).willReturn(
-                aResponse().proxiedFrom(
+            WireMock.any(WireMock.urlMatching(WILDCARD)).willReturn(
+                WireMock.aResponse().proxiedFrom(
                     remoteBaseUrl
                 )
             )
@@ -99,7 +98,7 @@ class WireMockManager(
 
     private fun instantiatePlayBackServer() {
         wireMockServer = WireMockServer(
-            wireMockConfig().port(httpPort)
+            WireMockConfiguration.wireMockConfig().port(httpPort)
                 .withRootDirectory(rootDirectory)
         )
     }
