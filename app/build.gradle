@@ -83,10 +83,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
     buildFeatures {
         compose true
     }
@@ -151,8 +147,8 @@ dependencies {
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.ui:ui-tooling:$compose_version"
-    implementation "com.github.zsoltk:compose-router:0.18.0"
-    implementation "dev.chrisbanes.accompanist:accompanist-coil:0.2.0"
+    implementation "com.github.zsoltk:compose-router:0.17.0"
+    implementation "dev.chrisbanes.accompanist:accompanist-coil:0.1.9"
 
     //JVM Tests Only
     testImplementation TestLibs.junit
@@ -163,7 +159,6 @@ dependencies {
     androidTestImplementation TestLibs.runner
     androidTestUtil TestLibs.orchestrator
 }
-
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {

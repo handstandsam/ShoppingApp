@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.handstandsam.shoppingapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name="com.handstandsam.shoppingapp.MyApplication"
         android:allowBackup="true"
@@ -16,6 +14,7 @@
             android:name="com.handstandsam.shoppingapp.features.login.LoginActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,18 +24,22 @@
         </activity>
         <activity
             android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
+
+        <activity android:name=".compose.ComposeActivity"></activity>
 
         <activity
             android:name="com.handstandsam.shoppingapp.features.category.CategoryActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
 
         <activity
             android:name="com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <activity
             android:name="com.handstandsam.shoppingapp.features.checkout.CheckoutActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
