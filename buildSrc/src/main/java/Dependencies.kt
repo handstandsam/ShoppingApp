@@ -49,8 +49,7 @@ object Versions {
     val androidx_test = "1.1.0"
 
     val android_gradle_plugin = "4.2.0-alpha10"
-    val espresso = "3.1.0"
-    val test_support_lib = "1.0.1"
+    val espresso = "3.1.1"
 
     val assertj = "3.11.1"
 }
@@ -78,8 +77,11 @@ object Libs {
     val androidx_persistence_room_test = "androidx.room:room-testing:${Versions.androidx_persistence}" // Test helpers
 
 
+    val androidx_espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    val androidx_espresso_contrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     val androidx_testrunner = "androidx.test:runner:${Versions.androidx_test}"
     val androidx_test_rules = "androidx.test:rules:${Versions.androidx_test}"
+    val androidx_test_orchestrator = "androidx.test:orchestrator:${Versions.androidx_test}"
 
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
@@ -106,12 +108,6 @@ object Libs {
 }
 
 object TestLibs {
-    val runner = "com.android.support.test:runner:${Versions.test_support_lib}"
-    val orchestrator = "com.android.support.test:orchestrator:${Versions.test_support_lib}"
-    val espresso_core = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-    val espresso_contrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
-    val android_test_runner = "com.android.support.test:runner:${Versions.test_support_lib}"
-    val testRules = "com.android.support.test:rules:${Versions.test_support_lib}"
     val junit = "junit:junit:${Versions.junit}"
     val assertj = "org.assertj:assertj-core:${Versions.assertj}"
 }
