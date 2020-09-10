@@ -15,6 +15,12 @@
             android:launchMode="singleTask"
             android:noHistory="true">
 
+        </activity>
+        <activity
+            android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
+            android:launchMode="singleTask" />
+
+        <activity android:name=".compose.ComposeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,11 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
-            android:launchMode="singleTask" />
-
-        <activity android:name=".compose.ComposeActivity"></activity>
 
         <activity
             android:name="com.handstandsam.shoppingapp.features.category.CategoryActivity"
