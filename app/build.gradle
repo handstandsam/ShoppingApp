@@ -18,26 +18,26 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
-    signingConfigs {
-        debug {
-            storeFile file("debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
-    }
-
-    buildTypes {
-        debug {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-            resValue("string", "PORT_NUMBER", "8081") //Android Debug Database Configuration
-        }
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            storeFile file("debug.keystore")
+//            storePassword "android"
+//            keyAlias "androiddebugkey"
+//            keyPassword "android"
+//        }
+//    }
+//
+//    buildTypes {
+//        debug {
+//            minifyEnabled false
+//            signingConfig signingConfigs.debug
+//            resValue("string", "PORT_NUMBER", "8081") //Android Debug Database Configuration
+//        }
+//        release {
+//            minifyEnabled false
+//            signingConfig signingConfigs.debug
+//        }
+//    }
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -88,10 +88,16 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "${compose_version}"
-        kotlinCompilerVersion "${kotlin_version}"
+        kotlinCompilerVersion "1.4.0"
+        kotlinCompilerExtensionVersion "1.0.0-alpha02"
     }
+}
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+    }
 }
 
 dependencies {
@@ -147,8 +153,8 @@ dependencies {
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.ui:ui-tooling:$compose_version"
-    implementation "com.github.zsoltk:compose-router:0.17.0"
-    implementation "dev.chrisbanes.accompanist:accompanist-coil:0.1.9"
+    implementation "com.github.zsoltk:compose-router:0.18.0"
+    implementation "dev.chrisbanes.accompanist:accompanist-coil:0.2.0"
 
     //JVM Tests Only
     testImplementation TestLibs.junit
@@ -158,13 +164,6 @@ dependencies {
     androidTestImplementation Libs.androidx_test_rules
     androidTestImplementation Libs.androidx_testrunner
     androidTestUtil Libs.androidx_test_orchestrator
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
-    }
 }
 
 repositories {

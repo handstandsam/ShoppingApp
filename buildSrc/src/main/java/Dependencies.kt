@@ -19,9 +19,9 @@ object Versions {
     val source_compat = "1.8"
     val target_compat = "1.8"
     val min_sdk = 21
-    val target_sdk = 29
-    val compile_sdk = 29
-    val build_tools = "29.0.3"
+    val target_sdk = 30
+    val compile_sdk = 30
+    val build_tools = "30.0.2"
 
     // Kotlin
     val kotlin = "1.3.72"
