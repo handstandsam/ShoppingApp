@@ -20,7 +20,8 @@
             android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
             android:launchMode="singleTask" />
 
-        <activity android:name=".compose.ComposeActivity">
+        <activity android:name=".compose.ComposeActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

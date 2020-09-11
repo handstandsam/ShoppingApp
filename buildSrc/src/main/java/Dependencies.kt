@@ -18,7 +18,7 @@ object Versions {
     val retrofit = "2.3.0"
     val source_compat = "1.8"
     val target_compat = "1.8"
-    val min_sdk = 21
+    val min_sdk = 23
     val target_sdk = 30
     val compile_sdk = 30
     val build_tools = "30.0.2"

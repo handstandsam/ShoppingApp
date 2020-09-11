@@ -9,3 +9,4 @@ include ':app',
         ':mock-data',
         ':models',
         ':networking'
+include ':myapplication'

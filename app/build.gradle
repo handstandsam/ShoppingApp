@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -14,34 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-    }
-
-//    signingConfigs {
-//        debug {
-//            storeFile file("debug.keystore")
-//            storePassword "android"
-//            keyAlias "androiddebugkey"
-//            keyPassword "android"
-//        }
-//    }
-//
-//    buildTypes {
-//        debug {
-//            minifyEnabled false
-//            signingConfig signingConfigs.debug
-//            resValue("string", "PORT_NUMBER", "8081") //Android Debug Database Configuration
-//        }
-//        release {
-//            minifyEnabled false
-//            signingConfig signingConfigs.debug
-//        }
-//    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/atomicfu.kotlin_module'
     }
 
     testOptions {
@@ -83,20 +55,25 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
     buildFeatures {
         compose true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
     }
 
     composeOptions {
         kotlinCompilerVersion "1.4.0"
         kotlinCompilerExtensionVersion "1.0.0-alpha02"
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
     }
 }
 
@@ -155,6 +132,11 @@ dependencies {
     implementation "androidx.ui:ui-tooling:$compose_version"
     implementation "com.github.zsoltk:compose-router:0.18.0"
     implementation "dev.chrisbanes.accompanist:accompanist-coil:0.2.0"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07'
+
+
+
+    implementation 'com.google.android.material:material:1.2.1'
 
     //JVM Tests Only
     testImplementation TestLibs.junit
@@ -164,8 +146,4 @@ dependencies {
     androidTestImplementation Libs.androidx_test_rules
     androidTestImplementation Libs.androidx_testrunner
     androidTestUtil Libs.androidx_test_orchestrator
-}
-
-repositories {
-    mavenCentral()
 }
