@@ -5,7 +5,6 @@ object Modules {
     val mockData = ":mock-data"
     val sample = ":sample"
     val networking = ":networking"
-    val debug = ":debug"
     val shoppingCart = ":shopping-cart"
     val shoppingCartRoom = ":shopping-cart-room"
     val shoppingCartSqldelight = ":shopping-cart-sqldelight"

@@ -5,7 +5,6 @@ include ':app',
         ':shopping-cart',
         ':shopping-cart-room',
         ':shopping-cart-sqldelight',
-        ':debug',
         ':mock-data',
         ':models',
         ':networking'
