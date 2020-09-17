@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
 import androidx.compose.ui.platform.setContent
 
-class MainActivity : AppCompatActivity() {
+class ComposeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".ComposeActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ShoppingApp.NoActionBar">
             <intent-filter>
