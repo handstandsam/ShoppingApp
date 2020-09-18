@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.features.category
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
@@ -88,5 +89,13 @@ class CategoryActivity : LoggedInActivity() {
 
     companion object {
         const val BUNDLE_PARAM_CATEGORY = "category"
+
+        fun launch(context: Context, category: Category) {
+            val intent = Intent(context, CategoryActivity::class.java)
+            val extras = Bundle()
+            extras.putSerializable(BUNDLE_PARAM_CATEGORY, category)
+            intent.putExtras(extras)
+            context.startActivity(intent)
+        }
     }
 }

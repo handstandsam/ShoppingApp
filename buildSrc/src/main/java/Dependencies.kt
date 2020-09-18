@@ -47,7 +47,7 @@ object Versions {
     val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "4.2.0-alpha10"
+    val android_gradle_plugin = "4.2.0-alpha11"
     val espresso = "3.1.1"
 
     val assertj = "3.11.1"

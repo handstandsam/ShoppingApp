@@ -23,12 +23,7 @@ internal class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(item
 
     init {
         itemView.setOnClickListener {
-            val context = itemView.context
-            val intent = Intent(context, CategoryActivity::class.java)
-            val extras = Bundle()
-            extras.putSerializable(BUNDLE_PARAM_CATEGORY, category)
-            intent.putExtras(extras)
-            context.startActivity(intent)
+            CategoryActivity.launch(itemView.context, category)
         }
     }
 
