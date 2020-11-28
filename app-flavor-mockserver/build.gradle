@@ -11,6 +11,7 @@ dependencies {
     implementation Libs.kotlin_std_lib
     implementation Libs.moshi
     implementation Libs.moshiKotlin
+
     implementation Libs.kotlin_std_lib
 
     api Libs.okhttp_logging_interceptor

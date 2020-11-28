@@ -8,7 +8,7 @@ import java.util.*
 
 class VideoGameMockAccount : MockAccount() {
 
-    private val imageBaseUrl = "http://shopping-app.s3.amazonaws.com" + "/video-games/images/"
+    private val imageBaseUrl = "https://shopping-app.s3.amazonaws.com" + "/video-games/images/"
 
     internal val user: User = User("Sam", "Edwards")
 

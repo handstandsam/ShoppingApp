@@ -15,10 +15,10 @@
         android:textSize="@dimen/welcome_message"
         tools:text="Welcome Message" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/categories"
+    <com.handstandsam.shoppingapp.compose.CategoryListView
+        android:id="@+id/compose_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@id/welcome_message"
-        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

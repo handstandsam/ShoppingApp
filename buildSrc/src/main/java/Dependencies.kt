@@ -23,13 +23,13 @@ object Versions {
     val build_tools = "30.0.2"
 
     // Kotlin
-    val kotlin = "1.3.72"
-    val kotlin_coroutines = "1.3.7"
+    val kotlin = "1.4.10"
+    val kotlin_coroutines = "1.3.9"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.4.3"
+    val sql_delight = "1.4.4"
 
     val okhttp = "3.10.0"
     val glide = "4.11.0"
@@ -47,10 +47,12 @@ object Versions {
     val androidx_persistence = "2.2.5"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "4.2.0-alpha11"
+    val android_gradle_plugin = "4.2.0-alpha16"
     val espresso = "3.1.1"
 
     val assertj = "3.11.1"
+
+    val jetpack_compose = "1.0.0-alpha07"
 }
 
 object Libs {

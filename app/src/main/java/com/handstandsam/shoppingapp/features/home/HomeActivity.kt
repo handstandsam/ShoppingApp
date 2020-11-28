@@ -2,13 +2,11 @@ package com.handstandsam.shoppingapp.features.home
 
 import android.content.Context
 import android.os.Bundle
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.compose.CategoryListView
 import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
@@ -21,30 +19,17 @@ class HomeActivity : LoggedInActivity() {
 
     private lateinit var presenter: HomePresenter
 
-    private var recyclerView: RecyclerView? = null
-
     private var welcomeMessageText: TextView? = null
 
-    private lateinit var homeView: HomeView
+    private val categoryListView get() = findViewById<CategoryListView>(R.id.compose_frame_layout)
 
-    private var recyclerViewAdapter: HomeRVAdapter? = null
+    private lateinit var homeView: HomeView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.title = "Categories"
         setContentView(R.layout.activity_home)
         welcomeMessageText = findViewById(R.id.welcome_message)
-        recyclerView = findViewById(R.id.categories)
-        recyclerView!!.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerViewAdapter = HomeRVAdapter()
-        recyclerView!!.adapter = recyclerViewAdapter
-        recyclerView!!.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-        )
 
         homeView = MyHomeView()
         presenter = HomePresenter(
@@ -70,7 +55,7 @@ class HomeActivity : LoggedInActivity() {
             get() = this@HomeActivity
 
         override fun showCategories(categories: List<Category>) {
-            recyclerViewAdapter!!.setData(categories)
+            categoryListView.categories.value = categories
         }
 
         override fun setWelcomeMessage(welcomeStr: String) {

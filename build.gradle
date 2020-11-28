@@ -2,8 +2,8 @@
 
 buildscript {
     ext {
-        compose_version = '1.0.0-alpha03'
-        kotlin_version = "1.4.10"
+        compose_version = Versions.jetpack_compose
+        kotlin_version = Versions.kotlin
     }
 
     repositories {
@@ -12,8 +12,10 @@ buildscript {
         google()
     }
     dependencies {
+        classpath "xml-apis:xml-apis:1.4.01"
         classpath GradlePlugins.android
         classpath GradlePlugins.kotlin
+
         classpath "com.squareup.sqldelight:gradle-plugin:${Versions.sql_delight}"
 
         // NOTE: Do not place your application dependencies here; they belong
