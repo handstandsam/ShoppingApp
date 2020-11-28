@@ -5,8 +5,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.RowScope.align
-import androidx.compose.foundation.layout.Stack
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,7 +37,7 @@ class CategoryListView @JvmOverloads constructor(
     val categories = mutableListOf<Category>()
 
     init {
-        setContent(Recomposer.current(), null) {
+        setContent {
             val counterState = remember { mutableStateOf(categories) }
             LazyColumnFor(items = counterState.value) { category ->
                 CategoryView(category) {
@@ -51,10 +50,11 @@ class CategoryListView @JvmOverloads constructor(
 
 @Composable
 fun CategoryView(category: Category, onClick: () -> Unit) {
-    Stack(
+    Box(
         modifier = Modifier
-            .wrapContentSize()
-            .align(Alignment.CenterVertically)
+            .wrapContentSize(
+                align = Alignment.BottomStart
+            )
     ) {
         CoilImageWithCrossfade(
             data = category.image,

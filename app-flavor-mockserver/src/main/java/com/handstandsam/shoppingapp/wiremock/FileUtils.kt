@@ -60,7 +60,7 @@ class FileUtils(private val contextForAssets: Context) {
             out.flush()
             out.close()
         } catch (e: Exception) {
-            Log.e("tag", e.message)
+            Log.e("tag", e.message.toString())
         }
 
     }
