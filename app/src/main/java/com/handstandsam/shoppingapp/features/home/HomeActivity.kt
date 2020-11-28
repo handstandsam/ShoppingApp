@@ -2,15 +2,12 @@ package com.handstandsam.shoppingapp.features.home
 
 import android.content.Context
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.compose.CategoryListView
 import com.handstandsam.shoppingapp.models.Category
-import com.handstandsam.shoppingapp.repository.NetworkResult
 
 class HomeActivity : LoggedInActivity() {
 
@@ -58,8 +55,7 @@ class HomeActivity : LoggedInActivity() {
             get() = this@HomeActivity
 
         override fun showCategories(categories: List<Category>) {
-            categoryListView.categories.clear()
-            categoryListView.categories.addAll(categories)
+            categoryListView.categories.value = categories
         }
 
         override fun setWelcomeMessage(welcomeStr: String) {

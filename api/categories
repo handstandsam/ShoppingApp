@@ -1,16 +1,16 @@
 [
   {
-    "image": "http://shopping-app.s3.amazonaws.com/video-games/images/console-nes.jpg",
+    "image": "https://shopping-app.s3.amazonaws.com/video-games/images/console-nes.jpg",
     "label": "Nintendo",
     "link": "https://en.wikipedia.org/wiki/Nintendo_Entertainment_System"
   },
   {
-    "image": "http://shopping-app.s3.amazonaws.com/video-games/images/console-sega.jpg",
+    "image": "https://shopping-app.s3.amazonaws.com/video-games/images/console-sega.jpg",
     "label": "Sega",
     "link": "https://en.wikipedia.org/wiki/Sega_Genesis"
   },
   {
-    "image": "http://shopping-app.s3.amazonaws.com/video-games/images/console-atari.jpg",
+    "image": "https://shopping-app.s3.amazonaws.com/video-games/images/console-atari.jpg",
     "label": "Atari",
     "link": "https://en.wikipedia.org/wiki/Atari"
   }
