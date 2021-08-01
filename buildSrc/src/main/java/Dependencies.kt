@@ -15,21 +15,18 @@ object Modules {
 
 object Versions {
     val retrofit = "2.3.0"
-    val source_compat = "1.8"
-    val target_compat = "1.8"
-    val min_sdk = 23
+    val min_sdk = 24
     val target_sdk = 30
     val compile_sdk = 30
-    val build_tools = "30.0.2"
 
     // Kotlin
-    val kotlin = "1.4.10"
+    val kotlin = "1.5.10"
     val kotlin_coroutines = "1.3.9"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
 
     // SqlDelight
-    val sql_delight = "1.4.4"
+    val sql_delight = "1.5.1"
 
     val okhttp = "3.10.0"
     val glide = "4.11.0"
@@ -40,19 +37,18 @@ object Versions {
     val moshi = "1.6.0"
 
     // android
-    val androidx = "1.2.0"
-    val androidx_recyclerview = "1.1.0"
-    val androidx_lifecycle = "2.2.0"
-    val androidx_support_v4 = "1.0.0"
-    val androidx_persistence = "2.2.5"
+    val androidx = "1.3.0"
+    val androidx_recyclerview = "1.2.1"
+    val androidx_lifecycle = "2.3.1"
+    val androidx_persistence = "2.3.0"
     val androidx_test = "1.1.0"
 
-    val android_gradle_plugin = "4.2.0-alpha16"
+    val android_gradle_plugin = "7.0.0"
     val espresso = "3.1.1"
 
     val assertj = "3.11.1"
 
-    val jetpack_compose = "1.0.0-alpha07"
+    val jetpack_compose = "1.0.0"
 }
 
 object Libs {
@@ -66,8 +62,6 @@ object Libs {
     val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx_recyclerview}" //com.android.support:recyclerview-v7
     val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
 
-    val androidx_support_v4 = "androidx.legacy:legacy-support-v4:${Versions.androidx_support_v4}" //com.android.support:support-v4
-
     val androidx_persistence_room_runtime = "androidx.room:room-runtime:${Versions.androidx_persistence}" // Room
     val androidx_persistence_room_kapt = "androidx.room:room-compiler:${Versions.androidx_persistence}" // Annotation Processor
 
@@ -76,7 +70,6 @@ object Libs {
 
     val androidx_persistence_room_ktx = "androidx.room:room-ktx:${Versions.androidx_persistence}" // optional - Kotlin Extensions and Coroutines support for Room
     val androidx_persistence_room_test = "androidx.room:room-testing:${Versions.androidx_persistence}" // Test helpers
-
 
     val androidx_espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     val androidx_espresso_contrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"

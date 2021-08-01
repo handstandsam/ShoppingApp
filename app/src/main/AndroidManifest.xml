@@ -25,10 +25,6 @@
             android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
             android:launchMode="singleTask" />
 
-        <activity android:name=".compose.ComposeActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-        </activity>
-
         <activity
             android:name="com.handstandsam.shoppingapp.features.category.CategoryActivity"
             android:launchMode="singleTask" />

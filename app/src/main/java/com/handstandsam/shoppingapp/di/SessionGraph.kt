@@ -1,18 +1,11 @@
 package com.handstandsam.shoppingapp.di
 
 import android.content.Context
-import androidx.room.Room
 import com.handstandsam.shoppingapp.cart.ActorStateFlowShoppingCartDao
-import com.handstandsam.shoppingapp.cart.InMemoryShoppingCartDao
-import com.handstandsam.shoppingapp.cart.RoomItemInCartDatabase
-import com.handstandsam.shoppingapp.cart.RoomShoppingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.cart.ShoppingCartDao
-import com.handstandsam.shoppingapp.cart.SqlDelightShoppingCartDao
-import com.handstandsam.shoppingapp.cart.sqldelight.Database
 import com.handstandsam.shoppingapp.preferences.UserPreferences
 import com.handstandsam.shoppingapp.repository.SessionManager
-import com.squareup.sqldelight.android.AndroidSqliteDriver
 
 interface SessionGraph {
     val sessionManager: SessionManager
@@ -33,22 +26,24 @@ class SessionGraphImpl(
             ActorStateFlowShoppingCartDao()
         }
         DatabaseType.ROOM -> {
-            RoomShoppingCartDao(
-                Room.databaseBuilder(
-                    appContext,
-                    RoomItemInCartDatabase::class.java,
-                    "cart_room.db"
-                ).build()
-            )
+            error("Add the dependency for shopping-room")
+//            RoomShoppingCartDao(
+//                Room.databaseBuilder(
+//                    appContext,
+//                    RoomItemInCartDatabase::class.java,
+//                    "cart_room.db"
+//                ).build()
+//            )
         }
         DatabaseType.SQLDELIGHT -> {
-            SqlDelightShoppingCartDao(
-                AndroidSqliteDriver(
-                    schema = Database.Schema,
-                    context = appContext,
-                    name = "cart_sqldelight.db"
-                )
-            )
+            error("Add the dependency for shopping-cartsqldelight")
+//            SqlDelightShoppingCartDao(
+//                AndroidSqliteDriver(
+//                    schema = Database.Schema,
+//                    context = appContext,
+//                    name = "cart_sqldelight.db"
+//                )
+//            )
         }
     }
 

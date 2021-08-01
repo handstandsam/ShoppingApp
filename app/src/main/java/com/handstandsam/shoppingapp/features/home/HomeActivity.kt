@@ -3,10 +3,20 @@ package com.handstandsam.shoppingapp.features.home
 import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
-import com.handstandsam.shoppingapp.compose.CategoryListView
+import com.handstandsam.shoppingapp.compose.CategoryView
+import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.models.Category
 
 class HomeActivity : LoggedInActivity() {
@@ -17,13 +27,13 @@ class HomeActivity : LoggedInActivity() {
     // Example of `by lazy`
     private val categoryRepo by lazy { graph.networkGraph.categoryRepo }
 
-    private lateinit var presenter: HomePresenter
+    private lateinit var presenter: com.handstandsam.shoppingapp.features.home.HomePresenter
 
     private var welcomeMessageText: TextView? = null
 
-    private val categoryListView get() = findViewById<CategoryListView>(R.id.compose_frame_layout)
+    private val categoryListView get() = findViewById<ComposeView>(R.id.compose_frame_layout)
 
-    private lateinit var homeView: HomeView
+    private lateinit var homeView: HomePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +41,7 @@ class HomeActivity : LoggedInActivity() {
         setContentView(R.layout.activity_home)
         welcomeMessageText = findViewById(R.id.welcome_message)
 
-        homeView = MyHomeView()
+        homeView = MyHomePresenter()
         presenter = HomePresenter(
             view = homeView,
             sessionManager = sessionManager,
@@ -40,7 +50,7 @@ class HomeActivity : LoggedInActivity() {
         )
     }
 
-    interface HomeView {
+    interface HomePresenter {
 
         val context: Context
 
@@ -49,13 +59,28 @@ class HomeActivity : LoggedInActivity() {
         fun setWelcomeMessage(welcomeStr: String)
     }
 
-    inner class MyHomeView : HomeView {
+    val categories = mutableStateOf(listOf<Category>())
+
+    inner class MyHomePresenter : HomePresenter {
 
         override val context: Context
             get() = this@HomeActivity
 
         override fun showCategories(categories: List<Category>) {
-            categoryListView.categories.value = categories
+            categoryListView.setContent {
+                LazyColumn(
+                    modifier = Modifier
+                        .background(Color.Green)
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                ) {
+                    items(categories) { category ->
+                        CategoryView(category) {
+                            CategoryActivity.launch(context, category)
+                        }
+                    }
+                }
+            }
         }
 
         override fun setWelcomeMessage(welcomeStr: String) {

@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class HomePresenter(
-    private val view: HomeActivity.HomeView,
+    private val view: HomeActivity.HomePresenter,
     private val sessionManager: SessionManager,
     private val categoryRepo: CategoryRepo,
     scope: CoroutineScope

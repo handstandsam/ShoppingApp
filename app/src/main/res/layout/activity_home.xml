@@ -15,10 +15,10 @@
         android:textSize="@dimen/welcome_message"
         tools:text="Welcome Message" />
 
-    <com.handstandsam.shoppingapp.compose.CategoryListView
+    <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_frame_layout"
         android:layout_width="match_parent"
         android:layout_below="@id/welcome_message"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
