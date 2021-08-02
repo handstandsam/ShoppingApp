@@ -26,7 +26,7 @@ abstract class MviViewModel<State, Intention, SideEffect>(
     private val actor = scope.actor<Intention> {
         channel.consumeEach { intention ->
             _states.value = reduce(
-                state = (states as MutableStateFlow).value,
+                state = _states.value,
                 intention = intention
             )
         }
