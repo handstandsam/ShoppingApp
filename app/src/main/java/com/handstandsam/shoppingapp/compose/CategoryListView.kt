@@ -28,11 +28,9 @@ fun CategoryView(category: Category, onClick: () -> Unit) {
             .wrapContentSize()
     ) {
         CoilImage(
-
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
-                .background(Color.Gray)
                 .clickable { onClick() },
             imageModel = category.image,
             // Crop, Fit, Inside, FillHeight, FillWidth, None
