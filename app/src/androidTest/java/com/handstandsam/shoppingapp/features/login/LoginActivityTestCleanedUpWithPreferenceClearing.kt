@@ -49,9 +49,6 @@ class LoginActivityTestCleanedUpWithPreferenceClearing {
         val appCompatButton = onView(allOf(withId(R.id.submit), withText("Log in")))
         appCompatButton.perform(scrollTo(), click())
 
-        val textView = onView(allOf(withId(R.id.welcome_message), withText("Welcome back Sam Edwards"), isDisplayed()))
-        textView.check(matches(withText("Welcome back Sam Edwards")))
-
         val recyclerView = onView(allOf(withId(R.id.categories), isDisplayed()))
         recyclerView.perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
 

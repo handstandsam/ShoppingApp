@@ -8,20 +8,26 @@ import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 abstract class MviViewModel<State, Intention, SideEffect>(
     scope: CoroutineScope,
     initialState: State
 ) : ViewModel() {
 
+    /** private, Mutable Shadow of Public `states` [Flow] */
     private val _states = MutableStateFlow(initialState)
 
+    /** private, Mutable Shadow of Public `sideEffects` [Flow] */
     private val _sideEffects = MutableSharedFlow<SideEffect>(Channel.UNLIMITED)
 
-    val states: Flow<State> = _states
+    /** Flow of [State]s */
+    val states: Flow<State> = _states.asStateFlow()
 
-    val sideEffects: Flow<SideEffect> = _sideEffects.asSharedFlow()
+    /** Flow of [SideEffect]s */
+    val sideEffects: SharedFlow<SideEffect> = _sideEffects.asSharedFlow()
 
     private val actor = scope.actor<Intention> {
         channel.consumeEach { intention ->

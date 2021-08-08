@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/welcome_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/two"
-        android:textSize="@dimen/welcome_message"
-        tools:text="Welcome Message" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_frame_layout"
         android:layout_width="match_parent"
-        android:layout_below="@id/welcome_message"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
-</RelativeLayout>
+</FrameLayout>
