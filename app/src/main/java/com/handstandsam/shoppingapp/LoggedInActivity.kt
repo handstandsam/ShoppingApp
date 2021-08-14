@@ -86,12 +86,7 @@ open class LoggedInActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
-                val launchIntent = Intent(this, LoginActivity::class.java)
-                lifecycleScope.launch {
-                    sessionManager.logout()
-                    startActivity(launchIntent)
-                    finish()
-                }
+                logout()
                 return true
             }
             android.R.id.home -> {
@@ -102,5 +97,16 @@ open class LoggedInActivity : AppCompatActivity() {
         }
     }
 
+    protected fun logout() {
+        val launchIntent = Intent(this, LoginActivity::class.java)
+        lifecycleScope.launch {
+            sessionManager.logout()
+            startActivity(launchIntent)
+            finish()
+        }
+    }
 
+    protected fun startCheckoutActivity() {
+        startActivity(Intent(this, CheckoutActivity::class.java))
+    }
 }
