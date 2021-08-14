@@ -1,9 +1,9 @@
 package com.handstandsam.shoppingapp.models
 
-fun List<ItemWithQuantity>.totalItemCount(): Long {
-    var total = 0L
+fun List<ItemWithQuantity>.totalItemCount(): Int {
+    var total = 0
     this.forEach {
-        total += it.quantity
+        total += it.quantity.toInt()
     }
     return total
 }
