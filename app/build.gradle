@@ -106,10 +106,6 @@ dependencies {
     //Logging
     implementation Libs.timber
 
-    // Network Inspection
-    debugImplementation 'com.ashokvarma.android:gander-imdb:3.1.0'
-    releaseImplementation 'com.ashokvarma.android:gander-no-op:3.1.0'
-
     debugImplementation Libs.okhttp_logging_interceptor
 
     implementation project(Modules.networking)
