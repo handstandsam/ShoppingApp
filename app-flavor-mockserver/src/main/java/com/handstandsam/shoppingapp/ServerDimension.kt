@@ -16,7 +16,6 @@ fun Application.serverDimensionNetworkGraph(interceptors: List<Interceptor> = li
     val mockAccount = ProduceMockAccount()
 
     MockNetworkManager(
-        appContext = applicationContext,
         networkConfig = networkConfig,
         mockAccount = mockAccount
     )
