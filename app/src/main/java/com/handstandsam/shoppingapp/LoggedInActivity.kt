@@ -9,6 +9,23 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.di.AppGraph
@@ -38,6 +55,49 @@ open class LoggedInActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
+        }
+    }
+
+    @Composable
+    fun ShoppingCartIconWithCount(itemCount: Int, onClick: () -> Unit) {
+        Box(modifier = Modifier.wrapContentSize()) {
+            IconButton(onClick = {
+                onClick()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Shopping Cart"
+                )
+            }
+            if (itemCount > 0) {
+                val topCornerPadding = 6.dp
+                val circleWidth = 15.dp
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .align(Alignment.TopEnd)
+                        .padding(
+                            end = topCornerPadding,
+                            top = topCornerPadding
+                        )
+                ) {
+                    Canvas(
+                        modifier = Modifier
+                            .size(circleWidth),
+                        onDraw = {
+                            drawCircle(color = Color.Red)
+                        }
+                    )
+                    Text(
+                        modifier = Modifier
+                            .size(circleWidth),
+                        text = "$itemCount",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
         }
     }
 

@@ -18,7 +18,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +31,7 @@ import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.CategoryView
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
+import com.handstandsam.shoppingapp.models.totalItemCount
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -45,6 +45,12 @@ class HomeActivity : LoggedInActivity() {
             .get(HomeViewModel::class.java)
 
         setContent {
+            val itemCount by
+                graph
+                    .sessionGraph
+                    .shoppingCart
+                    .itemsInCart
+                    .collectAsState(initial = listOf())
             Scaffold(
                 topBar = {
                     TopAppBar(
@@ -52,10 +58,8 @@ class HomeActivity : LoggedInActivity() {
                             Text("Shopping App")
                         },
                         actions = {
-                            IconButton(onClick = {
+                            ShoppingCartIconWithCount(itemCount = itemCount.totalItemCount()) {
                                 startCheckoutActivity()
-                            }) {
-                                Icon(Icons.Default.ShoppingCart, contentDescription = "")
                             }
                             var showMenu by remember { mutableStateOf(false) }
                             IconButton(onClick = { showMenu = !showMenu }) {
@@ -66,7 +70,7 @@ class HomeActivity : LoggedInActivity() {
                                 onDismissRequest = { showMenu = false }
                             ) {
                                 DropdownMenuItem(onClick = { logout() }) {
-                                    Text("Log out")
+                                    Text(text = "Log out")
                                 }
                             }
                         },
