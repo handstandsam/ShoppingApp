@@ -32,7 +32,6 @@ object Versions {
     val glide = "4.11.0"
     val process_phoenix = "2.0.0"
     val junit = "4.12"
-    val wiremock = "2.18.0"
     val timber = "4.5.1"
     val moshi = "1.6.0"
 
@@ -82,7 +81,6 @@ object Libs {
     val okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
-    val wiremock = "com.github.tomakehurst:wiremock:${Versions.wiremock}"
     val apacheHttpClientAndroid = "org.apache.httpcomponents:httpclient-android:4.3.5.1"
     val kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     val kotlin_coroutines =

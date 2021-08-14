@@ -11,7 +11,7 @@ import okhttp3.Interceptor
 class LiveNetworkGraph(interceptors: List<Interceptor>) : BaseNetworkGraph(
     networkConfig = NetworkConfig(
         baseUrl = "https://shopping-app.s3.amazonaws.com",
-        isWireMockServer = false,
+        isMockServer = false,
         port = 443
     ),
     interceptors = interceptors
