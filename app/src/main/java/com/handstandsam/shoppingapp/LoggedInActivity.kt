@@ -58,48 +58,6 @@ open class LoggedInActivity : AppCompatActivity() {
         }
     }
 
-    @Composable
-    fun ShoppingCartIconWithCount(itemCount: Int, onClick: () -> Unit) {
-        Box(modifier = Modifier.wrapContentSize()) {
-            IconButton(onClick = {
-                onClick()
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Shopping Cart"
-                )
-            }
-            if (itemCount > 0) {
-                val topCornerPadding = 6.dp
-                val circleWidth = 15.dp
-                Box(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .align(Alignment.TopEnd)
-                        .padding(
-                            end = topCornerPadding,
-                            top = topCornerPadding
-                        )
-                ) {
-                    Canvas(
-                        modifier = Modifier
-                            .size(circleWidth),
-                        onDraw = {
-                            drawCircle(color = Color.Red)
-                        }
-                    )
-                    Text(
-                        modifier = Modifier
-                            .size(circleWidth),
-                        text = "$itemCount",
-                        fontSize = 10.sp,
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-        }
-    }
 
     private fun initLoggedInMenuUi(
         menu: Menu,

@@ -23,7 +23,7 @@ import com.handstandsam.shoppingapp.models.Category
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun CategoryView(category: Category, onClick: () -> Unit) {
+fun CategoryRow(category: Category, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,29 +46,4 @@ fun CategoryView(category: Category, onClick: () -> Unit) {
                 .align(Alignment.Center)
         )
     }
-}
-
-@Composable
-fun TextWithShadow(
-    text: String,
-    color: Color = Color.White,
-    shadowColor: Color = Color.Black,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = text,
-        color = color,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        style = MaterialTheme.typography.h4.copy(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            shadow = Shadow(
-                color = shadowColor,
-                offset = Offset(4f, 4f),
-                blurRadius = 8f
-            )
-        )
-    )
 }
