@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.HomeScreen
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class HomeActivity : LoggedInActivity() {
@@ -15,17 +16,19 @@ class HomeActivity : LoggedInActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        val homeViewModel = ViewModelProvider(this, graph.homeViewModelFactory)
+        val homeViewModel = ViewModelProvider(this, graph.viewModelFactory)
             .get(HomeViewModel::class.java)
 
         lifecycleScope.launchWhenCreated {
-            homeViewModel.sideEffects.onEach {
-                when (it) {
-                    is HomeViewModel.SideEffect.LaunchCategoryActivity -> {
-                        CategoryActivity.launch(this@HomeActivity, it.category)
+            homeViewModel.sideEffects
+                .onEach {
+                    when (it) {
+                        is HomeViewModel.SideEffect.LaunchCategoryActivity -> {
+                            CategoryActivity.launch(this@HomeActivity, it.category)
+                        }
                     }
                 }
-            }
+                .launchIn(this)
         }
 
         setContent {

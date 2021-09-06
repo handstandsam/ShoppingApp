@@ -10,6 +10,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -19,6 +20,7 @@ fun TextWithShadow(
     text: String,
     color: Color = Color.White,
     shadowColor: Color = Color.Black,
+    textAlign: TextAlign = TextAlign.Start,
     modifier: Modifier = Modifier,
 ) {
     Text(
@@ -35,6 +37,7 @@ fun TextWithShadow(
                 offset = Offset(4f, 4f),
                 blurRadius = 8f
             )
-        )
+        ),
+        textAlign = textAlign
     )
 }

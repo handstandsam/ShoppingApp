@@ -2,14 +2,17 @@ package com.handstandsam.shoppingapp.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.handstandsam.shoppingapp.features.category.CategoryViewModel
 import com.handstandsam.shoppingapp.repository.CategoryRepo
+import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 
-class HomeViewModelFactory(
+class ShoppingAppViewModelFactory(
     private val scope: CoroutineScope,
     private val sessionManager: SessionManager,
-    private val categoryRepo: CategoryRepo
+    private val categoryRepo: CategoryRepo,
+    private val itemRepo: ItemRepo
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
@@ -17,6 +20,11 @@ class HomeViewModelFactory(
                 scope = scope,
                 sessionManager = sessionManager,
                 categoryRepo = categoryRepo
+            ) as T
+        } else if (modelClass.isAssignableFrom(CategoryViewModel::class.java)) {
+            return CategoryViewModel(
+                scope = scope,
+                itemRepo = itemRepo
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
