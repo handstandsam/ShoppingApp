@@ -3,89 +3,68 @@ package com.handstandsam.shoppingapp.features.category
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.compose.CategoryScreen
+import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
+import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailPresenter
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class CategoryActivity : LoggedInActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-
-    private lateinit var recyclerViewAdapter: CategoryRVAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        recyclerView = findViewById(R.id.categories)
 
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerViewAdapter = CategoryRVAdapter()
-        recyclerView.adapter = recyclerViewAdapter
+            supportActionBar?.hide()
 
-        Ui(graph.networkGraph.itemRepo)
-    }
+            val categoryViewModel = ViewModelProvider(this, graph.viewModelFactory)
+                .get(CategoryViewModel::class.java)
 
-    inner class Ui(itemRepo: ItemRepo) {
-        init {
             val extras = intent.extras
-            val (label) = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
-            setActionBarTitle(label)
+            val category = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
+            categoryViewModel.send(CategoryViewModel.Intention.CategoryLabelSet(category.label))
+
+            setContent {
+                CategoryScreen(
+                    itemsInCart = graph
+                        .sessionGraph
+                        .shoppingCart
+                        .itemsInCart,
+                    categoryViewModel = categoryViewModel,
+                    checkoutClicked = { startCheckoutActivity() },
+                    logoutClicked = { logout() },
+                    homeUpClicked = { onBackPressed() }
+                )
+            }
+
             lifecycleScope.launchWhenCreated {
-                val itemsResult = withContext(Dispatchers.Default) {
-                    itemRepo.getItemsForCategory(label)
-                }
-                when (itemsResult) {
-                    is NetworkResult.Success -> {
-                        showItems(itemsResult.body)
+                categoryViewModel.sideEffects
+                    .onEach {
+                        when (it) {
+                            is CategoryViewModel.SideEffect.LaunchItemDetailActivity -> {
+                                ItemDetailActivity.launch(this@CategoryActivity, it.item)
+                            }
+                        }
                     }
-                    is NetworkResult.Failure -> {
-                        Timber.w("Networking Error", itemsResult.errorResponse)
-                        showNetworkError(itemsResult.errorResponse.toString())
-                    }
-                }.exhaustive
+                    .launchIn(this)
             }
-        }
 
-        val context: Context
-            get() = this@CategoryActivity.applicationContext
-
-        fun showItems(items: List<Item>) {
-            recyclerViewAdapter.setItems(items)
-        }
-
-        fun setActionBarTitle(title: String) {
-            supportActionBar?.title = title
-        }
-
-        fun showNetworkError(message: String?) {
-            val builder = AlertDialog.Builder(
-                this@CategoryActivity
-            ).setTitle("Networking Error")
-
-            if (message != null) {
-                builder.setMessage(message)
-            }
-            builder
-                .setPositiveButton("OK") { _, i ->
-                    this@CategoryActivity.finish()
-                }
-                .show()
-        }
     }
-
 
     companion object {
         const val BUNDLE_PARAM_CATEGORY = "category"

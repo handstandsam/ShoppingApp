@@ -1,9 +1,8 @@
 package com.handstandsam.shoppingapp.di
 
 import android.app.Application
-import android.content.Context
 import com.handstandsam.shoppingapp.debugDimensionInterceptors
-import com.handstandsam.shoppingapp.features.home.HomeViewModelFactory
+import com.handstandsam.shoppingapp.features.home.ShoppingAppViewModelFactory
 import com.handstandsam.shoppingapp.serverDimensionNetworkGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +11,7 @@ interface AppGraph {
 
     val sessionGraph: SessionGraph
     val networkGraph: NetworkGraph
-    val homeViewModelFactory: HomeViewModelFactory
+    val viewModelFactory: ShoppingAppViewModelFactory
 }
 
 class AppGraphImpl(application: Application) : AppGraph {
@@ -22,9 +21,10 @@ class AppGraphImpl(application: Application) : AppGraph {
 
     private val appScope = CoroutineScope(Dispatchers.Default)
 
-    override val homeViewModelFactory = HomeViewModelFactory(
+    override val viewModelFactory = ShoppingAppViewModelFactory(
         scope = appScope,
         sessionManager = sessionGraph.sessionManager,
-        categoryRepo = networkGraph.categoryRepo
+        categoryRepo = networkGraph.categoryRepo,
+        itemRepo = networkGraph.itemRepo
     )
 }

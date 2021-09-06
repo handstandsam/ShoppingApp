@@ -1,8 +1,8 @@
 package com.handstandsam.shoppingapp.features.home
 
-import androidx.lifecycle.viewModelScope
 import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager

@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.features.itemdetail
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.R
+import com.handstandsam.shoppingapp.models.Item
 
 class ItemDetailActivity : LoggedInActivity() {
 
@@ -78,5 +80,15 @@ class ItemDetailActivity : LoggedInActivity() {
     override fun onResume() {
         super.onResume()
         presenter.onResume(intent)
+    }
+
+    companion object {
+        internal fun launch(context: Context, item: Item?) {
+            val intent = Intent(context, ItemDetailActivity::class.java)
+            val extras = Bundle()
+            extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, item)
+            intent.putExtras(extras)
+            context.startActivity(intent)
+        }
     }
 }

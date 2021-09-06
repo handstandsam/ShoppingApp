@@ -2,7 +2,6 @@ package com.handstandsam.shoppingapp.compose
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -14,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.handstandsam.shoppingapp.features.home.HomeViewModel
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
 import kotlinx.coroutines.flow.Flow
@@ -39,15 +38,27 @@ fun AppScaffold(
     itemsInCart: Flow<List<ItemWithQuantity>>,
     checkoutClicked: () -> Unit,
     logoutClicked: () -> Unit,
+    homeUpClicked: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val itemCount by itemsInCart.collectAsState(initial = listOf())
+
+    val navigationIcon: @Composable (() -> Unit)? = if (homeUpClicked != null) {
+        {
+            IconButton(onClick = homeUpClicked) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+        }
+    } else {
+        null
+    }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text("Shopping App")
                 },
+                navigationIcon = navigationIcon,
                 actions = {
                     ShoppingCartIconWithCount(itemCount = itemCount.totalItemCount()) {
                         checkoutClicked()
