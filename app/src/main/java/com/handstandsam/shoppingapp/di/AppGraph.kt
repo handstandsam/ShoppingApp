@@ -8,7 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 interface AppGraph {
-
     val sessionGraph: SessionGraph
     val networkGraph: NetworkGraph
     val viewModelFactory: ShoppingAppViewModelFactory
@@ -25,6 +24,7 @@ class AppGraphImpl(application: Application) : AppGraph {
         scope = appScope,
         sessionManager = sessionGraph.sessionManager,
         categoryRepo = networkGraph.categoryRepo,
+        shoppingCart = sessionGraph.shoppingCart,
         itemRepo = networkGraph.itemRepo
     )
 }

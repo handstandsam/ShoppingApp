@@ -82,7 +82,6 @@ dependencies {
 
     //Support Libraries
     implementation Libs.androidx_appcompat_v7
-    implementation Libs.androidx_recyclerview
 
     implementation Libs.androidx_lifecycle_runtime_ktx
 

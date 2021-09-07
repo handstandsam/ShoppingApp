@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun CategoryScreen(
     itemsInCart: Flow<List<ItemWithQuantity>>,
-    checkoutClicked: () -> Unit,
+    showCartClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeUpClicked: () -> Unit,
     categoryViewModel: CategoryViewModel
@@ -26,7 +26,7 @@ fun CategoryScreen(
     val state by categoryViewModel.states.collectAsState(initial = CategoryViewModel.State())
     AppScaffold(
         itemsInCart = itemsInCart,
-        checkoutClicked = checkoutClicked,
+        showCartClicked = showCartClicked,
         logoutClicked = logoutClicked,
         homeUpClicked = homeUpClicked,
         title = state.categoryLabel

@@ -37,7 +37,6 @@ object Versions {
 
     // android
     val androidx = "1.3.0"
-    val androidx_recyclerview = "1.2.1"
     val androidx_lifecycle = "2.3.1"
     val androidx_persistence = "2.3.0"
     val androidx_test = "1.4.0"
@@ -58,7 +57,6 @@ object Libs {
 
     //AndroidX
     val androidx_material = "com.google.android.material:material:${Versions.androidx}" //com.android.support:design
-    val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx_recyclerview}" //com.android.support:recyclerview-v7
     val androidx_appcompat_v7 = "androidx.appcompat:appcompat:${Versions.androidx}" //com.android.support:appcompat-v7
 
     val androidx_persistence_room_runtime = "androidx.room:room-runtime:${Versions.androidx_persistence}" // Room

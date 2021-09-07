@@ -36,10 +36,11 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun AppScaffold(
     itemsInCart: Flow<List<ItemWithQuantity>>,
-    checkoutClicked: () -> Unit,
+    showCartClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeUpClicked: (() -> Unit)? = null,
     title: String? = null,
+    showCartStatus: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val itemCount by itemsInCart.collectAsState(initial = listOf())
@@ -53,7 +54,6 @@ fun AppScaffold(
     } else {
         null
     }
-    
     Scaffold(
         topBar = {
             TopAppBar(
@@ -62,8 +62,10 @@ fun AppScaffold(
                 },
                 navigationIcon = navigationIcon,
                 actions = {
-                    ShoppingCartIconWithCount(itemCount = itemCount.totalItemCount()) {
-                        checkoutClicked()
+                    if (showCartStatus) {
+                        ShoppingCartIconWithCount(itemCount = itemCount.totalItemCount()) {
+                            showCartClicked()
+                        }
                     }
                     var showMenu by remember { mutableStateOf(false) }
                     IconButton(onClick = { showMenu = !showMenu }) {

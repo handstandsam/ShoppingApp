@@ -22,13 +22,13 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun HomeScreen(
     itemsInCart: Flow<List<ItemWithQuantity>>,
-    checkoutClicked: () -> Unit,
+    showCartClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeViewModel: HomeViewModel
 ) {
     AppScaffold(
         itemsInCart = itemsInCart,
-        checkoutClicked = checkoutClicked,
+        showCartClicked = showCartClicked,
         logoutClicked = logoutClicked
     ) {
         val state by homeViewModel.states.collectAsState(initial = HomeViewModel.State())

@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.HomeScreen
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
+import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -26,7 +27,7 @@ class HomeActivity : LoggedInActivity() {
                         is HomeViewModel.SideEffect.LaunchCategoryActivity -> {
                             CategoryActivity.launch(this@HomeActivity, it.category)
                         }
-                    }
+                    }.exhaustive
                 }
                 .launchIn(this)
         }
@@ -38,7 +39,7 @@ class HomeActivity : LoggedInActivity() {
                     .shoppingCart
                     .itemsInCart,
                 homeViewModel = homeViewModel,
-                checkoutClicked = { startCheckoutActivity() },
+                showCartClicked = { startCheckoutActivity() },
                 logoutClicked = { logout() }
             )
         }
