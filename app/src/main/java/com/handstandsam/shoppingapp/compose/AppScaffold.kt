@@ -39,6 +39,7 @@ fun AppScaffold(
     checkoutClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeUpClicked: (() -> Unit)? = null,
+    title: String? = null,
     content: @Composable () -> Unit
 ) {
     val itemCount by itemsInCart.collectAsState(initial = listOf())
@@ -52,11 +53,12 @@ fun AppScaffold(
     } else {
         null
     }
+    
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Shopping App")
+                    Text(title ?: "Shopping App")
                 },
                 navigationIcon = navigationIcon,
                 actions = {

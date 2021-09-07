@@ -23,13 +23,14 @@ fun CategoryScreen(
     homeUpClicked: () -> Unit,
     categoryViewModel: CategoryViewModel
 ) {
+    val state by categoryViewModel.states.collectAsState(initial = CategoryViewModel.State())
     AppScaffold(
         itemsInCart = itemsInCart,
         checkoutClicked = checkoutClicked,
         logoutClicked = logoutClicked,
-        homeUpClicked = homeUpClicked
+        homeUpClicked = homeUpClicked,
+        title = state.categoryLabel
     ) {
-        val state by categoryViewModel.states.collectAsState(initial = CategoryViewModel.State())
         Column(
             modifier = Modifier
                 .fillMaxSize()
