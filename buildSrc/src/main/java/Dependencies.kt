@@ -80,7 +80,7 @@ object Libs {
     val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
     val apacheHttpClientAndroid = "org.apache.httpcomponents:httpclient-android:4.3.5.1"
-    val kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+    val kotlin_std_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val kotlin_coroutines =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
     val kotlin_coroutines_android =
