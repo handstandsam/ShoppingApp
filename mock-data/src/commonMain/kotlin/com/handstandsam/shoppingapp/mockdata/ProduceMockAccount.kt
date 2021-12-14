@@ -4,7 +4,6 @@ package com.handstandsam.shoppingapp.mockdata
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.User
-import java.util.*
 
 class ProduceMockAccount : MockAccount() {
 

@@ -1,8 +1,22 @@
 plugins {
-    id("java-library")
-    id("kotlin")
+    kotlin("multiplatform")
 }
 
-dependencies {
-    implementation(Libs.kotlin_std_lib)
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib"))
+            }
+        }
+    }
 }
