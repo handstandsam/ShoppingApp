@@ -83,10 +83,10 @@ class ItemDetailActivity : LoggedInActivity() {
     }
 
     companion object {
-        internal fun launch(context: Context, item: Item?) {
+        internal fun launch(context: Context, item: Item) {
             val intent = Intent(context, ItemDetailActivity::class.java)
             val extras = Bundle()
-            extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, item)
+            extras.putSerializable(ItemDetailPresenter.BUNDLE_PARAM_ITEM, ItemDetailData.fromItem(item))
             intent.putExtras(extras)
             context.startActivity(intent)
         }

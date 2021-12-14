@@ -1,12 +1,12 @@
 package com.handstandsam.shoppingapp.features.itemdetail
 
 import android.content.Intent
-import androidx.lifecycle.LifecycleCoroutineScope
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.Item
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 class ItemDetailPresenter(
     private val view: ItemDetailActivity.ItemDetailView,
@@ -16,8 +16,8 @@ class ItemDetailPresenter(
 
     fun onResume(intent: Intent) {
         val extras = intent.extras
-        val item = extras!!.get(BUNDLE_PARAM_ITEM) as Item
-        this.item = item
+        val item = extras!!.get(BUNDLE_PARAM_ITEM) as ItemDetailData
+        this.item = item.toItem()
 
         view.setLabel(item.label)
         view.setImageUrl(item.image)

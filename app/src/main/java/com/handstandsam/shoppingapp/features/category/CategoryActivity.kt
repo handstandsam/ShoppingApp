@@ -24,8 +24,8 @@ class CategoryActivity : LoggedInActivity() {
                 .get(CategoryViewModel::class.java)
 
             val extras = intent.extras
-            val category = extras!!.get(BUNDLE_PARAM_CATEGORY) as Category
-            categoryViewModel.send(CategoryViewModel.Intention.CategoryLabelSet(category.label))
+            val categoryLabel = extras!!.getString(BUNDLE_PARAM_CATEGORY)!!
+            categoryViewModel.send(CategoryViewModel.Intention.CategoryLabelSet(categoryLabel))
 
             setContent {
                 CategoryScreen(
@@ -60,7 +60,7 @@ class CategoryActivity : LoggedInActivity() {
         fun launch(context: Context, category: Category) {
             val intent = Intent(context, CategoryActivity::class.java)
             val extras = Bundle()
-            extras.putSerializable(BUNDLE_PARAM_CATEGORY, category)
+            extras.putString(BUNDLE_PARAM_CATEGORY, category.label)
             intent.putExtras(extras)
             context.startActivity(intent)
         }
