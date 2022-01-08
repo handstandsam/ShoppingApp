@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.features.category.CategoryViewModel
 import com.handstandsam.shoppingapp.features.checkout.ShoppingCartViewModel
+import com.handstandsam.shoppingapp.features.countby.CountByViewModel
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
@@ -29,10 +30,14 @@ class ShoppingAppViewModelFactory(
                 scope = scope,
                 itemRepo = itemRepo
             ) as T
-        }else if (modelClass.isAssignableFrom(ShoppingCartViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(ShoppingCartViewModel::class.java)) {
             return ShoppingCartViewModel(
                 scope = scope,
                 cart = shoppingCart
+            ) as T
+        } else if (modelClass.isAssignableFrom(CountByViewModel::class.java)) {
+            return CountByViewModel(
+                scope = scope
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
