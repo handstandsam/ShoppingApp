@@ -11,10 +11,19 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
+<!--        <activity-->
+<!--            android:name=".features.login.LoginActivity"-->
+<!--            android:launchMode="singleTask"-->
+<!--            android:noHistory="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name="com.handstandsam.shoppingapp.features.login.LoginActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
+            android:name=".features.countby.CountByActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,18 +32,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.handstandsam.shoppingapp.features.home.HomeActivity"
+            android:name=".features.home.HomeActivity"
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.handstandsam.shoppingapp.features.category.CategoryActivity"
+            android:name=".features.category.CategoryActivity"
             android:launchMode="singleTask" />
 
         <activity
-            android:name="com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity"
+            android:name=".features.itemdetail.ItemDetailActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.handstandsam.shoppingapp.features.checkout.CheckoutActivity"
+            android:name=".features.checkout.CheckoutActivity"
             android:launchMode="singleTask" />
     </application>
 
