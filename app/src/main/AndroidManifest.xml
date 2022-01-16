@@ -24,6 +24,15 @@
 <!--        </activity>-->
         <activity
             android:name=".features.countby.CountByActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".features.poke.PokeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
