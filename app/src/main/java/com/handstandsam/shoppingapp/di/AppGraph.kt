@@ -2,7 +2,7 @@ package com.handstandsam.shoppingapp.di
 
 import android.app.Application
 import com.handstandsam.shoppingapp.debugDimensionInterceptors
-import com.handstandsam.shoppingapp.features.home.ShoppingAppViewModelFactory
+import com.handstandsam.shoppingapp.features.ShoppingAppViewModelFactory
 import com.handstandsam.shoppingapp.serverDimensionNetworkGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

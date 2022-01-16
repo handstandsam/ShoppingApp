@@ -1,21 +1,16 @@
-package com.handstandsam.shoppingapp.features.countby
+package com.handstandsam.shoppingapp.features.poke
 
 import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Item
-import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class CountByViewModel(
+class PokeViewModel(
     private val scope: CoroutineScope
 ) : MviViewModel<
-        CountByViewModel.State,
-        CountByViewModel.Intention,
-        CountByViewModel.SideEffect>(
+        PokeViewModel.State,
+        PokeViewModel.Intention,
+        PokeViewModel.SideEffect>(
     scope = scope,
     initialState = State()
 ) {

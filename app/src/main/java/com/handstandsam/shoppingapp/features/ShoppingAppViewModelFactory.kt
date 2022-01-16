@@ -1,11 +1,12 @@
-package com.handstandsam.shoppingapp.features.home
+package com.handstandsam.shoppingapp.features
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.features.category.CategoryViewModel
 import com.handstandsam.shoppingapp.features.checkout.ShoppingCartViewModel
-import com.handstandsam.shoppingapp.features.countby.CountByViewModel
+import com.handstandsam.shoppingapp.features.home.HomeViewModel
+import com.handstandsam.shoppingapp.features.poke.PokeViewModel
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
@@ -35,8 +36,8 @@ class ShoppingAppViewModelFactory(
                 scope = scope,
                 cart = shoppingCart
             ) as T
-        } else if (modelClass.isAssignableFrom(CountByViewModel::class.java)) {
-            return CountByViewModel(
+        } else if (modelClass.isAssignableFrom(PokeViewModel::class.java)) {
+            return PokeViewModel(
                 scope = scope
             ) as T
         }
