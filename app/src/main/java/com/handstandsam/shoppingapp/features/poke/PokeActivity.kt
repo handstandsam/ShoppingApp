@@ -12,10 +12,12 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +39,11 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.graph
+import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.Locale
+import kotlin.random.Random
 
 class PokeActivity : ComponentActivity() {
 
@@ -94,11 +98,10 @@ class PokeActivity : ComponentActivity() {
                 }
             val originalOffset = Offset(
                 x = (screenWidth / 2) - (pokeballSizePx.width / 2),
-//                y = screenHeight - pokeballSizePx.height - 200,
-                y = (screenHeight / 2) - (pokeballSizePx.height / 2),
+                y = screenHeight - (pokeballSizePx.height * 1.5).toFloat(),
+//                y = (screenHeight / 2) - (pokeballSizePx.height / 2),
             )
 
-            var isDragging by remember { mutableStateOf(false) }
             var currentOffset by remember { mutableStateOf(originalOffset) }
 
             var animationSpec = spring<Float>(dampingRatio = Spring.DampingRatioMediumBouncy)
@@ -112,6 +115,20 @@ class PokeActivity : ComponentActivity() {
                 animationSpec,
             )
 
+            var pokemonId: Int by remember { mutableStateOf(1) }
+            var pokemonImageUrl: String by remember {
+                mutableStateOf(
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
+                )
+            }
+
+            fun newImage(reason:String) {
+                pokemonId = Random.nextInt(1, 600)
+                println("Random because $reason: $pokemonId")
+                pokemonImageUrl =
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
+
+            }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -127,11 +144,18 @@ class PokeActivity : ComponentActivity() {
                                 currentOffset = Offset(x, y)
                             },
                             onDragStart = {
-                                isDragging = true
+//                                isDragging = true
+                                println("Drag Start")
                             },
                             onDragEnd = {
 //                                isDragging = false
                                 currentOffset = originalOffset
+                                newImage("onDragEnd")
+                            }
+                        )
+                        detectTapGestures(
+                            onDoubleTap = {
+                                newImage("onDoubleTap")
                             }
                         )
                     }
@@ -141,6 +165,19 @@ class PokeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds,
                     contentDescription = "content description"
+                )
+
+                val pokemonImageSizeDp = 300.dp
+//                val pokemonImageSizePx = with(LocalDensity.current) { pokemonImageSizeDp.toPx() }
+                CoilImage(
+                    modifier = Modifier
+                        .offset(x = 0.dp, y = 130.dp)
+                        .wrapContentSize(),
+                    imageModel = pokemonImageUrl,
+                    // Crop, Fit, Inside, FillHeight, FillWidth, None
+                    contentScale = ContentScale.Fit,
+                    // shows an image with a circular revealed animation.
+                    circularRevealedEnabled = true
                 )
 
                 with(LocalDensity.current) {
