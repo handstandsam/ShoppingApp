@@ -5,8 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -190,22 +194,30 @@ class PokeActivity : ComponentActivity() {
                     )
                 }
 
-                val isRotating = remember { mutableStateOf(true) }
+//                val isRotating = remember { mutableStateOf(true) }
+//                val angle: Float by animateFloatAsState(
+//                    targetValue = if (isRotating.value) {
+//                        180f
+//                    } else {
+//                        0f
+//                    },
+//                    animationSpec = tween(
+//                        durationMillis = 2000, // duration
+//                        easing = FastOutSlowInEasing
+//                    ), finishedListener = {
+//                        // disable the button
+//                        println("Rotating FINISHED")
+//                        isRotating.value = !isRotating.value
+//                    }
+//                )
 
-                val angle: Float by animateFloatAsState(
-                    targetValue = if (isRotating.value) {
-                        180f
-                    } else {
-                        0f
-                    },
-                    animationSpec = tween(
-                        durationMillis = 2000, // duration
-                        easing = FastOutSlowInEasing
-                    ), finishedListener = {
-                        // disable the button
-                        println("Rotating FINISHED")
-                        isRotating.value = !isRotating.value
-                    }
+                val infiniteTransition = rememberInfiniteTransition()
+                val angle by infiniteTransition.animateFloat(
+                    initialValue = 0F,
+                    targetValue = 360F,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(2000, easing = FastOutSlowInEasing)
+                    )
                 )
 
                 with(LocalDensity.current) {
