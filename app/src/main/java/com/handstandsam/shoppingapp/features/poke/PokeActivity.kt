@@ -84,7 +84,6 @@ class PokeActivity : ComponentActivity() {
             val originalOffset = Offset(
                 x = (screenWidth / 2) - (pokeballSizePx.width / 2),
                 y = screenHeight - (pokeballSizePx.height * 1.5).toFloat(),
-//                y = (screenHeight / 2) - (pokeballSizePx.height / 2),
             )
 
             var currentOffset by remember { mutableStateOf(originalOffset) }
@@ -138,18 +137,11 @@ class PokeActivity : ComponentActivity() {
                                 currentOffset = Offset(x, y)
                             },
                             onDragStart = {
-//                                isDragging = true
                                 println("Drag Start")
                             },
                             onDragEnd = {
-//                                isDragging = false
                                 currentOffset = originalOffset
                                 newImage("onDragEnd")
-                            }
-                        )
-                        detectTapGestures(
-                            onDoubleTap = {
-                                newImage("onDoubleTap")
                             }
                         )
                     }
@@ -194,28 +186,13 @@ class PokeActivity : ComponentActivity() {
                     )
                 }
 
-
-                with(LocalDensity.current) {
-                    Size(
-                        width = pokeballSizeDp.toPx(),
-                        height = pokeballSizeDp.toPx()
-                    )
-                }
-                val offset =
-//                    if (isDragging) {
-//                        Pair(currentOffset.x, currentOffset.y)
-//                    } else {
-                    Pair(offsetAnimationX, offsetAnimationY)
-//                    }
                 with(LocalDensity.current) {
                     Pokeball(
                         sizedp = pokeballSizeDp,
                         modifier = Modifier
                             .offset(
-//                            x = currentOffset.x.dp,
-//                            y = currentOffset.y.dp,
-                                x = offset.first.toDp(),
-                                y = offset.second.toDp(),
+                                x = offsetAnimationX.toDp(),
+                                y = offsetAnimationY.toDp(),
                             )
                     )
                 }
