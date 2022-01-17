@@ -3,7 +3,6 @@ package com.handstandsam.shoppingapp.features.poke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,14 +46,16 @@ fun Pokeball(
                     .fillMaxSize()
             ) {
 
+                val darkWhite = Color(0xFFCCCCCC)
                 drawArc(
-                    brush = Brush.linearGradient(listOf(Color.White, Color.White)),
+                    brush = Brush.radialGradient(listOf(Color.White, darkWhite)),
                     startAngle = 0f,
                     sweepAngle = 180f, // * animateFloat.value,
                     useCenter = false
                 )
+                val darkRed = Color(0xFFAA0000)
                 drawArc(
-                    brush = Brush.linearGradient(listOf(Color.Red, Color.Red)),
+                    brush = Brush.radialGradient(listOf(Color.Red, darkRed)),
                     startAngle = 180f,
                     sweepAngle = 180f, // * animateFloat.value,
                     useCenter = false
