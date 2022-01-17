@@ -1,20 +1,11 @@
 package com.handstandsam.shoppingapp.features.poke
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -23,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
@@ -31,13 +23,14 @@ import androidx.compose.ui.unit.dp
  */
 @Preview
 @Composable
-fun Pokeball() {
-    val sizedp = 300.dp
+fun Pokeball(
+    modifier: Modifier = Modifier,
+    sizedp: Dp = 100.dp
+) {
     val sizepx = with(LocalDensity.current) { sizedp.toPx() }
     Box(
         modifier = Modifier
-            .padding(32.dp)
-            .wrapContentSize()
+            .size(sizedp)
     ) {
         val blackLineColor = Color.Black
         val strokeWidth = sizepx * .04f
@@ -45,9 +38,8 @@ fun Pokeball() {
         val innerBallPercentage = .17.toFloat()
         val innerestBallPercentage = .10.toFloat()
         Box(
-            modifier = Modifier
-                .width(sizedp)
-                .height(sizedp)
+            modifier = modifier
+                .fillMaxSize()
         ) {
             Canvas(
                 modifier = Modifier
