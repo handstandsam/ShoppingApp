@@ -78,7 +78,6 @@ class PokeActivity : ComponentActivity() {
             val screenWidth = with(LocalDensity.current) { configuration.screenWidthDp.dp.toPx() }
             val screenHeight = with(LocalDensity.current) { configuration.screenHeightDp.dp.toPx() }
 
-
             val pokeballSizeDp by remember { mutableStateOf(150.dp) }
             val pokeballSizePx =
                 with(LocalDensity.current) {
@@ -128,24 +127,30 @@ class PokeActivity : ComponentActivity() {
                     textToSpeechEngine.speak("A ${pokemonName()} Appeared!")
                 }
             }
+
+
+            var isDraggingPokeball by remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .pointerInput(Unit) {
                         detectDragGestures(
                             onDrag = { change, dragAmount ->
-                                println("$change $dragAmount")
-                                change.consumeAllChanges()
-                                val newX = (currentOffset.x + dragAmount.x)
-                                    .coerceIn(0f, size.width.toFloat() - pokeballSizePx.width)
-                                val newY = (currentOffset.y + dragAmount.y)
-                                    .coerceIn(0f, size.height.toFloat() - pokeballSizePx.height)
-                                currentOffset = Offset(newX, newY)
+                                if (isDraggingPokeball) {
+                                    change.consumeAllChanges()
+                                    val newX = (currentOffset.x + dragAmount.x)
+                                        .coerceIn(0f, size.width.toFloat() - pokeballSizePx.width)
+                                    val newY = (currentOffset.y + dragAmount.y)
+                                        .coerceIn(0f, size.height.toFloat() - pokeballSizePx.height)
+                                    currentOffset = Offset(newX, newY)
+                                }
                             },
                             onDragStart = {
                                 println("Drag Start")
+                                isDraggingPokeball = it.isTouchWithinBounds(currentOffset, pokeballSizePx)
                             },
                             onDragEnd = {
+                                isDraggingPokeball = false
                                 currentOffset = originalOffset
                                 newImage("onDragEnd")
                             }
@@ -241,4 +246,15 @@ class PokeActivity : ComponentActivity() {
 
     companion object {
     }
+}
+
+fun Offset.isTouchWithinBounds(currentOffset: Offset, currentSizePx: Size): Boolean {
+    if ((x >= currentOffset.x) && x <= (currentOffset.x + currentSizePx.width)) {
+        // Within X
+        if ((y >= currentOffset.y) && y <= (currentOffset.y + currentSizePx.height)) {
+            // Within Y
+            return true
+        }
+    }
+    return false
 }
