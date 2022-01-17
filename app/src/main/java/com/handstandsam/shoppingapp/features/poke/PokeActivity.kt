@@ -4,7 +4,6 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
@@ -96,12 +95,12 @@ class PokeActivity : ComponentActivity() {
             var currentOffset by remember { mutableStateOf(originalOffset) }
 
             var animationSpec = spring<Float>(dampingRatio = Spring.DampingRatioMediumBouncy)
-            val offsetAnimationX: Float by animateFloatAsState(
+            val pokeballOffsetAnimationX: Float by animateFloatAsState(
                 currentOffset.x,
                 animationSpec,
             )
 
-            val offsetAnimationY: Float by animateFloatAsState(
+            val pokeballOffsetAnimationY: Float by animateFloatAsState(
                 currentOffset.y,
                 animationSpec,
             )
@@ -137,11 +136,11 @@ class PokeActivity : ComponentActivity() {
                             onDrag = { change, dragAmount ->
                                 println("$change $dragAmount")
                                 change.consumeAllChanges()
-                                val x = (currentOffset.x + dragAmount.x)
+                                val newX = (currentOffset.x + dragAmount.x)
                                     .coerceIn(0f, size.width.toFloat() - pokeballSizePx.width)
-                                val y = (currentOffset.y + dragAmount.y)
+                                val newY = (currentOffset.y + dragAmount.y)
                                     .coerceIn(0f, size.height.toFloat() - pokeballSizePx.height)
-                                currentOffset = Offset(x, y)
+                                currentOffset = Offset(newX, newY)
                             },
                             onDragStart = {
                                 println("Drag Start")
@@ -194,29 +193,14 @@ class PokeActivity : ComponentActivity() {
                     )
                 }
 
-//                val isRotating = remember { mutableStateOf(true) }
-//                val angle: Float by animateFloatAsState(
-//                    targetValue = if (isRotating.value) {
-//                        180f
-//                    } else {
-//                        0f
-//                    },
-//                    animationSpec = tween(
-//                        durationMillis = 2000, // duration
-//                        easing = FastOutSlowInEasing
-//                    ), finishedListener = {
-//                        // disable the button
-//                        println("Rotating FINISHED")
-//                        isRotating.value = !isRotating.value
-//                    }
-//                )
+                var doInfiniteRotate by remember { mutableStateOf(false) }
 
                 val infiniteTransition = rememberInfiniteTransition()
                 val angle by infiniteTransition.animateFloat(
                     initialValue = 0F,
                     targetValue = 360F,
                     animationSpec = infiniteRepeatable(
-                        animation = tween(2000, easing = FastOutSlowInEasing)
+                        animation = tween(3000, easing = LinearEasing)
                     )
                 )
 
@@ -225,10 +209,17 @@ class PokeActivity : ComponentActivity() {
                         sizedp = pokeballSizeDp,
                         modifier = Modifier
                             .offset(
-                                x = offsetAnimationX.toDp(),
-                                y = offsetAnimationY.toDp(),
+                                x = pokeballOffsetAnimationX.toDp(),
+                                y = pokeballOffsetAnimationY.toDp(),
                             )
-                            .rotate(angle)
+                            .clickable { doInfiniteRotate = !doInfiniteRotate }
+                            .rotate(
+                                if (doInfiniteRotate) {
+                                    angle
+                                } else {
+                                    0f
+                                }
+                            )
                     )
                 }
             }

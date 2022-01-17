@@ -1,5 +1,8 @@
 package com.handstandsam.shoppingapp.features.poke
 
+/**
+ * https://github.com/sindresorhus/pokemon/blob/main/data/en.json
+ */
 val PokemonNames = listOf(
     "Bulbasaur",
     "Ivysaur",
