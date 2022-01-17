@@ -4,12 +4,14 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -173,6 +176,7 @@ class PokeActivity : ComponentActivity() {
                         color = Color.White,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
+                            .clickable { newImage("clicked text") }
                             .fillMaxWidth()
                             .align(Alignment.CenterHorizontally)
                     )
@@ -186,6 +190,24 @@ class PokeActivity : ComponentActivity() {
                     )
                 }
 
+                val isRotating = remember { mutableStateOf(true) }
+
+                val angle: Float by animateFloatAsState(
+                    targetValue = if (isRotating.value) {
+                        180f
+                    } else {
+                        0f
+                    },
+                    animationSpec = tween(
+                        durationMillis = 2000, // duration
+                        easing = FastOutSlowInEasing
+                    ), finishedListener = {
+                        // disable the button
+                        println("Rotating FINISHED")
+                        isRotating.value = !isRotating.value
+                    }
+                )
+
                 with(LocalDensity.current) {
                     Pokeball(
                         sizedp = pokeballSizeDp,
@@ -194,6 +216,7 @@ class PokeActivity : ComponentActivity() {
                                 x = offsetAnimationX.toDp(),
                                 y = offsetAnimationY.toDp(),
                             )
+                            .rotate(angle)
                     )
                 }
             }
