@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
+ * Draggable/Scaling: https://developer.android.com/jetpack/compose/gestures
  * Animating: https://stackoverflow.com/questions/67080502/animating-circle-drawing-in-jetpack-compose
  * DP to PX: https://stackoverflow.com/questions/65921799/how-to-convert-dp-to-pixels-in-android-jetpack-compose
  */
