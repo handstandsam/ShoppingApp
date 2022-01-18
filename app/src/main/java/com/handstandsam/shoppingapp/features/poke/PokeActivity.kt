@@ -4,11 +4,15 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -32,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -77,8 +82,10 @@ class PokeActivity : ComponentActivity() {
             val configuration = LocalConfiguration.current
             val screenWidth = with(LocalDensity.current) { configuration.screenWidthDp.dp.toPx() }
             val screenHeight = with(LocalDensity.current) { configuration.screenHeightDp.dp.toPx() }
-
+            val pokeballAnimationDuration = 1200
             val pokeballSizeDp by remember { mutableStateOf(150.dp) }
+
+            var ballThrown by remember { mutableStateOf(false) }
             val pokeballSizePx =
                 with(LocalDensity.current) {
                     Size(
@@ -86,22 +93,34 @@ class PokeActivity : ComponentActivity() {
                         height = pokeballSizeDp.toPx()
                     )
                 }
-            val originalOffset = Offset(
+            val startPositionOffset = Offset(
                 x = (screenWidth / 2) - (pokeballSizePx.width / 2),
                 y = screenHeight - (pokeballSizePx.height * 1.5).toFloat(),
             )
-
-            var currentOffset by remember { mutableStateOf(originalOffset) }
-
-            var animationSpec = spring<Float>(dampingRatio = Spring.DampingRatioMediumBouncy)
-            val pokeballOffsetAnimationX: Float by animateFloatAsState(
-                currentOffset.x,
-                animationSpec,
+            val catchPositionOffset = Offset(
+                x = (screenWidth / 2) - (pokeballSizePx.width / 2),
+                y = with(LocalDensity.current) { 350.dp.toPx() },
             )
 
-            val pokeballOffsetAnimationY: Float by animateFloatAsState(
-                currentOffset.y,
-                animationSpec,
+            var currentOffset by remember { mutableStateOf(startPositionOffset) }
+            var currentScale by remember { mutableStateOf(1f) }
+
+            var isDraggingPokeball by remember { mutableStateOf(false) }
+            val pokeballOffsetAnimation by animateOffsetAsState(
+                targetValue = currentOffset,
+                animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+            )
+
+            var pokemonImageScale by remember { mutableStateOf(1f) }
+
+            val pokemonAnimatedImageScale: Float by animateFloatAsState(
+                targetValue = pokemonImageScale,
+                animationSpec = tween(250, easing = FastOutSlowInEasing),
+            )
+
+            val pokeballScaleAnimationValue: Float by animateFloatAsState(
+                targetValue = currentScale,
+                animationSpec = tween(pokeballAnimationDuration, easing = FastOutSlowInEasing),
             )
 
             var pokemonId: Int by remember { mutableStateOf(1) }
@@ -116,8 +135,11 @@ class PokeActivity : ComponentActivity() {
             }
 
             fun newImage(reason: String) {
-                mp.seekTo(0)
-                mp.start()
+                val playSound = false
+                if (playSound) {
+                    mp.seekTo(0)
+                    mp.start()
+                }
                 pokemonId = Random.nextInt(1, 600)
                 println("Random because $reason: $pokemonId")
                 pokemonImageUrl =
@@ -126,10 +148,40 @@ class PokeActivity : ComponentActivity() {
                 mp.setOnCompletionListener {
                     textToSpeechEngine.speak("A ${pokemonName()} Appeared!")
                 }
+                fun reset() {
+                    ballThrown = false
+                    isDraggingPokeball=true
+                    pokemonImageScale = 1f
+                    currentOffset = startPositionOffset
+                }
+                reset()
             }
 
+            var doInfiniteRotate by remember { mutableStateOf(false) }
 
-            var isDraggingPokeball by remember { mutableStateOf(false) }
+            val keyframeAnimation by animateOffsetAsState(
+                targetValue = currentOffset,
+                animationSpec = keyframes {
+                    durationMillis = pokeballAnimationDuration
+//                    Offset(currentOffset.x, currentOffset.y * 0f) at 500 with LinearOutSlowInEasing // ms
+                    Offset(currentOffset.x, currentOffset.y * 0.30f) at 600 with FastOutLinearInEasing
+//                    Offset(currentOffset.x, currentOffset.y * 0f) at 1500 with LinearEasing // ms
+                },
+                finishedListener = {
+                    if (ballThrown) {
+                        pokemonImageScale = 0f
+                    }
+                    doInfiniteRotate = false
+//                    newImage("onDragEnd")
+                }
+            )
+            val finalAnimation =
+                if (isDraggingPokeball) {
+                    pokeballOffsetAnimation
+                } else {
+                    keyframeAnimation
+                }
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -150,16 +202,27 @@ class PokeActivity : ComponentActivity() {
                                 isDraggingPokeball = it.isTouchWithinBounds(currentOffset, pokeballSizePx)
                             },
                             onDragEnd = {
+                                ballThrown = true
+                                currentOffset = if (ballThrown) {
+                                    catchPositionOffset
+                                } else {
+                                    startPositionOffset
+                                }
+                                currentScale = if (ballThrown) {
+                                    .50f
+                                } else {
+                                    1f
+                                }
                                 isDraggingPokeball = false
-                                currentOffset = originalOffset
-                                newImage("onDragEnd")
+                                doInfiniteRotate = true
                             }
                         )
                     }
             ) {
                 Image(
                     painter = painterResource(R.drawable.pokecatchbackground),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     contentScale = ContentScale.FillBounds,
                     contentDescription = "content description"
                 )
@@ -169,7 +232,10 @@ class PokeActivity : ComponentActivity() {
                         .fillMaxSize()
                         .align(Alignment.Center)
                 ) {
-                    Spacer(modifier = Modifier.height(100.dp))
+                    Spacer(
+                        modifier = Modifier
+                            .height(100.dp)
+                    )
                     Text(
                         text = pokemonName(),
                         style = MaterialTheme.typography.h4.copy(
@@ -188,24 +254,27 @@ class PokeActivity : ComponentActivity() {
                             .fillMaxWidth()
                             .align(Alignment.CenterHorizontally)
                     )
-                    Spacer(modifier = Modifier.height(100.dp))
+                    Spacer(modifier = Modifier.height(150.dp))
                     Image(
                         painter = rememberImagePainter(pokemonImageUrl),
                         contentDescription = null,
                         modifier = Modifier
                             .size(250.dp)
                             .align(Alignment.CenterHorizontally)
+                            .scale(pokemonAnimatedImageScale)
                     )
                 }
 
-                var doInfiniteRotate by remember { mutableStateOf(false) }
 
                 val infiniteTransition = rememberInfiniteTransition()
                 val angle by infiniteTransition.animateFloat(
                     initialValue = 0F,
                     targetValue = 360F,
                     animationSpec = infiniteRepeatable(
-                        animation = tween(3000, easing = LinearEasing)
+                        animation = tween(
+                            durationMillis = pokeballAnimationDuration,
+                            easing = LinearEasing
+                        )
                     )
                 )
 
@@ -214,10 +283,11 @@ class PokeActivity : ComponentActivity() {
                         sizedp = pokeballSizeDp,
                         modifier = Modifier
                             .offset(
-                                x = pokeballOffsetAnimationX.toDp(),
-                                y = pokeballOffsetAnimationY.toDp(),
+                                x = finalAnimation.x.toDp(),
+                                y = finalAnimation.y.toDp(),
                             )
                             .clickable { doInfiniteRotate = !doInfiniteRotate }
+                            .scale(pokeballScaleAnimationValue)
                             .rotate(
                                 if (doInfiniteRotate) {
                                     angle
