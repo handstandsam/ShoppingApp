@@ -22,6 +22,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +33,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -60,6 +60,13 @@ class PokeActivity : ComponentActivity() {
     private val textToSpeechEngine by lazy { TextToSpeechEngine(this) }
 
     data class PokeBallStateModel(val pokeballSizeDp: Dp)
+    data class PokemonInfoState(
+        val pokemonId: Int,
+        val pokemonAnimatedImageScale: Float,
+    ) {
+        val pokemonName: String get() = PokemonNames[pokemonId - 1]
+        val pokemonImageUrl: String get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
+    }
 
     enum class PokeBallState {
         Initial, Dragging, Thrown, LandingAnimation, Landed
@@ -77,19 +84,17 @@ class PokeActivity : ComponentActivity() {
         val categoryViewModel = ViewModelProvider(this, graph.viewModelFactory)
             .get(PokeViewModel::class.java)
 
+        fun randomPokemonId(): Int {
+            return Random.nextInt(1, 600)
+        }
+
         setContent {
 
             var pokeBallState by remember { mutableStateOf(PokeBallState.Initial) }
 
-            val configuration = LocalConfiguration.current
             var ballThrown by remember { mutableStateOf(false) }
 
-            val screenSizePx = with(LocalDensity.current) {
-                Size(
-                    configuration.screenWidthDp.dp.toPx(),
-                    configuration.screenHeightDp.dp.toPx()
-                )
-            }
+            val screenSizePx = getScreenSizePx()
             val pokeballAnimationDuration = 1200
 
             val initialPokeballSizeDp = 150.dp
@@ -137,30 +142,24 @@ class PokeActivity : ComponentActivity() {
 
             var pokemonImageScale by remember { mutableStateOf(1f) }
 
-            val pokemonAnimatedImageScale: Float by animateFloatAsState(
-                targetValue = pokemonImageScale,
-                animationSpec = tween(250, easing = FastOutSlowInEasing),
-            )
-
             val pokeballScaleAnimationValue: Float by animateFloatAsState(
                 targetValue = currentScale,
                 animationSpec = tween(pokeballAnimationDuration, easing = FastOutSlowInEasing),
             )
 
-            var pokemonId: Int by remember { mutableStateOf(1) }
-            var pokemonImageUrl: String by remember {
+
+            val pokemonAnimatedImageScale: Float by animateFloatAsState(
+                targetValue = pokemonImageScale,
+                animationSpec = tween(250, easing = FastOutSlowInEasing),
+            )
+
+            var pokemonInfoState by remember {
                 mutableStateOf(
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
+                    PokemonInfoState(
+                        pokemonId = 1,
+                        pokemonAnimatedImageScale = pokemonAnimatedImageScale
+                    )
                 )
-            }
-
-
-            fun getPokemonName(): String {
-                return PokemonNames[pokemonId - 1]
-            }
-
-            var pokemonName: String by remember {
-                mutableStateOf(getPokemonName())
             }
 
             var doInfiniteRotate by remember { mutableStateOf(false) }
@@ -172,13 +171,12 @@ class PokeActivity : ComponentActivity() {
                     mp.seekTo(0)
                     mp.start()
                     mp.setOnCompletionListener {
-                        textToSpeechEngine.speak("A $pokemonName Appeared!")
+                        textToSpeechEngine.speak("A ${pokemonInfoState.pokemonName} Appeared!")
                     }
                 }
-                pokemonId = Random.nextInt(1, 600)
-                pokemonImageUrl =
-                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
-                pokemonName = getPokemonName()
+                pokemonInfoState = pokemonInfoState.copy(
+                    pokemonId = randomPokemonId()
+                )
                 pokeBallState = PokeBallState.Initial
             }
 
@@ -271,18 +269,12 @@ class PokeActivity : ComponentActivity() {
                         )
                     }
             ) {
-                Image(
-                    painter = painterResource(R.drawable.pokecatchbackground),
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.FillBounds,
-                    contentDescription = "Background Image"
-                )
+                FieldBackgroundImage()
 
                 CurrentPokemonInfo(
                     modifier = Modifier.align(Alignment.Center),
-                    pokemonName = pokemonName,
-                    pokemonImageUrl = pokemonImageUrl,
+                    pokemonName = pokemonInfoState.pokemonName,
+                    pokemonImageUrl = pokemonInfoState.pokemonImageUrl,
                     pokemonAnimatedImageScale = pokemonAnimatedImageScale,
                     onRestart = {
                         onRestart()
@@ -323,6 +315,29 @@ class PokeActivity : ComponentActivity() {
                 .launchIn(this)
         }
 
+    }
+
+    @Composable
+    private fun FieldBackgroundImage() {
+        Image(
+            painter = painterResource(R.drawable.pokecatchbackground),
+            modifier = Modifier
+                .fillMaxSize(),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = "Background Image"
+        )
+
+    }
+
+    @Composable
+    private fun getScreenSizePx(): Size {
+        val configuration = LocalConfiguration.current
+        return with(LocalDensity.current) {
+            Size(
+                configuration.screenWidthDp.dp.toPx(),
+                configuration.screenHeightDp.dp.toPx()
+            )
+        }
     }
 }
 
