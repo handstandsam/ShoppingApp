@@ -17,7 +17,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,6 +43,7 @@ import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.features.poke.PokeBallStateModel.Companion.INITIAL_POKEBALL_SIZE_DP
+import com.handstandsam.shoppingapp.features.poke.PokeBallStateModel.Companion.THROWN_POKEBALL_SIZE_DP
 import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.utils.TextToSpeechEngine
 import kotlinx.coroutines.flow.launchIn
@@ -56,11 +56,6 @@ class PokeActivity : ComponentActivity() {
     private val graph: AppGraph get() = application.graph()
 
     private val textToSpeechEngine by lazy { TextToSpeechEngine(this) }
-
-
-    enum class PokeBallState {
-        Initial, Dragging, Thrown, LandingAnimation, Landed
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,99 +81,58 @@ class PokeActivity : ComponentActivity() {
         }
         setContent {
 
-            var pokeBallState by remember { mutableStateOf(PokeBallState.Initial) }
-
             val pokeballAnimationDuration = 1200
 
             var pokeballStateModel by remember { mutableStateOf(PokeBallStateModel()) }
 
 
-            pokeballStateModel = pokeballStateModel.copy(
-                pokeballSizeDp = when (pokeBallState) {
-                    PokeBallState.Dragging,
-                    PokeBallState.Initial -> INITIAL_POKEBALL_SIZE_DP
-                    PokeBallState.LandingAnimation,
-                    PokeBallState.Thrown,
-                    PokeBallState.Landed -> INITIAL_POKEBALL_SIZE_DP / 2
-                }
-            )
+            var currentOffset by mutableStateOf(pokeballStateModel.startPositionOffset())
 
-
-            var currentOffset = pokeballStateModel.startPositionOffset()
-            var currentScale by remember { mutableStateOf(1f) }
-
-            var isDraggingPokeball by remember { mutableStateOf(false) }
             val pokeballOffsetAnimation by animateOffsetAsState(
                 targetValue = currentOffset,
                 animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
             )
 
-
-            val pokeballScaleAnimationValue: Float by animateFloatAsState(
-                targetValue = currentScale,
-                animationSpec = tween(pokeballAnimationDuration, easing = FastOutSlowInEasing),
-            )
-
             // Pokemon Info
-            var pokemonImageScale by remember { mutableStateOf(1f) }
-            val pokemonAnimatedImageScale: Float by animateFloatAsState(
-                targetValue = pokemonImageScale,
-                animationSpec = tween(250, easing = FastOutSlowInEasing),
-            )
             var pokemonInfoState by remember {
-                mutableStateOf(
-                    PokemonInfoState(
-                        pokemonId = 1,
-                        pokemonAnimatedImageScale = pokemonAnimatedImageScale
-                    )
-                )
+                mutableStateOf(PokemonInfoState())
             }
-
-            var doInfiniteRotate by remember { mutableStateOf(false) }
 
 
             fun onRestart() {
                 playSound(pokemonInfoState.pokemonName)
                 pokemonInfoState = pokemonInfoState.copy(
-                    pokemonId = randomPokemonId()
+                    pokemonId = randomPokemonId(),
                 )
-                pokeBallState = PokeBallState.Initial
+                pokeballStateModel = pokeballStateModel.copy(pokeBallState = PokeBallState.Initial)
             }
 
-            when (pokeBallState) {
+            when (pokeballStateModel.pokeBallState) {
                 PokeBallState.Initial -> {
-                    isDraggingPokeball = false
-                    pokemonImageScale = 1f
-                    currentScale = 1f
+                    pokemonInfoState = pokemonInfoState.copy(
+                        pokemonImageScale = 1f
+                    )
                     currentOffset = pokeballStateModel.startPositionOffset()
-                    doInfiniteRotate = false
                 }
                 PokeBallState.Thrown -> {
-                    isDraggingPokeball = false
-                    doInfiniteRotate = true
                     currentOffset = pokeballStateModel.catchPositionOffset()
-                    currentScale = .50f
                 }
                 PokeBallState.Landed -> {
-                    doInfiniteRotate = false
-                    pokemonImageScale = 0f
+                    pokemonInfoState = pokemonInfoState.copy(pokemonImageScale = 0f)
                 }
-
-                PokeBallState.LandingAnimation -> TODO()
+                PokeBallState.Dragging -> {
+                    currentOffset = currentOffset
+                }
             }
 
-
-            val currentRotationAngle by rememberInfiniteTransition().animateFloat(
-                initialValue = 0F,
-                targetValue = 360F,
-                animationSpec = infiniteRepeatable(
-                    animation = tween(
-                        durationMillis = pokeballAnimationDuration,
-                        easing = LinearEasing
-                    )
-                )
+            pokeballStateModel = pokeballStateModel.copy(
+                pokeballSizeDp = when (pokeballStateModel.pokeBallState) {
+                    PokeBallState.Dragging,
+                    PokeBallState.Initial -> INITIAL_POKEBALL_SIZE_DP
+                    PokeBallState.Thrown,
+                    PokeBallState.Landed -> THROWN_POKEBALL_SIZE_DP
+                }
             )
-
 
             val keyframeAnimation by animateOffsetAsState(
                 targetValue = currentOffset,
@@ -189,15 +143,11 @@ class PokeActivity : ComponentActivity() {
 //                    Offset(currentOffset.x, currentOffset.y * 0f) at 1500 with LinearEasing // ms
                 },
                 finishedListener = {
-                    pokeBallState = PokeBallState.Landed
+                    pokeballStateModel = pokeballStateModel.copy(
+                        pokeBallState = PokeBallState.Landed
+                    )
                 }
             )
-            val finalAnimation = if (isDraggingPokeball) {
-                pokeballOffsetAnimation
-            } else {
-                keyframeAnimation
-            }
-
 
             val pokeballSizePx = pokeballStateModel.pokeballSizePx()
             Box(
@@ -206,7 +156,7 @@ class PokeActivity : ComponentActivity() {
                     .pointerInput(Unit) {
                         detectDragGestures(
                             onDrag = { change, dragAmount ->
-                                if (isDraggingPokeball) {
+                                if (pokeballStateModel.isDraggingPokeball) {
                                     change.consumeAllChanges()
                                     val newX = (currentOffset.x + dragAmount.x)
                                         .coerceIn(0f, size.width.toFloat() - pokeballSizePx.width)
@@ -216,11 +166,17 @@ class PokeActivity : ComponentActivity() {
                                 }
                             },
                             onDragStart = {
-                                println("Drag Start")
-                                isDraggingPokeball = it.isTouchWithinBounds(currentOffset, pokeballSizePx)
+                                if (it.isTouchWithinBounds(currentOffset, pokeballSizePx)) {
+                                    println("inside Drag Start")
+                                    pokeballStateModel = pokeballStateModel.copy(pokeBallState = PokeBallState.Dragging)
+                                } else {
+                                    println("outside")
+                                }
                             },
                             onDragEnd = {
-                                pokeBallState = PokeBallState.Thrown
+                                if (pokeballStateModel.isDraggingPokeball) {
+                                    pokeballStateModel = pokeballStateModel.copy(pokeBallState = PokeBallState.Thrown)
+                                }
                             }
                         )
                     }
@@ -231,25 +187,54 @@ class PokeActivity : ComponentActivity() {
                     modifier = Modifier.align(Alignment.Center),
                     pokemonName = pokemonInfoState.pokemonName,
                     pokemonImageUrl = pokemonInfoState.pokemonImageUrl,
-                    pokemonAnimatedImageScale = pokemonAnimatedImageScale,
+                    pokemonAnimatedImageScale = pokemonInfoState.pokemonAnimatedImageScale().value,
                     onRestart = {
                         onRestart()
                     },
                 )
 
+                val pokeballRotationAngle by rememberInfiniteTransition().animateFloat(
+                    initialValue = 0F,
+                    targetValue = 360F,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(
+                            durationMillis = pokeballAnimationDuration,
+                            easing = LinearEasing
+                        )
+                    )
+                )
+
                 with(LocalDensity.current) {
+
+                    val pokeballScaleValueAnimated: Float by animateFloatAsState(
+                        targetValue = when (pokeballStateModel.pokeBallState) {
+                            PokeBallState.Initial,
+                            PokeBallState.Dragging -> 1f
+                            PokeBallState.Thrown -> 0.50f
+                            PokeBallState.Landed -> 0f
+                        },
+                        animationSpec = tween(pokeballAnimationDuration, easing = FastOutSlowInEasing),
+                    )
+
+                    val pokeballAnimatedOffset = when (pokeballStateModel.pokeBallState) {
+                        PokeBallState.Initial -> currentOffset
+                        PokeBallState.Dragging -> pokeballOffsetAnimation
+                        PokeBallState.Thrown -> keyframeAnimation
+                        PokeBallState.Landed -> currentOffset
+                    }
+
                     Pokeball(
                         sizedp = pokeballStateModel.pokeballSizeDp,
                         modifier = Modifier
                             .offset(
-                                x = finalAnimation.x.toDp(),
-                                y = finalAnimation.y.toDp(),
+                                x = pokeballAnimatedOffset.x.toDp(),
+                                y = pokeballAnimatedOffset.y.toDp(),
                             )
-                            .clickable { doInfiniteRotate = !doInfiniteRotate }
-                            .scale(pokeballScaleAnimationValue)
+//                            .clickable { doInfiniteRotate = !doInfiniteRotate }
+                            .scale(pokeballScaleValueAnimated)
                             .rotate(
-                                if (doInfiniteRotate) {
-                                    currentRotationAngle
+                                if (pokeballStateModel.pokeBallState == PokeBallState.Thrown) {
+                                    pokeballRotationAngle
                                 } else {
                                     0f
                                 }

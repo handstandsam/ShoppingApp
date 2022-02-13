@@ -8,7 +8,28 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-data class PokeBallStateModel(val pokeballSizeDp: Dp = INITIAL_POKEBALL_SIZE_DP) {
+
+enum class PokeBallState {
+    Initial, Dragging, Thrown, Landed
+}
+
+
+data class PokeBallStateModel(
+    val pokeballSizeDp: Dp = INITIAL_POKEBALL_SIZE_DP,
+    val pokeBallState: PokeBallState = PokeBallState.Initial,
+) {
+
+    val isDraggingPokeball: Boolean = when (pokeBallState) {
+        PokeBallState.Dragging -> true
+        else -> false
+    }
+
+    val isPokeballRotating = when (pokeBallState) {
+        PokeBallState.Thrown -> true
+        PokeBallState.Initial,
+        PokeBallState.Dragging,
+        PokeBallState.Landed -> false
+    }
 
     @Composable
     private fun getScreenSizePx(): Size {
@@ -49,6 +70,7 @@ data class PokeBallStateModel(val pokeballSizeDp: Dp = INITIAL_POKEBALL_SIZE_DP)
 
     companion object {
         val INITIAL_POKEBALL_SIZE_DP = 150.dp
+        val THROWN_POKEBALL_SIZE_DP = INITIAL_POKEBALL_SIZE_DP / 2
     }
 
 
