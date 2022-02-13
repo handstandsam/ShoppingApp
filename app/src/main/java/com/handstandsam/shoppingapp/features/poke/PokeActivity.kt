@@ -36,16 +36,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
+import com.handstandsam.shoppingapp.features.poke.PokeBallStateModel.Companion.INITIAL_POKEBALL_SIZE_DP
 import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.utils.TextToSpeechEngine
 import kotlinx.coroutines.flow.launchIn
@@ -59,21 +57,9 @@ class PokeActivity : ComponentActivity() {
 
     private val textToSpeechEngine by lazy { TextToSpeechEngine(this) }
 
-    data class PokeBallStateModel(val pokeballSizeDp: Dp)
-    data class PokemonInfoState(
-        val pokemonId: Int,
-        val pokemonAnimatedImageScale: Float,
-    ) {
-        val pokemonName: String get() = PokemonNames[pokemonId - 1]
-        val pokemonImageUrl: String get() = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png"
-    }
 
     enum class PokeBallState {
         Initial, Dragging, Thrown, LandingAnimation, Landed
-    }
-
-    enum class PokemonState {
-        Shown, Caught
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,50 +74,37 @@ class PokeActivity : ComponentActivity() {
             return Random.nextInt(1, 600)
         }
 
+        fun playSound(pokemonName: String) {
+            val playSound = false
+            if (playSound) {
+                mp.seekTo(0)
+                mp.start()
+                mp.setOnCompletionListener {
+                    textToSpeechEngine.speak("A $pokemonName Appeared!")
+                }
+            }
+        }
         setContent {
 
             var pokeBallState by remember { mutableStateOf(PokeBallState.Initial) }
 
-            var ballThrown by remember { mutableStateOf(false) }
-
-            val screenSizePx = getScreenSizePx()
             val pokeballAnimationDuration = 1200
 
-            val initialPokeballSizeDp = 150.dp
+            var pokeballStateModel by remember { mutableStateOf(PokeBallStateModel()) }
 
 
-            var pokeballSizeDp by remember { mutableStateOf(initialPokeballSizeDp) }
-
-            val pokeBallStateModel by remember {
-                mutableStateOf(
-                    PokeBallStateModel(
-                        pokeballSizeDp = when (pokeBallState) {
-                            PokeBallState.Dragging,
-                            PokeBallState.Initial -> initialPokeballSizeDp
-                            PokeBallState.LandingAnimation,
-                            PokeBallState.Thrown,
-                            PokeBallState.Landed -> initialPokeballSizeDp / 2
-                        }
-                    )
-                )
-            }
-
-            val pokeballSizePx = with(LocalDensity.current) {
-                Size(
-                    width = pokeballSizeDp.toPx(),
-                    height = pokeballSizeDp.toPx()
-                )
-            }
-            val startPositionOffset = Offset(
-                x = (screenSizePx.width / 2) - (pokeballSizePx.width / 2),
-                y = screenSizePx.height - (pokeballSizePx.height * 1.5).toFloat(),
-            )
-            val catchPositionOffset = Offset(
-                x = (screenSizePx.width / 2) - (pokeballSizePx.width / 2),
-                y = with(LocalDensity.current) { 350.dp.toPx() },
+            pokeballStateModel = pokeballStateModel.copy(
+                pokeballSizeDp = when (pokeBallState) {
+                    PokeBallState.Dragging,
+                    PokeBallState.Initial -> INITIAL_POKEBALL_SIZE_DP
+                    PokeBallState.LandingAnimation,
+                    PokeBallState.Thrown,
+                    PokeBallState.Landed -> INITIAL_POKEBALL_SIZE_DP / 2
+                }
             )
 
-            var currentOffset by remember { mutableStateOf(startPositionOffset) }
+
+            var currentOffset = pokeballStateModel.startPositionOffset()
             var currentScale by remember { mutableStateOf(1f) }
 
             var isDraggingPokeball by remember { mutableStateOf(false) }
@@ -140,19 +113,18 @@ class PokeActivity : ComponentActivity() {
                 animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
             )
 
-            var pokemonImageScale by remember { mutableStateOf(1f) }
 
             val pokeballScaleAnimationValue: Float by animateFloatAsState(
                 targetValue = currentScale,
                 animationSpec = tween(pokeballAnimationDuration, easing = FastOutSlowInEasing),
             )
 
-
+            // Pokemon Info
+            var pokemonImageScale by remember { mutableStateOf(1f) }
             val pokemonAnimatedImageScale: Float by animateFloatAsState(
                 targetValue = pokemonImageScale,
                 animationSpec = tween(250, easing = FastOutSlowInEasing),
             )
-
             var pokemonInfoState by remember {
                 mutableStateOf(
                     PokemonInfoState(
@@ -166,14 +138,7 @@ class PokeActivity : ComponentActivity() {
 
 
             fun onRestart() {
-                val playSound = false
-                if (playSound) {
-                    mp.seekTo(0)
-                    mp.start()
-                    mp.setOnCompletionListener {
-                        textToSpeechEngine.speak("A ${pokemonInfoState.pokemonName} Appeared!")
-                    }
-                }
+                playSound(pokemonInfoState.pokemonName)
                 pokemonInfoState = pokemonInfoState.copy(
                     pokemonId = randomPokemonId()
                 )
@@ -182,28 +147,17 @@ class PokeActivity : ComponentActivity() {
 
             when (pokeBallState) {
                 PokeBallState.Initial -> {
-                    ballThrown = false
                     isDraggingPokeball = false
                     pokemonImageScale = 1f
-                    currentOffset = startPositionOffset
+                    currentScale = 1f
+                    currentOffset = pokeballStateModel.startPositionOffset()
                     doInfiniteRotate = false
                 }
                 PokeBallState.Thrown -> {
-                    ballThrown = true
                     isDraggingPokeball = false
                     doInfiniteRotate = true
-
-                    currentOffset = if (ballThrown) {
-                        catchPositionOffset
-                    } else {
-                        startPositionOffset
-                    }
-
-                    currentScale = if (ballThrown) {
-                        .50f
-                    } else {
-                        1f
-                    }
+                    currentOffset = pokeballStateModel.catchPositionOffset()
+                    currentScale = .50f
                 }
                 PokeBallState.Landed -> {
                     doInfiniteRotate = false
@@ -244,6 +198,8 @@ class PokeActivity : ComponentActivity() {
                 keyframeAnimation
             }
 
+
+            val pokeballSizePx = pokeballStateModel.pokeballSizePx()
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -283,7 +239,7 @@ class PokeActivity : ComponentActivity() {
 
                 with(LocalDensity.current) {
                     Pokeball(
-                        sizedp = pokeballSizeDp,
+                        sizedp = pokeballStateModel.pokeballSizeDp,
                         modifier = Modifier
                             .offset(
                                 x = finalAnimation.x.toDp(),
@@ -329,16 +285,6 @@ class PokeActivity : ComponentActivity() {
 
     }
 
-    @Composable
-    private fun getScreenSizePx(): Size {
-        val configuration = LocalConfiguration.current
-        return with(LocalDensity.current) {
-            Size(
-                configuration.screenWidthDp.dp.toPx(),
-                configuration.screenHeightDp.dp.toPx()
-            )
-        }
-    }
 }
 
 fun Offset.isTouchWithinBounds(currentOffset: Offset, currentSizePx: Size): Boolean {
