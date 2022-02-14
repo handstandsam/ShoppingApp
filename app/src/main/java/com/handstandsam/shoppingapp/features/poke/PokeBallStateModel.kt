@@ -15,21 +15,21 @@ enum class PokeBallState {
 
 
 data class PokeBallStateModel(
-    val pokeballSizeDp: Dp = INITIAL_POKEBALL_SIZE_DP,
     val pokeBallState: PokeBallState = PokeBallState.Initial,
     val currentOffset: Offset
 ) {
 
+    val pokeballSizeDp: Dp
+        get() = when (pokeBallState) {
+            PokeBallState.Dragging,
+            PokeBallState.Initial -> INITIAL_POKEBALL_SIZE_DP
+            PokeBallState.Thrown,
+            PokeBallState.Landed -> THROWN_POKEBALL_SIZE_DP
+        }
+
     val isDraggingPokeball: Boolean = when (pokeBallState) {
         PokeBallState.Dragging -> true
         else -> false
-    }
-
-    val isPokeballRotating = when (pokeBallState) {
-        PokeBallState.Thrown -> true
-        PokeBallState.Initial,
-        PokeBallState.Dragging,
-        PokeBallState.Landed -> false
     }
 
     @Composable

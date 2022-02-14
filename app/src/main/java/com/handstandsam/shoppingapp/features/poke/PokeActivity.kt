@@ -17,13 +17,10 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,24 +32,24 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
-import com.handstandsam.shoppingapp.features.poke.PokeBallStateModel.Companion.INITIAL_POKEBALL_SIZE_DP
-import com.handstandsam.shoppingapp.features.poke.PokeBallStateModel.Companion.THROWN_POKEBALL_SIZE_DP
 import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.utils.TextToSpeechEngine
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
@@ -86,44 +83,41 @@ class PokeActivity : ComponentActivity() {
         }
         setContent {
 
-//            DragRedBox()
-
-            // -------
-
             // Pokemon Info
             var pokemonInfoState by remember {
                 mutableStateOf(PokemonInfoState())
             }
 
 
-            val starter: Offset = PokeBallStateModel.startPosition()
-            var pokeballStateModel by remember { mutableStateOf(PokeBallStateModel(currentOffset = starter)) }
-            when (pokeballStateModel.pokeBallState) {
+            val pokeballStartOffset: Offset = PokeBallStateModel.startPosition()
+            var pokeballStateModel by remember {
+                mutableStateOf(
+                    PokeBallStateModel(currentOffset = pokeballStartOffset)
+                )
+            }
+            println(pokeballStateModel.toString())
+            pokemonInfoState = when (pokeballStateModel.pokeBallState) {
                 PokeBallState.Dragging,
                 PokeBallState.Thrown,
                 PokeBallState.Initial -> {
-                    pokemonInfoState = pokemonInfoState.copy(
+                    pokemonInfoState.copy(
                         pokemonImageScale = 1f
                     )
                 }
                 PokeBallState.Landed -> {
-                    pokemonInfoState = pokemonInfoState.copy(
+                    pokemonInfoState.copy(
                         pokemonImageScale = 0f
                     )
                 }
             }
 
+            val start = pokeballStateModel.startPositionOffset()
+            var currentOffset by remember { mutableStateOf(start) }
             fun reduce(pokeballStateModel: PokeBallStateModel, effect: Effect): PokeBallStateModel {
                 return when (effect) {
                     is Effect.StateChanged -> {
                         pokeballStateModel.copy(
-                            pokeBallState = effect.state,
-                            pokeballSizeDp = when (effect.state) {
-                                PokeBallState.Dragging,
-                                PokeBallState.Initial -> INITIAL_POKEBALL_SIZE_DP
-                                PokeBallState.Thrown,
-                                PokeBallState.Landed -> THROWN_POKEBALL_SIZE_DP
-                            }
+                            pokeBallState = effect.state
                         )
                     }
                     Effect.Restart -> {
@@ -131,8 +125,10 @@ class PokeActivity : ComponentActivity() {
                         pokemonInfoState = pokemonInfoState.copy(
                             pokemonId = randomPokemonId(),
                         )
+                        currentOffset = pokeballStartOffset
                         pokeballStateModel.copy(
-                            pokeBallState = PokeBallState.Initial
+                            pokeBallState = PokeBallState.Initial,
+                            currentOffset = pokeballStartOffset
                         )
                     }
                     is Effect.DraggedTo -> {
@@ -143,8 +139,6 @@ class PokeActivity : ComponentActivity() {
                 }
             }
 
-            val start = pokeballStateModel.startPositionOffset()
-            var currentOffset by remember { mutableStateOf(start) }
 
             fun sendEffect(effect: Effect) {
                 println("sendEffect($effect)")
@@ -152,7 +146,6 @@ class PokeActivity : ComponentActivity() {
             }
 
             val pokeballSizePx = pokeballStateModel.pokeballSizePx()
-
             Box(
                 modifier = Modifier
                     .pointerInput(Unit) {
@@ -186,7 +179,6 @@ class PokeActivity : ComponentActivity() {
                         )
                     }
                     .fillMaxSize()
-
             ) {
                 Ui(
                     pokeballStateModel = pokeballStateModel,
@@ -194,7 +186,8 @@ class PokeActivity : ComponentActivity() {
                     sendEffect = {
                         sendEffect(it)
                     },
-                    currentPokemonInfoModifier = Modifier.align(Alignment.Center),
+                    currentPokemonInfoModifier = Modifier
+                        .align(Alignment.Center),
                 )
             }
         }
@@ -210,9 +203,7 @@ class PokeActivity : ComponentActivity() {
                 }
                 .launchIn(this)
         }
-
     }
-
 
 
     sealed class Effect {
@@ -236,7 +227,7 @@ class PokeActivity : ComponentActivity() {
                 PokeBallState.Thrown -> pokeballStateModel.catchPositionOffset()
                 PokeBallState.Landed -> pokeballStateModel.catchPositionOffset()
             },
-            animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+            animationSpec = spring(dampingRatio = Spring.DampingRatioHighBouncy),
         )
 
         FieldBackgroundImage()
@@ -288,13 +279,18 @@ class PokeActivity : ComponentActivity() {
 //                    Offset(currentOffset.x, currentOffset.y * 0f) at 1500 with LinearEasing // ms
                 },
                 finishedListener = {
-                    sendEffect(Effect.StateChanged(PokeBallState.Landed))
+                    if (pokeballStateModel.pokeBallState == PokeBallState.Thrown) {
+                        sendEffect(Effect.StateChanged(PokeBallState.Landed))
+                        CoroutineScope(Dispatchers.Default).launch {
+                            delay(2000)
+                            sendEffect(Effect.Restart)
+                        }
+                    }
                 }
             )
 
             val pokeballAnimatedOffset = when (pokeballStateModel.pokeBallState) {
                 PokeBallState.Thrown -> keyframeAnimation
-                PokeBallState.Dragging -> currentOffset
                 else -> pokeballOffsetAnimation
             }
 
