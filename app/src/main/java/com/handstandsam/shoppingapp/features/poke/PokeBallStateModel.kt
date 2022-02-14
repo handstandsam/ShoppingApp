@@ -17,6 +17,7 @@ enum class PokeBallState {
 data class PokeBallStateModel(
     val pokeballSizeDp: Dp = INITIAL_POKEBALL_SIZE_DP,
     val pokeBallState: PokeBallState = PokeBallState.Initial,
+    val currentOffset: Offset
 ) {
 
     val isDraggingPokeball: Boolean = when (pokeBallState) {
@@ -29,17 +30,6 @@ data class PokeBallStateModel(
         PokeBallState.Initial,
         PokeBallState.Dragging,
         PokeBallState.Landed -> false
-    }
-
-    @Composable
-    private fun getScreenSizePx(): Size {
-        val configuration = LocalConfiguration.current
-        return with(LocalDensity.current) {
-            Size(
-                configuration.screenWidthDp.dp.toPx(),
-                configuration.screenHeightDp.dp.toPx()
-            )
-        }
     }
 
     @Composable
@@ -71,6 +61,38 @@ data class PokeBallStateModel(
     companion object {
         val INITIAL_POKEBALL_SIZE_DP = 150.dp
         val THROWN_POKEBALL_SIZE_DP = INITIAL_POKEBALL_SIZE_DP / 2
+
+        @Composable
+        private fun getScreenSizePx(): Size {
+            val configuration = LocalConfiguration.current
+            return with(LocalDensity.current) {
+                Size(
+                    configuration.screenWidthDp.dp.toPx(),
+                    configuration.screenHeightDp.dp.toPx()
+                )
+            }
+        }
+
+        @Composable
+        fun startPosition(): Offset {
+            return with(LocalDensity.current) {
+                startPositionOffset(
+                    Size(
+                        width = INITIAL_POKEBALL_SIZE_DP.toPx(),
+                        height = INITIAL_POKEBALL_SIZE_DP.toPx()
+                    )
+                )
+            }
+        }
+
+        @Composable
+        fun startPositionOffset(pokeballSizePx: Size): Offset {
+            val screenSizePx = getScreenSizePx()
+            return Offset(
+                x = (screenSizePx.width / 2) - (pokeballSizePx.width / 2),
+                y = screenSizePx.height - (pokeballSizePx.height * 1.5).toFloat(),
+            )
+        }
     }
 
 
