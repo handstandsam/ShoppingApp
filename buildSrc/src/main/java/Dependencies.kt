@@ -46,7 +46,7 @@ object Versions {
 
     val assertj = "3.11.1"
 
-    val jetpack_compose = "1.0.4"
+    val jetpack_compose = "1.0.5"
 }
 
 object Libs {
