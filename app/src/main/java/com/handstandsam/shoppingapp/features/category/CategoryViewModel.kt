@@ -8,7 +8,6 @@ import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class CategoryViewModel(
     private val scope: CoroutineScope,
@@ -22,10 +21,8 @@ class CategoryViewModel(
 ) {
 
     private fun getItemsForCategory(categoryLabel: String) {
-        scope.launch {
-            val categoriesResult = withContext(Dispatchers.Default) {
-                itemRepo.getItemsForCategory(categoryLabel)
-            }
+        scope.launch(Dispatchers.IO) {
+            val categoriesResult = itemRepo.getItemsForCategory(categoryLabel)
             when (categoriesResult) {
                 is NetworkResult.Success -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))

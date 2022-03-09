@@ -18,7 +18,7 @@ class AppGraphImpl(application: Application) : AppGraph {
 
     override val networkGraph = application.serverDimensionNetworkGraph(debugDimensionInterceptors(application))
 
-    private val appScope = CoroutineScope(Dispatchers.Default)
+    private val appScope = CoroutineScope(Dispatchers.IO)
 
     override val viewModelFactory = ShoppingAppViewModelFactory(
         scope = appScope,

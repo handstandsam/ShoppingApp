@@ -18,39 +18,40 @@ class CategoryActivity : LoggedInActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-            supportActionBar?.hide()
+        supportActionBar?.hide()
 
-            val categoryViewModel = ViewModelProvider(this, graph.viewModelFactory)
-                .get(CategoryViewModel::class.java)
+        val categoryViewModel = ViewModelProvider(this, graph.viewModelFactory)
+            .get(CategoryViewModel::class.java)
 
-            val extras = intent.extras
-            val categoryLabel = extras!!.getString(BUNDLE_PARAM_CATEGORY)!!
-            categoryViewModel.send(CategoryViewModel.Intention.CategoryLabelSet(categoryLabel))
+        setContent {
+            CategoryScreen(
+                itemsInCart = graph
+                    .sessionGraph
+                    .shoppingCart
+                    .itemsInCart,
+                categoryViewModel = categoryViewModel,
+                showCartClicked = { startCheckoutActivity() },
+                logoutClicked = { logout() },
+                homeUpClicked = { onBackPressed() }
+            )
+        }
 
-            setContent {
-                CategoryScreen(
-                    itemsInCart = graph
-                        .sessionGraph
-                        .shoppingCart
-                        .itemsInCart,
-                    categoryViewModel = categoryViewModel,
-                    showCartClicked = { startCheckoutActivity() },
-                    logoutClicked = { logout() },
-                    homeUpClicked = { onBackPressed() }
-                )
-            }
-
-            lifecycleScope.launchWhenCreated {
-                categoryViewModel.sideEffects
-                    .onEach {
-                        when (it) {
-                            is CategoryViewModel.SideEffect.LaunchItemDetailActivity -> {
-                                ItemDetailActivity.launch(this@CategoryActivity, it.item)
-                            }
+        lifecycleScope.launchWhenCreated {
+            categoryViewModel.sideEffects
+                .onEach {
+                    when (it) {
+                        is CategoryViewModel.SideEffect.LaunchItemDetailActivity -> {
+                            ItemDetailActivity.launch(this@CategoryActivity, it.item)
                         }
                     }
-                    .launchIn(this)
-            }
+                }
+                .launchIn(this)
+        }
+
+
+        val extras = intent.extras
+        val categoryLabel = extras!!.getString(BUNDLE_PARAM_CATEGORY)!!
+        categoryViewModel.send(CategoryViewModel.Intention.CategoryLabelSet(categoryLabel))
 
     }
 
