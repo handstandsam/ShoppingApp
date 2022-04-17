@@ -1,28 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        compose_version = Versions.jetpack_compose
-        kotlin_version = Versions.kotlin
-    }
-
     repositories {
         mavenCentral()
-        jcenter()
         google()
     }
     dependencies {
-        classpath "xml-apis:xml-apis:1.4.01"
-        classpath GradlePlugins.android
-        classpath GradlePlugins.kotlin
-
-        classpath "com.squareup.sqldelight:gradle-plugin:${Versions.sql_delight}"
+        classpath(libs.android.gradle.plugin)
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.sqldelight.gradle.plugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
     }
 }
-apply plugin: 'kotlin'
 
 allprojects {
     repositories {
@@ -31,13 +22,5 @@ allprojects {
         mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx/" }
         maven { url 'https://jitpack.io' }
-    }
-}
-
-configurations.all {
-    resolutionStrategy {
-        force "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
-        force "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
-        force "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     }
 }

@@ -1,15 +1,15 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    implementation Libs.kotlin_std_lib
+    implementation libs.kotlin.std.lib
 
-    implementation Libs.retrofit
+    implementation libs.retrofit
 
-    implementation Libs.moshi
-    implementation Libs.moshiKotlin
-    implementation Libs.retrofit_moshi_converter
+    implementation libs.moshi
+    implementation libs.moshiKotlin
+    implementation libs.retrofit.moshi.converter
 
-    implementation Libs.retrofit_coroutines_adapter
+    implementation libs.retrofit.coroutines.adapter
 
-    implementation project(Modules.models)
+    implementation project(":models")
 }

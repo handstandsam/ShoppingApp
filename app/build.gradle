@@ -4,11 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion Versions.compile_sdk
+    compileSdkVersion Integer.parseInt(libs.versions.android.compile.sdk.get())
+
     defaultConfig {
         applicationId "com.handstandsam.shoppingapp"
-        minSdkVersion Versions.min_sdk
-        targetSdkVersion Versions.target_sdk
+        minSdkVersion Integer.parseInt(libs.versions.android.min.sdk.get())
+        targetSdkVersion Integer.parseInt(libs.versions.android.target.sdk.get())
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -70,75 +71,67 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion kotlin_version
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion libs.versions.compose.get()
     }
 }
 
 dependencies {
 
-    implementation project(Modules.models)
-    implementation project(Modules.mockData)
+    implementation project(":models")
+    implementation project(":mock-data")
 
-    //Support Libraries
-    implementation Libs.androidx_appcompat_v7
+    // AndroidX Libraries
+    implementation libs.androidx.appcompat.v7
+    implementation libs.androidx.material
+    implementation libs.androidx.lifecycle.runtime.ktx
 
-    implementation Libs.androidx_lifecycle_runtime_ktx
+    // Networking
+    implementation libs.glide
+    implementation libs.retrofit
+    implementation libs.okhttp
+    implementation project(":networking")
+    debugImplementation libs.okhttp.logging.interceptor
 
-    //Networking
-    implementation Libs.glide
-    implementation Libs.retrofit
-    implementation Libs.okhttp
+    // Kotlin
+    implementation libs.kotlin.std.lib
+    implementation libs.kotlin.coroutines
+    implementation libs.kotlin.coroutines.android
 
-    //Kotlin
-    implementation Libs.kotlin_std_lib
-    implementation Libs.kotlin_coroutines
-    implementation Libs.kotlin_coroutines_android
-
-    implementation Libs.moshi
+    implementation libs.moshi
 
     //Flavor Modules
-    inmemoryImplementation project(Modules.flavorInmemory)
-    mockserverImplementation project(Modules.flavorMockserver)
-    liveserverImplementation project(Modules.flavorLiveserver)
+    inmemoryImplementation project(":app-flavor-inmemory")
+    mockserverImplementation project(":app-flavor-mockserver")
+    liveserverImplementation project(":app-flavor-liveserver")
 
     //Logging
-    implementation Libs.timber
-
-    debugImplementation Libs.okhttp_logging_interceptor
-
-    implementation project(Modules.networking)
-    implementation project(Modules.shoppingCart)
-//    implementation project(Modules.shoppingCartSqldelight)
-//    implementation project(Modules.shoppingCartRoom)
+    implementation libs.timber
+    implementation project(":shopping-cart")
 
     // Compose
-    implementation "androidx.compose.compiler:compiler:$compose_version"
-    implementation "androidx.compose.runtime:runtime:$compose_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.foundation:foundation-layout:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
-    implementation "androidx.compose.foundation:foundation:$compose_version"
-    implementation "androidx.compose.animation:animation:$compose_version"
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation "androidx.activity:activity-compose:1.3.0"
+    implementation libs.androidx.compose.compiler
+    implementation libs.androidx.compose.runtime
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.foundation
+    implementation libs.androidx.compose.material
+    implementation libs.androidx.compose.material.icons.extended
+    implementation libs.androidx.compose.animation
+    implementation libs.androidx.compose.runtime.livedata
+    implementation libs.androidx.compose.ui.tooling
+    implementation libs.androidx.activity.compose
 
-    implementation "com.google.accompanist:accompanist-coil:0.15.0"
-    implementation "io.coil-kt:coil-compose:1.3.1"
-    implementation "com.github.skydoves:landscapist-coil:1.3.0"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha03'
-
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation libs.accompanist.coil
+    implementation libs.coil.compose
+    implementation libs.landscapist.coil
+    implementation libs.androidx.lifecycle.runtime.ktx
 
     //JVM Tests Only
-    testImplementation TestLibs.junit
+    testImplementation libs.junit
 
-    androidTestImplementation Libs.androidx_espresso
-    androidTestImplementation Libs.androidx_espresso_contrib
-    androidTestImplementation Libs.androidx_test_rules
-    androidTestImplementation Libs.androidx_testrunner
-    androidTestUtil Libs.androidx_test_orchestrator
+    androidTestImplementation libs.androidx.espresso
+    androidTestImplementation libs.androidx.espresso.contrib
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.androidx.testrunner
+    androidTestUtil libs.androidx.test.orchestrator
 }
 

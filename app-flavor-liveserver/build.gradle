@@ -1,10 +1,10 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    implementation Libs.retrofit
-    implementation Libs.kotlin_std_lib
+    implementation libs.retrofit
+    implementation libs.kotlin.std.lib
 
-    implementation project(Modules.models)
-    implementation project(Modules.networking)
+    implementation project(":models")
+    implementation project(":networking")
 
 }

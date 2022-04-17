@@ -1,15 +1,15 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    api project(Modules.models)
-    api Libs.timber
+    api project(":models")
+    api libs.timber
 
     //Kotlin
-    api Libs.kotlin_std_lib
-    api Libs.kotlin_coroutines
-    api Libs.kotlin_coroutines_android
+    api libs.kotlin.std.lib
+    api libs.kotlin.coroutines
+    api libs.kotlin.coroutines.android
 
     //Unit Tests
-    testImplementation TestLibs.junit
-    testImplementation TestLibs.assertj
+    testImplementation libs.junit
+    testImplementation libs.assertj
 }

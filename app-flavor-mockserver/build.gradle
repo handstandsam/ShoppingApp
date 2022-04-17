@@ -1,22 +1,21 @@
 apply from: "$rootProject.projectDir/android-library.gradle"
 
 dependencies {
-    implementation project(Modules.mockData)
-    implementation project(Modules.networking)
-    implementation project(Modules.models)
+    implementation project(":mock-data")
+    implementation project(":networking")
+    implementation project(":models")
 
-    implementation Libs.timber
-    implementation Libs.okhttp
-    implementation Libs.apache_commons
-    implementation Libs.kotlin_std_lib
-    implementation Libs.moshi
-    implementation Libs.moshiKotlin
-    implementation Libs.kotlin_coroutines
+    implementation libs.timber
+    implementation libs.okhttp
+    implementation libs.kotlin.std.lib
+    implementation libs.moshi
+    implementation libs.moshiKotlin
+    implementation libs.kotlin.coroutines
 
-    implementation Libs.kotlin_std_lib
+    implementation libs.kotlin.std.lib
 
-    api Libs.okhttp_logging_interceptor
-    api Libs.process_phoenix
+    api libs.okhttp.logging.interceptor
+    api libs.process.phoenix
     
-    api Libs.okhttp_mockwebserver
+    api libs.okhttp.mockwebserver
 }
