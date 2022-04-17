@@ -17,10 +17,10 @@ object Versions {
     val retrofit = "2.3.0"
     val min_sdk = 24
     val target_sdk = 30
-    val compile_sdk = 30
+    val compile_sdk = 31
 
     // Kotlin
-    val kotlin = "1.5.31"
+    val kotlin = "1.6.10"
     val kotlin_coroutines = "1.5.1"
     val apache_commons = "2.4"
     val retrofit_coroutines_adapter = "0.9.2"
@@ -37,16 +37,16 @@ object Versions {
 
     // android
     val androidx = "1.3.0"
-    val androidx_lifecycle = "2.3.1"
-    val androidx_persistence = "2.3.0"
+    val androidx_lifecycle = "2.4.1"
+    val androidx_persistence = "2.4.2"
     val androidx_test = "1.4.0"
 
-    val android_gradle_plugin = "7.0.3"
+    val android_gradle_plugin = "7.1.2"
     val espresso = "3.1.1"
 
     val assertj = "3.11.1"
 
-    val jetpack_compose = "1.0.5"
+    val jetpack_compose = "1.1.1"
 }
 
 object Libs {
