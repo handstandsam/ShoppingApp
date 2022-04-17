@@ -9,25 +9,25 @@ android {
 }
 
 dependencies {
-    api project(Modules.shoppingCart)
+    api project(":shopping-cart")
 
     //Kotlin
-    api Libs.kotlin_std_lib
-    api Libs.kotlin_coroutines
-    api Libs.kotlin_coroutines_android
+    api libs.kotlin.std.lib
+    api libs.kotlin.coroutines
+    api libs.kotlin.coroutines.android
 
     //Room
-    api Libs.androidx_persistence_room_runtime // Room
-    kapt Libs.androidx_persistence_room_kapt // Annotation Processor
+    api libs.androidx.persistence.room.runtime // Room
+    kapt libs.androidx.persistence.room.kapt // Annotation Processor
 
-    implementation Libs.androidx_persistence_room_ktx    // Coroutines support for Room
+    implementation libs.androidx.persistence.room.ktx    // Coroutines support for Room
 
     // LiveData
-    implementation Libs.androidx_lifecycle_livedata_core
+    implementation libs.androidx.lifecycle.livedata.core
     // LiveData for Reactive Streams from Queries
 
     // Unit Tests
-    androidTestImplementation TestLibs.junit
-    androidTestImplementation Libs.androidx_persistence_room_test // Test helpers
-    androidTestImplementation Libs.androidx_testrunner
+    androidTestImplementation libs.junit
+    androidTestImplementation libs.androidx.persistence.room.test // Test helpers
+    androidTestImplementation libs.androidx.testrunner
 }

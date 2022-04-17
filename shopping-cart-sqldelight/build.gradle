@@ -2,11 +2,11 @@ apply from: "$rootProject.projectDir/android-library.gradle"
 apply plugin: "com.squareup.sqldelight"
 
 dependencies {
-    implementation project(Modules.shoppingCart)
+    implementation project(":shopping-cart")
 
-    api Libs.sql_delight_android
-    api Libs.sql_delight_coroutines_extensions
-    testImplementation TestLibs.junit
-    testImplementation TestLibs.assertj
-    testImplementation Libs.sql_delight_jvm
+    api libs.sqldelight.android
+    api libs.sqldelight.coroutines.extensions
+    testImplementation libs.junit
+    testImplementation libs.assertj
+    testImplementation libs.sqldelight.jvm
 }

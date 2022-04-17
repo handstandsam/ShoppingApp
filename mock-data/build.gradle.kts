@@ -13,7 +13,7 @@ sourceSets {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation(project(Modules.models))
+    implementation(project(":models"))
 }
 
 // TODO Re-enable Multiplatform https://github.com/handstandsam/ShoppingApp/issues/39
@@ -35,7 +35,7 @@ dependencies {
 //        val commonMain by getting {
 //            dependencies {
 //                implementation(kotlin("stdlib"))
-//                implementation(project(Modules.models))
+//                implementation(project(":models"))
 //            }
 //        }
 //    }
