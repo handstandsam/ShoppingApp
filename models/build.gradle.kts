@@ -1,8 +1,3 @@
 plugins {
-    kotlin("jvm")
-    `java-library`
-}
-
-dependencies {
-    implementation(kotlin("stdlib"))
+    id("com.handstandsam.jvm.lib")
 }
