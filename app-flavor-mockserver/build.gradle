@@ -1,4 +1,4 @@
-apply from: "$rootProject.projectDir/android-library.gradle"
+apply plugin: 'com.handstandsam.android.lib'
 
 dependencies {
     implementation project(":mock-data")
@@ -11,11 +11,9 @@ dependencies {
     implementation libs.moshi
     implementation libs.moshiKotlin
     implementation libs.kotlin.coroutines
-
     implementation libs.kotlin.std.lib
 
     api libs.okhttp.logging.interceptor
     api libs.process.phoenix
-    
     api libs.okhttp.mockwebserver
 }

@@ -1,4 +1,4 @@
-apply from: "$rootProject.projectDir/android-library.gradle"
+apply plugin: 'com.handstandsam.android.lib'
 
 dependencies {
     implementation libs.kotlin.std.lib

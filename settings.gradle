@@ -1,3 +1,5 @@
+rootProject.name = 'ShoppingApp'
+
 include ':app'
 include ':app-flavor-inmemory'
 include ':app-flavor-liveserver'
@@ -8,3 +10,9 @@ include ':shopping-cart-sqldelight'
 include ':mock-data'
 include ':models'
 include ':networking'
+
+includeBuild('convention-plugins') {
+    dependencySubstitution {
+        substitute module('com.handstandsam:convention-plugins') using project(':')
+    }
+}
