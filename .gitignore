@@ -40,3 +40,6 @@ captures/
 *.jks
 
 .idea
+
+# Dependency Guard Tree Format
+*.tree.txt
