@@ -139,3 +139,9 @@ dependencies {
 dependencyGuard {
     configuration("inmemoryDebugRuntimeClasspath")
 }
+
+configurations {
+    inmemoryDebugRuntimeClasspath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
