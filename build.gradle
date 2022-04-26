@@ -26,3 +26,9 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+apply plugin: "com.dropbox.dependency-guard"
+
+dependencyGuard {
+    configuration("classpath")
+}
