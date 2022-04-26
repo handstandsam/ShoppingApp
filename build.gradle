@@ -9,7 +9,7 @@ buildscript {
         classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.sqldelight.gradle.plugin)
-        classpath("com.handstandsam:convention-plugins:1.0-SNAPSHOT")
+        classpath("com.handstandsam:convention-plugins")
         classpath("com.dropbox.dependency-guard:dependency-guard:0.1.0")
 
         // NOTE: Do not place your application dependencies here; they belong
