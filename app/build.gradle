@@ -149,7 +149,7 @@ configurations {
                     def name = selection.candidate.toString()
                     // Example rule to disallow glide as a dependency
                     if (name.contains("glide")) {
-                        selection.reject("$name Not allowed")
+                        throw GradleException("$name Not allowed")
                     }
                 }
             }
