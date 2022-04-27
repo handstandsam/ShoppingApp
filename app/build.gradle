@@ -139,3 +139,16 @@ dependencies {
 dependencyGuard {
     configuration("inmemoryDebugRuntimeClasspath")
 }
+
+// https://docs.gradle.org/current/userguide/dynamic_versions.html#sec:component_selection_rules
+configurations {
+    inmemoryDebugRuntimeClasspath { config ->
+        resolutionStrategy {
+            componentSelection {
+                all { ComponentSelection selection ->
+                    println(selection.candidate)
+                }
+            }
+        }
+    }
+}
