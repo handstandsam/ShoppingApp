@@ -146,7 +146,11 @@ configurations {
         resolutionStrategy {
             componentSelection {
                 all { ComponentSelection selection ->
-                    println(selection.candidate)
+                    def name = selection.candidate.toString()
+                    // Example rule to disallow glide as a dependency
+                    if (name.contains("glide")) {
+                        selection.reject("$name Not allowed")
+                    }
                 }
             }
         }
