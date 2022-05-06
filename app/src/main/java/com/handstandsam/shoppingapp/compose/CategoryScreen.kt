@@ -3,8 +3,8 @@ package com.handstandsam.shoppingapp.compose
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,7 +36,7 @@ fun CategoryScreen(
                 .fillMaxSize()
         ) {
             LazyVerticalGrid(
-                cells = GridCells.Fixed(2)
+                GridCells.Fixed(2)
             ) {
                 items(state.items.size) {
                     val item = state.items[it]
