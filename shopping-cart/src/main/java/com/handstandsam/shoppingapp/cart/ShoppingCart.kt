@@ -4,7 +4,6 @@ import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import timber.log.Timber
 
 /**
  * Application Logic for interacting with the [ShoppingCartDao]
@@ -27,9 +26,7 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
      */
     suspend fun decrementItemInCart(item: Item) {
         val foundItem = shoppingCartDao.findByLabel(item.label)
-        if (foundItem == null) {
-            Timber.w("Item didn't exist.  This must have been called by error.")
-        } else {
+        foundItem?.let {
             val newQuantity = foundItem.quantity - 1
             if (newQuantity <= 0L) {
                 shoppingCartDao.remove(foundItem)

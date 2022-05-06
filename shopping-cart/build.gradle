@@ -2,7 +2,6 @@ apply plugin: 'com.handstandsam.android.lib'
 
 dependencies {
     api project(":models")
-    api libs.timber
 
     //Kotlin
     api libs.kotlin.std.lib
