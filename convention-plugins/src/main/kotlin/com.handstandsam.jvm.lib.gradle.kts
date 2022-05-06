@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
 plugins {
     kotlin("multiplatform")
 }
@@ -15,28 +13,56 @@ kotlin {
             kotlin.srcDirs("src/test/java", "src/test/kotlin")
         }
 
+        val api by configurations.creating
         val implementation by configurations.creating
+        val compileOnly by configurations.creating
+        val runtimeOnly by configurations.creating
+        val apiDependenciesMetadata by configurations.creating
+        val implementationDependenciesMetadata by configurations.creating
+        val compileOnlyDependenciesMetadata by configurations.creating
+        val runtimeOnlyDependenciesMetadata by configurations.creating
+
+        configurations.getByName(commonMain.apiConfigurationName)
+            .extendsFrom(api)
+        configurations.getByName(commonMain.implementationConfigurationName)
+            .extendsFrom(implementation)
+        configurations.getByName(commonMain.compileOnlyConfigurationName)
+            .extendsFrom(compileOnly)
+        configurations.getByName(commonMain.runtimeOnlyConfigurationName)
+            .extendsFrom(runtimeOnly)
+        configurations.getByName(commonMain.apiMetadataConfigurationName)
+            .extendsFrom(apiDependenciesMetadata)
+        configurations.getByName(commonMain.implementationMetadataConfigurationName)
+            .extendsFrom(implementationDependenciesMetadata)
+        configurations.getByName(commonMain.compileOnlyMetadataConfigurationName)
+            .extendsFrom(compileOnlyDependenciesMetadata)
+        configurations.getByName(commonMain.runtimeOnlyMetadataConfigurationName)
+            .extendsFrom(runtimeOnlyDependenciesMetadata)
+
+        val testApi by configurations.creating
         val testImplementation by configurations.creating
+        val testCompileOnly by configurations.creating
+        val testRuntimeOnly by configurations.creating
+        val testApiDependenciesMetadata by configurations.creating
+        val testImplementationDependenciesMetadata by configurations.creating
+        val testCompileOnlyDependenciesMetadata by configurations.creating
+        val testRuntimeOnlyDependenciesMetadata by configurations.creating
 
-        configurations.getByName(commonMain.implementationConfigurationName).extendsFrom(implementation)
-        configurations.getByName(commonTest.implementationConfigurationName).extendsFrom(testImplementation)
-
-        fun createAliasConfigurations(sourceSet: KotlinSourceSet) {
-            sourceSet.relatedConfigurationNames.forEach { configurationName ->
-                val aliasName = configurationName
-                    .removePrefix("common")
-                    .removePrefix("Main")
-                    .decapitalize()
-
-                val configuration = configurations.getByName(configurationName)
-                val aliasConfiguration = configurations.maybeCreate(aliasName)
-                configuration.extendsFrom(aliasConfiguration)
-            }
-        }
-
-        createAliasConfigurations(commonMain)
-        createAliasConfigurations(commonTest)
+        configurations.getByName(commonTest.apiConfigurationName)
+            .extendsFrom(testApi)
+        configurations.getByName(commonTest.implementationConfigurationName)
+            .extendsFrom(testImplementation)
+        configurations.getByName(commonTest.compileOnlyConfigurationName)
+            .extendsFrom(testCompileOnly)
+        configurations.getByName(commonTest.runtimeOnlyConfigurationName)
+            .extendsFrom(testRuntimeOnly)
+        configurations.getByName(commonTest.apiMetadataConfigurationName)
+            .extendsFrom(testApiDependenciesMetadata)
+        configurations.getByName(commonTest.implementationMetadataConfigurationName)
+            .extendsFrom(testImplementationDependenciesMetadata)
+        configurations.getByName(commonTest.compileOnlyMetadataConfigurationName)
+            .extendsFrom(testCompileOnlyDependenciesMetadata)
+        configurations.getByName(commonTest.runtimeOnlyMetadataConfigurationName)
+            .extendsFrom(testRuntimeOnlyDependenciesMetadata)
     }
-
-    println(configurations.map { it.name }.sorted())
 }
