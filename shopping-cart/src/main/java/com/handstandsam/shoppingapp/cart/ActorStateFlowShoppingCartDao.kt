@@ -1,15 +1,9 @@
 package com.handstandsam.shoppingapp.cart
 
-import android.util.Log
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asFlow
 
 class ActorStateFlowShoppingCartDao : ShoppingCartDao {
 
@@ -28,55 +22,48 @@ class ActorStateFlowShoppingCartDao : ShoppingCartDao {
         object Empty : Intention()
     }
 
-    private val scope = CoroutineScope(Dispatchers.Default)
 
-    private val actor = scope.actor<Intention> {
+    private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
-        val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
-
-        for (intention in channel) {
-            Log.d("Actor Intention", intention.toString())
-            when (intention) {
-                is Intention.FindByLabel -> {
-                    intention.deferred
-                        .complete(itemsInCart[intention.label])
-                }
-                is Intention.Upsert -> {
-                    itemsInCart[intention.itemWithQuantity.item.label] = intention.itemWithQuantity
-                }
-                is Intention.Remove -> {
-                    itemsInCart.remove(intention.itemWithQuantity.item.label)
-                }
-                is Intention.Empty -> {
-                    itemsInCart.clear()
-                }
+    /**
+     * Need to find a solution to replace the JVM Kotlin Actor we had.
+     * This here may be susceptible to concurrency issues.
+     * https://github.com/handstandsam/ShoppingApp/issues/51
+     */
+    private fun send(intention: Intention) {
+        when (intention) {
+            is Intention.FindByLabel -> {
+                intention.deferred.complete(itemsInCart[intention.label])
             }
-
-            val newValues = itemsInCart.asSortedList()
-            Log.d("New Values", newValues.toString())
-
-            if (allItems.value != newValues) {
-                allItems.value = newValues
+            is Intention.Upsert -> {
+                itemsInCart[intention.itemWithQuantity.item.label] = intention.itemWithQuantity
+            }
+            is Intention.Remove -> {
+                itemsInCart.remove(intention.itemWithQuantity.item.label)
+            }
+            is Intention.Empty -> {
+                itemsInCart.clear()
             }
         }
+
+        allItems.value = itemsInCart.asSortedList()
     }
 
-
     override suspend fun empty() {
-        actor.send(Intention.Empty)
+        send(Intention.Empty)
     }
 
     override suspend fun upsert(itemWithQuantity: ItemWithQuantity) {
-        actor.send(Intention.Upsert(itemWithQuantity))
+        send(Intention.Upsert(itemWithQuantity))
     }
 
     override suspend fun remove(itemWithQuantity: ItemWithQuantity) {
-        actor.send(Intention.Remove(itemWithQuantity))
+        send(Intention.Remove(itemWithQuantity))
     }
 
     override suspend fun findByLabel(label: String): ItemWithQuantity? {
         val deferred = CompletableDeferred<ItemWithQuantity?>()
-        actor.send(
+        send(
             Intention.FindByLabel(
                 label = label,
                 deferred = deferred
