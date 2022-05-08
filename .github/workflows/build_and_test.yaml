@@ -1,0 +1,66 @@
+# This workflow will build the project with Gradle, run integration tests, and release.
+# Because secrets are not available on external forks, this job is expected to fail
+# on external pull requests.
+
+name: Build project & run tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.repository == 'handstandsam/ShoppingApp' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up our JDK environment
+        uses: actions/setup-java@v2
+        with:
+          distribution: zulu
+          java-version: 11
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: true
+      matrix:
+        api-level:
+          - 29
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Set up our JDK environment
+        uses: actions/setup-java@v2
+        with:
+          distribution: zulu
+          java-version: 11
+
+      - name: Dependency Guard
+        run: ./gradlew dependencyGuard --stacktrace
+
+      - name: Run Tests
+        run: ./gradlew check --stacktrace
+
+      - name: (Fail-only) Bundle test reports
+        if: failure()
+        run: find . -type d -name 'reports' | zip -@ -r build-reports.zip
+
+      - name: (Fail-only) Upload the build report
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: error-report
+          path: build-reports.zip

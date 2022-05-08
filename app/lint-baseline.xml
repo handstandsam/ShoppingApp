@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.1.3" type="baseline" client="gradle" dependencies="false" name="AGP (7.1.3)" variant="all" version="7.1.3">
+
+    <issue
+        id="ObsoleteLintCustomCheck"
+        message="Lint found one or more custom checks that could not be loaded. The most likely reason for this is that it is using an older, incompatible or unsupported API in lint. Make sure these lint checks are updated to the new APIs. The issue registry class is timber.lint.IssueRegistry. The class loading issue is com/android/tools/lint/detector/api/Detector$JavaPsiScanner: ClassLoader.defineClass1(ClassLoader.java:-2)←ClassLoader.defineClass(ClassLoader.java:1017)←UrlClassLoader.consumeClassData(UrlClassLoader.java:269)←JdkZipResourceFile.findClass(JdkZipResourceFile.java:147)←JarLoader.findClass(JarLoader.java:55)←ClassPath.findClassInLoader(ClassPath.java:224)←ClassPath.findClass(ClassPath.java:207)←UrlClassLoader.findClass(UrlClassLoader.java:207)">
+        <location
+            file="../../../../.gradle/caches/transforms-3/3d2ab2ce3c955b687e014bf0e07d7331/transformed/timber-4.5.1/jars/lint.jar"/>
+    </issue>
+
+    <issue
+        id="ScrollViewSize"
+        message="This LinearLayout should use `android:layout_height=&quot;wrap_content&quot;`"
+        errorLine1="            android:layout_height=&quot;match_parent&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_item_detail.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ScrollViewSize"
+        message="This FrameLayout should use `android:layout_height=&quot;wrap_content&quot;`"
+        errorLine1="        android:layout_height=&quot;match_parent&quot;>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_login.xml"
+            line="9"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ManifestOrder"
+        message="`&lt;uses-permission>` tag appears after `&lt;application>` tag"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; />"
+        errorLine2="     ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="41"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ModifierParameter"
+        message="Modifier parameter should be the first optional parameter"
+        errorLine1="    modifier: Modifier = Modifier,"
+        errorLine2="    ~~~~~~~~">
+        <location
+            file="src/main/java/com/handstandsam/shoppingapp/compose/TextWithShadow.kt"
+            line="24"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedMaterialScaffoldPaddingParameter"
+        message="Content padding parameter it is not used"
+        errorLine1="    ) {"
+        errorLine2="      ^">
+        <location
+            file="src/main/java/com/handstandsam/shoppingapp/compose/AppScaffold.kt"
+            line="87"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="IntentFilterExportedReceiver"
+        message="As of Android 12, `android:exported` must be set; use `true` to make the activity \&#xA;available to other apps, and `false` otherwise. For launcher activities, this should be set to `true`."
+        errorLine1="        &lt;activity"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="14"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ObsoleteLayoutParam"
+        message="Invalid layout param in a `LinearLayout`: `layout_alignParentTop`"
+        errorLine1="                android:layout_alignParentTop=&quot;true&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_item_detail.xml"
+            line="25"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteLayoutParam"
+        message="Invalid layout param in a `LinearLayout`: `layout_below`"
+        errorLine1="                android:layout_below=&quot;@+id/title_text&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_item_detail.xml"
+            line="35"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteLayoutParam"
+        message="Invalid layout param in a `LinearLayout`: `layout_centerHorizontal`"
+        errorLine1="                android:layout_centerHorizontal=&quot;true&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_item_detail.xml"
+            line="36"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?android:attr/actionBarItemBackground` with a theme that also paints a background (inferred theme is `@style/AppTheme`)"
+        errorLine1="    android:background=&quot;?android:attr/actionBarItemBackground&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/view_alertsbadge.xml"
+            line="7"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.checkout_menu` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/checkout_menu.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black&quot;>#000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_red` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_red&quot;>#f44336&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_purple` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_purple&quot;>#9c27b0&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_indigo` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_indigo&quot;>#3f51b5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="14"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_teal` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_teal&quot;>#009688&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="18"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_light_green` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_light_green&quot;>#8bc34a&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="20"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_lime` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_lime&quot;>#cddc39&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="21"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_yellow` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_yellow&quot;>#ffeb3b&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="22"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_orange` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_orange&quot;>#ff9800&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="24"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.material_grey` appears to be unused"
+        errorLine1="    &lt;color name=&quot;material_grey&quot;>#9e9e9e&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="27"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.one` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;one&quot;>8dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="3"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.three` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;three&quot;>24dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.four` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;four&quot;>32dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="6"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.alpha` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;alpha&quot;>0.8&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="8"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.item_in_cart_label` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;item_in_cart_label&quot;>20sp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.category_title` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;category_title&quot;>32sp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.welcome_message` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;welcome_message&quot;>20sp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="13"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.menu_item_size` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;menu_item_size&quot;>48dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_baseline_add_circle_24px` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_baseline_add_circle_24px.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_baseline_remove_circle_24px` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_baseline_remove_circle_24px.xml"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.selector` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/selector.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.message` appears to be unused"
+        errorLine1="    &lt;string name=&quot;message&quot;>Welcome&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="3"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.empty_cart` appears to be unused"
+        errorLine1="    &lt;string name=&quot;empty_cart&quot;>Empty Cart&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.checkout` appears to be unused"
+        errorLine1="    &lt;string name=&quot;checkout&quot;>Checkout&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.cart` appears to be unused"
+        errorLine1="    &lt;string name=&quot;cart&quot;>Cart&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.CategoryRowTitle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;CategoryRowTitle&quot; parent=&quot;TextAppearance.AppCompat&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="11"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.ItemRowTitle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;ItemRowTitle&quot; parent=&quot;CategoryRowTitle&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="29"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.CartItemRowTitle` appears to be unused"
+        errorLine1="    &lt;style name=&quot;CartItemRowTitle&quot; parent=&quot;TextAppearance.AppCompat&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="37"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `FrameLayout` parent is unnecessary"
+        errorLine1="        &lt;LinearLayout"
+        errorLine2="         ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_login.xml"
+            line="11"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `FrameLayout` layout or its `FrameLayout` parent is unnecessary; transfer the `background` attribute to the other view"
+        errorLine1="    &lt;FrameLayout"
+        errorLine2="     ~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/view_alertsbadge.xml"
+            line="10"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="SmallSp"
+        message="Avoid using sizes smaller than `11sp`: `10sp`"
+        errorLine1="                android:textSize=&quot;10sp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/view_alertsbadge.xml"
+            line="36"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/view_alertsbadge.xml"
+            line="15"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="KeyboardInaccessibleWidget"
+        message="&apos;clickable&apos; attribute found, please also add &apos;focusable&apos;"
+        errorLine1="    android:clickable=&quot;true&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/view_alertsbadge.xml"
+            line="8"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Shopping App&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Shopping App&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_login.xml"
+            line="22"
+            column="17"/>
+    </issue>
+
+</issues>
