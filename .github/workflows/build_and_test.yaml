@@ -49,10 +49,10 @@ jobs:
           java-version: 11
 
       - name: Dependency Guard
-        run: ./gradlew dependencyGuard --stacktrace
+        run: ./gradlew dependencyGuard --scan --stacktrace
 
       - name: Run Tests
-        run: ./gradlew check --stacktrace
+        run: ./gradlew check --scan --stacktrace
 
       - name: (Fail-only) Bundle test reports
         if: failure()

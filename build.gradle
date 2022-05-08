@@ -4,6 +4,7 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        gradlePluginPortal()
     }
     dependencies {
         classpath(libs.android.gradle.plugin)
@@ -23,5 +24,13 @@ allprojects {
         mavenCentral()
         maven { url "https://kotlin.bintray.com/kotlinx/" }
         maven { url 'https://jitpack.io' }
+    }
+}
+
+// Allow Gradle Build Scans
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
     }
 }
