@@ -14,6 +14,7 @@ apache_commons = "2.4"
 assertj = "3.11.1"
 coil_compose = "1.3.1"
 compose = "1.2.0-alpha08"
+dependency_guard = "0.2.0-SNAPSHOT"
 espresso = "3.1.1"
 glide = "4.11.0"
 junit = "4.12"
@@ -81,3 +82,6 @@ sqldelight_coroutines_extensions = { module = "com.squareup.sqldelight:coroutine
 sqldelight_gradle_plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight_jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+[plugins]
+dependency_guard = { id = "com.dropbox.dependency-guard", version.ref = "dependency_guard" }
