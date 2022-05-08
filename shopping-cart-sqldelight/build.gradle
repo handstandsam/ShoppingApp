@@ -1,4 +1,4 @@
-apply plugin: 'com.handstandsam.jvm.lib'
+apply plugin: 'com.handstandsam.android.lib'
 apply plugin: "com.squareup.sqldelight"
 
 dependencies {
