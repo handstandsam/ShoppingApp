@@ -1,6 +1,5 @@
 package com.handstandsam.shoppingapp
 
-import android.app.Application
 import com.handstandsam.shoppingapp.di.NetworkGraph
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
@@ -46,6 +45,6 @@ class InMemoryNetworkGraph : NetworkGraph {
 
 }
 
-fun Application.serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
+fun serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
     return InMemoryNetworkGraph()
 }

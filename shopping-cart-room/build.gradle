@@ -1,13 +1,6 @@
 apply plugin: 'com.handstandsam.android.lib'
 apply plugin: "kotlin-kapt"
 
-android {
-
-    packagingOptions {
-        exclude 'META-INF/atomicfu.kotlin_module'
-    }
-}
-
 dependencies {
     api project(":shopping-cart")
 
@@ -26,8 +19,8 @@ dependencies {
     implementation libs.androidx.lifecycle.livedata.core
     // LiveData for Reactive Streams from Queries
 
-    // Unit Tests
-    androidTestImplementation libs.junit
-    androidTestImplementation libs.androidx.persistence.room.test // Test helpers
-    androidTestImplementation libs.androidx.testrunner
+//    // Unit Tests
+//    androidTestImplementation libs.junit
+//    androidTestImplementation libs.androidx.persistence.room.test // Test helpers
+//    androidTestImplementation libs.androidx.testrunner
 }

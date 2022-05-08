@@ -1,4 +1,4 @@
-apply plugin: 'com.handstandsam.android.lib'
+apply plugin: 'kotlin'
 
 dependencies {
     implementation libs.kotlin.std.lib
