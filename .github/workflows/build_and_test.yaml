@@ -48,11 +48,8 @@ jobs:
           distribution: zulu
           java-version: 11
 
-      - name: Dependency Guard
-        run: ./gradlew dependencyGuard --scan --stacktrace
-
-      - name: Run Tests
-        run: ./gradlew check --scan --stacktrace
+      - name: Run Checks
+        run: ./gradlew dependencyGuard check --scan --stacktrace
 
       - name: (Fail-only) Bundle test reports
         if: failure()
