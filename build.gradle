@@ -21,7 +21,9 @@ plugins {
 }
 
 dependencyGuard {
-    configuration("classpath")
+    configuration("classpath") {
+        modules = false
+    }
 }
 
 allprojects {
