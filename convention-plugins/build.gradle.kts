@@ -23,3 +23,16 @@ java {
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(8)
 }
+
+gradlePlugin {
+    plugins {
+        plugins.create("com.handstandsam.jvm.lib") {
+            id = "com.handstandsam.jvm.lib"
+            implementationClass = "com.handstandsam.JvmLibConventionPlugin"
+        }
+        plugins.create("com.handstandsam.android.lib") {
+            id = "com.handstandsam.android.lib"
+            implementationClass = "com.handstandsam.AndroidLibConventionPlugin"
+        }
+    }
+}
