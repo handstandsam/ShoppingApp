@@ -17,7 +17,10 @@ internal
 fun KotlinMultiplatformExtension.sourceSets(configure: Action<NamedDomainObjectContainer<KotlinSourceSet>>): Unit =
     (this as org.gradle.api.plugins.ExtensionAware).extensions.configure("sourceSets", configure)
 
-private val Project.kotlin: KotlinMultiplatformExtension get() = extensions.getByName("kotlin") as KotlinMultiplatformExtension
+private val Project.kotlin: KotlinMultiplatformExtension
+    get() = extensions.getByType(
+        KotlinMultiplatformExtension::class.java
+    )
 
 class JvmKmpLibConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
