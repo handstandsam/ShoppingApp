@@ -141,5 +141,7 @@ dependencies {
 }
 
 dependencyGuard {
-    configuration("inmemoryDebugRuntimeClasspath")
+    configuration("inmemoryDebugRuntimeClasspath") {
+        modules = true
+    }
 }
