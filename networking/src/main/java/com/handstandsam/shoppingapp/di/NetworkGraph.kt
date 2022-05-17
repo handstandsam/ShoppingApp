@@ -1,5 +1,6 @@
 package com.handstandsam.shoppingapp.di
-
+import io.ktor.client.*
+import io.ktor.client.engine.okhttp.*
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.CategoryRepo
@@ -40,12 +41,14 @@ open class BaseNetworkGraph(
 
     private val coroutinesCallAdapterFactory = CoroutineCallAdapterFactory()
 
+    private val okHttpClient = okHttpClientBuilder.build()
+
     private val retrofitBuilder: Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(networkConfig.fullUrl)
             .addConverterFactory(moshiConverterFactory)
             .addCallAdapterFactory(coroutinesCallAdapterFactory)
-            .client(okHttpClientBuilder.build())
+            .client(okHttpClient)
 
     private val retrofit: Retrofit = retrofitBuilder.build()
 
@@ -55,6 +58,13 @@ open class BaseNetworkGraph(
 
     override val itemRepo: ItemRepo = NetworkItemRepo(shoppingService)
 
-    override val userRepo: UserRepo = NetworkUserRepo(shoppingService)
+    val ktorClient = HttpClient(OkHttp) {
+        engine {
+            preconfigured = okHttpClient
+        }
+    }
+
+    override val userRepo: UserRepo = NetworkUserRepo(shoppingService, ktorClient)
+
 
 }

@@ -11,5 +11,9 @@ dependencies {
 
     implementation libs.retrofit.coroutines.adapter
 
+    implementation(libs.ktor.client)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.kotlinx.serialization.json)
+
     implementation project(":models")
 }

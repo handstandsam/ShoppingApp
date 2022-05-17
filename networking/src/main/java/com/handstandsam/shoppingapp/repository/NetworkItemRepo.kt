@@ -13,6 +13,6 @@ class NetworkItemRepo(private val shoppingService: ShoppingService) : ItemRepo {
                 return NetworkResult.Success(items)
             }
         }
-        return NetworkResult.Failure(response)
+        return NetworkResult.Failure()
     }
 }

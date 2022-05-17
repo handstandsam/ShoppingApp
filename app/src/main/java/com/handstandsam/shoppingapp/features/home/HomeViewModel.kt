@@ -31,13 +31,13 @@ class HomeViewModel(
                 categoryRepo.getCategories()
             }
             when (categoriesResult) {
-                is NetworkResult.Success -> {
+                is NetworkResult.Success<List<Category>> -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
-                is NetworkResult.Failure -> {
+                else -> {
                     Timber.d("onError")
                 }
-            }.exhaustive
+            }
         }
 
 

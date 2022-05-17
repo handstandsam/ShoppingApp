@@ -13,7 +13,7 @@ class NetworkCategoryRepo(private val shoppingService: ShoppingService) : Catego
                 return NetworkResult.Success(categories)
             }
         }
-        return NetworkResult.Failure(response)
+        return NetworkResult.Failure()
 
     }
 }

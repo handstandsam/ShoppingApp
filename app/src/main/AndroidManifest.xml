@@ -14,7 +14,7 @@
         <activity
             android:name="com.handstandsam.shoppingapp.features.login.LoginActivity"
             android:launchMode="singleTask"
-            android:exported="false"
+            android:exported="true"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

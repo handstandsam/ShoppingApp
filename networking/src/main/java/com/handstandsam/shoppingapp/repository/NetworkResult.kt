@@ -1,8 +1,6 @@
 package com.handstandsam.shoppingapp.repository
 
-import retrofit2.Response
-
-sealed class NetworkResult<out T> {
-    data class Success<T>(val body: T) : NetworkResult<T>()
-    data class Failure<T>(val errorResponse: Response<T>? = null) : NetworkResult<T>()
+sealed interface NetworkResult<T> {
+    data class Success<T>(val body: T) : NetworkResult<T>
+    class Failure<T> : NetworkResult<T>
 }
