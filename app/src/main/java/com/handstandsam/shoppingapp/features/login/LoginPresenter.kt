@@ -42,8 +42,8 @@ class LoginPresenter(
             val userResult = userRepo.login(LoginRequest(username, password))
             when (userResult) {
                 is Response.Success<User> -> {
-                    userPreferences.setRememberMe(rememberMe, view.username)
-                    sessionManager.currentUser = userResult.body
+                    userPreferences.setLastLoggedInUsername(rememberMe, view.username)
+                    sessionManager.updateCurrentUser(userResult.body)
                     view.startHomeActivity()
                 }
                 is Response.Failure -> {

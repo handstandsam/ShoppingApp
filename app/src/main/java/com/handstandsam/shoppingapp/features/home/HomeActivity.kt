@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.HomeScreen
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
+import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +27,9 @@ class HomeActivity : LoggedInActivity() {
                     when (it) {
                         is HomeViewModel.SideEffect.LaunchCategoryActivity -> {
                             CategoryActivity.launch(this@HomeActivity, it.category)
+                        }
+                        HomeViewModel.SideEffect.Logout -> {
+                            LoginActivity.launch(this@HomeActivity)
                         }
                     }.exhaustive
                 }

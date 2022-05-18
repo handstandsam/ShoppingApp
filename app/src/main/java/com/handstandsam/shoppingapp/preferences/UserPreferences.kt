@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.handstandsam.shoppingapp.models.User
+import java.io.IOException
 import org.json.JSONObject
 import timber.log.Timber
-import java.io.IOException
 
 class UserPreferences(context: Context) {
 
@@ -24,40 +24,41 @@ class UserPreferences(context: Context) {
         }
         set(value) = sharedPreferences.edit().putString(LAST_LOGGED_IN_USERNAME, value).apply()
 
-    var currentUser: User?
-        get() {
-            val json = sharedPreferences.getString(CURRENT_USER, null)
-            if (json != null) {
-                try {
-                    val jsonObject = JSONObject(json)
-                    return User(
-                        firstname = jsonObject.optString("firstname"),
-                        lastname = jsonObject.optString("lastname")
-                    )
-                } catch (e: IOException) {
-                    Timber.w(e)
-                }
+    fun updateRememberedUser(user: User?) {
+        sharedPreferences.edit().apply {
+            if (user != null) {
+                putString(
+                    CURRENT_USER,
+                    JSONObject()
+                        .apply {
+                            put("firstname", user.firstname)
+                            put("lastname", user.lastname)
+                        }
+                        .toString()
+                )
+            } else {
+                remove(CURRENT_USER)
             }
-            return null
-        }
-        set(user) {
-            sharedPreferences.edit().putString(
-                CURRENT_USER,
-                JSONObject()
-                    .apply {
-                        put("firstname", user?.firstname)
-                        put("lastname", user?.lastname)
-                    }
-                    .toString()
-            ).apply()
-        }
-
-    fun clearRememberMe() {
-        setRememberMe(false, null)
-        currentUser = null
+        }.apply()
     }
 
-    fun setRememberMe(rememberMe: Boolean, username: String?) {
+    fun getRememberedUser(): User? {
+        val json = sharedPreferences.getString(CURRENT_USER, null)
+        if (json != null) {
+            try {
+                val jsonObject = JSONObject(json)
+                return User(
+                    firstname = jsonObject.optString("firstname"),
+                    lastname = jsonObject.optString("lastname")
+                )
+            } catch (e: IOException) {
+                Timber.w(e)
+            }
+        }
+        return null
+    }
+
+    fun setLastLoggedInUsername(rememberMe: Boolean, username: String?) {
         sharedPreferences.edit().putBoolean(REMEMBER_ME, rememberMe).apply()
         if (rememberMe) {
             lastLoggedInUsername = username

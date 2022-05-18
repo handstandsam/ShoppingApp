@@ -7,6 +7,8 @@ import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -38,10 +40,18 @@ class HomeViewModel(
             }
         }
 
-
-        val currentUser = sessionManager.currentUser
-        val welcomeStr = "Welcome back " + currentUser?.firstname + " " + currentUser?.lastname
-        send(Intention.WelcomeMessage(welcomeStr))
+        sessionManager.currentUser
+            .onEach { currentUser ->
+                if (currentUser != null) {
+                    val welcomeStr =
+                        "Welcome back " + currentUser.firstname + " " + currentUser.lastname
+                    send(Intention.WelcomeMessage(welcomeStr))
+                } else {
+                    sessionManager.logout()
+                    sideEffect(HomeViewModel.SideEffect.Logout)
+                }
+            }
+            .launchIn(scope)
     }
 
     override fun reduce(state: State, intention: Intention): State {
@@ -66,14 +76,14 @@ class HomeViewModel(
         val welcomeMessage: String = ""
     )
 
-    sealed class Intention {
-        data class WelcomeMessage(val welcomeMessage: String) : Intention()
-        data class CategoriesReceived(val categories: List<Category>) : Intention()
-        data class CategoryClicked(val category: Category) : Intention()
+    sealed interface Intention {
+        data class WelcomeMessage(val welcomeMessage: String) : Intention
+        data class CategoriesReceived(val categories: List<Category>) : Intention
+        data class CategoryClicked(val category: Category) : Intention
     }
 
-    sealed class SideEffect {
-        data class LaunchCategoryActivity(val category: Category) : SideEffect()
-
+    sealed interface SideEffect {
+        data class LaunchCategoryActivity(val category: Category) : SideEffect
+        object Logout : SideEffect
     }
 }
