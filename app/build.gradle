@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion Integer.parseInt(libs.versions.android.compile.sdk.get())
+    compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
     defaultConfig {
         applicationId "com.handstandsam.shoppingapp"
