@@ -6,20 +6,19 @@ import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.network.Response
-import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkCategoryRepo
-import com.handstandsam.shoppingapp.repository.NetworkItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkResult
-import com.handstandsam.shoppingapp.repository.NetworkUserRepo
 import com.handstandsam.shoppingapp.repository.UserRepo
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.request
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
-import kotlinx.coroutines.Deferred
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -45,28 +44,56 @@ open class BaseNetworkGraph(
 
     private val okHttpClient = okHttpClientBuilder.build()
 
-    private val shoppingService: ShoppingService = object : ShoppingService {
-        override fun login(loginRequest: LoginRequest): Deferred<Response<User>> {
-            TODO("Not yet implemented")
-        }
-
-        override fun categories(): Deferred<Response<List<Category>>> {
-            TODO("Not yet implemented")
-        }
-
-        override fun getItemsForCategory(categoryName: String): Deferred<Response<List<Item>>> {
-            TODO("Not yet implemented")
-        }
-
-    }
-
-    override val categoryRepo: CategoryRepo = NetworkCategoryRepo(shoppingService)
-
-    override val itemRepo: ItemRepo = NetworkItemRepo(shoppingService)
 
     val ktorClient = createKtorClient(okHttpClient)
 
-    override val userRepo: UserRepo = NetworkUserRepo(shoppingService, ktorClient)
+
+    override val userRepo: UserRepo = object: UserRepo{
+        override suspend fun login(loginRequest: LoginRequest): Response<User> {
+            val response = ktorClient.request("${networkConfig.fullUrl}login") {
+                method = HttpMethod.Post
+                // TODO
+//                setBody(loginRequest)
+            }
+
+            if (response.status == HttpStatusCode.OK) {
+                val user = response.body<User>()
+                return Response.Success(user)
+
+            }
+            return Response.Failure()
+        }
+    }
+
+    override val categoryRepo: CategoryRepo = object :CategoryRepo {
+        override suspend fun getCategories(): Response<List<Category>> {
+            val response = ktorClient.request("${networkConfig.fullUrl}categories") {
+                method = HttpMethod.Get
+            }
+
+            if (response.status == HttpStatusCode.OK) {
+                val responseBody = response.body<List<Category>>()
+                return Response.Success(responseBody)
+
+            }
+            return Response.Failure()
+        }
+    }
+
+    override val itemRepo: ItemRepo = object: ItemRepo{
+        override suspend fun getItemsForCategory(categoryLabel: String): Response<List<Item>> {
+            val response = ktorClient.request("${networkConfig.fullUrl}categories/${categoryLabel}/items") {
+                method = HttpMethod.Get
+            }
+
+            if (response.status == HttpStatusCode.OK) {
+                val responseBody = response.body<List<Item>>()
+                return Response.Success(responseBody)
+
+            }
+            return Response.Failure()
+        }
+    }
 
     companion object {
         fun createKtorClient(okHttpClient: OkHttpClient): HttpClient {
@@ -74,10 +101,10 @@ open class BaseNetworkGraph(
                 engine {
                     preconfigured = okHttpClient
                 }
+                install(Logging)
                 install(ContentNegotiation) {
                     register(
-//                        contentType = ContentType.Application.Json,
-                        contentType = ContentType.Any,
+                        contentType = ContentType.Application.Json,
                         converter = KotlinxSerializationConverter(
                             Json {
                                 prettyPrint = true

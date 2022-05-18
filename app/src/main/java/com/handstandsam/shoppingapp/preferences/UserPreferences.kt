@@ -31,8 +31,8 @@ class UserPreferences(context: Context) {
                 try {
                     val jsonObject = JSONObject(json)
                     return User(
-                        firstname = jsonObject.getString("firstname"),
-                        lastname = jsonObject.getString("lastname")
+                        firstname = jsonObject.optString("firstname"),
+                        lastname = jsonObject.optString("lastname")
                     )
                 } catch (e: IOException) {
                     Timber.w(e)
@@ -40,13 +40,17 @@ class UserPreferences(context: Context) {
             }
             return null
         }
-        set(user) = sharedPreferences.edit().putString(
-            CURRENT_USER,
-            JSONObject().apply {
-                put("firstname", user!!.firstname)
-                put("lastname", user!!.lastname)
-            }.toString()
-        ).apply()
+        set(user) {
+            sharedPreferences.edit().putString(
+                CURRENT_USER,
+                JSONObject()
+                    .apply {
+                        put("firstname", user?.firstname)
+                        put("lastname", user?.lastname)
+                    }
+                    .toString()
+            ).apply()
+        }
 
     fun clearRememberMe() {
         setRememberMe(false, null)

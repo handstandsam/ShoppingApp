@@ -2,11 +2,9 @@ package com.handstandsam.shoppingapp.features.home
 
 import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Category
-import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.CategoryRepo
-import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
-import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +29,7 @@ class HomeViewModel(
                 categoryRepo.getCategories()
             }
             when (categoriesResult) {
-                is NetworkResult.Success<List<Category>> -> {
+                is Response.Success<List<Category>> -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
                 else -> {

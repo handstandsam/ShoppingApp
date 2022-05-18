@@ -4,6 +4,7 @@ import com.handstandsam.shoppingapp.di.BaseNetworkGraph
 import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
 import okhttp3.Interceptor
@@ -22,8 +23,8 @@ class LiveNetworkGraph(interceptors: List<Interceptor>) : BaseNetworkGraph(
      * so we are just returning a mock for this call.
      */
     override val userRepo: UserRepo = object : UserRepo {
-        override suspend fun login(loginRequest: LoginRequest): NetworkResult<User> {
-            return NetworkResult.Success(
+        override suspend fun login(loginRequest: LoginRequest): Response<User> {
+            return Response.Success(
                 User(
                     firstname = "Live",
                     lastname = "User"
