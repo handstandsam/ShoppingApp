@@ -48,7 +48,7 @@ open class BaseNetworkGraph(
     val ktorClient = createKtorClient(okHttpClient)
 
 
-    override val userRepo: UserRepo = object: UserRepo{
+    override val userRepo: UserRepo = object : UserRepo {
         override suspend fun login(loginRequest: LoginRequest): Response<User> {
             val response = ktorClient.request("${networkConfig.fullUrl}login") {
                 method = HttpMethod.Post
@@ -65,7 +65,7 @@ open class BaseNetworkGraph(
         }
     }
 
-    override val categoryRepo: CategoryRepo = object :CategoryRepo {
+    override val categoryRepo: CategoryRepo = object : CategoryRepo {
         override suspend fun getCategories(): Response<List<Category>> {
             val response = ktorClient.request("${networkConfig.fullUrl}categories") {
                 method = HttpMethod.Get
@@ -80,11 +80,12 @@ open class BaseNetworkGraph(
         }
     }
 
-    override val itemRepo: ItemRepo = object: ItemRepo{
+    override val itemRepo: ItemRepo = object : ItemRepo {
         override suspend fun getItemsForCategory(categoryLabel: String): Response<List<Item>> {
-            val response = ktorClient.request("${networkConfig.fullUrl}categories/${categoryLabel}/items") {
-                method = HttpMethod.Get
-            }
+            val response =
+                ktorClient.request("${networkConfig.fullUrl}category/${categoryLabel}/items") {
+                    method = HttpMethod.Get
+                }
 
             if (response.status == HttpStatusCode.OK) {
                 val responseBody = response.body<List<Item>>()
@@ -102,17 +103,23 @@ open class BaseNetworkGraph(
                     preconfigured = okHttpClient
                 }
                 install(Logging)
+
                 install(ContentNegotiation) {
-                    register(
-                        contentType = ContentType.Application.Json,
-                        converter = KotlinxSerializationConverter(
-                            Json {
-                                prettyPrint = true
-                                isLenient = true
-                                ignoreUnknownKeys = true
-                            }
-                        )
-                    )
+                    KotlinxSerializationConverter(
+                        Json {
+                            prettyPrint = true
+                            isLenient = true
+                            ignoreUnknownKeys = true
+                        }
+                    ).apply {
+
+                        listOf<ContentType>(
+                            ContentType.Application.Json,
+                            ContentType("binary", "octet-stream"), // S3 Bucket
+                        ).forEach { contentType ->
+                            register(contentType, this)
+                        }
+                    }
                 }
             }
         }
