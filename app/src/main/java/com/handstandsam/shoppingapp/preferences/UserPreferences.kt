@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.handstandsam.shoppingapp.models.User
-import com.squareup.moshi.Moshi
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 
 class UserPreferences(context: Context) {
-
-    private var moshi = Moshi.Builder().build()
 
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
@@ -31,7 +29,11 @@ class UserPreferences(context: Context) {
             val json = sharedPreferences.getString(CURRENT_USER, null)
             if (json != null) {
                 try {
-                    return moshi.adapter(User::class.java).fromJson(json)
+                    val jsonObject = JSONObject(json)
+                    return User(
+                        firstname = jsonObject.getString("firstname"),
+                        lastname = jsonObject.getString("lastname")
+                    )
                 } catch (e: IOException) {
                     Timber.w(e)
                 }
@@ -40,7 +42,10 @@ class UserPreferences(context: Context) {
         }
         set(user) = sharedPreferences.edit().putString(
             CURRENT_USER,
-            moshi.adapter(User::class.java).toJson(user)
+            JSONObject().apply {
+                put("firstname", user!!.firstname)
+                put("lastname", user!!.lastname)
+            }.toString()
         ).apply()
 
     fun clearRememberMe() {

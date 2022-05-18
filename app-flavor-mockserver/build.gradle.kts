@@ -1,5 +1,6 @@
 plugins {
-    id("com.handstandsam.jvm.lib")
+//    id("com.handstandsam.jvm.lib")
+    kotlin("jvm")
 }
 
 dependencies {
@@ -10,10 +11,9 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.okhttp)
     implementation(libs.kotlin.std.lib)
-    implementation(libs.moshi)
-    implementation(libs.moshiKotlin)
     implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.std.lib)
+    implementation(libs.kotlinx.serialization.json)
 
     api(libs.okhttp.logging.interceptor)
     api(libs.process.phoenix)

@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.retrofit)
     implementation(libs.kotlin.std.lib)
 
     implementation(project(":models"))

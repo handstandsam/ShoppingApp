@@ -1,20 +1,28 @@
 package com.handstandsam.shoppingapp.di
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
+
+import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
+import com.handstandsam.shoppingapp.models.User
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.network.ShoppingService
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.NetworkCategoryRepo
 import com.handstandsam.shoppingapp.repository.NetworkItemRepo
+import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.NetworkUserRepo
 import com.handstandsam.shoppingapp.repository.UserRepo
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.Moshi
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
+import kotlinx.coroutines.Deferred
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 interface NetworkGraph {
     val categoryRepo: CategoryRepo
@@ -35,36 +43,51 @@ open class BaseNetworkGraph(
         }
     }
 
-    private val moshi = Moshi.Builder().build()
-
-    private val moshiConverterFactory = MoshiConverterFactory.create(moshi)
-
-    private val coroutinesCallAdapterFactory = CoroutineCallAdapterFactory()
-
     private val okHttpClient = okHttpClientBuilder.build()
 
-    private val retrofitBuilder: Retrofit.Builder =
-        Retrofit.Builder()
-            .baseUrl(networkConfig.fullUrl)
-            .addConverterFactory(moshiConverterFactory)
-            .addCallAdapterFactory(coroutinesCallAdapterFactory)
-            .client(okHttpClient)
+    private val shoppingService: ShoppingService = object : ShoppingService {
+        override fun login(loginRequest: LoginRequest): Deferred<Response<User>> {
+            TODO("Not yet implemented")
+        }
 
-    private val retrofit: Retrofit = retrofitBuilder.build()
+        override fun categories(): Deferred<Response<List<Category>>> {
+            TODO("Not yet implemented")
+        }
 
-    private val shoppingService: ShoppingService = retrofit.create(ShoppingService::class.java)
+        override fun getItemsForCategory(categoryName: String): Deferred<Response<List<Item>>> {
+            TODO("Not yet implemented")
+        }
+
+    }
 
     override val categoryRepo: CategoryRepo = NetworkCategoryRepo(shoppingService)
 
     override val itemRepo: ItemRepo = NetworkItemRepo(shoppingService)
 
-    val ktorClient = HttpClient(OkHttp) {
-        engine {
-            preconfigured = okHttpClient
-        }
-    }
+    val ktorClient = createKtorClient(okHttpClient)
 
     override val userRepo: UserRepo = NetworkUserRepo(shoppingService, ktorClient)
 
-
+    companion object {
+        fun createKtorClient(okHttpClient: OkHttpClient): HttpClient {
+            return HttpClient(OkHttp) {
+                engine {
+                    preconfigured = okHttpClient
+                }
+                install(ContentNegotiation) {
+                    register(
+//                        contentType = ContentType.Application.Json,
+                        contentType = ContentType.Any,
+                        converter = KotlinxSerializationConverter(
+                            Json {
+                                prettyPrint = true
+                                isLenient = true
+                                ignoreUnknownKeys = true
+                            }
+                        )
+                    )
+                }
+            }
+        }
+    }
 }

@@ -92,7 +92,6 @@ dependencies {
 
     // Networking
     implementation libs.glide
-    implementation libs.retrofit
     implementation libs.okhttp
     implementation project(":networking")
     debugImplementation libs.okhttp.logging.interceptor
@@ -101,8 +100,6 @@ dependencies {
     implementation libs.kotlin.std.lib
     implementation libs.kotlin.coroutines
     implementation libs.kotlin.coroutines.android
-
-    implementation libs.moshi
 
     //Flavor Modules
     inmemoryImplementation project(":app-flavor-inmemory")
