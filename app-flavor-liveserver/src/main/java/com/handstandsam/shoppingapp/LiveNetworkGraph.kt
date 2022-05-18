@@ -5,7 +5,6 @@ import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.network.Response
-import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.UserRepo
 import okhttp3.Interceptor
 

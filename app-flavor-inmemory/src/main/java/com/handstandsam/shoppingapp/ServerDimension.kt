@@ -42,7 +42,6 @@ class InMemoryNetworkGraph : NetworkGraph {
                 return Response.Success(mockAccount.getUser())
             }
         }
-
 }
 
 fun serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
