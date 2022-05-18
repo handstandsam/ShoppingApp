@@ -42,13 +42,14 @@ class HomeViewModel(
 
         sessionManager.currentUser
             .onEach { currentUser ->
+                println("onEach currentUser: $currentUser")
                 if (currentUser != null) {
                     val welcomeStr =
                         "Welcome back " + currentUser.firstname + " " + currentUser.lastname
                     send(Intention.WelcomeMessage(welcomeStr))
                 } else {
                     sessionManager.logout()
-                    sideEffect(HomeViewModel.SideEffect.Logout)
+                    sideEffect(SideEffect.Logout)
                 }
             }
             .launchIn(scope)
@@ -66,7 +67,9 @@ class HomeViewModel(
                 )
             }
             is Intention.WelcomeMessage -> {
-                state.copy(welcomeMessage = intention.welcomeMessage)
+                state.copy(
+                    welcomeMessage = intention.welcomeMessage
+                )
             }
         }
     }

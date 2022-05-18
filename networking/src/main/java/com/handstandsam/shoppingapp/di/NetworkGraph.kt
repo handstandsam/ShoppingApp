@@ -13,8 +13,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.request
+import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
@@ -52,8 +56,7 @@ open class BaseNetworkGraph(
         override suspend fun login(loginRequest: LoginRequest): Response<User> {
             val response = ktorClient.request("${networkConfig.fullUrl}login") {
                 method = HttpMethod.Post
-                // TODO
-//                setBody(loginRequest)
+                setBody(loginRequest)
             }
 
             if (response.status == HttpStatusCode.OK) {
@@ -82,17 +85,18 @@ open class BaseNetworkGraph(
 
     override val itemRepo: ItemRepo = object : ItemRepo {
         override suspend fun getItemsForCategory(categoryLabel: String): Response<List<Item>> {
+            val itemsForCategoryUrl = "${networkConfig.fullUrl}category/${categoryLabel}/items"
             val response =
-                ktorClient.request("${networkConfig.fullUrl}category/${categoryLabel}/items") {
+                ktorClient.request(itemsForCategoryUrl) {
                     method = HttpMethod.Get
                 }
 
             if (response.status == HttpStatusCode.OK) {
                 val responseBody = response.body<List<Item>>()
                 return Response.Success(responseBody)
-
+            } else {
+                return Response.Failure()
             }
-            return Response.Failure()
         }
     }
 
@@ -102,8 +106,10 @@ open class BaseNetworkGraph(
                 engine {
                     preconfigured = okHttpClient
                 }
-                install(Logging)
-
+                install(Logging) {
+                    logger = Logger.DEFAULT
+                    level = LogLevel.ALL
+                }
                 install(ContentNegotiation) {
                     KotlinxSerializationConverter(
                         Json {
@@ -112,8 +118,7 @@ open class BaseNetworkGraph(
                             ignoreUnknownKeys = true
                         }
                     ).apply {
-
-                        listOf<ContentType>(
+                        listOf(
                             ContentType.Application.Json,
                             ContentType("binary", "octet-stream"), // S3 Bucket
                         ).forEach { contentType ->

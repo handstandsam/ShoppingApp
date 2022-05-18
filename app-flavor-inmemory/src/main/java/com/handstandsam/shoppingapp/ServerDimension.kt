@@ -1,8 +1,10 @@
 package com.handstandsam.shoppingapp
 
 import com.handstandsam.shoppingapp.di.NetworkGraph
+import com.handstandsam.shoppingapp.mockdata.AndroidLibsMockAccount
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.mockdata.ProduceMockAccount
+import com.handstandsam.shoppingapp.mockdata.VideoGameMockAccount
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.LoginRequest
@@ -19,10 +21,10 @@ class InMemoryNetworkGraph : NetworkGraph {
     override val categoryRepo: CategoryRepo =
         object : CategoryRepo {
             override suspend fun getCategories(): Response<List<Category>> {
-                return Response.Success(mockAccount.getCategories())
+                val categories = mockAccount.getCategories()
+                return Response.Success(categories)
             }
         }
-
 
     override val itemRepo: ItemRepo =
         object : ItemRepo {
