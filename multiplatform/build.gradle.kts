@@ -7,7 +7,7 @@ kotlin {
         withJava()
     }
 
-    val useIOs = property("ios") == "true"
+    val useIOs = findProperty("ios") == "true"
 
     if (useIOs) {
         listOf(

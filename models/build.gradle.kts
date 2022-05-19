@@ -1,7 +1,12 @@
 plugins {
-   id("com.handstandsam.multiplatform.lib")
+    id("com.handstandsam.multiplatform.lib")
     kotlin("plugin.serialization") version "1.6.21"
 }
+
+//dependencies {
+//    implementation(kotlin("stdlib"))
+//    implementation(libs.kotlinx.serialization.json)
+//}
 
 kotlin {
     sourceSets {
@@ -15,12 +20,12 @@ kotlin {
             dependencies {
             }
         }
-        val jvmMain  = maybeCreate("commonTest").apply {
+        val jvmMain = maybeCreate("commonTest").apply {
             dependsOn(commonMain)
             dependencies {
             }
         }
-        val jvmTest  = maybeCreate("commonTest").apply {
+        val jvmTest = maybeCreate("commonTest").apply {
             dependsOn(commonMain)
             dependencies {
             }

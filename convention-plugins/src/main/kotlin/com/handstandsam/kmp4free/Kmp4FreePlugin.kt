@@ -21,6 +21,7 @@ class Kmp4FreePlugin : Plugin<Project> {
         } else {
             // Use Standard Kotlin Jvm Plugin
             target.plugins.apply("org.jetbrains.kotlin.jvm")
+            KmpCloakingMagic(target).enable()
         }
 
         target.extensions.getByType(JavaPluginExtension::class.java).apply {
