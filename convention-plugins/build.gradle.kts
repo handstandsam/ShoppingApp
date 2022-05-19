@@ -26,13 +26,24 @@ tasks.withType<JavaCompile>().configureEach {
 
 gradlePlugin {
     plugins {
-        plugins.create("com.handstandsam.jvm.lib") {
-            id = "com.handstandsam.jvm.lib"
-            implementationClass = "com.handstandsam.JvmLibConventionPlugin"
+
+        fun createPlugin(id: String, className: String) {
+            plugins.create(id) {
+                this.id = id
+                implementationClass = className
+            }
         }
-        plugins.create("com.handstandsam.android.lib") {
-            id = "com.handstandsam.android.lib"
-            implementationClass = "com.handstandsam.AndroidLibConventionPlugin"
-        }
+        createPlugin(
+            "com.handstandsam.jvm.lib",
+            "com.handstandsam.convention.plugins.JvmLibConventionPlugin"
+        )
+        createPlugin(
+            "com.handstandsam.android.lib",
+            "com.handstandsam.AndroidLibConventionPlugin"
+        )
+        createPlugin(
+            "com.handstandsam.multiplatform.lib",
+            "com.handstandsam.convention.plugins.KotlinMultiplatformConventionPlugin"
+        )
     }
 }

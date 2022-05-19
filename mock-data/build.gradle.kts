@@ -1,5 +1,5 @@
 plugins {
-    id("com.handstandsam.jvm.lib")
+    id("com.handstandsam.multiplatform.lib")
 }
 
 dependencies {
