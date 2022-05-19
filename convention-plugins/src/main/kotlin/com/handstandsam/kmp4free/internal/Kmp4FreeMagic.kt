@@ -59,33 +59,28 @@ class Kmp4FreeMagic(private val target: Project) {
     private fun configureSourceSets() {
         multiplatformExtension.sourceSets {
             // Ensure commonMain uses Sources from src/main
-            val commonMain by getting {
-                kotlin.srcDirs("src/main/java", "src/main/kotlin")
+            listOf(
+                "commonMain",
+                "jvmMain"
+            ).forEach {
+                maybeCreate(it).apply {
+                    kotlin.srcDirs("src/main/java", "src/main/kotlin")
+                }
             }
 
-            val jvmMain = maybeCreate("jvmMain").apply {
-                kotlin.srcDirs("src/main/java", "src/main/kotlin")
+            listOf(
+                "commonTest",
+                "jvmTest"
+            ).forEach {
+                maybeCreate(it).apply {
+                    kotlin.srcDirs("src/test/java", "src/test/kotlin")
+                }
             }
 
-            // Map all "main" configuration to "commonMain" and "jvmMain"
-            // commonMainApi extendsFrom api
+            // Extend SourceSets
             Kmp4FreeSourceSetMagic(target).apply {
                 extendSourceSet("commonMain", "main")
                 extendSourceSet("jvmTest", "test")
-            }
-//            setupMainSourceSetConfigurations(commonMain)
-
-            // Map all "test" configuration to "jvmTest"
-            val jvmTest by getting {
-                // Without this, would only have src/jvmTest/...
-                kotlin.srcDirs("src/test/java", "src/test/kotlin")
-            }
-//            setupTestSourceSetConfigurations(jvmTest)
-
-            // Ensure commonTest uses Sources from src/test
-            val commonTest by getting {
-                // Without this, would only have src/commonTest/...
-                kotlin.srcDirs("src/test/java", "src/test/kotlin")
             }
         }
     }
