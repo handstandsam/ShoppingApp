@@ -1,5 +1,6 @@
 package com.handstandsam.shoppingapp.features.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
+import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.home.HomeActivity
 import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.preferences.UserPreferences
@@ -122,5 +124,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         presenter.onResume()
+    }
+
+    companion object {
+        fun launch(context: Context){
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

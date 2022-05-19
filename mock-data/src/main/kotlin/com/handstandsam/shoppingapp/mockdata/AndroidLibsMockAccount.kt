@@ -61,8 +61,8 @@ class AndroidLibsMockAccount : MockAccount() {
             items.add(
                 Item(
                     "Butter Knife",
-                    "http://jakewharton.github.io/butterknife/static/logo.png",
-                    "http://jakewharton.github.io/butterknife/"
+                    "https://jakewharton.github.io/butterknife/static/logo.png",
+                    "https://jakewharton.github.io/butterknife/"
                 )
             )
 
@@ -115,7 +115,7 @@ class AndroidLibsMockAccount : MockAccount() {
                 ,
                 Item(
                     "Picasso",
-                    "http://square.github.io/picasso/static/sample.png",
+                    "https://square.github.io/picasso/static/sample.png",
                     "https://square.github.io/picasso/"
                 )
             )

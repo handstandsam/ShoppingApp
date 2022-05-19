@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.retrofit)
     implementation(libs.kotlin.std.lib)
+    implementation(libs.okhttp)
 
     implementation(project(":models"))
     implementation(project(":networking"))

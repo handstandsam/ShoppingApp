@@ -2,8 +2,8 @@ package com.handstandsam.shoppingapp.features.category
 
 import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +24,10 @@ class CategoryViewModel(
         scope.launch(Dispatchers.IO) {
             val categoriesResult = itemRepo.getItemsForCategory(categoryLabel)
             when (categoriesResult) {
-                is NetworkResult.Success -> {
+                is Response.Success -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
-                is NetworkResult.Failure -> {
+                is Response.Failure -> {
                     error("Ooops")
                 }
             }.exhaustive

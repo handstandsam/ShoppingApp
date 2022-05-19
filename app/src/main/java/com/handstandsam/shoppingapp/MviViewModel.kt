@@ -31,10 +31,13 @@ abstract class MviViewModel<State, Intention, SideEffect>(
 
     private val actor = scope.actor<Intention> {
         channel.consumeEach { intention ->
-            _states.value = reduce(
+            println("Intention: $intention")
+            val newState = reduce(
                 state = _states.value,
                 intention = intention
             )
+            println("NewState: $newState")
+            _states.value = newState
         }
     }
 

@@ -2,13 +2,13 @@ package com.handstandsam.shoppingapp.features.home
 
 import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Category
-import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.CategoryRepo
-import com.handstandsam.shoppingapp.repository.NetworkResult
 import com.handstandsam.shoppingapp.repository.SessionManager
-import com.handstandsam.shoppingapp.utils.exhaustive
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -31,7 +31,7 @@ class HomeViewModel(
                 categoryRepo.getCategories()
             }
             when (categoriesResult) {
-                is NetworkResult.Success<List<Category>> -> {
+                is Response.Success<List<Category>> -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
                 else -> {
@@ -40,10 +40,19 @@ class HomeViewModel(
             }
         }
 
-
-        val currentUser = sessionManager.currentUser
-        val welcomeStr = "Welcome back " + currentUser?.firstname + " " + currentUser?.lastname
-        send(Intention.WelcomeMessage(welcomeStr))
+        sessionManager.currentUser
+            .onEach { currentUser ->
+                println("onEach currentUser: $currentUser")
+                if (currentUser != null) {
+                    val welcomeStr =
+                        "Welcome back " + currentUser.firstname + " " + currentUser.lastname
+                    send(Intention.WelcomeMessage(welcomeStr))
+                } else {
+                    sessionManager.logout()
+                    sideEffect(SideEffect.Logout)
+                }
+            }
+            .launchIn(scope)
     }
 
     override fun reduce(state: State, intention: Intention): State {
@@ -58,7 +67,9 @@ class HomeViewModel(
                 )
             }
             is Intention.WelcomeMessage -> {
-                state.copy(welcomeMessage = intention.welcomeMessage)
+                state.copy(
+                    welcomeMessage = intention.welcomeMessage
+                )
             }
         }
     }
@@ -68,14 +79,14 @@ class HomeViewModel(
         val welcomeMessage: String = ""
     )
 
-    sealed class Intention {
-        data class WelcomeMessage(val welcomeMessage: String) : Intention()
-        data class CategoriesReceived(val categories: List<Category>) : Intention()
-        data class CategoryClicked(val category: Category) : Intention()
+    sealed interface Intention {
+        data class WelcomeMessage(val welcomeMessage: String) : Intention
+        data class CategoriesReceived(val categories: List<Category>) : Intention
+        data class CategoryClicked(val category: Category) : Intention
     }
 
-    sealed class SideEffect {
-        data class LaunchCategoryActivity(val category: Category) : SideEffect()
-
+    sealed interface SideEffect {
+        data class LaunchCategoryActivity(val category: Category) : SideEffect
+        object Logout : SideEffect
     }
 }

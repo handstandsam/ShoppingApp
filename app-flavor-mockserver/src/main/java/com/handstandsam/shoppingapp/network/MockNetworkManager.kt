@@ -3,11 +3,11 @@ package com.handstandsam.shoppingapp.network
 import com.handstandsam.shoppingapp.mockaccount.EndpointUrls
 import com.handstandsam.shoppingapp.mockdata.MockAccount
 import com.handstandsam.shoppingapp.models.NetworkConfig
-import com.handstandsam.shoppingapp.models.User
-import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -18,11 +18,11 @@ class MockNetworkManager(
     private val mockAccount: MockAccount
 ) {
 
-    private var moshi = Moshi.Builder().build()
-
     private fun processCategoriesRequest(): MockResponse {
-        val json = moshi.adapter(List::class.java).toJson(mockAccount.getCategories())
+
+        val json = Json.encodeToString(mockAccount.getCategories())
         return MockResponse().apply {
+            addApplicationJsonContentTypeHeader()
             setBody(json)
         }
     }
@@ -31,8 +31,9 @@ class MockNetworkManager(
         mockAccount.itemsByCategory.keys.forEach { categoryId ->
             if (requestUrl.contains(EndpointUrls.getItemsForCategoryUrl(categoryId))) {
                 val items = mockAccount.itemsByCategory[categoryId]
-                val json = moshi.adapter(List::class.java).toJson(items)
+                val json = Json.encodeToString(items)
                 return MockResponse().apply {
+                    addApplicationJsonContentTypeHeader()
                     setBody(json)
                 }
             }
@@ -50,14 +51,15 @@ class MockNetworkManager(
         server.start(networkConfig.port)
         println("Server started on port: ${server.port}")
 
-        server.setDispatcher(object : Dispatcher() {
+        server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 println("Request: $request")
                 val url = request.requestUrl.toString()
                 return when {
                     url.contains(EndpointUrls.loginUrl) -> {
-                        val json = moshi.adapter(User::class.java).toJson(mockAccount.getUser())
+                        val json = Json.encodeToString(mockAccount.getUser())
                         MockResponse().apply {
+                            addApplicationJsonContentTypeHeader()
                             setBody(json)
                         }
                     }
@@ -74,7 +76,7 @@ class MockNetworkManager(
                     }
                 }
             }
-        })
+        }
     }
 
     init {
@@ -84,4 +86,8 @@ class MockNetworkManager(
             }
         }
     }
+}
+
+private fun MockResponse.addApplicationJsonContentTypeHeader() {
+    addHeader("content-type", "application/json")
 }

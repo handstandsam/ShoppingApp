@@ -22,11 +22,8 @@ kotlin = "1.6.21"
 kotlin_coroutines = "1.6.1"
 kotlinx_serialization = "1.3.3"
 ktor = "2.0.1"
-moshi = "1.6.0"
-okhttp = "3.10.0"
+okhttp = "4.9.3"
 process_phoenix = "2.0.0"
-retrofit = "2.3.0"
-retrofit_coroutines_adapter = "0.9.2"
 sqldelight = "1.5.3"
 timber = "4.5.1"
 accompanist_coil = "0.15.0"
@@ -71,17 +68,15 @@ kotlin_gradle_plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
 ktor_client = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor_client_logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor_client_okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor_client_content_negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor_serialization_kotlinx_json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 landscapist_coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "landscapist_coil" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp_logging_interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp_mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
-moshiKotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 process_phoenix = { module = "com.jakewharton:process-phoenix", version.ref = "process_phoenix" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit_coroutines_adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "retrofit_coroutines_adapter" }
-retrofit_moshi_converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 sqldelight_android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight_coroutines_extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight_gradle_plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }

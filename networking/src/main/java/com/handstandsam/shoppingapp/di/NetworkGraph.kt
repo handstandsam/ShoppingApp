@@ -1,20 +1,31 @@
 package com.handstandsam.shoppingapp.di
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
+
+import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
+import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.NetworkConfig
-import com.handstandsam.shoppingapp.network.ShoppingService
+import com.handstandsam.shoppingapp.models.User
+import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkCategoryRepo
-import com.handstandsam.shoppingapp.repository.NetworkItemRepo
-import com.handstandsam.shoppingapp.repository.NetworkUserRepo
 import com.handstandsam.shoppingapp.repository.UserRepo
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.Moshi
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.request
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 interface NetworkGraph {
     val categoryRepo: CategoryRepo
@@ -35,36 +46,87 @@ open class BaseNetworkGraph(
         }
     }
 
-    private val moshi = Moshi.Builder().build()
-
-    private val moshiConverterFactory = MoshiConverterFactory.create(moshi)
-
-    private val coroutinesCallAdapterFactory = CoroutineCallAdapterFactory()
-
     private val okHttpClient = okHttpClientBuilder.build()
 
-    private val retrofitBuilder: Retrofit.Builder =
-        Retrofit.Builder()
-            .baseUrl(networkConfig.fullUrl)
-            .addConverterFactory(moshiConverterFactory)
-            .addCallAdapterFactory(coroutinesCallAdapterFactory)
-            .client(okHttpClient)
 
-    private val retrofit: Retrofit = retrofitBuilder.build()
+    val ktorClient = createKtorClient(okHttpClient)
 
-    private val shoppingService: ShoppingService = retrofit.create(ShoppingService::class.java)
 
-    override val categoryRepo: CategoryRepo = NetworkCategoryRepo(shoppingService)
+    override val userRepo: UserRepo = object : UserRepo {
+        override suspend fun login(loginRequest: LoginRequest): Response<User> {
+            val response = ktorClient.request("${networkConfig.fullUrl}login") {
+                method = HttpMethod.Post
+                setBody(loginRequest)
+            }
 
-    override val itemRepo: ItemRepo = NetworkItemRepo(shoppingService)
+            if (response.status == HttpStatusCode.OK) {
+                val user = response.body<User>()
+                return Response.Success(user)
 
-    val ktorClient = HttpClient(OkHttp) {
-        engine {
-            preconfigured = okHttpClient
+            }
+            return Response.Failure()
         }
     }
 
-    override val userRepo: UserRepo = NetworkUserRepo(shoppingService, ktorClient)
+    override val categoryRepo: CategoryRepo = object : CategoryRepo {
+        override suspend fun getCategories(): Response<List<Category>> {
+            val response = ktorClient.request("${networkConfig.fullUrl}categories") {
+                method = HttpMethod.Get
+            }
 
+            if (response.status == HttpStatusCode.OK) {
+                val responseBody = response.body<List<Category>>()
+                return Response.Success(responseBody)
 
+            }
+            return Response.Failure()
+        }
+    }
+
+    override val itemRepo: ItemRepo = object : ItemRepo {
+        override suspend fun getItemsForCategory(categoryLabel: String): Response<List<Item>> {
+            val itemsForCategoryUrl = "${networkConfig.fullUrl}category/${categoryLabel}/items"
+            val response =
+                ktorClient.request(itemsForCategoryUrl) {
+                    method = HttpMethod.Get
+                }
+
+            if (response.status == HttpStatusCode.OK) {
+                val responseBody = response.body<List<Item>>()
+                return Response.Success(responseBody)
+            } else {
+                return Response.Failure()
+            }
+        }
+    }
+
+    companion object {
+        fun createKtorClient(okHttpClient: OkHttpClient): HttpClient {
+            return HttpClient(OkHttp) {
+                engine {
+                    preconfigured = okHttpClient
+                }
+                install(Logging) {
+                    logger = Logger.DEFAULT
+                    level = LogLevel.ALL
+                }
+                install(ContentNegotiation) {
+                    KotlinxSerializationConverter(
+                        Json {
+                            prettyPrint = true
+                            isLenient = true
+                            ignoreUnknownKeys = true
+                        }
+                    ).apply {
+                        listOf(
+                            ContentType.Application.Json,
+                            ContentType("binary", "octet-stream"), // S3 Bucket
+                        ).forEach { contentType ->
+                            register(contentType, this)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
