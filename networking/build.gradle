@@ -1,4 +1,4 @@
-apply plugin: 'kotlin'
+apply plugin: 'com.handstandsam.multiplatform.lib'
 
 dependencies {
     implementation libs.kotlin.std.lib
@@ -11,6 +11,4 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation project(":models")
-
-    testImplementation(libs.junit)
 }
