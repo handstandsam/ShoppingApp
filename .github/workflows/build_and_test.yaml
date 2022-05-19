@@ -51,11 +51,11 @@ jobs:
       - name: Dependency Guard
         run: ./gradlew dependencyGuard --scan --stacktrace
 
-      - name: Run Checks without Multiplatform
-        run: ./gradlew check -Pmultiplatform=false -Pios=false --scan --stacktrace
+      - name: Run App Checks with JVM
+        run: ./gradlew :app:check -Pmultiplatform=false -Pios=false --scan --stacktrace
 
-      - name: Run Checks with Multiplatform
-        run: ./gradlew check -Pmultiplatform=true -Pios=true --scan --stacktrace
+      - name: Run All Checks with Multiplatform
+        run: ./gradlew :multiplatform:check -Pmultiplatform=true -Pios=true --scan --stacktrace
 
       - name: Run Checks
         run: ./gradlew check --scan --stacktrace

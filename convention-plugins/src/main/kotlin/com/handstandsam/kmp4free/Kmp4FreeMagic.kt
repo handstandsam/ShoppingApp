@@ -1,6 +1,5 @@
-package com.handstandsam.convention.plugins
+package com.handstandsam.kmp4free
 
-import com.handstandsam.ConventionPluginsGradlePropertyValues
 import org.gradle.api.Action
 import org.gradle.api.GradleException
 import org.gradle.api.NamedDomainObjectContainer
@@ -16,9 +15,9 @@ import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
 /**
  * Allows us to use the SourceSet Structure of a JVM Project in a Multiplatform Project
  */
-class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
+class Kmp4FreeMagic(private val target: Project) {
 
-    private val gradleProperties = ConventionPluginsGradlePropertyValues(target)
+    private val gradleProperties = Kmp4FreePropertyValues(target)
 
     private val multiplatformExtension =
         target.extensions.getByType(KotlinMultiplatformExtension::class.java)
@@ -136,7 +135,6 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
 
         configureSourceSets()
         createTestTaskAliasToJvmTest()
-        JvmLibConventionPlugin.setJvmVersionCompatibility(target)
     }
 
     private fun configureSourceSets() {
@@ -146,7 +144,11 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
                 kotlin.srcDirs("src/main/java", "src/main/kotlin")
             }
 
-            // Map all "main" configuration to "commonMain"
+            val jvmMain = maybeCreate("jvmMain").apply {
+                kotlin.srcDirs("src/main/java", "src/main/kotlin")
+            }
+
+            // Map all "main" configuration to "commonMain" and "jvmMain"
             setupMainSourceSetConfigurations(commonMain)
 
             // Map all "test" configuration to "jvmTest"
