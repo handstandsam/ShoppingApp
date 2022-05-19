@@ -40,3 +40,6 @@ captures/
 *.jks
 
 .idea
+
+# iOS
+xcuserdata

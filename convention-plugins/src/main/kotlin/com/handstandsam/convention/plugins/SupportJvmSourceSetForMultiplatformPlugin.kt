@@ -36,6 +36,15 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
         val compileOnly = configurations.maybeCreate("compileOnly")
         val runtimeOnly = configurations.maybeCreate("runtimeOnly")
 
+        val apiDependenciesMetadata =
+            configurations.maybeCreate("apiDependenciesMetadata")
+        val implementationDependenciesMetadata =
+            configurations.maybeCreate("implementationDependenciesMetadata")
+        val compileOnlyDependenciesMetadata =
+            configurations.maybeCreate("compileOnlyDependenciesMetadata")
+        val runtimeOnlyDependenciesMetadata =
+            configurations.maybeCreate("runtimeOnlyDependenciesMetadata")
+
         configurations.getByName(commonMain.apiConfigurationName)
             .extendsFrom(api)
         configurations.getByName(commonMain.implementationConfigurationName)
@@ -44,6 +53,15 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
             .extendsFrom(compileOnly)
         configurations.getByName(commonMain.runtimeOnlyConfigurationName)
             .extendsFrom(runtimeOnly)
+
+        configurations.getByName(commonMain.apiMetadataConfigurationName)
+            .extendsFrom(apiDependenciesMetadata)
+        configurations.getByName(commonMain.implementationMetadataConfigurationName)
+            .extendsFrom(implementationDependenciesMetadata)
+        configurations.getByName(commonMain.compileOnlyMetadataConfigurationName)
+            .extendsFrom(compileOnlyDependenciesMetadata)
+        configurations.getByName(commonMain.runtimeOnlyMetadataConfigurationName)
+            .extendsFrom(runtimeOnlyDependenciesMetadata)
     }
 
     /**
@@ -88,10 +106,6 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
         }
     }
 
-    private fun enableIosTarget() {
-        multiplatformExtension.ios()
-    }
-
     /**
      * Configures the [sourceSets] of the [KotlinSourceSet] extension.
      */
@@ -108,7 +122,9 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
             }
             if (gradleProperties.isIosEnabled) {
                 println("Enabling iOS Multiplatform Target for ${target.path}")
-                enableIosTarget()
+                multiplatformExtension.apply {
+                    ios()
+                }
             }
             if (gradleProperties.isJsEnabled) {
                 println("Enabling JavaScript Multiplatform Target for ${target.path}")
