@@ -93,6 +93,7 @@ dependencies {
     // Networking
     implementation libs.glide
     implementation libs.okhttp
+    implementation project(":multiplatform")
     implementation project(":networking")
     debugImplementation libs.okhttp.logging.interceptor
 

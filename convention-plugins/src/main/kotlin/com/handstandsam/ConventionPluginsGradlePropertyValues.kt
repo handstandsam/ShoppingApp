@@ -17,7 +17,7 @@ class ConventionPluginsGradlePropertyValues(private val project: Project) {
             if (!isMultiplatformEnabled) {
                 throw GradleException("You cannot specify -Pjs without also specifying `-Pmultiplatform")
             }
-            return project.hasProperty("js")
+            return project.hasProperty("js") && project.findProperty("js") != "false"
         }
 
     val isIosEnabled: Boolean
@@ -25,6 +25,6 @@ class ConventionPluginsGradlePropertyValues(private val project: Project) {
             if (!isMultiplatformEnabled) {
                 throw GradleException("You cannot specify -Pios without also specifying `-Pmultiplatform")
             }
-            return project.hasProperty("ios")
+            return project.hasProperty("ios") && project.findProperty("ios") != "false"
         }
 }
