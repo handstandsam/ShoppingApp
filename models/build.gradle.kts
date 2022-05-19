@@ -4,27 +4,23 @@ plugins {
 }
 
 kotlin {
-    jvm()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
     sourceSets {
-        val commonMain by getting {
+        val commonMain = maybeCreate("commonMain").apply {
             dependencies {
                 implementation(kotlin("stdlib"))
                 implementation(libs.kotlinx.serialization.json)
             }
         }
-        val commonTest by getting {
+        val commonTest = maybeCreate("commonTest").apply {
             dependencies {
             }
         }
-        val jvmMain by getting {
+        val jvmMain  = maybeCreate("commonTest").apply {
             dependsOn(commonMain)
             dependencies {
             }
         }
-        val jvmTest by getting {
+        val jvmTest  = maybeCreate("commonTest").apply {
             dependsOn(commonMain)
             dependencies {
             }

@@ -123,7 +123,9 @@ class SupportJvmSourceSetForMultiplatformPlugin(private val target: Project) {
             if (gradleProperties.isIosEnabled) {
                 println("Enabling iOS Multiplatform Target for ${target.path}")
                 multiplatformExtension.apply {
-                    ios()
+                    iosX64()
+                    iosArm64()
+                    iosSimulatorArm64()
                 }
             }
             if (gradleProperties.isJsEnabled) {
