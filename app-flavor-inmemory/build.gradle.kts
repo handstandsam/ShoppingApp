@@ -1,6 +1,5 @@
 plugins {
-//    id("com.handstandsam.jvm.lib")
-    kotlin("jvm")
+    id("com.handstandsam.jvm.lib")
 }
 
 dependencies {

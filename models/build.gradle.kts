@@ -1,7 +1,5 @@
 plugins {
    id("com.handstandsam.multiplatform.lib")
-//    kotlin("jvm")
-//     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.6.21"
 }
 
