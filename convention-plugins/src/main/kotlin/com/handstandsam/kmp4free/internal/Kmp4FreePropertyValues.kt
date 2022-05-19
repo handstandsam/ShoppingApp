@@ -1,10 +1,10 @@
-package com.handstandsam.kmp4free
+package com.handstandsam.kmp4free.internal
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 
 /**
- * Helpers to access relevant gradle properties in a clean way
+ * Helpers to access relevant Gradle properties in a clean way
  */
 internal class Kmp4FreePropertyValues(private val project: Project) {
     val isMultiplatformEnabled: Boolean
@@ -15,7 +15,7 @@ internal class Kmp4FreePropertyValues(private val project: Project) {
     val isJsEnabled: Boolean
         get() {
             if (!isMultiplatformEnabled) {
-                throw GradleException("You cannot specify -Pjs without also specifying `-Pmultiplatform")
+                throw GradleException("You cannot specify -P$GRADLE_PROPERTY_JS without also specifying `-P$GRADLE_PROPERTY_MULTIPLATFORM")
             }
             return project.findProperty(GRADLE_PROPERTY_JS) == "true"
         }
@@ -23,7 +23,7 @@ internal class Kmp4FreePropertyValues(private val project: Project) {
     val isIosEnabled: Boolean
         get() {
             if (!isMultiplatformEnabled) {
-                throw GradleException("You cannot specify -Pios without also specifying `-Pmultiplatform")
+                throw GradleException("You cannot specify -P$GRADLE_PROPERTY_IOS without also specifying `-P$GRADLE_PROPERTY_MULTIPLATFORM")
             }
             return project.findProperty(GRADLE_PROPERTY_IOS) == "true"
         }

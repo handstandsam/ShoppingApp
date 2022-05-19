@@ -1,5 +1,8 @@
 package com.handstandsam.kmp4free
 
+import com.handstandsam.kmp4free.internal.Kmp4FreeCloakingMagic
+import com.handstandsam.kmp4free.internal.Kmp4FreeMagic
+import com.handstandsam.kmp4free.internal.Kmp4FreePropertyValues
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -21,7 +24,7 @@ class Kmp4FreePlugin : Plugin<Project> {
         } else {
             // Use Standard Kotlin Jvm Plugin
             target.plugins.apply("org.jetbrains.kotlin.jvm")
-            KmpCloakingMagic(target).enable()
+            Kmp4FreeCloakingMagic(target).enable()
         }
 
         target.extensions.getByType(JavaPluginExtension::class.java).apply {
