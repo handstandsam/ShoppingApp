@@ -14,22 +14,16 @@ import org.gradle.api.plugins.JavaPluginExtension
 class Kmp4FreePlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        val kmp4freeProperties = Kmp4FreePropertyValues(target)
-
-        // If property set with -Pmultiplatform=true
-        if (kmp4freeProperties.isMultiplatformEnabled) {
-            println("Multiplatform Plugin Applied To: ${target.path}")
+        if (Kmp4FreePropertyValues(target).isMultiplatformEnabled) {
+            // Use Kotlin Multiplatform Plugin
+            println("Applying Plugin org.jetbrains.kotlin.multiplatform to ${target.path}")
             target.plugins.apply("org.jetbrains.kotlin.multiplatform")
             Kmp4FreeMagic(target).enable()
         } else {
-            // Use Standard Kotlin Jvm Plugin
+            // Use Kotlin JVM Plugin
+            println("Applying Plugin org.jetbrains.kotlin.jvm to ${target.path}")
             target.plugins.apply("org.jetbrains.kotlin.jvm")
             Kmp4FreeCloakingMagic(target).enable()
-        }
-
-        target.extensions.getByType(JavaPluginExtension::class.java).apply {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
         }
     }
 }

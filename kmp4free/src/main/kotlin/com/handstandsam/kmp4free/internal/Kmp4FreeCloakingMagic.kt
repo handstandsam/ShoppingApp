@@ -13,23 +13,26 @@ class Kmp4FreeCloakingMagic(private val target: Project) {
      */
     fun enable() {
         target.extensions.getByType(KotlinProjectExtension::class.java).apply {
-            sourceSets.getByName("main").apply {
-                // Without this, would only have src/main/...
-                kotlin.srcDirs("src/commonMain/java", "src/commonMain/kotlin")
-            }
+//            sourceSets.getByName("main").apply {
+//                kotlin.srcDirs("src/commonMain/java", "src/commonMain/kotlin")
+//            }
+//
+//            sourceSets.getByName("test").apply {
+//                kotlin.srcDirs("src/commonTest/java", "src/commonTest/kotlin")
+//            }
 
             Kmp4FreeSourceSetMagic(target).apply {
-                extendSourceSet(
+                extendConfigurationsAndSourceSets(
+                    extendsFromSourceSetName = "commonMain",
                     sourceSetName = "main",
-                    extendsFromSourceSetName = "commonMain"
                 )
-                extendSourceSet(
+                extendConfigurationsAndSourceSets(
+                    extendsFromSourceSetName = "commonTest",
                     sourceSetName = "test",
-                    extendsFromSourceSetName = "commonTest"
                 )
-                extendSourceSet(
+                extendConfigurationsAndSourceSets(
+                    extendsFromSourceSetName = "jvmTest",
                     sourceSetName = "test",
-                    extendsFromSourceSetName = "jvmTest"
                 )
             }
         }

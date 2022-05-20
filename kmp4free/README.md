@@ -43,8 +43,11 @@ When tests are already written with JVM Libraries like JUnit and Google's Truth 
 
 #### Configuration Mapping
 * `commonMainImplementation` ➡️ `implementation`
-* `commonMainImplementation` ➡️ `implementation`
-* `api` ➡️ `commonMainApi`
+* `commonMainApi` ➡️ `api`
+* `commonTestImplementation` ➡️ `testImplementation`
+* `commonTestApi` ➡️ `testApi`
+* `jvmTestImplementation` ➡️ `testImplementation`
+* `jvmTestApi` ➡️ `testApi`
 
 You can set the following properties in your `gradle.properties`
 
