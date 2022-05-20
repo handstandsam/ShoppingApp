@@ -46,6 +46,6 @@ class InMemoryNetworkGraph : NetworkGraph {
         }
 }
 
-fun serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
+fun serverDimensionNetworkGraph(): NetworkGraph {
     return InMemoryNetworkGraph()
 }

@@ -15,6 +15,3 @@ class Something {
         }.toTypedArray()
     }
 }
-
-@JsExport
-data class CategoryData(val label: String, val image: String)

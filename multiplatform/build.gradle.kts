@@ -7,8 +7,8 @@ kotlin {
         withJava()
     }
 
-    val useIos = findProperty("ios") == "true"
-    val useJs = findProperty("js") == "true"
+    val useIos = findProperty("kmp4free.ios") == "true"
+    val useJs = findProperty("kmp4free.js") == "true"
 
     if (useIos) {
         listOf(
@@ -18,11 +18,6 @@ kotlin {
         ).forEach {
             it.binaries.framework {
                 baseName = "multiplatform"
-//           export(project(":models"))
-//            export(project(":mock-data"))
-//            export(project(":shopping-cart"))
-                // Export transitively.
-                // transitiveExport = true
             }
         }
     }
@@ -48,7 +43,9 @@ kotlin {
             dependencies {
                 api(project(":models"))
                 api(project(":mock-data"))
-//                api(project(":shopping-cart"))
+                implementation(project(":shopping-cart"))
+                implementation(project(":networking"))
+                implementation(libs.ktor.client)
             }
         }
         val commonTest by getting {
@@ -59,6 +56,7 @@ kotlin {
         val jvmMain by getting {
             dependsOn(commonMain)
             dependencies {
+                implementation(libs.ktor.client.okhttp)
             }
         }
         val jvmTest by getting {
@@ -69,6 +67,7 @@ kotlin {
             val jsMain by getting {
                 dependsOn(commonMain)
                 dependencies {
+                    implementation(libs.ktor.client.js)
                 }
             }
             val jsTest by getting {
@@ -85,6 +84,9 @@ kotlin {
                 iosX64Main.dependsOn(this)
                 iosArm64Main.dependsOn(this)
                 iosSimulatorArm64Main.dependsOn(this)
+                dependencies {
+                    implementation(libs.ktor.client.cio)
+                }
             }
             val iosX64Test by getting
             val iosArm64Test by getting

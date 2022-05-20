@@ -34,7 +34,7 @@ gradlePlugin {
             }
         }
         createPlugin(
-            "com.handstandsam.multiplatform.lib",
+            "com.handstandsam.kmp4free",
             "com.handstandsam.kmp4free.Kmp4FreePlugin"
         )
     }

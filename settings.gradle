@@ -25,6 +25,7 @@ include ':mock-data'
 include ':models'
 include ':multiplatform'
 include ':networking'
+include ':networking-jvm'
 
 includeBuild('convention-plugins') {
     dependencySubstitution {

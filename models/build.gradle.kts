@@ -1,5 +1,5 @@
 plugins {
-    id("com.handstandsam.multiplatform.lib")
+    id("com.handstandsam.kmp4free")
     kotlin("plugin.serialization") version "1.6.21"
 }
 
