@@ -23,11 +23,26 @@ internal class Kmp4FreeSourceSetMagic(
     private val sourceSets: NamedDomainObjectContainer<KotlinSourceSet> =
         kotlinProjectExtension.sourceSets
 
-    fun extendSourceSet(
-        sourceSetName: String,
+    fun extendConfigurationsAndSourceSets(
         extendsFromSourceSetName: String,
+        sourceSetName: String,
     ) {
-        logger.info("** $sourceSetName extendsFrom $extendsFromSourceSetName **")
+        // Extend SourceSets
+        logger.info("--------")
+        sourceSets.findByName(sourceSetName)?.apply {
+            logger.info("** SourceSets: $sourceSetName now includes sources from $extendsFromSourceSetName **")
+            listOf(
+                "src/$extendsFromSourceSetName/java",
+                "src/$extendsFromSourceSetName/kotlin",
+            ).forEach {
+                kotlin.srcDir(it)
+                logger.info("Added $it as a srcDir for $sourceSetName")
+            }
+            logger.info("--------")
+        }
+
+        // Extend Configurations
+        logger.info("** Configurations: $sourceSetName extendsFrom $extendsFromSourceSetName **")
         listOf(
             "api",
             "implementation",

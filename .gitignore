@@ -43,3 +43,6 @@ captures/
 
 # iOS
 xcuserdata
+
+# Kotlin JS
+yarn.lock

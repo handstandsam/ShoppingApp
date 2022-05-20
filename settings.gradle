@@ -31,3 +31,8 @@ includeBuild('convention-plugins') {
         substitute module('com.handstandsam:convention-plugins') using project(':')
     }
 }
+includeBuild('kmp4free') {
+    dependencySubstitution {
+        substitute module('com.handstandsam:kmp4free') using project(':')
+    }
+}
