@@ -16,7 +16,7 @@ interface AppGraph {
 class AppGraphImpl(application: Application) : AppGraph {
     override val sessionGraph = SessionGraphImpl(application)
 
-    override val networkGraph = serverDimensionNetworkGraph(debugDimensionInterceptors(application))
+    override val networkGraph = serverDimensionNetworkGraph()
 
     private val appScope = CoroutineScope(Dispatchers.IO)
 

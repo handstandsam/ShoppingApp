@@ -105,8 +105,6 @@ io.ktor:ktor-client-core-jvm:2.0.1
 io.ktor:ktor-client-core:2.0.1
 io.ktor:ktor-client-logging-jvm:2.0.1
 io.ktor:ktor-client-logging:2.0.1
-io.ktor:ktor-client-okhttp-jvm:2.0.1
-io.ktor:ktor-client-okhttp:2.0.1
 io.ktor:ktor-events-jvm:2.0.1
 io.ktor:ktor-events:2.0.1
 io.ktor:ktor-http-jvm:2.0.1

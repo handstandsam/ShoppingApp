@@ -8,5 +8,6 @@ dependencies {
 
     implementation(project(":models"))
     implementation(project(":networking"))
+    implementation(project(":networking-jvm"))
 
 }

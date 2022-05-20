@@ -1,8 +1,7 @@
 package com.handstandsam.shoppingapp
 
 import com.handstandsam.shoppingapp.di.NetworkGraph
-import okhttp3.Interceptor
 
-fun serverDimensionNetworkGraph(interceptors: List<Interceptor>): NetworkGraph {
-    return LiveNetworkGraph(interceptors)
+fun serverDimensionNetworkGraph(): NetworkGraph {
+    return LiveNetworkGraph()
 }

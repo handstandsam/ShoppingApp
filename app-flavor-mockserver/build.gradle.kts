@@ -5,10 +5,10 @@ plugins {
 dependencies {
     implementation(project(":mock-data"))
     implementation(project(":networking"))
+    implementation(project(":networking-jvm"))
     implementation(project(":models"))
 
     implementation(libs.timber)
-    implementation(libs.okhttp)
     implementation(libs.kotlin.std.lib)
     implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.std.lib)

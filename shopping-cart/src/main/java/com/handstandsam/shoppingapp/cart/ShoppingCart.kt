@@ -39,7 +39,8 @@ class ShoppingCart(private val shoppingCartDao: ShoppingCartDao) {
     /**
      * Exposes a current list of the Items in the Cart
      */
-    suspend fun itemsInCart(): List<ItemWithQuantity> {
+    // Visible for Testing
+    suspend fun latestItemsInCart(): List<ItemWithQuantity> {
         return shoppingCartDao.allItems
             .first()
     }
