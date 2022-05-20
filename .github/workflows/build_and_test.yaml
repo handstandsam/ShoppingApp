@@ -60,7 +60,7 @@ jobs:
       - name: Run All Checks with Multiplatform - KMP4FREE Enabled
         run: ./gradlew check -Pkmp4free.multiplatform=true -Pkmp4free.ios=true -Pkmp4free.js=true --scan --stacktrace
 
-      - name: Run Checks
+      - name: Run All Checks - KMP4FREE Disabled
         run: ./gradlew check --scan --stacktrace
 
       - name: (Fail-only) Bundle test reports

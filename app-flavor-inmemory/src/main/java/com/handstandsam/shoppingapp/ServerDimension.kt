@@ -13,7 +13,6 @@ import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
 import com.handstandsam.shoppingapp.repository.UserRepo
-import okhttp3.Interceptor
 
 val mockAccount: MockAccount = ProduceMockAccount()
 

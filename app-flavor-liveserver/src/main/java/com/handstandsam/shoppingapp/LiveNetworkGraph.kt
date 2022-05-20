@@ -7,9 +7,8 @@ import com.handstandsam.shoppingapp.models.NetworkConfig
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.UserRepo
-import okhttp3.Interceptor
 
-class LiveNetworkGraph() : BaseNetworkGraph(
+class LiveNetworkGraph : BaseNetworkGraph(
     networkConfig = NetworkConfig(
         baseUrl = "https://shopping-app.s3.amazonaws.com",
         isMockServer = false,
