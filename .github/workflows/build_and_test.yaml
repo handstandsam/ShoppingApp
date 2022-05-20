@@ -51,8 +51,11 @@ jobs:
       - name: Dependency Guard
         run: ./gradlew dependencyGuard --scan --stacktrace
 
-      - name: Run App Checks with JVM - KMP4FREE Disabled
-        run: ./gradlew check -Pkmp4free.multiplatform=false --scan --stacktrace
+      - name: Run App Assemble with JVM - KMP4FREE Disabled
+        run: ./gradlew :app:assemble -Pkmp4free.multiplatform=false --scan --stacktrace
+
+      - name: Run App Assemble with JVM - KMP4FREE Enabled
+        run: ./gradlew :app:assemble -Pkmp4free.multiplatform=true --scan --stacktrace
 
       - name: Run All Checks with Multiplatform - KMP4FREE Enabled
         run: ./gradlew check -Pkmp4free.multiplatform=true -Pkmp4free.ios=true -Pkmp4free.js=true --scan --stacktrace

@@ -112,7 +112,6 @@ open class BaseNetworkGraph(
                     level = LogLevel.HEADERS
                 }
                 install(ContentNegotiation) {
-
                     val jsonConfig = Json {
                         prettyPrint = true
                         isLenient = true
