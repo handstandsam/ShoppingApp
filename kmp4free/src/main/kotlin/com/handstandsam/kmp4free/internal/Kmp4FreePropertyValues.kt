@@ -1,6 +1,5 @@
 package com.handstandsam.kmp4free.internal
 
-import org.gradle.api.GradleException
 import org.gradle.api.Project
 
 /**
@@ -14,23 +13,17 @@ internal class Kmp4FreePropertyValues(private val project: Project) {
 
     val isJsEnabled: Boolean
         get() {
-            if (!isMultiplatformEnabled) {
-                throw GradleException("You cannot specify -P$GRADLE_PROPERTY_JS without also specifying `-P$GRADLE_PROPERTY_MULTIPLATFORM")
-            }
             return project.findProperty(GRADLE_PROPERTY_JS) == "true"
         }
 
     val isIosEnabled: Boolean
         get() {
-            if (!isMultiplatformEnabled) {
-                throw GradleException("You cannot specify -P$GRADLE_PROPERTY_IOS without also specifying `-P$GRADLE_PROPERTY_MULTIPLATFORM")
-            }
             return project.findProperty(GRADLE_PROPERTY_IOS) == "true"
         }
 
     companion object {
-        const val GRADLE_PROPERTY_MULTIPLATFORM = "multiplatform"
-        const val GRADLE_PROPERTY_JS = "js"
-        const val GRADLE_PROPERTY_IOS = "ios"
+        const val GRADLE_PROPERTY_MULTIPLATFORM = "kmp4free.multiplatform"
+        const val GRADLE_PROPERTY_JS = "kmp4free.js"
+        const val GRADLE_PROPERTY_IOS = "kmp4free.ios"
     }
 }

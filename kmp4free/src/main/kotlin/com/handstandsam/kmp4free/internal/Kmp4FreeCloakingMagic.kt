@@ -1,8 +1,6 @@
 package com.handstandsam.kmp4free.internal
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.getting
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 
 /**
@@ -15,7 +13,7 @@ class Kmp4FreeCloakingMagic(private val target: Project) {
      */
     fun enable() {
         target.extensions.getByType(KotlinProjectExtension::class.java).apply {
-            val main by sourceSets.getting {
+            sourceSets.getByName("main").apply {
                 // Without this, would only have src/main/...
                 kotlin.srcDirs("src/commonMain/java", "src/commonMain/kotlin")
             }

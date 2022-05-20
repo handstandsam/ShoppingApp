@@ -26,6 +26,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 gradlePlugin {
     plugins {
+
         fun createPlugin(id: String, className: String) {
             plugins.create(id) {
                 this.id = id
@@ -33,12 +34,8 @@ gradlePlugin {
             }
         }
         createPlugin(
-            "com.handstandsam.jvm.lib",
-            "com.handstandsam.convention.plugins.JvmLibConventionPlugin"
-        )
-        createPlugin(
-            "com.handstandsam.android.lib",
-            "com.handstandsam.AndroidLibConventionPlugin"
+            "com.handstandsam.multiplatform.lib",
+            "com.handstandsam.kmp4free.Kmp4FreePlugin"
         )
     }
 }
