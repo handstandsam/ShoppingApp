@@ -37,6 +37,7 @@ When tests are already written with JVM Libraries like JUnit and Google's Truth 
 
 #### SourceSet Mapping
 * `src/commonMain` ➡️ `src/main`
+* `src/jvmMain` ➡️ `src/main`
 * `src/commonTest` ➡️ `src/test`
 * `src/jvmTest` ➡️ `src/test`
 
