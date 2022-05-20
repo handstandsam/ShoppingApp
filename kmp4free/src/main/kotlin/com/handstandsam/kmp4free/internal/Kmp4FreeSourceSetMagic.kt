@@ -27,6 +27,7 @@ internal class Kmp4FreeSourceSetMagic(
         extendsFromSourceSetName: String,
         sourceSetName: String,
     ) {
+        // Extend SourceSets
         logger.info("--------")
         sourceSets.findByName(sourceSetName)?.apply {
             logger.info("** SourceSets: $sourceSetName now includes sources from $extendsFromSourceSetName **")
@@ -40,6 +41,7 @@ internal class Kmp4FreeSourceSetMagic(
             logger.info("--------")
         }
 
+        // Extend Configurations
         logger.info("** Configurations: $sourceSetName extendsFrom $extendsFromSourceSetName **")
         listOf(
             "api",
