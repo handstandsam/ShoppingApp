@@ -1,10 +1,7 @@
 package com.handstandsam.kmp4free.internal
 
-import org.gradle.api.Action
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 /**
  * Allows us to use the SourceSet Structure of a JVM Project in a Multiplatform Project
@@ -13,18 +10,9 @@ class Kmp4FreeMagic(private val target: Project) {
 
     private val gradleProperties = Kmp4FreePropertyValues(target)
 
-    private val multiplatformExtension =
-        target.extensions.getByType(KotlinMultiplatformExtension::class.java)
-
-    /**
-     * Configures the [sourceSets] of the [KotlinSourceSet] extension.
-     */
-    private fun KotlinMultiplatformExtension.sourceSets(
-        configure: Action<NamedDomainObjectContainer<KotlinSourceSet>>
-    ): Unit = (this as org.gradle.api.plugins.ExtensionAware).extensions
-        .configure("sourceSets", configure)
-
-    fun enable() {
+    fun enableKotlinMultiplatform() {
+        val multiplatformExtension =
+            target.extensions.getByType(KotlinMultiplatformExtension::class.java)
         multiplatformExtension.apply {
             // Always enable JVM
             jvm {
@@ -46,32 +34,53 @@ class Kmp4FreeMagic(private val target: Project) {
             }
         }
 
-        multiplatformExtension.sourceSets {
-            // Extend Configurations and SourceSets
-            Kmp4FreeSourceSetMagic(target).apply {
-                extendConfigurationsAndSourceSets(
-                    extendsFromSourceSetName = "main",
-                    sourceSetName = "commonMain",
-                )
-                extendConfigurationsAndSourceSets(
-                    extendsFromSourceSetName = "test",
-                    sourceSetName = "jvmTest"
-                )
-            }
+        // Extend Configurations and SourceSets
+        Kmp4FreeSourceSetMagic(target).apply {
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "main",
+                sourceSetName = "commonMain",
+            )
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "test",
+                sourceSetName = "jvmTest"
+            )
         }
-        createTestTaskAliasToJvmTest()
-    }
 
-    /**
-     * Create a "test" task that will map to "jvmTest"
-     */
-    private fun createTestTaskAliasToJvmTest() {
+        // Create a "test" task that will map to "jvmTest"
         if (target.tasks.findByName("test") == null) {
             target.tasks.create("test").apply {
                 dependsOn(target.tasks.findByName("jvmTest"))
                 group = "Verification"
                 description = "Alias for jvmTest"
             }
+        }
+    }
+
+
+    /**
+     * Allow us to specify dependencies as "commonMain", "commonTest", "jvmMain", "jvmTest"
+     */
+    fun enableKotlinJvm() {
+        Kmp4FreeSourceSetMagic(target).apply {
+            // Main Sources
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "commonMain",
+                sourceSetName = "main",
+            )
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "jvmMain",
+                sourceSetName = "main",
+            )
+
+            // Test Sources
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "commonTest",
+                sourceSetName = "test",
+            )
+            extendConfigurationsAndSourceSets(
+                extendsFromSourceSetName = "jvmTest",
+                sourceSetName = "test",
+            )
         }
     }
 }
