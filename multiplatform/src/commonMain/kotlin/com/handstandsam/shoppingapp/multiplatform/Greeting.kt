@@ -7,4 +7,8 @@ class Greeting {
         val user = User("Sam", "Edwards")
         return "Hello ($user), ${Platform().platform}!"
     }
+
+    fun user(firstname: String, lastname: String): User {
+        return User(firstname = firstname, lastname = lastname)
+    }
 }
