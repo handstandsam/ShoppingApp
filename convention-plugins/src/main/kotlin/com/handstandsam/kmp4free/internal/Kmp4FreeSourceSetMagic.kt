@@ -15,6 +15,8 @@ internal class Kmp4FreeSourceSetMagic(
 ) {
     private val configurations: ConfigurationContainer = target.configurations
 
+    private val logger = target.logger
+
     private val kotlinProjectExtension: KotlinProjectExtension =
         target.extensions.getByType(KotlinProjectExtension::class.java)
 
@@ -25,7 +27,7 @@ internal class Kmp4FreeSourceSetMagic(
         sourceSetName: String,
         extendsFromSourceSetName: String,
     ) {
-        println("** $sourceSetName extendsFrom $extendsFromSourceSetName **")
+        logger.info("** $sourceSetName extendsFrom $extendsFromSourceSetName **")
         listOf(
             "api",
             "implementation",
@@ -41,12 +43,13 @@ internal class Kmp4FreeSourceSetMagic(
             } else {
                 "${sourceSetName}${it.capitalized()}"
             }
-            val extendsFromSourceSetTargetConfigurationName = if (sourceSetName == "test") {
-                it
-            } else {
-                "${extendsFromSourceSetName}${it.capitalized()}"
-            }
-            println("$configurationName extendsFrom $extendsFromSourceSetTargetConfigurationName")
+            val extendsFromSourceSetTargetConfigurationName =
+                if (sourceSetName == "test" || extendsFromSourceSetName == "main") {
+                    it
+                } else {
+                    "${extendsFromSourceSetName}${it.capitalized()}"
+                }
+            logger.info("$configurationName extendsFrom $extendsFromSourceSetTargetConfigurationName")
             configurations.maybeCreate(configurationName)
                 .extendsFrom(
                     configurations.maybeCreate(
@@ -54,6 +57,5 @@ internal class Kmp4FreeSourceSetMagic(
                     )
                 )
         }
-        println()
     }
 }

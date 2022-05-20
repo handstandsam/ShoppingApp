@@ -4,13 +4,13 @@ import org.gradle.api.Action
 import org.gradle.api.GradleException
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.getting
+import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 /**
  * Allows us to use the SourceSet Structure of a JVM Project in a Multiplatform Project
@@ -46,7 +46,7 @@ class Kmp4FreeMagic(private val target: Project) {
             }
             if (gradleProperties.isJsEnabled) {
                 println("Enabling JavaScript Multiplatform Target for ${target.path}")
-                multiplatformExtension.js {
+                multiplatformExtension.js(IR) {
                     browser()
                 }
             }
@@ -61,7 +61,8 @@ class Kmp4FreeMagic(private val target: Project) {
             // Ensure commonMain uses Sources from src/main
             listOf(
                 "commonMain",
-                "jvmMain"
+                "jvmMain",
+                "jsMain"
             ).forEach {
                 maybeCreate(it).apply {
                     kotlin.srcDirs("src/main/java", "src/main/kotlin")
@@ -70,7 +71,8 @@ class Kmp4FreeMagic(private val target: Project) {
 
             listOf(
                 "commonTest",
-                "jvmTest"
+                "jvmTest",
+                "jsTest"
             ).forEach {
                 maybeCreate(it).apply {
                     kotlin.srcDirs("src/test/java", "src/test/kotlin")

@@ -7,9 +7,10 @@ kotlin {
         withJava()
     }
 
-    val useIOs = findProperty("ios") == "true"
+    val useIos = findProperty("ios") == "true"
+    val useJs = findProperty("js") == "true"
 
-    if (useIOs) {
+    if (useIos) {
         listOf(
             iosX64(),
             iosArm64(),
@@ -22,6 +23,22 @@ kotlin {
 //            export(project(":shopping-cart"))
                 // Export transitively.
                 // transitiveExport = true
+            }
+        }
+    }
+
+
+    if (useJs) {
+        js(IR) {
+            browser {
+                testTask {
+                    enabled = false
+                }
+                webpackTask {
+                    output.library = project.name
+                    output.libraryTarget = "window"
+                }
+                binaries.executable()
             }
         }
     }
@@ -47,7 +64,19 @@ kotlin {
         val jvmTest by getting {
             dependsOn(commonTest)
         }
-        if (useIOs) {
+
+        if (useJs) {
+            val jsMain by getting {
+                dependsOn(commonMain)
+                dependencies {
+                }
+            }
+            val jsTest by getting {
+                dependsOn(commonTest)
+            }
+        }
+
+        if (useIos) {
             val iosX64Main by getting
             val iosArm64Main by getting
             val iosSimulatorArm64Main by getting

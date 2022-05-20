@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.item {
+    height: 100px;
+    width: 400px;
+    border: 1px solid #000000;
+  position: relative;
+  text-align: center;
+}
+
+.item img {
+    width: 400px;
+    height: 100px;
+    object-fit: cover; object-position: 100% 0;
+}
+
+.item p {
+    -webkit-text-stroke: 1px black;
+    color: #FFFFFF;
+    font-size: 30pt;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

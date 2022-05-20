@@ -30,7 +30,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://kotlin.bintray.com/kotlinx/" }
         maven { url 'https://jitpack.io' }
     }
 }
@@ -41,8 +40,4 @@ gradleEnterprise {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
     }
-}
-
-tasks.register("clean", Delete.class) {
-    delete(rootProject.buildDir)
 }
