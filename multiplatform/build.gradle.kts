@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev686"
 }
 
 kotlin {
@@ -29,10 +30,10 @@ kotlin {
                 testTask {
                     enabled = false
                 }
-                webpackTask {
-                    output.library = project.name
-                    output.libraryTarget = "window"
-                }
+//                webpackTask {
+//                    output.library = project.name
+//                    output.libraryTarget = "window"
+//                }
                 binaries.executable()
             }
         }
@@ -68,6 +69,8 @@ kotlin {
                 dependsOn(commonMain)
                 dependencies {
                     implementation(libs.ktor.client.js)
+                    implementation(compose.web.core)
+                    implementation(compose.runtime)
                 }
             }
             val jsTest by getting {

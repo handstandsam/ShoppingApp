@@ -9,7 +9,7 @@ import kotlinx.coroutines.promise
 class JsMultiplatformApi {
     private val ktorHttpClient = KtorHttpClient()
 
-    private val networkGraph = ktorHttpClient.networkGraph
+    val networkGraph = ktorHttpClient.networkGraph
 
     fun getCategoriesAsync(): Promise<Array<CategoryData>> = GlobalScope.promise {
         val categoriesResponse = networkGraph.categoryRepo.getCategories()
