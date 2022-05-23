@@ -50,15 +50,13 @@ class ItemDetailViewModel(
         sendIntention(Intent.InitialState(item))
         val state: State by states.collectAsState()
         Div {
-            WrappedPreformattedText(state.toString())
+            WrappedPreformattedText("State: ${state.toString()}")
             ImageAndTextRow(label = item.label, imageUrl = item.image) {
                 sendIntention(Intent.AddItemToCart(item))
             }
-            Button(attrs = {
-                onClick {
-                    sendIntention(Intent.AddItemToCart(item))
-                }
-            }) { Text("Add to Cart") }
+            PrimaryButton(label = "Add to Cart") {
+                sendIntention(Intent.AddItemToCart(item))
+            }
         }
     }
 }

@@ -3,8 +3,8 @@ package com.handstandsam.shoppingapp.multiplatform.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.Category
+import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.multiplatform.JsMultiplatformApi
 import com.handstandsam.shoppingapp.network.Response
 import kotlinx.coroutines.CoroutineScope
@@ -70,7 +70,7 @@ class CategoryDetailViewModel(
 
     @Composable
     fun ItemsComposable(categories: List<Item>) {
-        Div(attrs = {}) {
+        ShoppingAppList {
             categories.forEach { item ->
                 ImageAndTextRow(label = item.label, imageUrl = item.image) {
                     sendIntention(Intent.ItemClicked(item))

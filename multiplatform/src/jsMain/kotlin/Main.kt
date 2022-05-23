@@ -5,15 +5,15 @@ import com.handstandsam.shoppingapp.cart.InMemoryShoppingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
+import com.handstandsam.shoppingapp.multiplatform.ui.ButtonType
 import com.handstandsam.shoppingapp.multiplatform.ui.CartViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.CategoryDetailViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.HomeViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.ItemDetailViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.NavRoute
+import com.handstandsam.shoppingapp.multiplatform.ui.ShoppingAppButton
 import com.handstandsam.shoppingapp.multiplatform.ui.WrappedPreformattedText
 import com.handstandsam.shoppingapp.multiplatform.ui.navController
-import io.ktor.http.encodeURLParameter
-import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -28,27 +28,6 @@ fun main() {
 
     val scope = CoroutineScope(Dispatchers.Unconfined)
 
-    val historyEntries: MutableMap<String, NavRoute> = mutableMapOf()
-
-    fun addToBackstack(navRoute: NavRoute) {
-        val key = "#/" + when (navRoute) {
-            is NavRoute.HomeScreen -> {
-                "home"
-            }
-            is NavRoute.CategoryDetailScreen -> {
-                "categories/${navRoute.category.label.encodeURLParameter()}"
-            }
-            is NavRoute.ItemDetailScreen -> {
-                "items/${navRoute.item.label.encodeURLParameter()}"
-            }
-            is NavRoute.CartScreen -> {
-                "cart"
-            }
-        }
-        println("addToBackstack($key, $navRoute)")
-        historyEntries[key] = navRoute
-        window.history.pushState(key, "", key)
-    }
 
     val shoppingCart = ShoppingCart(InMemoryShoppingCartDao())
     val homeViewModel = HomeViewModel()
@@ -62,20 +41,13 @@ fun main() {
         val itemsInCartCount: List<ItemWithQuantity> by itemsInCartFlow.collectAsState(listOf())
         val collectedNavRoute: NavRoute by navController.collectAsState()
 
-        println("collectedNavRoute: $collectedNavRoute")
-
-        addToBackstack(collectedNavRoute)
         Div {
             Text("${itemsInCartCount.totalItemCount()} Item(s) in Cart")
-            Button(
-                attrs = {
-                    onClick {
-                        scope.launch {
-                            navController.tryEmit(NavRoute.CartScreen(shoppingCart.latestItemsInCart()))
-                        }
-                    }
+            ShoppingAppButton(label = "View Cart", buttonType = ButtonType.PRIMARY) {
+                scope.launch {
+                    navController.tryEmit(NavRoute.CartScreen(shoppingCart.latestItemsInCart()))
                 }
-            ) { Text("View Cart") }
+            }
             WrappedPreformattedText(itemsInCartCount.toString())
         }
         when (val navRoute = collectedNavRoute) {
@@ -99,16 +71,5 @@ fun main() {
         ShoppingApp()
     }
 
-    window.onpopstate = {
-        val key = it.state.toString()
-        println(it)
-        println("key: $key")
-        val historyEntry: NavRoute? = historyEntries[key]
-        if (historyEntry != null) {
-            println("Found History Entry for $historyEntry")
-            navController.tryEmit(historyEntry)
-        } else {
-            println("No History Entry for $key")
-        }
-    }
+    Backstack.init()
 }

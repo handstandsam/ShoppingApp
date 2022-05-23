@@ -61,7 +61,7 @@ class HomeViewModel(
 
     @Composable
     fun CategoriesComposable(categories: List<Category>) {
-        Div(attrs = {}) {
+        ShoppingAppList {
             categories.forEach { category ->
                 ImageAndTextRow(label = category.label, imageUrl = category.image, onClick = {
                     sendIntention(Intent.CategoryClicked(category))
@@ -73,7 +73,7 @@ class HomeViewModel(
     @Composable
     fun HomeScreen() {
         val state: State by states.collectAsState()
-        Div {
+        ShoppingAppList {
             WrappedPreformattedText(state.toString())
             if (state.isLoading) {
                 H1 { Text("LOADING...") }

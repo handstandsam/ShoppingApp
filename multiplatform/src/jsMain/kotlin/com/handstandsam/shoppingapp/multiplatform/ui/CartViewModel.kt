@@ -9,7 +9,6 @@ import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
@@ -70,23 +69,12 @@ class CartViewModel(
                         label = item.label + " (${it.quantity})",
                         imageUrl = item.image
                     )
-                    Button(
-                        attrs = {
-                            onClick {
-                                sendIntention(Intent.IncrementClicked(item))
-                            }
-                        }
-                    ) {
-                        Text("Increment")
+
+                    ShoppingAppButton(label = "Increment", buttonType = ButtonType.GREEN) {
+                        sendIntention(Intent.IncrementClicked(item))
                     }
-                    Button(
-                        attrs = {
-                            onClick {
-                                sendIntention(Intent.DecrementClicked(item))
-                            }
-                        }
-                    ) {
-                        Text("Decrement")
+                    ShoppingAppButton(label = "Decrement", buttonType = ButtonType.RED) {
+                        sendIntention(Intent.DecrementClicked(item))
                     }
                 }
             }

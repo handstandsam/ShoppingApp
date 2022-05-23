@@ -14,10 +14,16 @@ abstract class JsMviViewModel<State, Intention>(
 
     private val intentions = MutableSharedFlow<Intention?>(1)
 
+    fun verbosePrintLn(str: String) {
+        if (false) {
+            println(str)
+        }
+    }
+
     init {
         scope.launch {
             intentions.collect { intention ->
-                println("Intention: $intention")
+                verbosePrintLn("Intention: $intention")
                 intention?.let {
                     val newState = reduce(states.value, intention)
                     states.emit(newState)
@@ -29,7 +35,7 @@ abstract class JsMviViewModel<State, Intention>(
     abstract fun reduce(state: State, intention: Intention): State
 
     fun sendIntention(intention: Intention) {
-        println("sendIntention(${intention!!::class.simpleName}")
+        verbosePrintLn("sendIntention(${intention!!::class.simpleName}")
         intentions.tryEmit(intention)
     }
 

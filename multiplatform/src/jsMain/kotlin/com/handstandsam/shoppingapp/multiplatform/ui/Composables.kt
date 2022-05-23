@@ -1,12 +1,12 @@
 package com.handstandsam.shoppingapp.multiplatform.ui
 
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.web.css.height
-import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.whiteSpace
+import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
+import org.jetbrains.compose.web.dom.H3
+import org.jetbrains.compose.web.dom.H6
 import org.jetbrains.compose.web.dom.Img
-import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
 
@@ -27,17 +27,55 @@ fun WrappedPreformattedText(str: String) {
 fun ImageAndTextRow(label: String, imageUrl: String, onClick: () -> Unit = {}) {
     Div({
         onClick { onClick() }
+        classes("list-group-item", "list-group-item-action")
     }) {
-        P {
-            Text(label)
-        }
-        Img(
-            attrs = {
-                style {
-                    height(200.px)
+        Div(attrs = { classes("row") }) {
+            Div(attrs = {
+                classes("col")
+            }) {
+                Img(
+                    attrs = {
+                        classes("flex-shrink-0")
+                    },
+                    src = imageUrl
+                )
+            }
+            Div(attrs = {
+                classes("col")
+            }) {
+                H3 {
+                    Text(label)
                 }
-            },
-            src = imageUrl
-        )
+            }
+        }
     }
+}
+
+@Composable
+fun PrimaryButton(label: String, onClick: () -> Unit = {}) {
+    ShoppingAppButton(label, ButtonType.PRIMARY, onClick)
+}
+
+enum class ButtonType(val cssClass: String) {
+    PRIMARY("btn-primary"), GREEN("btn-success"), RED("btn-danger")
+}
+
+@Composable
+fun ShoppingAppButton(label: String, buttonType: ButtonType, onClick: () -> Unit = {}) {
+    Button(
+        attrs = {
+            classes("btn", buttonType.cssClass)
+            onClick {
+                onClick()
+            }
+        }
+    ) { Text(label) }
+}
+
+@Composable
+fun ShoppingAppList(content: (@Composable () -> Unit)) {
+    Div(attrs =
+    {
+        classes("list-group")
+    }) { content() }
 }
