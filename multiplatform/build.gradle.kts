@@ -30,10 +30,6 @@ kotlin {
                 testTask {
                     enabled = false
                 }
-//                webpackTask {
-//                    output.library = project.name
-//                    output.libraryTarget = "window"
-//                }
                 binaries.executable()
             }
         }
