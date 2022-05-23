@@ -24,7 +24,7 @@ fun WrappedPreformattedText(str: String) {
 
 
 @Composable
-fun ImageAndTextRow(label: String, imageUrl: String, onClick: () -> Unit) {
+fun ImageAndTextRow(label: String, imageUrl: String, onClick: () -> Unit = {}) {
     Div({
         onClick { onClick() }
     }) {

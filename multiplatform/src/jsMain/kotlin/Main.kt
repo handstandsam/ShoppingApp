@@ -5,6 +5,7 @@ import com.handstandsam.shoppingapp.cart.InMemoryShoppingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
+import com.handstandsam.shoppingapp.multiplatform.ui.CartViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.CategoryDetailViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.HomeViewModel
 import com.handstandsam.shoppingapp.multiplatform.ui.ItemDetailViewModel
@@ -16,6 +17,8 @@ import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.renderComposable
@@ -38,15 +41,19 @@ fun main() {
             is NavRoute.ItemDetailScreen -> {
                 "items/${navRoute.item.label.encodeURLParameter()}"
             }
+            is NavRoute.CartScreen -> {
+                "cart"
+            }
         }
         println("addToBackstack($key, $navRoute)")
         historyEntries[key] = navRoute
-        window.history.pushState(key, "", "$key")
+        window.history.pushState(key, "", key)
     }
 
     val shoppingCart = ShoppingCart(InMemoryShoppingCartDao())
     val homeViewModel = HomeViewModel()
     val categoryDetailViewModel = CategoryDetailViewModel()
+    val cartViewModel = CartViewModel(shoppingCart = shoppingCart)
     val itemDetailViewModel = ItemDetailViewModel(shoppingCart = shoppingCart)
 
     @Composable
@@ -60,6 +67,15 @@ fun main() {
         addToBackstack(collectedNavRoute)
         Div {
             Text("${itemsInCartCount.totalItemCount()} Item(s) in Cart")
+            Button(
+                attrs = {
+                    onClick {
+                        scope.launch {
+                            navController.tryEmit(NavRoute.CartScreen(shoppingCart.latestItemsInCart()))
+                        }
+                    }
+                }
+            ) { Text("View Cart") }
             WrappedPreformattedText(itemsInCartCount.toString())
         }
         when (val navRoute = collectedNavRoute) {
@@ -71,6 +87,9 @@ fun main() {
             }
             is NavRoute.ItemDetailScreen -> {
                 itemDetailViewModel.ItemDetailScreen(navRoute.item)
+            }
+            is NavRoute.CartScreen -> {
+                cartViewModel.CartScreen(navRoute.itemsWithQuantity)
             }
         }
     }
