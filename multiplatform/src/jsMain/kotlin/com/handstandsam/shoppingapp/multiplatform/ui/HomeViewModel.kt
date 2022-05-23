@@ -8,13 +8,15 @@ import com.handstandsam.shoppingapp.multiplatform.JsMultiplatformApi
 import com.handstandsam.shoppingapp.network.Response
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 
-class HomeViewModel {
+class HomeViewModel(
+    scope: CoroutineScope = CoroutineScope(Dispatchers.Unconfined),
+    initialState: State = State(),
+) : JsMviViewModel<HomeViewModel.State, HomeViewModel.Intent>(scope, initialState) {
 
     sealed interface Intent {
         object PageOpened : Intent
@@ -27,15 +29,11 @@ class HomeViewModel {
         val categories: List<Category> = listOf()
     )
 
-    private val events = MutableStateFlow<Intent>(Intent.PageOpened)
-
-    private val states = MutableStateFlow(State())
-
-    fun reduce(state: State, intent: Intent): State {
+    override fun reduce(state: State, intent: Intent): State {
         println("HomeReduce: $intent")
         return when (intent) {
             is Intent.CategoryClicked -> {
-                navController.tryEmit(NavRoutes.CategoryDetailScreen(intent.category))
+                navController.tryEmit(NavRoute.CategoryDetailScreen(intent.category))
                 state.copy()
             }
             is Intent.CategoriesReceived -> {
@@ -49,7 +47,7 @@ class HomeViewModel {
                     val result = JsMultiplatformApi().networkGraph.categoryRepo.getCategories()
                     when (result) {
                         is Response.Success -> {
-                            events.emit(Intent.CategoriesReceived(result.body))
+                            sendIntention(Intent.CategoriesReceived(result.body))
                         }
                         is Response.Failure -> TODO()
                     }
@@ -66,7 +64,7 @@ class HomeViewModel {
         Div(attrs = {}) {
             categories.forEach { category ->
                 ImageAndTextRow(label = category.label, imageUrl = category.image, onClick = {
-                    events.tryEmit(Intent.CategoryClicked(category))
+                    sendIntention(Intent.CategoryClicked(category))
                 })
             }
         }
@@ -86,11 +84,6 @@ class HomeViewModel {
     }
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
-            events.collect { event ->
-                val state = states.value
-                states.value = reduce(state, event)
-            }
-        }
+        sendIntention(Intent.PageOpened)
     }
 }

@@ -9,21 +9,18 @@ import com.handstandsam.shoppingapp.multiplatform.JsMultiplatformApi
 import com.handstandsam.shoppingapp.network.Response
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.web.css.height
-import org.jetbrains.compose.web.css.maxHeight
-import org.jetbrains.compose.web.css.maxWidth
-import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
-import org.jetbrains.compose.web.dom.Img
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
 
-class CategoryDetailViewModel {
+class CategoryDetailViewModel(
+    scope: CoroutineScope = CoroutineScope(Dispatchers.Unconfined),
+    initialState: State = State()
+) : JsMviViewModel<CategoryDetailViewModel.State, CategoryDetailViewModel.Intent>(
+    scope,
+    initialState
+) {
 
     sealed interface Intent {
         object NoState : Intent
@@ -38,17 +35,13 @@ class CategoryDetailViewModel {
         val items: List<Item> = listOf(),
     )
 
-    val intents = MutableStateFlow<Intent>(Intent.NoState)
-
-    val states = MutableStateFlow(State())
-
-    fun reduce(state: State, intent: Intent): State {
+    override fun reduce(state: State, intent: Intent): State {
         return when (intent) {
             Intent.NoState -> {
                 State()
             }
             is Intent.ItemClicked -> {
-                navController.tryEmit(NavRoutes.ItemDetailScreen(intent.item))
+                navController.tryEmit(NavRoute.ItemDetailScreen(intent.item))
                 state.copy()
             }
             is Intent.ItemsForCategoryReceived -> {
@@ -63,7 +56,7 @@ class CategoryDetailViewModel {
                         JsMultiplatformApi().networkGraph.itemRepo.getItemsForCategory(intent.category.label)
                     when (result) {
                         is Response.Success -> {
-                            intents.emit(Intent.ItemsForCategoryReceived(result.body))
+                            sendIntention(Intent.ItemsForCategoryReceived(result.body))
                         }
                         is Response.Failure -> TODO()
                     }
@@ -75,15 +68,12 @@ class CategoryDetailViewModel {
         }
     }
 
-
-
-
     @Composable
     fun ItemsComposable(categories: List<Item>) {
         Div(attrs = {}) {
             categories.forEach { item ->
                 ImageAndTextRow(label = item.label, imageUrl = item.image) {
-                    intents.tryEmit(Intent.ItemClicked(item))
+                    sendIntention(Intent.ItemClicked(item))
                 }
             }
         }
@@ -91,7 +81,7 @@ class CategoryDetailViewModel {
 
     @Composable
     fun CategoryDetailScreen(category: Category) {
-        intents.tryEmit(Intent.InitialState(category))
+        sendIntention(Intent.InitialState(category))
 
         val state: State by states.collectAsState()
         Div {
@@ -100,15 +90,6 @@ class CategoryDetailViewModel {
                 H1 { Text("LOADING Items for Category ${state.category}...") }
             } else {
                 ItemsComposable(state.items)
-            }
-        }
-    }
-
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            intents.collect { event ->
-                val state = states.value
-                states.value = reduce(state, event)
             }
         }
     }
