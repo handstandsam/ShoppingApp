@@ -1,6 +1,9 @@
 package com.handstandsam.shoppingapp.multiplatform.ui
 
 import androidx.compose.runtime.Composable
+import org.jetbrains.compose.web.css.CSSColorValue
+import org.jetbrains.compose.web.css.Color
+import org.jetbrains.compose.web.css.backgroundColor
 import org.jetbrains.compose.web.css.whiteSpace
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
@@ -65,6 +68,15 @@ fun ShoppingAppButton(label: String, buttonType: ButtonType, onClick: () -> Unit
     Button(
         attrs = {
             classes("btn", buttonType.cssClass)
+            style {
+                when(buttonType){
+                    ButtonType.PRIMARY ->{}
+                    ButtonType.GREEN ->
+                        backgroundColor(Color.green)
+                    ButtonType.RED ->
+                        backgroundColor(Color.red)
+                }
+            }
             onClick {
                 onClick()
             }
