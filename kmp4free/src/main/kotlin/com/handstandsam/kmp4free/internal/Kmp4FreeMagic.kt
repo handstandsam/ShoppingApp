@@ -82,6 +82,5 @@ class Kmp4FreeMagic(private val target: Project) {
                 sourceSetName = "test",
             )
         }
-//        throw RuntimeException("blah")
     }
 }

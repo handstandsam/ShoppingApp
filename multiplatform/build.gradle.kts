@@ -56,6 +56,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.jetbrains.compose.runtime)
             }
         }
         val jvmTest by getting {
