@@ -60,7 +60,7 @@ internal class Kmp4FreeSourceSetMagic(
             }
             val extendsFromSourceSetTargetConfigurationName =
                 if (
-                    sourceSetName == "test" ||
+//                    sourceSetName == "test" ||
                     extendsFromSourceSetName == "main") {
                     it
                 } else {
