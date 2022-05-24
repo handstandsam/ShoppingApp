@@ -21,8 +21,8 @@ class Kmp4FreeMagic(private val target: Project) {
             if (gradleProperties.isIosEnabled) {
                 println("Enabling iOS Multiplatform Target for ${target.path}")
                 multiplatformExtension.apply {
-                    iosX64()
-                    iosArm64()
+//                    iosX64()
+//                    iosArm64()
                     iosSimulatorArm64()
                 }
             }
@@ -82,5 +82,6 @@ class Kmp4FreeMagic(private val target: Project) {
                 sourceSetName = "test",
             )
         }
+//        throw RuntimeException("blah")
     }
 }

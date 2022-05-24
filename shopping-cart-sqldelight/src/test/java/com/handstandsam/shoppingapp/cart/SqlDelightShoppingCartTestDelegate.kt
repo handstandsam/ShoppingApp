@@ -47,7 +47,7 @@ class SqlDelightShoppingCartTestDelegate {
         val itemTypeCount = itemsInCart.size
         assertThat(itemTypeCount).isEqualTo(typeCount)
 
-        val totalItems = itemsInCart.sumBy { it.quantity.toInt() }
+        val totalItems = itemsInCart.sumOf { it.quantity.toInt() }
         assertThat(totalItems).isEqualTo(totalCount)
     }
 
