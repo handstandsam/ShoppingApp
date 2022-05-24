@@ -17,6 +17,7 @@ compose = "1.2.0-beta01"
 dependency_guard = "0.2.0"
 espresso = "3.1.1"
 glide = "4.11.0"
+jetbrains_compose = "1.2.0-alpha01-dev686"
 junit = "4.12"
 kotlin = "1.6.21"
 kotlin_coroutines = "1.6.1"
@@ -60,6 +61,9 @@ androidx_test_rules = { module = "androidx.test:rules", version.ref = "androidx_
 androidx_test_orchestrator = { module = "androidx.test:orchestrator", version.ref = "androidx_test" }
 coil_compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+jetbrains_compose_gradle_plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrains_compose" }
+jetbrains_compose_web_core = { module = "org.jetbrains.compose.web:web-core", version.ref = "jetbrains_compose" }
+jetbrains_compose_runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jetbrains_compose" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin_std_lib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 kotlin_coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin_coroutines" }

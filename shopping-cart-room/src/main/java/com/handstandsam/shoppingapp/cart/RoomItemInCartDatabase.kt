@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * [Room] database definition
  */
-@Database(entities = [RoomItemInCartEntity::class], version = 1)
+@Database(entities = [RoomItemInCartEntity::class], version = 1, exportSchema = false)
 abstract class RoomItemInCartDatabase : RoomDatabase() {
     abstract fun itemInCartDao(): RoomItemInCartDao
 }

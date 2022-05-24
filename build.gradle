@@ -4,6 +4,7 @@ buildscript {
         mavenCentral()
         google()
         gradlePluginPortal()
+        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
     }
     dependencies {
         classpath(libs.android.gradle.plugin)
@@ -11,6 +12,7 @@ buildscript {
         classpath(libs.sqldelight.gradle.plugin)
         classpath("com.handstandsam:convention-plugins")
         classpath("com.handstandsam:kmp4free")
+        classpath(libs.jetbrains.compose.gradle.plugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
@@ -31,7 +33,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
     }
 }
 

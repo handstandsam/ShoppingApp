@@ -1,14 +1,17 @@
 plugins {
     kotlin("multiplatform")
 }
+val useIos = findProperty("kmp4free.ios") == "true"
+val useJs = findProperty("kmp4free.js") == "true"
+if (useJs) {
+    apply(plugin = "org.jetbrains.compose")
+}
 
 kotlin {
     jvm {
         withJava()
     }
 
-    val useIos = findProperty("kmp4free.ios") == "true"
-    val useJs = findProperty("kmp4free.js") == "true"
 
     if (useIos) {
         listOf(
@@ -28,10 +31,6 @@ kotlin {
             browser {
                 testTask {
                     enabled = false
-                }
-                webpackTask {
-                    output.library = project.name
-                    output.libraryTarget = "window"
                 }
                 binaries.executable()
             }
@@ -57,6 +56,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.jetbrains.compose.runtime)
             }
         }
         val jvmTest by getting {
@@ -68,6 +68,8 @@ kotlin {
                 dependsOn(commonMain)
                 dependencies {
                     implementation(libs.ktor.client.js)
+                    implementation(libs.jetbrains.compose.web.core)
+                    implementation(libs.jetbrains.compose.runtime)
                 }
             }
             val jsTest by getting {

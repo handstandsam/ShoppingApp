@@ -59,7 +59,9 @@ internal class Kmp4FreeSourceSetMagic(
                 "${sourceSetName}${it.capitalized()}"
             }
             val extendsFromSourceSetTargetConfigurationName =
-                if (sourceSetName == "test" || extendsFromSourceSetName == "main") {
+                if (
+//                    sourceSetName == "test" ||
+                    extendsFromSourceSetName == "main") {
                     it
                 } else {
                     "${extendsFromSourceSetName}${it.capitalized()}"
