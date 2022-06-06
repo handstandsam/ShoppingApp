@@ -1,9 +1,10 @@
 plugins {
     kotlin("multiplatform")
 }
+val useKmp4Free = findProperty("kmp4free") == "true"
 val useIos = findProperty("kmp4free.ios") == "true"
 val useJs = findProperty("kmp4free.js") == "true"
-if (useJs) {
+if (useKmp4Free && useJs) {
     apply(plugin = "org.jetbrains.compose")
 }
 

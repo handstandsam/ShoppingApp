@@ -1,4 +1,4 @@
-package com.handstandsam
+package com.handstandsam.convention.plugins
 
 import ANDROID_COMPILE_SDK_VERSION
 import ANDROID_MIN_SDK_VERSION

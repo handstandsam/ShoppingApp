@@ -1,5 +1,5 @@
 plugins {
-    id("com.handstandsam.kmp4free")
+    id("com.handstandsam.kmp4free.lib")
 }
 dependencies {
     api(libs.ktor.client)
