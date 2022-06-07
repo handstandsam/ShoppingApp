@@ -1,4 +1,4 @@
-package com.handstandsam.convention.plugins
+package com.handstandsam.shoppingapp.convention.plugins
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -7,9 +7,12 @@ import org.gradle.api.plugins.JavaPluginExtension
 import com.handstandsam.kmp4free.Kmp4FreePlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-class Kmp4FreeLibConventionPlugin : Plugin<Project> {
+class ShoppingAppKmp4FreeLibConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val kmp4FreePlugin: Kmp4FreePlugin = target.plugins.apply(Kmp4FreePlugin::class.java)
+        // Add Kmp4Free Plugin
+        target.plugins.apply(Kmp4FreePlugin::class.java)
+
+        // Apply Multiplatform Config if Available
         target.extensions.findByType(KotlinMultiplatformExtension::class.java)?.apply {
             val useIos = target.findProperty("ios") == "true"
             val useJs = target.findProperty("js") == "true"
