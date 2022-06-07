@@ -9,11 +9,10 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class Kmp4FreeLibConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.plugins.apply(Kmp4FreePlugin::class.java)
-        target.extensions.getByType(KotlinMultiplatformExtension::class.java)?.apply {
-
-            val useIos = target.findProperty("kmp4free.ios") == "true"
-            val useJs = target.findProperty("kmp4free.js") == "true"
+        val kmp4FreePlugin: Kmp4FreePlugin = target.plugins.apply(Kmp4FreePlugin::class.java)
+        target.extensions.findByType(KotlinMultiplatformExtension::class.java)?.apply {
+            val useIos = target.findProperty("ios") == "true"
+            val useJs = target.findProperty("js") == "true"
 
             if (useIos) {
                 iosSimulatorArm64 {
