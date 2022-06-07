@@ -1,4 +1,4 @@
-package com.handstandsam.convention.plugins
+package com.handstandsam.shoppingapp.convention.plugins
 
 import ANDROID_COMPILE_SDK_VERSION
 import ANDROID_MIN_SDK_VERSION
@@ -8,7 +8,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class AndroidLibConventionPlugin : Plugin<Project> {
+class ShoppingAppAndroidLibConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.plugins.apply("com.android.library")
         target.plugins.apply("org.jetbrains.kotlin.android")

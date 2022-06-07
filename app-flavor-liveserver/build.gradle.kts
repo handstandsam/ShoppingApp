@@ -1,5 +1,5 @@
 plugins {
-    id("com.handstandsam.jvm.lib")
+    id("shoppingapp.jvm.lib")
 }
 
 dependencies {

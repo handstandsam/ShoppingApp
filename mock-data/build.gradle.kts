@@ -1,5 +1,5 @@
 plugins {
-    id("com.handstandsam.kmp4free.lib")
+    id("shoppingapp.kmp4free.lib")
 }
 
 dependencies {

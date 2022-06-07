@@ -35,16 +35,16 @@ gradlePlugin {
             }
         }
         createPlugin(
-            "com.handstandsam.kmp4free.lib",
-            "com.handstandsam.convention.plugins.Kmp4FreeLibConventionPlugin"
+            "shoppingapp.kmp4free.lib",
+            "com.handstandsam.shoppingapp.convention.plugins.ShoppingAppKmp4FreeLibConventionPlugin"
         )
         createPlugin(
-            "com.handstandsam.jvm.lib",
-            "com.handstandsam.convention.plugins.JvmLibConventionPlugin"
+            "shoppingapp.jvm.lib",
+            "com.handstandsam.shoppingapp.convention.plugins.ShoppingAppJvmLibConventionPlugin"
         )
         createPlugin(
-            "com.handstandsam.android.lib",
-            "com.handstandsam.convention.plugins.AndroidLibConventionPlugin"
+            "shoppingapp.android.lib",
+            "com.handstandsam.shoppingapp.convention.plugins.ShoppingAppAndroidLibConventionPlugin"
         )
     }
 }
