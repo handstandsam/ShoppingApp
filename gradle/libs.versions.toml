@@ -19,6 +19,7 @@ espresso = "3.1.1"
 glide = "4.11.0"
 jetbrains_compose = "1.2.0-alpha01-dev686"
 junit = "4.12"
+kmp4free = "0.1.0-SNAPSHOT"
 kotlin = "1.6.21"
 kotlin_coroutines = "1.6.1"
 kotlinx_serialization = "1.3.3"
@@ -71,6 +72,7 @@ kotlin_coroutines_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin_gradle_plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin_reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx_serialization_json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx_serialization" }
+kmp4free = { module = "com.handstandsam.kmp4free:kmp4free", version.ref = "kmp4free" }
 ktor_client = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor_client_logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor_client_okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -91,3 +93,4 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 dependency_guard = { id = "com.dropbox.dependency-guard", version.ref = "dependency_guard" }
+kmp4free = { id = "com.handstandsam.kmp4free", version.ref = "kmp4free" }

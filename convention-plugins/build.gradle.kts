@@ -6,11 +6,13 @@ repositories {
     mavenCentral()
     google()
     gradlePluginPortal()
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.android.gradle.plugin)
+    implementation(libs.kmp4free)
     compileOnly(gradleApi())
 }
 
@@ -33,12 +35,16 @@ gradlePlugin {
             }
         }
         createPlugin(
+            "com.handstandsam.kmp4free.lib",
+            "com.handstandsam.convention.plugins.Kmp4FreeLibConventionPlugin"
+        )
+        createPlugin(
             "com.handstandsam.jvm.lib",
             "com.handstandsam.convention.plugins.JvmLibConventionPlugin"
         )
         createPlugin(
             "com.handstandsam.android.lib",
-            "com.handstandsam.AndroidLibConventionPlugin"
+            "com.handstandsam.convention.plugins.AndroidLibConventionPlugin"
         )
     }
 }

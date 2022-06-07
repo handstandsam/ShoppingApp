@@ -67,6 +67,7 @@ com.google.protobuf:protobuf-java:3.10.0
 com.google.testing.platform:core-proto:0.0.8-alpha07
 com.googlecode.json-simple:json-simple:1.1
 com.googlecode.juniversalchardet:juniversalchardet:1.0.3
+com.handstandsam.kmp4free:kmp4free:0.1.0-SNAPSHOT
 com.squareup.sqldelight:gradle-plugin:1.5.3
 com.squareup:javapoet:1.10.0
 com.squareup:javawriter:2.5.0

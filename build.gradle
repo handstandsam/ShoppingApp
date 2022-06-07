@@ -5,13 +5,14 @@ buildscript {
         google()
         gradlePluginPortal()
         maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
+        maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.sqldelight.gradle.plugin)
         classpath("com.handstandsam:convention-plugins")
-        classpath("com.handstandsam:kmp4free")
+        classpath("com.handstandsam.kmp4free:kmp4free:0.1.0-SNAPSHOT")
         classpath(libs.jetbrains.compose.gradle.plugin)
 
         // NOTE: Do not place your application dependencies here; they belong

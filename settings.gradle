@@ -5,6 +5,7 @@ pluginManagement {
         google()
         gradlePluginPortal()
         maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
 
@@ -23,17 +24,12 @@ include ':shopping-cart-room'
 include ':shopping-cart-sqldelight'
 include ':mock-data'
 include ':models'
-include ':multiplatform'
 include ':networking'
 include ':networking-jvm'
+include(":multiplatform")
 
 includeBuild('convention-plugins') {
     dependencySubstitution {
         substitute module('com.handstandsam:convention-plugins') using project(':')
-    }
-}
-includeBuild('kmp4free') {
-    dependencySubstitution {
-        substitute module('com.handstandsam:kmp4free') using project(':')
     }
 }
