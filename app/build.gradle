@@ -119,7 +119,6 @@ dependencies {
     implementation libs.androidx.compose.material
     implementation libs.androidx.compose.material.icons.extended
     implementation libs.androidx.compose.animation
-    implementation libs.androidx.compose.runtime.livedata
     implementation libs.androidx.compose.ui.tooling
     implementation libs.androidx.activity.compose
 
