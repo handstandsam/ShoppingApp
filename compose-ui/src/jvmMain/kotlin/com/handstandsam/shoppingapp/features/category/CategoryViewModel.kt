@@ -4,6 +4,7 @@ import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.ItemRepo
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,9 +13,9 @@ class CategoryViewModel(
     private val scope: CoroutineScope,
     private val itemRepo: ItemRepo
 ) : MviViewModel<
-    CategoryViewModel.State,
-    CategoryViewModel.Intention,
-    CategoryViewModel.SideEffect>(
+        CategoryViewModel.State,
+        CategoryViewModel.Intention,
+        CategoryViewModel.SideEffect>(
     scope = scope,
     initialState = State()
 ) {
@@ -26,7 +27,6 @@ class CategoryViewModel(
                 is Response.Success -> {
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
-
                 is Response.Failure -> {
                     error("Ooops")
                 }
@@ -40,13 +40,11 @@ class CategoryViewModel(
                 sideEffect(SideEffect.LaunchItemDetailActivity(intention.item))
                 state
             }
-
             is Intention.CategoriesReceived -> {
                 state.copy(
                     items = intention.items
                 )
             }
-
             is Intention.CategoryLabelSet -> {
                 getItemsForCategory(intention.categoryLabel)
                 state.copy(
@@ -69,5 +67,6 @@ class CategoryViewModel(
 
     sealed class SideEffect {
         data class LaunchItemDetailActivity(val item: Item) : SideEffect()
+
     }
 }

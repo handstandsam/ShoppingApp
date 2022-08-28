@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.CategoryScreen
+import com.handstandsam.shoppingapp.features.home.AndroidCategoryViewModel
 import com.handstandsam.shoppingapp.features.itemdetail.ItemDetailActivity
 import com.handstandsam.shoppingapp.models.Category
 import kotlinx.coroutines.flow.launchIn
@@ -21,7 +22,7 @@ class CategoryActivity : LoggedInActivity() {
         supportActionBar?.hide()
 
         val categoryViewModel = ViewModelProvider(this, graph.viewModelFactory)
-            .get(CategoryViewModel::class.java)
+            .get(AndroidCategoryViewModel::class.java).viewModel
 
         setContent {
             CategoryScreen(

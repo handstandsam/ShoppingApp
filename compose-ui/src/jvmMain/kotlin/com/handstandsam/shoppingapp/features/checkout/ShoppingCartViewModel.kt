@@ -4,7 +4,7 @@ import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
-import com.handstandsam.shoppingapp.utils.exhaustive
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ class ShoppingCartViewModel(
                 }
                 state
             }
-        }.exhaustive
+        }
     }
 
     data class State(

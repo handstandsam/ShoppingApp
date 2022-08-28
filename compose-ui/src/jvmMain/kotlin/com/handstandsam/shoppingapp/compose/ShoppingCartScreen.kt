@@ -1,6 +1,7 @@
 package com.handstandsam.shoppingapp.compose
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,13 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.handstandsam.shoppingapp.features.checkout.ShoppingCartViewModel
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
-import com.skydoves.landscapist.coil.CoilImage
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -40,7 +39,8 @@ fun ShoppingCartScreen(
     checkoutClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeUpClicked: () -> Unit,
-    shoppingCartViewModel: ShoppingCartViewModel
+    shoppingCartViewModel: ShoppingCartViewModel,
+    shoppingAppImageLoader: ShoppingAppImageLoader
 ) {
     AppScaffold(
         itemsInCart = itemsInCart,
@@ -74,7 +74,8 @@ fun ShoppingCartScreen(
             ) {
                 state.items.forEach { itemWithQuantity ->
                     item {
-                        ShoppingCartItemRow(itemWithQuantity = itemWithQuantity,
+                        ShoppingCartItemRow(
+                            itemWithQuantity = itemWithQuantity,
                             incrementClicked = {
                                 shoppingCartViewModel.send(
                                     ShoppingCartViewModel.Intention.IncrementClicked(itemWithQuantity)
@@ -84,7 +85,8 @@ fun ShoppingCartScreen(
                                 shoppingCartViewModel.send(
                                     ShoppingCartViewModel.Intention.DecrementClicked(itemWithQuantity)
                                 )
-                            }
+                            },
+                            imageLoader = shoppingAppImageLoader
                         )
                     }
                 }
@@ -105,7 +107,8 @@ fun ShoppingCartScreen(
 fun ShoppingCartItemRow(
     itemWithQuantity: ItemWithQuantity,
     incrementClicked: () -> Unit,
-    decrementClicked: () -> Unit
+    decrementClicked: () -> Unit,
+    imageLoader: ShoppingAppImageLoader,
 ) {
     val height = 100.dp
     Row(
@@ -113,16 +116,28 @@ fun ShoppingCartItemRow(
             .fillMaxWidth()
             .height(height)
     ) {
-        CoilImage(
+        // Box(
+        //     modifier = Modifier
+        //         .size(height)
+        //         .aspectRatio(1.0f)
+        //         .background(Color.LightGray)
+        // )
+        imageLoader.loadImage(
             modifier = Modifier
                 .size(height)
                 .aspectRatio(1.0f),
-            imageModel = itemWithQuantity.item.image,
-            // Crop, Fit, Inside, FillHeight, FillWidth, None
-            contentScale = ContentScale.Crop,
-            // shows an image with a circular revealed animation.
-            circularRevealedEnabled = true
+            image = itemWithQuantity.item.image
         )
+        // CoilImage(
+        //     modifier = Modifier
+        //         .size(height)
+        //         .aspectRatio(1.0f),
+        //     imageModel = itemWithQuantity.item.image,
+        //     // Crop, Fit, Inside, FillHeight, FillWidth, None
+        //     contentScale = ContentScale.Crop,
+        //     // shows an image with a circular revealed animation.
+        //     circularRevealedEnabled = true
+        // )
         Spacer(modifier = Modifier.width(16.dp))
         val label = itemWithQuantity.quantity.toString() + " x " + itemWithQuantity.item.label
         Text(
@@ -141,7 +156,7 @@ fun ShoppingCartItemRow(
             ColoredCircleWithText(
                 color = Color.Red,
                 text = "-",
-                onClick = incrementClicked
+                onClick = decrementClicked
             )
         }
     }

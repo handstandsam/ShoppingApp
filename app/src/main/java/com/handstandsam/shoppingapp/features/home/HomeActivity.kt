@@ -8,7 +8,7 @@ import com.handstandsam.shoppingapp.LoggedInActivity
 import com.handstandsam.shoppingapp.compose.HomeScreen
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
-import com.handstandsam.shoppingapp.utils.exhaustive
+
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -19,7 +19,7 @@ class HomeActivity : LoggedInActivity() {
         supportActionBar?.hide()
 
         val homeViewModel = ViewModelProvider(this, graph.viewModelFactory)
-            .get(HomeViewModel::class.java)
+            .get(AndroidHomeViewModel::class.java).viewModel
 
         lifecycleScope.launchWhenCreated {
             homeViewModel.sideEffects
@@ -31,7 +31,7 @@ class HomeActivity : LoggedInActivity() {
                         HomeViewModel.SideEffect.Logout -> {
                             LoginActivity.launch(this@HomeActivity)
                         }
-                    }.exhaustive
+                    }
                 }
                 .launchIn(this)
         }
