@@ -4,7 +4,7 @@ import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.utils.exhaustive
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class CategoryViewModel(
                 is Response.Failure -> {
                     error("Ooops")
                 }
-            }.exhaustive
+            }
         }
     }
 
@@ -51,7 +51,7 @@ class CategoryViewModel(
                     categoryLabel = intention.categoryLabel
                 )
             }
-        }.exhaustive
+        }
     }
 
     data class State(

@@ -1,6 +1,5 @@
 package com.handstandsam.shoppingapp
 
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.actor
@@ -15,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 abstract class MviViewModel<State, Intention, SideEffect>(
     scope: CoroutineScope,
     initialState: State
-) : ViewModel() {
+) {
 
     /** private, Mutable Shadow of Public `states` [Flow] */
     private val _states = MutableStateFlow(initialState)

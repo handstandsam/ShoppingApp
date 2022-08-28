@@ -1,20 +1,20 @@
 package com.handstandsam.shoppingapp.repository
 
-
+import com.handstandsam.shoppingapp.cart.SessionManager
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.preferences.UserPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
 
-class SessionManager(
+class AndroidSessionManager(
     private val cart: ShoppingCart,
     private val userPreferences: UserPreferences
-) {
+) : SessionManager {
 
-    val currentUser = MutableStateFlow(userPreferences.getRememberedUser())
+    override val currentUser = MutableStateFlow(userPreferences.getRememberedUser())
 
-    fun updateCurrentUser(user: User?) {
+    override fun updateCurrentUser(user: User?) {
         Timber.d("setCurrentUser: $user")
         if (userPreferences.rememberMe) {
             // Save to disk if we want to remember them
@@ -23,14 +23,14 @@ class SessionManager(
         currentUser.value = user
     }
 
-    val isLoggedIn: Boolean
+    override val isLoggedIn: Boolean
         get() {
             val loggedIn = currentUser.value != null
             Timber.d("isLoggedIn: $loggedIn")
             return loggedIn
         }
 
-    suspend fun logout() {
+    override suspend fun logout() {
         currentUser.value = null
         userPreferences.updateRememberedUser(null)
         cart.empty()

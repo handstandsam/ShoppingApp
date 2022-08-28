@@ -7,8 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
+import com.handstandsam.shoppingapp.compose.AndroidShoppingAppImageLoader
 import com.handstandsam.shoppingapp.compose.ShoppingCartScreen
-import com.handstandsam.shoppingapp.utils.exhaustive
+import com.handstandsam.shoppingapp.features.home.AndroidShoppingCartViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -19,7 +20,7 @@ class CheckoutActivity : LoggedInActivity() {
         supportActionBar?.hide()
 
         val shoppingCartViewModel = ViewModelProvider(this, graph.viewModelFactory)
-            .get(ShoppingCartViewModel::class.java)
+            .get(AndroidShoppingCartViewModel::class.java).viewModel
 
         lifecycleScope.launchWhenCreated {
             shoppingCartViewModel.sideEffects
@@ -34,12 +35,13 @@ class CheckoutActivity : LoggedInActivity() {
                             toast.setGravity(Gravity.CENTER, 0, 0)
                             toast.show()
                         }
-                    }.exhaustive
+                    }
                 }
                 .launchIn(this)
         }
 
         setContent {
+
             ShoppingCartScreen(
                 itemsInCart = graph
                     .sessionGraph
@@ -52,7 +54,8 @@ class CheckoutActivity : LoggedInActivity() {
                     )
                 },
                 logoutClicked = { logout() },
-                homeUpClicked = { onBackPressed() }
+                homeUpClicked = { onBackPressed() },
+                shoppingAppImageLoader = AndroidShoppingAppImageLoader()
             )
         }
     }

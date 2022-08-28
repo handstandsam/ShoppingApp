@@ -5,10 +5,10 @@ import com.handstandsam.shoppingapp.cart.ActorStateFlowShoppingCartDao
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.cart.ShoppingCartDao
 import com.handstandsam.shoppingapp.preferences.UserPreferences
-import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 
 interface SessionGraph {
-    val sessionManager: SessionManager
+    val sessionManager: AndroidSessionManager
     val shoppingCart: ShoppingCart
     val userPreferences: UserPreferences
 }
@@ -51,5 +51,5 @@ class SessionGraphImpl(
 
     override val userPreferences = UserPreferences(appContext)
 
-    override val sessionManager = SessionManager(shoppingCart, userPreferences)
+    override val sessionManager = AndroidSessionManager(shoppingCart, userPreferences)
 }

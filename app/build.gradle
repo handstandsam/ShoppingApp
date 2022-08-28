@@ -81,9 +81,11 @@ android {
 }
 
 dependencies {
+    implementation project(":compose-ui")
 
     implementation project(":models")
     implementation project(":mock-data")
+    implementation project(":shopping-cart")
 
     // AndroidX Libraries
     implementation libs.androidx.appcompat.v7
@@ -108,7 +110,6 @@ dependencies {
 
     //Logging
     implementation libs.timber
-    implementation project(":shopping-cart")
 
     // Compose
     implementation libs.androidx.compose.compiler
@@ -118,7 +119,6 @@ dependencies {
     implementation libs.androidx.compose.material
     implementation libs.androidx.compose.material.icons.extended
     implementation libs.androidx.compose.animation
-    implementation libs.androidx.compose.runtime.livedata
     implementation libs.androidx.compose.ui.tooling
     implementation libs.androidx.activity.compose
 

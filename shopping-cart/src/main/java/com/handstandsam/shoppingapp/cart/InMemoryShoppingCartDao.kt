@@ -15,7 +15,6 @@ class InMemoryShoppingCartDao : ShoppingCartDao {
     private val itemsInCart: MutableMap<String, ItemWithQuantity> = mutableMapOf()
 
     private val itemWithQuantity = MutableStateFlow(listOf<ItemWithQuantity>())
-
     init {
         CoroutineScope(Dispatchers.Unconfined).launch {
             itemWithQuantity.collect{

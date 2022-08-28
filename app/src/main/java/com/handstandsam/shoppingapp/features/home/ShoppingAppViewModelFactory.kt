@@ -7,32 +7,44 @@ import com.handstandsam.shoppingapp.features.category.CategoryViewModel
 import com.handstandsam.shoppingapp.features.checkout.ShoppingCartViewModel
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 import kotlinx.coroutines.CoroutineScope
+
+class AndroidHomeViewModel(val viewModel: HomeViewModel) : ViewModel()
+class AndroidCategoryViewModel(val viewModel: CategoryViewModel) : ViewModel()
+class AndroidShoppingCartViewModel(val viewModel: ShoppingCartViewModel) : ViewModel()
 
 class ShoppingAppViewModelFactory(
     private val scope: CoroutineScope,
-    private val sessionManager: SessionManager,
+    private val sessionManager: AndroidSessionManager,
     private val categoryRepo: CategoryRepo,
     private val shoppingCart: ShoppingCart,
     private val itemRepo: ItemRepo
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(
-                scope = scope,
-                sessionManager = sessionManager,
-                categoryRepo = categoryRepo
+        if (modelClass.isAssignableFrom(AndroidHomeViewModel::class.java)) {
+            return AndroidHomeViewModel(
+                HomeViewModel(
+                    scope = scope,
+                    sessionManager = sessionManager,
+                    categoryRepo = categoryRepo
+                )
             ) as T
-        } else if (modelClass.isAssignableFrom(CategoryViewModel::class.java)) {
-            return CategoryViewModel(
-                scope = scope,
-                itemRepo = itemRepo
+        }
+        else if (modelClass.isAssignableFrom(AndroidCategoryViewModel::class.java)) {
+            return AndroidCategoryViewModel(
+                CategoryViewModel(
+                    scope = scope,
+                    itemRepo = itemRepo
+                )
             ) as T
-        }else if (modelClass.isAssignableFrom(ShoppingCartViewModel::class.java)) {
-            return ShoppingCartViewModel(
-                scope = scope,
-                cart = shoppingCart
+        }
+        else if (modelClass.isAssignableFrom(AndroidShoppingCartViewModel::class.java)) {
+            return AndroidShoppingCartViewModel(
+                ShoppingCartViewModel(
+                    scope = scope,
+                    cart = shoppingCart
+                )
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

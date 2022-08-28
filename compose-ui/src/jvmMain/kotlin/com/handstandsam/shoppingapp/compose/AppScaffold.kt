@@ -71,16 +71,25 @@ fun AppScaffold(
                     IconButton(onClick = { showMenu = !showMenu }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More...")
                     }
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            onClick = logoutClicked
-                        ) {
-                            Text(text = "Log out")
-                        }
-                    }
+                    // 2022-08-28 08:52:01.207 7122-7122/com.handstandsam.shoppingapp E/AndroidRuntime: FATAL EXCEPTION: main
+                    //     Process: com.handstandsam.shoppingapp, PID: 7122
+                    //     java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/compose/material/DesktopMenu_desktopKt;
+                    //         at com.handstandsam.shoppingapp.compose.AppScaffoldKt$AppScaffold$1$2.invoke(AppScaffold.kt:75)
+                    //         at com.handstandsam.shoppingapp.compose.AppScaffoldKt$AppScaffold$1$2.invoke(AppScaffold.kt:65)
+                    //         at androidx.compose.runtime.internal.ComposableLambdaImpl.invoke(ComposableLambda.jvm.kt:116)
+                    //         at androidx.compose.runtime.internal.ComposableLambdaImpl.invoke(ComposableLambda.jvm.kt:34)
+                    //         at androidx.compose.material.AppBarKt$TopAppBar$1$3.invoke(AppBar.kt:576)
+                    //         at androidx.compose.material.AppBarKt$TopAppBar$1$3.invoke(AppBar.kt:117)
+                    // DropdownMenu(
+                    //     expanded = showMenu,
+                    //     onDismissRequest = { showMenu = false }
+                    // ) {
+                    //     DropdownMenuItem(
+                    //         onClick = logoutClicked
+                    //     ) {
+                    //         Text(text = "Log out")
+                    //     }
+                    // }
                 },
             )
         }
