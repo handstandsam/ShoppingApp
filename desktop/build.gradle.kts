@@ -15,7 +15,9 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(project(":compose-ui"))
+                implementation(project(":mock-data"))
                 implementation(project(":models"))
+                implementation(project(":networking"))
                 implementation(project(":shopping-cart"))
             }
         }

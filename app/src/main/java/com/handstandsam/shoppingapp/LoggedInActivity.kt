@@ -9,23 +9,6 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.di.AppGraph
@@ -34,8 +17,7 @@ import com.handstandsam.shoppingapp.features.checkout.CheckoutActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import com.handstandsam.shoppingapp.models.totalItemCount
-import com.handstandsam.shoppingapp.repository.SessionManager
-import kotlinx.coroutines.flow.collect
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 import kotlinx.coroutines.launch
 
 
@@ -45,7 +27,7 @@ open class LoggedInActivity : AppCompatActivity() {
 
     private val sessionGraph: SessionGraph get() = graph.sessionGraph
 
-    private val sessionManager: SessionManager get() = sessionGraph.sessionManager
+    private val sessionManager: AndroidSessionManager get() = sessionGraph.sessionManager
 
     private val checkoutCart: ShoppingCart get() = sessionGraph.shoppingCart
 

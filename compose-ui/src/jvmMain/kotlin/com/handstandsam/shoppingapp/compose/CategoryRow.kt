@@ -20,25 +20,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.handstandsam.shoppingapp.models.Category
-import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun CategoryRow(category: Category, onClick: () -> Unit) {
+fun CategoryRow(category: Category, shoppingAppImageLoader: ShoppingAppImageLoader, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentSize()
     ) {
-        CoilImage(
+        shoppingAppImageLoader.loadImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(120.dp)
                 .clickable { onClick() },
-            imageModel = category.image,
-            // Crop, Fit, Inside, FillHeight, FillWidth, None
-            contentScale = ContentScale.Crop,
-            // shows an image with a circular revealed animation.
-            circularRevealedEnabled = true
+            image = category.image,
         )
         TextWithShadow(
             text = category.label,

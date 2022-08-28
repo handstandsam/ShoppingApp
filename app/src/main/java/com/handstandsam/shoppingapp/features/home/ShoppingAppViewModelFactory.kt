@@ -2,13 +2,12 @@ package com.handstandsam.shoppingapp.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.handstandsam.shoppingapp.MviViewModel
 import com.handstandsam.shoppingapp.cart.ShoppingCart
 import com.handstandsam.shoppingapp.features.category.CategoryViewModel
 import com.handstandsam.shoppingapp.features.checkout.ShoppingCartViewModel
 import com.handstandsam.shoppingapp.repository.CategoryRepo
 import com.handstandsam.shoppingapp.repository.ItemRepo
-import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 import kotlinx.coroutines.CoroutineScope
 
 class AndroidHomeViewModel(val viewModel: HomeViewModel) : ViewModel()
@@ -17,7 +16,7 @@ class AndroidShoppingCartViewModel(val viewModel: ShoppingCartViewModel) : ViewM
 
 class ShoppingAppViewModelFactory(
     private val scope: CoroutineScope,
-    private val sessionManager: SessionManager,
+    private val sessionManager: AndroidSessionManager,
     private val categoryRepo: CategoryRepo,
     private val shoppingCart: ShoppingCart,
     private val itemRepo: ItemRepo

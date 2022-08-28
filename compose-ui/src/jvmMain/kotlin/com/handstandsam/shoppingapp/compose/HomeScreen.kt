@@ -24,7 +24,8 @@ fun HomeScreen(
     itemsInCart: Flow<List<ItemWithQuantity>>,
     showCartClicked: () -> Unit,
     logoutClicked: () -> Unit,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    shoppingAppImageLoader: ShoppingAppImageLoader,
 ) {
     AppScaffold(
         itemsInCart = itemsInCart,
@@ -52,7 +53,7 @@ fun HomeScreen(
             ) {
                 state.categories.forEach { category ->
                     item {
-                        CategoryRow(category) {
+                        CategoryRow(category, shoppingAppImageLoader ) {
                             homeViewModel.send(HomeViewModel.Intention.CategoryClicked(category))
                         }
                     }

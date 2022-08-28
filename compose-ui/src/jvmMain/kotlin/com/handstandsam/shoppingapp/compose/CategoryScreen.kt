@@ -10,18 +10,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.handstandsam.shoppingapp.features.category.CategoryViewModel
+import com.handstandsam.shoppingapp.models.Item
 import com.handstandsam.shoppingapp.models.ItemWithQuantity
 import kotlinx.coroutines.flow.Flow
 
-
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CategoryScreen(
     itemsInCart: Flow<List<ItemWithQuantity>>,
     showCartClicked: () -> Unit,
     logoutClicked: () -> Unit,
     homeUpClicked: () -> Unit,
-    categoryViewModel: CategoryViewModel
+    itemClicked: (item: Item) -> Unit,
+    categoryViewModel: CategoryViewModel,
+    shoppingAppImageLoader: ShoppingAppImageLoader,
 ) {
     val state by categoryViewModel.states.collectAsState(initial = CategoryViewModel.State())
     AppScaffold(
@@ -40,12 +41,9 @@ fun CategoryScreen(
             ) {
                 items(state.items.size) {
                     val item = state.items[it]
-                    ItemGridItem(item) {
-                        categoryViewModel.send(CategoryViewModel.Intention.ItemClicked(item))
+                    ItemGridItem(item, shoppingAppImageLoader) {
+                        itemClicked(item)
                     }
-//                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//                        Text(text = " $item")
-//                    }
                 }
             }
         }

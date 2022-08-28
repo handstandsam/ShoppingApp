@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.LoggedInActivity
+import com.handstandsam.shoppingapp.compose.AndroidShoppingAppImageLoader
 import com.handstandsam.shoppingapp.compose.HomeScreen
 import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.login.LoginActivity
@@ -44,7 +45,8 @@ class HomeActivity : LoggedInActivity() {
                     .itemsInCart,
                 homeViewModel = homeViewModel,
                 showCartClicked = { startCheckoutActivity() },
-                logoutClicked = { logout() }
+                logoutClicked = { logout() },
+                shoppingAppImageLoader = AndroidShoppingAppImageLoader()
             )
         }
     }

@@ -5,14 +5,14 @@ import com.handstandsam.shoppingapp.models.LoginRequest
 import com.handstandsam.shoppingapp.models.User
 import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.preferences.UserPreferences
-import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class LoginPresenter(
     private val view: LoginActivity.LoginView,
-    internal var sessionManager: SessionManager,
+    internal var sessionManager: AndroidSessionManager,
     internal var userPreferences: UserPreferences,
     internal var userRepo: UserRepo,
     scope: CoroutineScope

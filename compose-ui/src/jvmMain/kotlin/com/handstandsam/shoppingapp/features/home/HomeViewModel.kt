@@ -1,17 +1,16 @@
 package com.handstandsam.shoppingapp.features.home
 
 import com.handstandsam.shoppingapp.MviViewModel
+import com.handstandsam.shoppingapp.cart.SessionManager
 import com.handstandsam.shoppingapp.models.Category
 import com.handstandsam.shoppingapp.network.Response
 import com.handstandsam.shoppingapp.repository.CategoryRepo
-import com.handstandsam.shoppingapp.repository.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class HomeViewModel(
     scope: CoroutineScope,
@@ -35,7 +34,7 @@ class HomeViewModel(
                     send(Intention.CategoriesReceived(categoriesResult.body))
                 }
                 else -> {
-                    Timber.d("onError")
+                    throw RuntimeException("Category Response Error")
                 }
             }
         }

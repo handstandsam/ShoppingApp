@@ -13,11 +13,10 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.lifecycleScope
 import com.handstandsam.shoppingapp.R
 import com.handstandsam.shoppingapp.di.AppGraph
-import com.handstandsam.shoppingapp.features.category.CategoryActivity
 import com.handstandsam.shoppingapp.features.home.HomeActivity
 import com.handstandsam.shoppingapp.graph
 import com.handstandsam.shoppingapp.preferences.UserPreferences
-import com.handstandsam.shoppingapp.repository.SessionManager
+import com.handstandsam.shoppingapp.repository.AndroidSessionManager
 import com.handstandsam.shoppingapp.repository.UserRepo
 
 class LoginActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private val graph: AppGraph
         get() = application.graph()
 
-    private val sessionManager: SessionManager
+    private val sessionManager: AndroidSessionManager
         get() = graph.sessionGraph.sessionManager
 
     private val userPreferences: UserPreferences
