@@ -140,5 +140,6 @@ dependencies {
 dependencyGuard {
     configuration("inmemoryDebugRuntimeClasspath") {
         modules = true
+        tree = true
     }
 }
