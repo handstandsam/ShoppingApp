@@ -141,5 +141,6 @@ dependencyGuard {
     configuration("inmemoryDebugRuntimeClasspath") {
         modules = true
         tree = true
+        allowedFilter = { !it.contains("SNAPSHOT)") }
     }
 }
