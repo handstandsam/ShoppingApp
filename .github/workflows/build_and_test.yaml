@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: zulu
-          java-version: 11
+          java-version: 17
 
   test:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: zulu
-          java-version: 11
+          java-version: 17
 
       - name: Dependency Guard
         run: ./gradlew dependencyGuard --scan --stacktrace
