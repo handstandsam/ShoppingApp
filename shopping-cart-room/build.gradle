@@ -1,11 +1,14 @@
 apply plugin: 'shoppingapp.android.lib'
 apply plugin: "kotlin-kapt"
 
+android {
+    namespace = "com.handstandsam.shoppingapp.cart.room"
+}
+
 dependencies {
     api project(":shopping-cart")
 
     //Kotlin
-    api libs.kotlin.std.lib
     api libs.kotlin.coroutines
     api libs.kotlin.coroutines.android
 

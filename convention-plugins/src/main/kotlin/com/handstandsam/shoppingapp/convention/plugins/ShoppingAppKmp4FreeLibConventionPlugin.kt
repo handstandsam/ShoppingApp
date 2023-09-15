@@ -38,8 +38,8 @@ class ShoppingAppKmp4FreeLibConventionPlugin : Plugin<Project> {
     companion object {
         fun setJvmVersionCompatibility(target: Project) {
             target.extensions.getByType(JavaPluginExtension::class.java).apply {
-                sourceCompatibility = JavaVersion.VERSION_1_8
-                targetCompatibility = JavaVersion.VERSION_1_8
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
         }
     }

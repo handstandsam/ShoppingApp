@@ -1,6 +1,10 @@
 apply plugin: 'shoppingapp.android.lib'
 apply plugin: "com.squareup.sqldelight"
 
+android {
+    namespace "com.handstandsam.shoppingapp.cart.sqldelight"
+}
+
 dependencies {
     implementation project(":shopping-cart")
 

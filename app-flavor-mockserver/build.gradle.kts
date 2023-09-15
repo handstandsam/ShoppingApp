@@ -9,9 +9,7 @@ dependencies {
     implementation(project(":models"))
 
     implementation(libs.timber)
-    implementation(libs.kotlin.std.lib)
     implementation(libs.kotlin.coroutines)
-    implementation(libs.kotlin.std.lib)
     implementation(libs.kotlinx.serialization.json)
 
     api(libs.okhttp.logging.interceptor)

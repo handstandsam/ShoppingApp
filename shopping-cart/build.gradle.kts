@@ -9,7 +9,6 @@ kotlin {
                 api(project(":models"))
 
                 //Kotlin
-                api(libs.kotlin.std.lib)
                 api(libs.kotlin.coroutines)
             }
         }

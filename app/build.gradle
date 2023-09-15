@@ -7,6 +7,8 @@ plugins {
 android {
     compileSdk = Integer.parseInt(libs.versions.android.compile.sdk.get())
 
+    namespace = "com.handstandsam.shoppingapp"
+
     defaultConfig {
         applicationId "com.handstandsam.shoppingapp"
         minSdkVersion Integer.parseInt(libs.versions.android.min.sdk.get())
@@ -99,7 +101,6 @@ dependencies {
     debugImplementation libs.okhttp.logging.interceptor
 
     // Kotlin
-    implementation libs.kotlin.std.lib
     implementation libs.kotlin.coroutines
     implementation libs.kotlin.coroutines.android
 
