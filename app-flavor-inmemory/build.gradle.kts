@@ -1,5 +1,5 @@
 plugins {
-    id("shoppingapp.jvm.lib")
+    id("shoppingapp.kmp4free.lib")
 }
 
 dependencies {

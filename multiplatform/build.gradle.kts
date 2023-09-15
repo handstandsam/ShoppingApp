@@ -45,6 +45,7 @@ kotlin {
                 implementation(project(":mock-data"))
                 implementation(project(":shopping-cart"))
                 implementation(project(":networking"))
+                implementation(project(":app-flavor-inmemory"))
                 implementation(libs.ktor.client)
             }
         }

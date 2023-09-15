@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Implements the app's [ShoppingCartDao] interface, but makes queries to our [Room] database [RoomItemInCartDatabase]
@@ -19,7 +20,7 @@ class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
 
     private val itemInCartDao: RoomItemInCartDao = itemInCartDatabase.itemInCartDao()
 
-    private val channel = ConflatedBroadcastChannel(listOf<ItemWithQuantity>())
+    private val channel = MutableStateFlow<List<ItemWithQuantity>>(listOf())
 
     init {
         /**
@@ -27,13 +28,12 @@ class RoomShoppingCartDao(itemInCartDatabase: RoomItemInCartDatabase) :
          */
         itemInCartDao.selectAllStream().observeForever { list ->
             launch {
-                channel.send(list.toItemWithQuantityList())
+                channel.tryEmit(list.toItemWithQuantityList())
             }
         }
     }
 
-    override val allItems: Flow<List<ItemWithQuantity>>
-        get() = channel.asFlow()
+    override val allItems: Flow<List<ItemWithQuantity>> = channel
 
     override suspend fun findByLabel(label: String): ItemWithQuantity? {
         return itemInCartDao.findByLabel(label)?.toItemWithQuantity()
