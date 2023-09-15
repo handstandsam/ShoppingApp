@@ -1,6 +1,6 @@
 [versions]
 android_compile_sdk = "34"
-android_gradle_plugin = "8.0.1"
+android_gradle_plugin = "8.1.0"
 android_min_sdk = "24"
 android_target_sdk = "34"
 androidx_activity = "1.7.2"
