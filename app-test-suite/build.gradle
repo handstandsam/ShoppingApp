@@ -5,6 +5,10 @@ plugins {
 
 android {
   namespace = "com.handstandsam.shoppingapp.android.tests.lib"
+
+  variantFilter { variant ->
+    setIgnore(!variant.name.toLowerCase().endsWith("debug"))
+  }
 }
 
 dependencies {

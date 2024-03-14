@@ -25,16 +25,7 @@ android {
   }
 
   variantFilter { variant ->
-    def fullName = variant.name.toLowerCase()
-    def names = variant.flavors*.name
-    // Only Allow Debug variants
-    if (fullName.endsWith("debug")) {
-      println(fullName + " - " + names)
-      // Gradle ignores any variants that satisfy the conditions above.
-      setIgnore(false)
-    } else {
-      setIgnore(true)
-    }
+    setIgnore(!variant.name.toLowerCase().endsWith("debug"))
   }
 
   lint {
