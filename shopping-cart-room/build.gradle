@@ -22,8 +22,8 @@ dependencies {
     implementation libs.androidx.lifecycle.livedata.core
     // LiveData for Reactive Streams from Queries
 
-//    // Unit Tests
-//    androidTestImplementation libs.junit
-//    androidTestImplementation libs.androidx.persistence.room.test // Test helpers
-//    androidTestImplementation libs.androidx.testrunner
+    // Unit Tests
+    androidTestImplementation libs.junit
+    androidTestImplementation libs.androidx.persistence.room.test // Test helpers
+    androidTestImplementation libs.androidx.testrunner
 }

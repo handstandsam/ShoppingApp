@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 7.1.3" type="baseline" client="gradle" dependencies="false" name="AGP (7.1.3)" variant="all" version="7.1.3">
+<issues format="6" by="lint 8.1.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.1.0)" variant="all" version="8.1.0">
 
     <issue
         id="ObsoleteLintCustomCheck"
-        message="Lint found one or more custom checks that could not be loaded. The most likely reason for this is that it is using an older, incompatible or unsupported API in lint. Make sure these lint checks are updated to the new APIs. The issue registry class is timber.lint.IssueRegistry. The class loading issue is com/android/tools/lint/detector/api/Detector$JavaPsiScanner: ClassLoader.defineClass1(ClassLoader.java:-2)←ClassLoader.defineClass(ClassLoader.java:1017)←UrlClassLoader.consumeClassData(UrlClassLoader.java:269)←JdkZipResourceFile.findClass(JdkZipResourceFile.java:147)←JarLoader.findClass(JarLoader.java:55)←ClassPath.findClassInLoader(ClassPath.java:224)←ClassPath.findClass(ClassPath.java:207)←UrlClassLoader.findClass(UrlClassLoader.java:207)">
+        message="Lint found one or more custom checks that could not be loaded. The most likely reason for this is that it is using an older, incompatible or unsupported API in lint. Make sure these lint checks are updated to the new APIs. The issue registry class is timber.lint.IssueRegistry. The class loading issue is com/android/tools/lint/detector/api/Detector$JavaPsiScanner: ClassLoader.defineClass1(ClassLoader.java:-2)←ClassLoader.defineClass(ClassLoader.java:1012)←UrlClassLoader.consumeClassData(UrlClassLoader.java:258)←JdkZipResourceFile.findClass(JdkZipResourceFile.java:89)←JarLoader.findClass(JarLoader.java:63)←ClassPath.findClassInLoader(ClassPath.java:243)←ClassPath.findClass(ClassPath.java:176)←UrlClassLoader.findClass(UrlClassLoader.java:214)←ClassLoader.loadClass(ClassLoader.java:587)←ClassLoader.loadClass(ClassLoader.java:520)←IssueRegistry.getIssues(IssueRegistry.java:10)←JarFileIssueRegistry$Factory.loadIssueRegistry(JarFileIssueRegistry.kt:263)←JarFileIssueRegistry$Factory.get(JarFileIssueRegistry.kt:181)←JarFileIssueRegistry$Factory.get(JarFileIssueRegistry.kt:140)←JarFileIssueRegistry$Factory.get$default(JarFileIssueRegistry.kt:113)←LintDriver.registerCustomDetectors(LintDriver.kt:689)←LintDriver.initializeExtraRegistries(LintDriver.kt:587)←LintDriver.doAnalyze(LintDriver.kt:485)←LintDriver.doAnalyze$default(LintDriver.kt:473)←LintDriver.mergeOnly(LintDriver.kt:459)←LintCliClient$mergeOnly$1.invoke(LintCliClient.kt:251)←LintCliClient$mergeOnly$1.invoke(LintCliClient.kt:248)←LintCliClient.run(LintCliClient.kt:279)←LintCliClient.mergeOnly(LintCliClient.kt:248)←Main.run(Main.java:1691)←Main.run(Main.java:275)←NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java:-2)←NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)←DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)←Method.invoke(Method.java:568)←AndroidLintWorkAction.invokeLintMainRunMethod(AndroidLintWorkAction.kt:98)←AndroidLintWorkAction.runLint(AndroidLintWorkAction.kt:87)←AndroidLintWorkAction.execute(AndroidLintWorkAction.kt:62)←DefaultWorkerServer.execute(DefaultWorkerServer.java:63)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:66)←NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:62)←ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:100)←NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:62)←AbstractWorker$1.call(AbstractWorker.java:44)←AbstractWorker$1.call(AbstractWorker.java:41)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)←DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:199)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)←DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:157)←DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)←DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)←DefaultBuildOperationExecutor.call(DefaultBuildOperationExecutor.java:73)←AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)←NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:59)←DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:170)←FutureTask.run(FutureTask.java:264)←DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:187)←DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:120)←DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:162)←Factories$1.create(Factories.java:31)←DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:264)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:128)←DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:133)←DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:157)←DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:126)←Executors$RunnableAdapter.call(Executors.java:539)←FutureTask.run(FutureTask.java:264)←ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)←AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)←ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)←ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)←Thread.run(Thread.java:833)">
         <location
-            file="../../../../.gradle/caches/transforms-3/3d2ab2ce3c955b687e014bf0e07d7331/transformed/timber-4.5.1/jars/lint.jar"/>
+            file="$GRADLE_USER_HOME/caches/transforms-4/3330de6bef117ba9a3353d95b2b49f0e/transformed/timber-4.5.1/jars/lint.jar"/>
     </issue>
 
     <issue
@@ -31,6 +31,13 @@
     </issue>
 
     <issue
+        id="NotificationPermission"
+        message="When targeting Android 13 or higher, posting a permission requires holding the `POST_NOTIFICATIONS` permission (usage from com.bumptech.glide.request.target.NotificationTarget)">
+        <location
+            file="src/main/AndroidManifest.xml"/>
+    </issue>
+
+    <issue
         id="ManifestOrder"
         message="`&lt;uses-permission>` tag appears after `&lt;application>` tag"
         errorLine1="    &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; />"
@@ -42,36 +49,278 @@
     </issue>
 
     <issue
-        id="ModifierParameter"
-        message="Modifier parameter should be the first optional parameter"
-        errorLine1="    modifier: Modifier = Modifier,"
-        errorLine2="    ~~~~~~~~">
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.tools.build:gradle than 8.1.0 is available: 8.3.0. (There is also a newer version of 8.1.𝑥 available, if upgrading to 8.3.0 is difficult: 8.1.4)"
+        errorLine1="android_gradle_plugin = &quot;8.1.0&quot;"
+        errorLine2="                        ~~~~~~~">
         <location
-            file="src/main/java/com/handstandsam/shoppingapp/compose/TextWithShadow.kt"
-            line="24"
-            column="5"/>
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="3"
+            column="25"/>
     </issue>
 
     <issue
-        id="UnusedMaterialScaffoldPaddingParameter"
-        message="Content padding parameter it is not used"
-        errorLine1="    ) {"
-        errorLine2="      ^">
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.7.2 is available: 1.8.2"
+        errorLine1="androidx_activity = &quot;1.7.2&quot;"
+        errorLine2="                    ~~~~~~~">
         <location
-            file="src/main/java/com/handstandsam/shoppingapp/compose/AppScaffold.kt"
-            line="87"
-            column="7"/>
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="6"
+            column="21"/>
     </issue>
 
     <issue
-        id="IntentFilterExportedReceiver"
-        message="As of Android 12, `android:exported` must be set; use `true` to make the activity \&#xA;available to other apps, and `false` otherwise. For launcher activities, this should be set to `true`."
-        errorLine1="        &lt;activity"
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.9.0 is available: 1.11.0"
+        errorLine1="androidx_material = &quot;1.9.0&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="9"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-livedata-core than 2.6.2 is available: 2.7.0"
+        errorLine1="androidx_lifecycle = &quot;2.6.2&quot;"
+        errorLine2="                     ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="10"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.6.2 is available: 2.7.0"
+        errorLine1="androidx_lifecycle = &quot;2.6.2&quot;"
+        errorLine2="                     ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="10"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.5.2 is available: 2.6.1"
+        errorLine1="androidx_persistence = &quot;2.5.2&quot;"
+        errorLine2="                       ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="11"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.5.2 is available: 2.6.1"
+        errorLine1="androidx_persistence = &quot;2.5.2&quot;"
+        errorLine2="                       ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="11"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-runtime than 2.5.2 is available: 2.6.1"
+        errorLine1="androidx_persistence = &quot;2.5.2&quot;"
+        errorLine2="                       ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="11"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-testing than 2.5.2 is available: 2.6.1"
+        errorLine1="androidx_persistence = &quot;2.5.2&quot;"
+        errorLine2="                       ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="11"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of commons-io:commons-io than 2.11.0 is available: 2.12.0"
+        errorLine1="apache_commons = &quot;2.11.0&quot;"
+        errorLine2="                 ~~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="15"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.animation:animation than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.foundation:foundation-layout than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material:material than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material:material-icons-extended than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.runtime:runtime than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.runtime:runtime-livedata than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.ui:ui-tooling than 1.5.1 is available: 1.6.3"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="Upgrade `androidx.compose.foundation` for keyboard and mouse support"
+        errorLine1="compose = &quot;1.5.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="18"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.compiler:compiler than 1.5.3 is available: 1.5.10"
+        errorLine1="compose_compiler = &quot;1.5.3&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="19"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.compose.runtime:runtime than 1.5.1 is available: 1.5.12"
+        errorLine1="jetbrains_compose = &quot;1.5.1&quot;"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="23"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 1.9.10 is available: 1.9.22"
+        errorLine1="kotlin = &quot;1.9.10&quot;"
         errorLine2="         ~~~~~~~~">
         <location
-            file="src/main/AndroidManifest.xml"
-            line="14"
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="26"
             column="10"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.4.1 is available: 1.6.2"
+        errorLine1="kotlinx_serialization = &quot;1.4.1&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="28"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.jakewharton.timber:timber than 4.5.1 is available: 4.7.1"
+        errorLine1="timber = &quot;4.5.1&quot;"
+        errorLine2="         ~~~~~~~">
+        <location
+            file="$HOME/Development/ShoppingApp/gradle/libs.versions.toml"
+            line="34"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ComposableNaming"
+        message="Composable functions that return Unit should start with an uppercase letter"
+        errorLine1="    override fun loadImage(modifier: Modifier, image: String) {"
+        errorLine2="                 ~~~~~~~~~">
+        <location
+            file="src/main/java/com/handstandsam/shoppingapp/compose/AndroidShoppingAppImageLoader.kt"
+            line="10"
+            column="18"/>
     </issue>
 
     <issue
