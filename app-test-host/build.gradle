@@ -33,5 +33,5 @@ dependencies {
     implementation libs.androidx.espresso.contrib
     implementation libs.androidx.test.rules
     implementation libs.androidx.testrunner
-    implementation(project(":app-android-tests-lib"))
+    implementation(project(":app-test-suite"))
 }

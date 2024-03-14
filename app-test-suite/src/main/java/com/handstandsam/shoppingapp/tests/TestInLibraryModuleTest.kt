@@ -10,22 +10,14 @@ import com.handstandsam.shoppingapp.features.login.LoginActivity
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class AndroidTestModuleTest {
+/**
+ * com.android.library
+ */
+class TestInLibraryModuleTest {
 
   @Test
-  fun androidTestModule() {
+  fun testInLibraryModule() {
+    println("Test in Library Module!")
     assertTrue(true)
-  }
-
-  @Test
-  fun androidTestModuleLoginActivityTypeUsernameTest() {
-    val activityScenario: ActivityScenario<LoginActivity> =
-      ActivityScenario.launch(LoginActivity::class.java)
-
-    activityScenario.moveToState(Lifecycle.State.RESUMED)
-
-    onView(withId(R.id.username)).perform(typeText("username"))
-
-    activityScenario.moveToState(Lifecycle.State.DESTROYED)
   }
 }

@@ -119,7 +119,7 @@ dependencies {
   androidTestImplementation libs.androidx.espresso.contrib
   androidTestImplementation libs.androidx.test.rules
   androidTestImplementation libs.androidx.testrunner
-  androidTestUtil libs.androidx.test.orchestrator
+  androidTestImplementation(project(":app-test-suite"))
 }
 
 dependencyGuard {
