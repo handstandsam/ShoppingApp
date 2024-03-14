@@ -1,0 +1,17 @@
+plugins {
+  id 'shoppingapp.android.lib'
+  id 'kotlin-android'
+}
+
+android {
+  namespace = "com.handstandsam.shoppingapp.android.tests.lib"
+}
+
+dependencies {
+  compileOnly project(path: ':app')
+
+  implementation libs.androidx.espresso
+  implementation libs.androidx.espresso.contrib
+  implementation libs.androidx.test.rules
+  implementation libs.androidx.testrunner
+}

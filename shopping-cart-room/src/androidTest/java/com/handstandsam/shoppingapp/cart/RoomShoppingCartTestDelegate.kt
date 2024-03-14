@@ -28,14 +28,14 @@ class RoomShoppingCartTestDelegate {
         println("after adding item: ${shoppingCart.latestItemsInCart()}")
     }
 
-    suspend fun assertPersisted(item: Item, quantity: Long) = apply {
-        println("asserting there is $quantity of $item")
+    suspend fun assertPersisted(expectedItem: Item, expectedQuantity: Long) = apply {
+        println("asserting there is $expectedQuantity of $expectedItem")
         val matchingItemsInCart = shoppingCart.latestItemsInCart()
-            .filter { it.item.label == item.label }
+            .filter { it.item.label == expectedItem.label }
         assertEquals(matchingItemsInCart.size, 1)
         val matchingItemInCart = matchingItemsInCart[0]
-        assertEquals(matchingItemInCart.item, item)
-        assertEquals(matchingItemInCart.quantity, quantity)
+        assertEquals(expectedItem, matchingItemInCart.item)
+        assertEquals(expectedQuantity, matchingItemInCart.quantity)
     }
 
     suspend fun assertTotalItemsInCart(typeCount: Int, totalCount: Int) = apply {
