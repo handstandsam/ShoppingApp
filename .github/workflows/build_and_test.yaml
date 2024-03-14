@@ -55,7 +55,7 @@ jobs:
         run: ./gradlew check -Pkmp4free=false -Pios=false -Pjs=false --scan --stacktrace
 
       - name: Run All Checks with Multiplatform - KMP4FREE Enabled
-        run: ./gradlew check -Pkmp4free=true -Pios=true -Pjs=true --scan --stacktrace
+        run: ./gradlew check -Pkmp4free=true -Pios=true -Pjs=true --scan --stacktrace --rerun-tasks
 
       - name: (Fail-only) Bundle test reports
         if: failure()
