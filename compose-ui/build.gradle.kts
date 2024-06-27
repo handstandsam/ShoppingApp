@@ -11,9 +11,9 @@ kotlin {
     }
     val jvmMain by sourceSets.getting {
         dependencies {
-            implementation(libs.androidx.compose.material)
-            implementation(libs.androidx.compose.foundation)
-            implementation(libs.androidx.compose.ui)
+            api(libs.androidx.material3)
+            api(libs.androidx.compose.foundation)
+            api(libs.androidx.compose.ui)
 
             implementation(project(":models"))
             implementation(project(":mock-data"))

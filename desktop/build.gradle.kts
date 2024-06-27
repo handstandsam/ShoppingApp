@@ -5,6 +5,7 @@ plugins {
     kotlin("jvm")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.dependency.guard)
     application
 }
 
@@ -17,6 +18,9 @@ dependencies {
     implementation(project(":shopping-cart"))
 }
 
+dependencyGuard {
+    configuration("runtimeClasspath")
+}
 
 //compose.desktop {
 //}

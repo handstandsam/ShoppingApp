@@ -61,6 +61,7 @@ dependencies {
     // AndroidX Libraries
     implementation(libs.androidx.appcompat.v7)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Networking)
@@ -82,11 +83,10 @@ dependencies {
     implementation(libs.timber)
 
     // Compose
-//  implementation( libs.androidx.compose.compiler)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling)

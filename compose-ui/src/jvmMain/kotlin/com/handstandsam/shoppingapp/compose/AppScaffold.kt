@@ -5,17 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+//import androidx.compose.material.DropdownMenu
+//import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,6 +29,7 @@ import com.handstandsam.shoppingapp.models.totalItemCount
 import kotlinx.coroutines.flow.Flow
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
     itemsInCart: Flow<List<ItemWithQuantity>>,
@@ -45,14 +42,14 @@ fun AppScaffold(
 ) {
     val itemCount by itemsInCart.collectAsState(initial = listOf())
 
-    val navigationIcon: @Composable (() -> Unit)? = if (homeUpClicked != null) {
+    val navigationIcon: @Composable (() -> Unit) = if (homeUpClicked != null) {
         {
             IconButton(onClick = homeUpClicked) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back")
             }
         }
     } else {
-        null
+        {}
     }
     Scaffold(
         topBar = {

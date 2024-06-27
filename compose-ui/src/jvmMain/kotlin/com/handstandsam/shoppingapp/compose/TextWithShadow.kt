@@ -2,8 +2,8 @@ package com.handstandsam.shoppingapp.compose
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -28,7 +28,7 @@ fun TextWithShadow(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        style = MaterialTheme.typography.h4.copy(
+        style = MaterialTheme.typography.headlineSmall.copy(
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             shadow = Shadow(
