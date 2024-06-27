@@ -6,6 +6,7 @@ val useIos = findProperty("ios") == "true"
 val useJs = findProperty("js") == "true"
 if (useKmp4Free && useJs) {
     apply(plugin = "org.jetbrains.compose")
+    apply(plugin = "org.jetbrains.kotlin.plugin.compose")
 }
 
 kotlin {
