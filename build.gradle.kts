@@ -4,16 +4,20 @@ buildscript {
         mavenCentral()
         google()
         gradlePluginPortal()
-        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
-        maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+//        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
+//        maven { url = "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath(libs.android.gradle.plugin)
-        classpath(libs.kotlin.gradle.plugin)
+//        classpath(libs.kotlin.gradle.plugin)
         classpath(libs.sqldelight.gradle.plugin)
+        classpath(libs.kotlin.gradle.plugin)
         classpath("com.handstandsam:convention-plugins")
-        classpath("com.handstandsam.kmp4free:kmp4free:0.1.0")
-        classpath(libs.jetbrains.compose.gradle.plugin)
+//        classpath(libs.plugins.compose.compiler)
+//        classpath("com.handstandsam.kmp4free:kmp4free:0.1.0")
+//        classpath(libs.jetbrains.compose)
+//        classpath(libs.plugins.jetbrains.compose) apply false
+//        classpath(libs.plugins.compose.compiler) apply false
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
@@ -22,6 +26,8 @@ buildscript {
 
 plugins {
     alias(libs.plugins.dependency.guard)
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 dependencyGuard {
@@ -34,7 +40,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
+//        maven { url = "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
     }
 }
 

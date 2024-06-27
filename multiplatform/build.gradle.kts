@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform")
+    alias(libs.plugins.kotlin.multiplatform)
 }
 val useKmp4Free = findProperty("kmp4free") == "true"
 val useIos = findProperty("ios") == "true"

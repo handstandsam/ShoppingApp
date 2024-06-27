@@ -1,8 +1,8 @@
-import org.jetbrains.compose.compose
+//import org.jetbrains.compose.compose
 
 plugins {
-    kotlin("multiplatform") // kotlin("jvm") doesn't work well in IDEA/AndroidStudio (https://github.com/JetBrains/compose-jb/issues/22)
-    id("org.jetbrains.compose")
+    alias(libs.plugins.kotlin.multiplatform) // kotlin("jvm") doesn't work well in IDEA/AndroidStudio (https://github.com/JetBrains/compose-jb/issues/22)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -11,9 +11,9 @@ kotlin {
     }
     val jvmMain by sourceSets.getting {
         dependencies {
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(libs.androidx.compose.material)
+            implementation(libs.androidx.compose.foundation)
+            implementation(libs.androidx.compose.ui)
 
             implementation(project(":models"))
             implementation(project(":mock-data"))

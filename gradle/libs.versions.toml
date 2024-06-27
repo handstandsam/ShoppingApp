@@ -15,17 +15,19 @@ androidx_test_runner = "1.5.2"
 apache_commons = "2.11.0"
 assertj = "3.23.1"
 coil_compose = "2.2.0"
-compose = "1.5.12"
-compose_compiler = "1.5.3"
+compose = "1.6.8"
+
+
+
 dependency_guard = "0.5.0"
 espresso = "3.5.1"
 glide = "4.11.0"
-jetbrains_compose = "1.5.12"
+jetbrains_compose = "1.6.11"
 junit = "4.13.2"
 kmp4free = "0.1.0"
-kotlin = "1.9.22"
-kotlin_coroutines = "1.7.3"
-kotlinx_serialization = "1.6.0"
+kotlin = "2.0.0"
+kotlin_coroutines = "1.8.1"
+kotlinx_serialization = "1.7.1"
 ktor = "2.1.0"
 ktor_client_okhttp = "2.1.0"
 okhttp = "4.11.0"
@@ -42,7 +44,6 @@ assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 accompanist_coil = { module = "com.google.accompanist:accompanist-coil", version.ref = "accompanist_coil" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity" }
 androidx_appcompat_v7 = { module = "androidx.appcompat:appcompat", version.ref = "androidx_appcompat" }
-androidx_compose_compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose_compiler" }
 androidx_compose_runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
 androidx_compose_ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx_compose_foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
@@ -66,7 +67,6 @@ androidx_test_rules = { module = "androidx.test:rules", version.ref = "androidx_
 androidx_test_orchestrator = { module = "androidx.test:orchestrator", version.ref = "androidx_test_orchestrator" }
 coil_compose = { module = "io.coil-kt:coil-compose", version.ref = "coil_compose" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-jetbrains_compose_gradle_plugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrains_compose" }
 jetbrains_compose_web_core = { module = "org.jetbrains.compose.web:web-core", version.ref = "jetbrains_compose" }
 jetbrains_compose_runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jetbrains_compose" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -97,3 +97,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 [plugins]
 dependency_guard = { id = "com.dropbox.dependency-guard", version.ref = "dependency_guard" }
 kmp4free = { id = "com.handstandsam.kmp4free", version.ref = "kmp4free" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains_compose" }
