@@ -108,7 +108,7 @@ val itemRepo = DesktopAppGraph.networkGraph.itemRepo
 
 val basicNav = MutableStateFlow(ScreenType.Home)
 
-fun main1() = application {
+fun main() = application {
 
     Window(
         onCloseRequest = ::exitApplication,
@@ -127,7 +127,7 @@ fun main1() = application {
     }
 }
 
-fun main() = application {
+fun main2() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Compose for Desktop",

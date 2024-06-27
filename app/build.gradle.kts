@@ -61,7 +61,6 @@ dependencies {
     // AndroidX Libraries
     implementation(libs.androidx.appcompat.v7)
     implementation(libs.androidx.material)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Networking)
