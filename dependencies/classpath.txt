@@ -112,6 +112,8 @@ org.codehaus.mojo:animal-sniffer-annotations:1.19
 org.glassfish.jaxb:jaxb-runtime:2.3.2
 org.glassfish.jaxb:txw2:2.3.2
 org.jdom:jdom2:2.0.6
+org.jetbrains.compose:compose-gradle-plugin:1.6.11
+org.jetbrains.compose:org.jetbrains.compose.gradle.plugin:1.6.11
 org.jetbrains.intellij.deps:trove4j:1.0.20200330
 org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin:2.0.0
 org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:2.0.0
