@@ -79,7 +79,7 @@ org.jetbrains.compose.ui:ui-util:1.6.11
 org.jetbrains.compose.ui:ui:1.6.11
 org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23
 org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23
-org.jetbrains.kotlin:kotlin-stdlib:2.0.0
+org.jetbrains.kotlin:kotlin-stdlib:2.0.21
 org.jetbrains.kotlinx:atomicfu-jvm:0.23.2
 org.jetbrains.kotlinx:atomicfu:0.23.2
 org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.8.1
