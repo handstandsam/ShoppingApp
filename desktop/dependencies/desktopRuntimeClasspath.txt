@@ -44,7 +44,7 @@ org.jetbrains.compose.animation:animation-desktop:1.6.11
 org.jetbrains.compose.animation:animation:1.6.11
 org.jetbrains.compose.annotation-internal:annotation:1.6.11
 org.jetbrains.compose.collection-internal:collection:1.6.11
-org.jetbrains.compose.desktop:desktop-jvm-macos-arm64:1.6.11
+org.jetbrains.compose.desktop:desktop-jvm-<platform>:1.6.11
 org.jetbrains.compose.desktop:desktop-jvm:1.6.11
 org.jetbrains.compose.desktop:desktop:1.6.11
 org.jetbrains.compose.foundation:foundation-desktop:1.6.11
@@ -94,7 +94,7 @@ org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.1
 org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.1
 org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.1
 org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1
-org.jetbrains.skiko:skiko-awt-runtime-macos-arm64:0.8.4
+org.jetbrains.skiko:skiko-awt-runtime-<platform>:0.8.4
 org.jetbrains.skiko:skiko-awt:0.8.4
 org.jetbrains.skiko:skiko:0.8.4
 org.jetbrains:annotations:23.0.0
