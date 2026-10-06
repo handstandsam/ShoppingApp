@@ -2,8 +2,9 @@
 # Replay only: no LLM and no API key, so it runs the same on fork PRs.
 #
 # Results, from fastest to look at:
-#   1. Job summary (and a PR comment): storyboard image inline, plus a link that
-#      opens each session in the Trailblaze report viewer.
+#   1. Job summary (and a PR comment): a pass/fail table with a link that opens each
+#      session in the Trailblaze report viewer, then each trail's storyboard
+#      (click it to open that session).
 #   2. The report-interactive.html artifact, which opens straight in the browser.
 #   3. The session zips, for drag-and-drop into the viewer.
 #
@@ -25,6 +26,8 @@ permissions:
 
 env:
   TRAILBLAZE_VERSION: "2026.10.06"
+  # One screenshot-per-step image per trail in the summary. Turn off for big suites.
+  TRAILBLAZE_STORYBOARDS: "true"
   RESULTS: ${{ github.workspace }}/trailblaze-results
 
 jobs:
@@ -107,8 +110,10 @@ jobs:
             id="${d%/}"
             [ "$id" = reports ] && continue
             zip -q -r "$RESULTS/$id.zip" "$id" || status=1
-            trailblaze report --id "$id" --storyboard="$RESULTS/$id.webp" --max-size=8MB \
-              --output-dir "$RUNNER_TEMP/report-$id" || status=1
+            if [ "$TRAILBLAZE_STORYBOARDS" = true ]; then
+              trailblaze report --id "$id" --storyboard="$RESULTS/$id.webp" --max-size=8MB \
+                --output-dir "$RUNNER_TEMP/report-$id" || status=1
+            fi
           done
           trailblaze report --output-dir "$RESULTS" || status=1
           ls -lh "$RESULTS"
@@ -170,22 +175,49 @@ jobs:
         run: |
           viewer=https://block.github.io/trailblaze/report-viewer/
           out="$RUNNER_TEMP/summary.md"
-          {
-            echo "## Trailblaze"
-            echo
-            echo "[Open the report]($REPORT_URL)"
+          # Opens one session: in the viewer when its zip is published, else the HTML report artifact.
+          session_link() {
             if [ -n "$RAW" ]; then
-              echo
-              for z in "$RESULTS"/*.zip; do
-                id=$(basename "$z" .zip)
-                zip_url=$(jq -rn --arg u "$RAW/$id.zip" '$u|@uri')
-                echo "### \`$id\`: [open in the viewer]($viewer?zip=$zip_url)"
-                [ -f "$RESULTS/$id.webp" ] && echo && echo "![$id storyboard]($RAW/$id.webp)"
-                echo
-              done
+              echo "$viewer?zip=$(jq -rn --arg u "$RAW/$1.zip" '$u|@uri')"
             else
+              echo "$REPORT_URL"
+            fi
+          }
+          rows() {
+            jq -r '.results[] | [.outcome, .title, (.device_classifier // .platform // ""),
+              ((.duration_ms // 0) / 1000 | floor), .session_id,
+              ((.failure_reason // "") | gsub("\\s+"; " ") | .[0:300])] | @tsv' \
+              "$RESULTS/summary.json" 2>/dev/null
+          }
+          passed=$(rows | awk -F'\t' '$1=="PASSED"' | wc -l | tr -d ' ')
+          total=$(rows | wc -l | tr -d ' ')
+          {
+            if [ "$total" -gt 0 ] && [ "$passed" = "$total" ]; then
+              echo "## Trailblaze: ✅ $passed of $total trails passed"
+            else
+              echo "## Trailblaze: ❌ $passed of $total trails passed"
+            fi
+            echo
+            echo "[Open the full report]($REPORT_URL)"
+            echo
+            echo "| | Trail | Device | Time |"
+            echo "|---|---|---|---|"
+            rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+              case "$outcome" in PASSED) icon=✅ ;; FAILED) icon=❌ ;; *) icon=⚠️ ;; esac
+              echo "| $icon | [$title]($(session_link "$id")) | $device | ${secs}s |"
+            done
+            rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+              if [ -n "$reason" ]; then printf -- '\n- **%s**: %s\n' "$title" "$reason"; fi
+            done
+            if [ -z "$RAW" ]; then
               echo
-              echo "Session zips and storyboards: [download]($SESSIONS_URL). Drop a zip on $viewer."
+              echo "Session zips: [download]($SESSIONS_URL), then drop one on $viewer."
+            elif [ "$TRAILBLAZE_STORYBOARDS" = true ]; then
+              rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+                [ -f "$RESULTS/$id.webp" ] || continue
+                printf -- '\n### %s\n\n[![%s storyboard](%s)](%s)\n' \
+                  "$title" "$title" "$RAW/$id.webp" "$(session_link "$id")"
+              done
             fi
           } > "$out"
           cat "$out" >> "$GITHUB_STEP_SUMMARY"
