@@ -24,7 +24,7 @@ permissions:
   contents: read
 
 env:
-  TRAILBLAZE_VERSION: "2026.09.25"
+  TRAILBLAZE_VERSION: "2026.10.06"
   RESULTS: ${{ github.workspace }}/trailblaze-results
 
 jobs:
