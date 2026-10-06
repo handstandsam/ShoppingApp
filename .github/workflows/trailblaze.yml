@@ -45,6 +45,9 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      # The Trailblaze CLI builds its HTML report with bun.
+      - uses: oven-sh/setup-bun@v2
+
       - name: Build the app
         run: ./gradlew :app:assembleDebug -Pkmp4free=false -Pios=false -Pjs=false
 
@@ -82,6 +85,8 @@ jobs:
         with:
           api-level: 34
           arch: x86_64
+          # Same device the trail was recorded on.
+          profile: pixel_6
           force-avd-creation: true
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
@@ -89,16 +94,21 @@ jobs:
 
       - name: Export report and session zips
         if: ${{ !cancelled() }}
+        # Each export keeps going if another fails, so a broken report still leaves the zips.
         run: |
           mkdir -p "$RESULTS"
-          trailblaze report --output-dir "$RESULTS" --storyboard --max-size=8MB
+          status=0
           cd ~/.trailblaze/logs
           for d in */; do
             id="${d%/}"
             [ "$id" = reports ] && continue
-            zip -q -r "$RESULTS/$id.zip" "$id"
+            zip -q -r "$RESULTS/$id.zip" "$id" || status=1
+            trailblaze report --id "$id" --storyboard="$RESULTS/$id.webp" --max-size=8MB \
+              --output-dir "$RUNNER_TEMP/report-$id" || status=1
           done
+          trailblaze report --output-dir "$RESULTS" || status=1
           ls -lh "$RESULTS"
+          exit $status
 
       - name: Upload report (opens in the browser)
         id: report
@@ -108,20 +118,15 @@ jobs:
           path: trailblaze-results/report-interactive.html
           archive: false
 
-      - name: Upload storyboard
-        id: storyboard
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
-        with:
-          path: trailblaze-results/storyboard.webp
-          archive: false
-
-      - name: Upload session zips
+      - name: Upload session zips and storyboards
+        id: sessions
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
           name: trailblaze-sessions
-          path: trailblaze-results/*.zip
+          path: |
+            trailblaze-results/*.zip
+            trailblaze-results/*.webp
 
       - name: Publish sessions for the viewer
         id: publish
@@ -141,7 +146,8 @@ jobs:
             git -C "$pub" remote add origin "$url"
           fi
           mkdir -p "$pub/$dir"
-          cp "$RESULTS"/*.zip "$RESULTS/storyboard.webp" "$pub/$dir/"
+          cp "$RESULTS"/*.zip "$pub/$dir/"
+          cp "$RESULTS"/*.webp "$pub/$dir/" 2>/dev/null || true
           git -C "$pub" config user.name "github-actions[bot]"
           git -C "$pub" config user.email "41898299+github-actions[bot]@users.noreply.github.com"
           git -C "$pub" add -A
@@ -155,7 +161,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RAW: ${{ steps.publish.outputs.raw }}
           REPORT_URL: ${{ steps.report.outputs.artifact-url }}
-          STORYBOARD_URL: ${{ steps.storyboard.outputs.artifact-url }}
+          SESSIONS_URL: ${{ steps.sessions.outputs.artifact-url }}
           PR: ${{ github.event.pull_request.number }}
         run: |
           viewer=https://block.github.io/trailblaze/report-viewer/
@@ -169,13 +175,13 @@ jobs:
               for z in "$RESULTS"/*.zip; do
                 id=$(basename "$z" .zip)
                 zip_url=$(jq -rn --arg u "$RAW/$id.zip" '$u|@uri')
-                echo "- \`$id\`: [open in the viewer]($viewer?zip=$zip_url)"
+                echo "### \`$id\`: [open in the viewer]($viewer?zip=$zip_url)"
+                [ -f "$RESULTS/$id.webp" ] && echo && echo "![$id storyboard]($RAW/$id.webp)"
+                echo
               done
-              echo
-              echo "![storyboard]($RAW/storyboard.webp)"
             else
               echo
-              echo "[Storyboard]($STORYBOARD_URL). Session zips are in the \`trailblaze-sessions\` artifact; drop one on $viewer."
+              echo "Session zips and storyboards: [download]($SESSIONS_URL). Drop a zip on $viewer."
             fi
           } > "$out"
           cat "$out" >> "$GITHUB_STEP_SUMMARY"
