@@ -51,3 +51,7 @@ yarn.lock
 .DS_Store
 
 .kotlin
+
+# Trailblaze local settings and results
+.trailblaze/
+trailblaze-results/
