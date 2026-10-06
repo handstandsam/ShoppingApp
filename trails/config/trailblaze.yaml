@@ -1,0 +1,3 @@
+# Trailblaze workspace anchor: `trailblaze` commands run anywhere under trails/ find this file.
+targets:
+  - shoppingapp

@@ -1,0 +1,96 @@
+config:
+  id: shopping/add-to-cart
+  target: shoppingapp
+  devices:
+    android:
+      driver: ANDROID_ONDEVICE_ACCESSIBILITY
+
+trailhead:
+  step: "Launch Shopping App fresh, on the login screen"
+  recording:
+    android:
+      launchApp:
+        appId: com.handstandsam.shoppingapp
+
+trail:
+  - step: "Log in with username \"sam\" and password \"trailblaze\""
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The current screen is the Shopping App login form. No fields have been filled and no login attempt has been made. I will focus the Username field so I can enter the provided username.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/username
+        - inputText:
+            text: sam
+            reasoning: The Username field is focused and empty on the login screen. I am entering the provided username 'sam'; next I will focus Password and enter 'trailblaze', then submit the form.
+            hideKeyboardAfter: false
+        - tapOnElementBySelector:
+            reason: The username 'sam' has been entered successfully, and the Password field is visible. Next I will focus the Password field and enter the provided password.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/password
+        - inputText:
+            text: trailblaze
+            reasoning: The Password field is focused and empty, while the username 'sam' is already populated. I am entering the provided password 'trailblaze' and closing the keyboard; next I will submit the login form.
+        - tapOnElementBySelector:
+            reason: 'The login form is fully populated with username ''sam'' and the entered password, and the LOG IN button is visible. Completed: entered both credentials. Next: submit the form and then verify the resulting logged-in screen.'
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/submit
+        - assertVisibleBySelector:
+            reason: 'The app is on HomeActivity after login, showing the Shopping App home screen with category tiles and cart/more controls. Completed: entered username and password and submitted the form. Next: verify the post-login home screen is present, which confirms successful login.'
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Shopping App
+            expectedText: Shopping App
+
+  - step: "Open the first category"
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The current HomeActivity shows the category list. No steps have been completed yet because the prior tap used an invalid ref. The first category is the visible 'Fruits' item with ref v105. I will tap it, then inspect the changed screen and verify that the Fruits category opened.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Fruits
+        - assertVisibleBySelector:
+            reason: The first category has been opened successfully. The current CategoryActivity displays the Fruits title and fruit items. I will verify the Fruits heading is present as the completion check.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Fruits
+            expectedText: Fruits
+
+  - step: "Open the first item and add it to the cart"
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The product grid is visible and the first item is Granny Smith Apple in the top-left. I will open that first item, then verify its detail screen before adding it to the cart.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Granny Smith Apple
+        - tapOnElementBySelector:
+            reason: The first item detail screen is open for Granny Smith Apple, and the ADD TO CART button is visible. The item has been opened; the next step is to add it to the cart, then verify the cart state.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/add_to_cart
+        - assertVisibleBySelector:
+            reason: The first item, Granny Smith Apple, is open and the cart badge shows 1, confirming the item was added to the cart. I will verify the item title is still present as the completed detail state.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/activity_main_alerts_menu_item
+            expectedText: "1"
+
+  - step: "Open the cart and verify it contains one item"
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The app is on the Granny Smith Apple product screen. The cart icon at the top shows a badge of 1, but I need to open the cart and verify its contents. I will tap the visible cart icon; next I will wait for the cart screen and verify that exactly one item is shown.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/activity_main_alerts_menu_item
+        - assertVisibleBySelector:
+            reason: The cart screen is open and displays a single cart line item, '1 x Granny Smith Apple'. The cart contents have been verified as one item; no further navigation is needed.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: 1 x Granny Smith Apple
+            expectedText: 1 x Granny Smith Apple

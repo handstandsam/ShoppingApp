@@ -1,0 +1,226 @@
+# Replays the recorded Trailblaze trails under trails/ on an Android emulator.
+# Replay only: no LLM and no API key, so it runs the same on fork PRs.
+#
+# Results, from fastest to look at:
+#   1. Job summary (and a PR comment): a pass/fail table with a link that opens each
+#      session in the Trailblaze report viewer, then each trail's storyboard
+#      (click it to open that session).
+#   2. The report-interactive.html artifact, which opens straight in the browser.
+#   3. The session zips, for drag-and-drop into the viewer.
+#
+# Session zips and storyboards are also pushed to the `trailblaze-sessions` branch,
+# because the viewer can only fetch a zip from a URL that allows CORS
+# (raw.githubusercontent.com does; artifact downloads don't). Fork PRs skip that step.
+
+name: Trailblaze trails
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TRAILBLAZE_VERSION: "2026.10.06"
+  # One screenshot-per-step image per trail in the summary. Turn off for big suites.
+  TRAILBLAZE_STORYBOARDS: "true"
+  RESULTS: ${{ github.workspace }}/trailblaze-results
+
+jobs:
+  trails:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # The Trailblaze CLI builds its HTML report with bun.
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Build the app
+        run: ./gradlew :app:assembleDebug -Pkmp4free=false -Pios=false -Pjs=false
+
+      - name: Cache Trailblaze
+        id: tb-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/trailblaze-cli
+          key: trailblaze-cli-${{ env.TRAILBLAZE_VERSION }}
+
+      - name: Install Trailblaze
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ steps.tb-cache.outputs.cache-hit }}" != "true" ]; then
+            gh release download "v$TRAILBLAZE_VERSION" --repo block/trailblaze \
+              -p trailblaze -p trailblaze.jar -D ~/trailblaze-cli
+            chmod +x ~/trailblaze-cli/trailblaze
+          fi
+          echo "$HOME/trailblaze-cli" >> "$GITHUB_PATH"
+
+      # Trailblaze records the device video through ffmpeg.
+      - name: Install ffmpeg
+        run: command -v ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          # Keep the emulator from grabbing Trailblaze's port.
+          sudo sysctl -w net.ipv4.ip_local_reserved_ports=52525-52526
+
+      - name: Run trails
+        uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b
+        env:
+          TRAILBLAZE_DISABLE_DAEMON_AUTOSTART: "1"
+        with:
+          api-level: 34
+          arch: x86_64
+          # Same device the trail was recorded on.
+          profile: pixel_6
+          force-avd-creation: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && trailblaze run trails/ -d android/emulator-5554 --use-recorded-steps --capture-video
+
+      - name: Export report and session zips
+        if: ${{ !cancelled() }}
+        # Each export keeps going if another fails, so a broken report still leaves the zips.
+        run: |
+          mkdir -p "$RESULTS"
+          status=0
+          cd ~/.trailblaze/logs
+          for d in */; do
+            id="${d%/}"
+            [ "$id" = reports ] && continue
+            zip -q -r "$RESULTS/$id.zip" "$id" || status=1
+            if [ "$TRAILBLAZE_STORYBOARDS" = true ]; then
+              trailblaze report --id "$id" --storyboard="$RESULTS/$id.webp" --max-size=8MB \
+                --output-dir "$RUNNER_TEMP/report-$id" || status=1
+            fi
+          done
+          trailblaze report --output-dir "$RESULTS" || status=1
+          ls -lh "$RESULTS"
+          exit $status
+
+      - name: Upload report (opens in the browser)
+        id: report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          path: trailblaze-results/report-interactive.html
+          archive: false
+
+      - name: Upload session zips and storyboards
+        id: sessions
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: trailblaze-sessions
+          path: |
+            trailblaze-results/*.zip
+            trailblaze-results/*.webp
+
+      - name: Publish sessions for the viewer
+        id: publish
+        # Fork PRs get a read-only token, so they keep only the artifacts above.
+        if: ${{ !cancelled() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch=trailblaze-sessions
+          dir="runs/${{ github.run_id }}-${{ github.run_attempt }}"
+          pub="$RUNNER_TEMP/pub"
+          url="https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads "$url" "$branch" > /dev/null; then
+            git clone -q --depth 1 --branch "$branch" "$url" "$pub"
+          else
+            git init -q -b "$branch" "$pub"
+            git -C "$pub" remote add origin "$url"
+          fi
+          mkdir -p "$pub/$dir"
+          cp "$RESULTS"/*.zip "$pub/$dir/"
+          cp "$RESULTS"/*.webp "$pub/$dir/" 2>/dev/null || true
+          git -C "$pub" config user.name "github-actions[bot]"
+          git -C "$pub" config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git -C "$pub" add -A
+          git -C "$pub" commit -q -m "Trailblaze sessions for run ${{ github.run_id }}"
+          git -C "$pub" push -q origin "$branch"
+          echo "raw=https://raw.githubusercontent.com/${{ github.repository }}/$branch/$dir" >> "$GITHUB_OUTPUT"
+
+      - name: Write summary
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RAW: ${{ steps.publish.outputs.raw }}
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+          SESSIONS_URL: ${{ steps.sessions.outputs.artifact-url }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          viewer=https://block.github.io/trailblaze/report-viewer/
+          out="$RUNNER_TEMP/summary.md"
+          # Opens one session: in the viewer when its zip is published, else the HTML report artifact.
+          session_link() {
+            if [ -n "$RAW" ]; then
+              echo "$viewer?zip=$(jq -rn --arg u "$RAW/$1.zip" '$u|@uri')"
+            else
+              echo "$REPORT_URL"
+            fi
+          }
+          rows() {
+            jq -r '.results[] | [.outcome, .title, (.device_classifier // .platform // ""),
+              ((.duration_ms // 0) / 1000 | floor), .session_id,
+              ((.failure_reason // "") | gsub("\\s+"; " ") | .[0:300])] | @tsv' \
+              "$RESULTS/summary.json" 2>/dev/null
+          }
+          passed=$(rows | awk -F'\t' '$1=="PASSED"' | wc -l | tr -d ' ')
+          total=$(rows | wc -l | tr -d ' ')
+          {
+            if [ "$total" -gt 0 ] && [ "$passed" = "$total" ]; then
+              echo "## Trailblaze: ✅ $passed of $total trails passed"
+            else
+              echo "## Trailblaze: ❌ $passed of $total trails passed"
+            fi
+            echo
+            echo "[Open the full report]($REPORT_URL)"
+            echo
+            echo "| | Trail | Device | Time |"
+            echo "|---|---|---|---|"
+            rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+              case "$outcome" in PASSED) icon=✅ ;; FAILED) icon=❌ ;; *) icon=⚠️ ;; esac
+              echo "| $icon | [$title]($(session_link "$id")) | $device | ${secs}s |"
+            done
+            rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+              if [ -n "$reason" ]; then printf -- '\n- **%s**: %s\n' "$title" "$reason"; fi
+            done
+            if [ -z "$RAW" ]; then
+              echo
+              echo "Session zips: [download]($SESSIONS_URL), then drop one on $viewer."
+            elif [ "$TRAILBLAZE_STORYBOARDS" = true ]; then
+              rows | while IFS=$'\t' read -r outcome title device secs id reason; do
+                [ -f "$RESULTS/$id.webp" ] || continue
+                printf -- '\n### %s\n\n[![%s storyboard](%s)](%s)\n' \
+                  "$title" "$title" "$RAW/$id.webp" "$(session_link "$id")"
+              done
+            fi
+          } > "$out"
+          cat "$out" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PR" ] && [ -n "$RAW" ]; then
+            gh pr comment "$PR" --body-file "$out" --edit-last --create-if-none
+          fi
