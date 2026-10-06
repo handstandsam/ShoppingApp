@@ -69,6 +69,10 @@ jobs:
           fi
           echo "$HOME/trailblaze-cli" >> "$GITHUB_PATH"
 
+      # Trailblaze records the device video through ffmpeg.
+      - name: Install ffmpeg
+        run: command -v ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
@@ -90,7 +94,7 @@ jobs:
           force-avd-creation: true
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
-          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && trailblaze run trails/ -d android/emulator-5554 --use-recorded-steps
+          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && trailblaze run trails/ -d android/emulator-5554 --use-recorded-steps --capture-video
 
       - name: Export report and session zips
         if: ${{ !cancelled() }}
