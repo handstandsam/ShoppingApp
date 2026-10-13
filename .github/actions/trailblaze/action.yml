@@ -39,13 +39,13 @@ inputs:
       Fork PRs skip it.
     default: none
   publish-branch:
-    description: Branch that `publish: branch` writes to.
+    description: "Branch that `publish: branch` writes to."
     default: trailblaze-sessions
   keep-runs:
-    description: How many runs `publish: branch` keeps. Older runs' links stop working.
+    description: "How many runs `publish: branch` keeps. Older runs' links stop working."
     default: "20"
   comment:
-    description: Post the summary as one PR comment, updated on every push. Needs `pull-requests: write`.
+    description: "Post the summary as one PR comment, updated on every push. Needs `pull-requests: write`."
     default: "true"
   github-token:
     description: Token for downloading the CLI, publishing and commenting.
