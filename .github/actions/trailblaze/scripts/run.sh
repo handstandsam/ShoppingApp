@@ -9,9 +9,10 @@ fi
 if [ "$status" = 0 ]; then
   flags=()
   if [ "$CAPTURE_VIDEO" = true ]; then flags+=(--capture-video); fi
-  # INPUT_ARGS is a flag list, split on purpose.
-  # shellcheck disable=SC2086
-  trailblaze run "$INPUT_TRAILS" -d android/emulator-5554 $INPUT_ARGS "${flags[@]}" || status=$?
+  # Both are lists, split on whitespace on purpose.
+  read -r -d '' -a trails <<< "$INPUT_TRAILS" || true
+  read -r -d '' -a args <<< "$INPUT_ARGS" || true
+  trailblaze run "${trails[@]}" -d android/emulator-5554 "${args[@]}" "${flags[@]}" || status=$?
 fi
 echo "$status" > "$RUNNER_TEMP/trailblaze-exit"
 exit 0

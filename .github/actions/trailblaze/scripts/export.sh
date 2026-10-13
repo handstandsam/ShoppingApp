@@ -3,7 +3,7 @@
 # Each export keeps going if another fails, so a broken report still leaves the zips.
 set -uo pipefail
 results="$RUNNER_TEMP/trailblaze-results"
-logs="$HOME/.trailblaze/logs"
+logs="${TRAILBLAZE_HOME:-$HOME/.trailblaze}/logs"
 mkdir -p "$results"
 if [ ! -d "$logs" ]; then
   echo "::warning title=Trailblaze::No sessions were recorded."
@@ -21,5 +21,8 @@ for d in */; do
   fi
 done
 trailblaze report --output-dir "$results" > /dev/null || status=1
+if [ -f "$results/report-interactive.html" ]; then
+  mv "$results/report-interactive.html" "$results/trailblaze-report${SUFFIX:-}.html"
+fi
 ls -lh "$results"
 exit $status

@@ -1,5 +1,5 @@
-# Replays the recorded Trailblaze trails under trails/ on an Android emulator.
-# Replay only: no LLM and no API key, so it runs the same on fork PRs.
+# Replays the recorded Trailblaze trails on Android emulators, as listed in
+# .github/trailblaze-runs.yaml. Replay only: no LLM and no API key, so it runs the same on fork PRs.
 #
 # The job summary and one PR comment show a pass/fail table, each trail's storyboard, and links
 # that open each session in the Trailblaze report viewer. The HTML report is also an artifact.
@@ -17,30 +17,31 @@ permissions:
   contents: read
 
 jobs:
-  trails:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew :app:assembleDebug -Pkmp4free=false -Pios=false -Pjs=false
+      - uses: actions/upload-artifact@v7
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+  trails:
+    needs: build
     permissions:
       # `publish: branch` pushes session zips to the trailblaze-sessions branch.
       contents: write
       pull-requests: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: zulu
-          java-version: 17
-
-      - uses: gradle/actions/setup-gradle@v4
-
-      - name: Build the app
-        run: ./gradlew :app:assembleDebug -Pkmp4free=false -Pios=false -Pjs=false
-
-      - uses: ./.github/actions/trailblaze
-        with:
-          version: "2026.10.06"
-          app: app/build/outputs/apk/debug/app-debug.apk
-          # Public repo, so the summary can link straight into the viewer.
-          publish: branch
+    uses: ./.github/workflows/trail-runner.yml
+    with:
+      request: .github/trailblaze-runs.yaml
+      app-artifact: app
+      version: "2026.10.06"
+      # Public repo, so the summary can link straight into the viewer.
+      publish: branch

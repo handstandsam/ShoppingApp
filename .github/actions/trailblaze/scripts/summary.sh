@@ -57,9 +57,10 @@ total=$(rows | wc -l | tr -d ' ')
     done
   fi
 } > "$out"
-cat "$out" >> "$GITHUB_STEP_SUMMARY"
 echo "passed=$passed" >> "$GITHUB_OUTPUT"
 echo "total=$total" >> "$GITHUB_OUTPUT"
+if [ "${WRITE_SUMMARY:-true}" != true ]; then exit 0; fi
+cat "$out" >> "$GITHUB_STEP_SUMMARY"
 
 if [ "$COMMENT" != true ] || [ -z "$PR" ]; then exit 0; fi
 # Fork PRs get a read-only token, so a failed comment warns instead of failing the job.
