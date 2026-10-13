@@ -1,0 +1,172 @@
+name: Trailblaze
+description: Run Trailblaze trails on an Android emulator and post the results to the job summary and the PR.
+author: Block
+
+inputs:
+  trails:
+    description: Trail file, glob or directory to run.
+    default: trails/
+  app:
+    description: APK to install before the run. Leave empty if a trailhead installs the app.
+    default: ""
+  version:
+    description: >-
+      Trailblaze CLI version, such as 2026.10.06. Defaults to the version in this action's tag
+      (block/trailblaze/github-action@v2026.10.06 runs CLI 2026.10.06).
+    default: ""
+  args:
+    description: >-
+      Extra `trailblaze run` flags. The default replays recordings only, so no LLM key is needed
+      and fork PRs work.
+    default: --use-recorded-steps
+  android-api-level:
+    description: Emulator API level.
+    default: "34"
+  android-profile:
+    description: Emulator device profile. Use the device the trails were recorded on.
+    default: pixel_6
+  capture-video:
+    description: Record the device screen into each session.
+    default: "true"
+  storyboards:
+    description: Show a screenshot-per-step image for each trail in the summary. Turn off for big suites.
+    default: "true"
+  publish:
+    description: >-
+      `none` keeps results in this run's artifacts, which need repo access to open (right for private
+      repos). `branch` also pushes each session to a branch so the summary gets one-click viewer links
+      and inline storyboards that anyone can open (public repos only). Needs `contents: write`.
+      Fork PRs skip it.
+    default: none
+  publish-branch:
+    description: Branch that `publish: branch` writes to.
+    default: trailblaze-sessions
+  keep-runs:
+    description: How many runs `publish: branch` keeps. Older runs' links stop working.
+    default: "20"
+  comment:
+    description: Post the summary as one PR comment, updated on every push. Needs `pull-requests: write`.
+    default: "true"
+  github-token:
+    description: Token for downloading the CLI, publishing and commenting.
+    default: ${{ github.token }}
+
+outputs:
+  passed:
+    description: Number of trails that passed.
+    value: ${{ steps.summary.outputs.passed }}
+  total:
+    description: Number of trails run.
+    value: ${{ steps.summary.outputs.total }}
+  report-url:
+    description: Link to the HTML report artifact.
+    value: ${{ steps.report.outputs.artifact-url }}
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve Trailblaze version
+      id: install
+      shell: bash
+      env:
+        INPUT_VERSION: ${{ inputs.version }}
+        ACTION_REF: ${{ github.action_ref }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/resolve-version.sh"
+
+    - name: Cache Trailblaze
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.install.outputs.cli-dir }}
+        key: trailblaze-cli-${{ steps.install.outputs.version }}
+
+    - name: Download Trailblaze
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        CLI_DIR: ${{ steps.install.outputs.cli-dir }}
+        VERSION: ${{ steps.install.outputs.version }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/download.sh"
+
+    # The CLI builds its HTML report with bun.
+    - uses: oven-sh/setup-bun@v2
+
+    - name: Prepare the runner
+      shell: bash
+      env:
+        CAPTURE_VIDEO: ${{ inputs.capture-video }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/prepare-android.sh"
+
+    - name: Run trails
+      uses: reactivecircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b
+      env:
+        TRAILBLAZE_DISABLE_DAEMON_AUTOSTART: "1"
+        INPUT_TRAILS: ${{ inputs.trails }}
+        INPUT_APP: ${{ inputs.app }}
+        INPUT_ARGS: ${{ inputs.args }}
+        CAPTURE_VIDEO: ${{ inputs.capture-video }}
+      with:
+        api-level: ${{ inputs.android-api-level }}
+        arch: x86_64
+        profile: ${{ inputs.android-profile }}
+        force-avd-creation: true
+        emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+        disable-animations: true
+        script: bash "${{ github.action_path }}/scripts/run.sh"
+
+    - name: Export results
+      if: ${{ !cancelled() }}
+      shell: bash
+      env:
+        STORYBOARDS: ${{ inputs.storyboards }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/export.sh"
+
+    - name: Upload report
+      id: report
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v7
+      with:
+        path: ${{ runner.temp }}/trailblaze-results/report-interactive.html
+        archive: false
+
+    - name: Upload sessions
+      id: sessions
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: trailblaze-sessions
+        path: |
+          ${{ runner.temp }}/trailblaze-results/*.zip
+          ${{ runner.temp }}/trailblaze-results/*.webp
+        if-no-files-found: ignore
+
+    - name: Publish sessions
+      id: publish
+      # Fork PRs get a read-only token, so they keep only the artifacts.
+      if: >-
+        ${{ !cancelled() && inputs.publish == 'branch' && (github.event_name != 'pull_request'
+        || github.event.pull_request.head.repo.full_name == github.repository) }}
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        BRANCH: ${{ inputs.publish-branch }}
+        KEEP_RUNS: ${{ inputs.keep-runs }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/publish.sh"
+
+    - name: Summarize
+      id: summary
+      if: ${{ !cancelled() }}
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        RAW: ${{ steps.publish.outputs.raw }}
+        REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+        SESSIONS_URL: ${{ steps.sessions.outputs.artifact-url }}
+        STORYBOARDS: ${{ inputs.storyboards }}
+        COMMENT: ${{ inputs.comment }}
+        PR: ${{ github.event.pull_request.number }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/summary.sh"
+
+    - name: Fail if a trail failed
+      if: ${{ !cancelled() }}
+      shell: bash
+      run: bash "$GITHUB_ACTION_PATH/scripts/verdict.sh"
