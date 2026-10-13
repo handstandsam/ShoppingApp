@@ -38,10 +38,11 @@ jobs:
       # `publish: branch` pushes session zips to the trailblaze-sessions branch.
       contents: write
       pull-requests: write
-    uses: ./.github/workflows/trail-runner.yml
+    uses: block/trailblaze/.github/workflows/trail-runner.yml@bc3ca05dc38950582d14e119b3c215da114fe7db # main, 2026-10-13
     with:
       request: .github/trailblaze-runs.yaml
       app-artifact: app
+      # The CLI release to run; the workflow above is pinned to a commit, not a release tag.
       version: "2026.10.06"
       # Public repo, so the summary can link straight into the viewer.
       publish: branch
