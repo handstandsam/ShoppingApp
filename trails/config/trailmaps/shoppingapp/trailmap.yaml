@@ -1,0 +1,9 @@
+id: shoppingapp
+dependencies:
+  - trailblaze
+target:
+  display_name: Shopping App
+  platforms:
+    android:
+      app_ids:
+        - com.handstandsam.shoppingapp

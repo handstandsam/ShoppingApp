@@ -28,7 +28,8 @@ abstract class MviViewModel<State, Intention, SideEffect>(
     /** Flow of [SideEffect]s */
     val sideEffects: SharedFlow<SideEffect> = _sideEffects.asSharedFlow()
 
-    private val actor = scope.actor<Intention> {
+    // Unlimited, so `send` from a coroutine never drops an intention while one is being reduced.
+    private val actor = scope.actor<Intention>(capacity = Channel.UNLIMITED) {
         channel.consumeEach { intention ->
             println("Intention: $intention")
             val newState = reduce(
