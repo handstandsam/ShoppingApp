@@ -1,0 +1,11 @@
+# What the Trailblaze workflow runs. Each run is one device; `shards` splits its trails across
+# that many parallel jobs. JSON works too.
+defaults:
+  mode: replay               # replay | self-heal | ai
+runs:
+  - name: android-phone
+    device: android
+    android: { api: 34, profile: pixel_6 }   # the device the trails were recorded on
+    app: app-debug.apk                       # from the `app` artifact
+    trails: [trails/]
+    shards: 2

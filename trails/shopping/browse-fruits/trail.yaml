@@ -1,0 +1,61 @@
+config:
+  id: shopping/browse-fruits
+  target: shoppingapp
+  devices:
+    android:
+      driver: ANDROID_ONDEVICE_ACCESSIBILITY
+
+trailhead:
+  step: "Launch Shopping App fresh, on the login screen"
+  recording:
+    android:
+      launchApp:
+        appId: com.handstandsam.shoppingapp
+
+trail:
+  - step: "Log in with username \"sam\" and password \"trailblaze\""
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The current screen is the Shopping App login form. No fields have been filled and no login attempt has been made. I will focus the Username field so I can enter the provided username.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/username
+        - inputText:
+            text: sam
+            reasoning: The Username field is focused and empty on the login screen. I am entering the provided username 'sam'; next I will focus Password and enter 'trailblaze', then submit the form.
+            hideKeyboardAfter: false
+        - tapOnElementBySelector:
+            reason: The username 'sam' has been entered successfully, and the Password field is visible. Next I will focus the Password field and enter the provided password.
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/password
+        - inputText:
+            text: trailblaze
+            reasoning: The Password field is focused and empty, while the username 'sam' is already populated. I am entering the provided password 'trailblaze' and closing the keyboard; next I will submit the login form.
+        - tapOnElementBySelector:
+            reason: 'The login form is fully populated with username ''sam'' and the entered password, and the LOG IN button is visible. Completed: entered both credentials. Next: submit the form and then verify the resulting logged-in screen.'
+            nodeSelector:
+              androidAccessibility:
+                resourceIdRegex: com.handstandsam.shoppingapp:id/submit
+        - assertVisibleBySelector:
+            reason: 'The app is on HomeActivity after login, showing the Shopping App home screen with category tiles and cart/more controls. Completed: entered username and password and submitted the form. Next: verify the post-login home screen is present, which confirms successful login.'
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Shopping App
+            expectedText: Shopping App
+
+  - step: "Open the first category and check it lists Granny Smith Apple"
+    recording:
+      android-phone:
+        - tapOnElementBySelector:
+            reason: The current HomeActivity shows the category list. No steps have been completed yet because the prior tap used an invalid ref. The first category is the visible 'Fruits' item with ref v105. I will tap it, then inspect the changed screen and verify that the Fruits category opened.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Fruits
+        - assertVisibleBySelector:
+            reason: The Fruits category is open and its product grid lists Granny Smith Apple first. I will verify that item is shown as the completion check.
+            nodeSelector:
+              androidAccessibility:
+                textRegex: Granny Smith Apple
+            expectedText: Granny Smith Apple
