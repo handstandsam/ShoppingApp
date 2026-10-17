@@ -3,6 +3,7 @@ plugins {
   id("kotlin-android")
   alias(libs.plugins.dependency.guard)
   alias(libs.plugins.compose.compiler)
+  id("app.cash.burst")
 }
 
 android {

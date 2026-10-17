@@ -13,6 +13,7 @@ buildscript {
         classpath(libs.sqldelight.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath("com.handstandsam:convention-plugins")
+        classpath("app.cash.burst:burst-gradle-plugin:2.0.0")
 //        classpath(libs.plugins.compose.compiler)
 //        classpath("com.handstandsam.kmp4free:kmp4free:0.1.0")
 //        classpath(libs.jetbrains.compose)
